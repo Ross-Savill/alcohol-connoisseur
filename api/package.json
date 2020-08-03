@@ -1,0 +1,17 @@
+{
+  "name": "alcohol-connoisseurs",
+  "version": "1.0.0",
+  "description": "My MERN personal project to display drinking data relating to me and my friends.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon api.js"
+  },
+  "author": "Ross Savill",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

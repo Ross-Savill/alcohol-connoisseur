@@ -1,6 +1,6 @@
-const Mongoose = require('mongoose')
+const mongoose = require('mongoose')
 
-const drinksSchema = new Mongoose.Schema({
+const drinksSchema = new mongoose.Schema({
   name: String,
   id: Number,
   date: Date,

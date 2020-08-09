@@ -10,8 +10,15 @@ const port = process.env.PORT || 5000;
 
 app.use(express.json())
 
-app.get('/', (req,res) => {
-  return res.send('hello world from api')
+app.get('/drinks', (req,res) => {
+  Drinks.find({})
+  .then(docs => res.send(docs))
+})
+
+app.get('/drinks/:id', (req,res) =>{
+  const id = req.params;
+  Drinks.findOne({id})
+    .then(doc => res.send(doc))
 })
 
 app.listen(port , () => {

@@ -8,6 +8,10 @@ class Drinks extends Component {
       .then(resp => console.log(resp.data))
   }
 
+  componentWillUpdate() {
+
+  }
+
   render() {
     return (
       <button>Click me</button>

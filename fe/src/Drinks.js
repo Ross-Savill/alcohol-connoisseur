@@ -8,12 +8,14 @@ const drinksImport = axios.create({
 class Drinks extends Component {
   constructor(props) {
     super(props)
-      this.state = { drinks: [] }
+      this.state = { drinks: null }
   }
 
   componentDidMount() {
     drinksImport.get()
       .then(drinks => this.setState({ drinks: drinks }))
+      .then(console.log('component did mount here'))
+      .then(console.log(this.state.drinks))
       .catch(error => console.log(error))
   }
 
@@ -22,14 +24,18 @@ class Drinks extends Component {
     }
 
     renderTableHeader = () => {
-      let header = Object.keys(this.state.drinks[0])
+      let header = Object.keys(this.state.drinks.data[0])
       return header.map((key, index) => {
          return <th key={index}>{key}</th>
       })
     }
 
      renderTableData = () => {
-        return this.state.drinks.map((drink, index) => {
+      {console.log(this.state.drinks)}
+       if(this.state.drinks.data === [] || undefined) {
+         return <h1>Please Wait</h1>
+       } else {
+        return this.state.drinks.data.map((drink, index) => {
            const { name, date, drinkMain, drinkType, mixerOne, mixerTwo, garnish, ratingWordOne, ratingWordTwo, score, brand, collabOne, collabTwo, company} = drink
            return (
               <tr key={index}>
@@ -50,16 +56,14 @@ class Drinks extends Component {
               </tr>
            )
         })
-     }
+     }}
 
   render() {
-    if(this.state.drinks === []) {
+    {console.log(this.state.drinks)}
+    if(!this.state.drinks) {
       return <h1>Please Wait</h1>
     } else {
-      const { drinks } = this.state
-      { console.log(this.state) }
-
-
+      { console.log(this.state.drinks.data) }
       return (
         <div className="container">
           <h1>Drinks Table</h1>

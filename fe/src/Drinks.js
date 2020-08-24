@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './Drink.css';
 
 const drinksImport = axios.create({
   baseURL: 'http://localhost:5000/drinks',
@@ -25,7 +26,7 @@ class Drinks extends Component {
 
     renderTableHeader = () => {
       let header = Object.keys(this.state.drinks.data[0])
-      return header.map((key, index) => {
+      return header.slice(1).map((key, index) => {
          return <th key={index}>{key}</th>
       })
     }
@@ -38,22 +39,22 @@ class Drinks extends Component {
         return this.state.drinks.data.map((drink, index) => {
            const { name, date, drinkMain, drinkType, mixerOne, mixerTwo, garnish, ratingWordOne, ratingWordTwo, score, brand, collabOne, collabTwo, company} = drink
            return (
-              <tr key={index}>
-                 <td>{name}</td>
-                 <td>{date}</td>
-                 <td>{drinkMain}</td>
-                 <td>{drinkType}</td>
-                 <td>{mixerOne}</td>
-                 <td>{mixerTwo}</td>
-                 <td>{garnish}</td>
-                 <td>{ratingWordOne}</td>
-                 <td>{ratingWordTwo}</td>
-                 <td>{score}</td>
-                 <td>{brand}</td>
-                 <td>{collabOne}</td>
-                 <td>{collabTwo}</td>
-                 <td>{company}</td>
-              </tr>
+                <tr key={index}>
+                  <td className="mainTableDataLeftmost">{name}</td>
+                  <td className="mainTableData">{date}</td>
+                  <td className="mainTableData">{drinkMain}</td>
+                  <td className="mainTableData">{drinkType}</td>
+                  <td className="mainTableData">{mixerOne}</td>
+                  <td className="mainTableData">{mixerTwo}</td>
+                  <td className="mainTableData">{garnish}</td>
+                  <td className="mainTableData">{ratingWordOne}</td>
+                  <td className="mainTableData">{ratingWordTwo}</td>
+                  <td className="mainTableData">{score}</td>
+                  <td className="mainTableData">{brand}</td>
+                  <td className="mainTableData">{collabOne}</td>
+                  <td className="mainTableData">{collabTwo}</td>
+                  <td className="mainTableDataRightmost">{company}</td>
+                </tr>
            )
         })
      }}
@@ -66,10 +67,10 @@ class Drinks extends Component {
       { console.log(this.state.drinks.data) }
       return (
         <div className="container">
-          <h1>Drinks Table</h1>
+          <h1 className="mainTitle">Drinks Table</h1>
           <table className="mainTable">
-            <tbody>
-              <tr>{this.renderTableHeader()}</tr>
+            <tbody className="mainTableBody">
+              <tr className="mainTableHeader">{this.renderTableHeader()}</tr>
               {this.renderTableData()}
             </tbody>
           </table>

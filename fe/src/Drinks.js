@@ -25,39 +25,50 @@ class Drinks extends Component {
     }
 
     renderTableHeader = () => {
-      let header = Object.keys(this.state.drinks.data[0])
-      return header.slice(1).map((key, index) => {
-         return <th key={index}>{key}</th>
+      return (
+        <tr>
+          <td className="mainTableDataLeftmost">Name</td>
+          <td className="mainTableData">Date</td>
+          <td className="mainTableData">Main Drink Component</td>
+          <td className="mainTableData">Drink Type</td>
+          <td className="mainTableData">Mixer One</td>
+          <td className="mainTableData">Mixer Two</td>
+          <td className="mainTableData">Garnish</td>
+          <td className="mainTableData">Rating Word One</td>
+          <td className="mainTableData">Rating Word Two</td>
+          <td className="mainTableData">Score</td>
+          <td className="mainTableData">Brand</td>
+          <td className="mainTableData">Collaboration One</td>
+          <td className="mainTableData">Collaboration Two</td>
+          <td className="mainTableDataRightmost">Company</td>
+        </tr>
+      )
+    }
+
+    renderTableData = () => {
+      return this.state.drinks.data.map((drink, index) => {
+          const { name, date, drinkMain, drinkType, mixerOne, mixerTwo, garnish, ratingWordOne, ratingWordTwo, score, brand, collabOne, collabTwo, company} = drink
+          return (
+              <tr key={index}>
+                <td className="mainTableDataLeftmost">{name}</td>
+                <td className="mainTableData">{date}</td>
+                <td className="mainTableData">{drinkMain}</td>
+                <td className="mainTableData">{drinkType}</td>
+                <td className="mainTableData">{mixerOne}</td>
+                <td className="mainTableData">{mixerTwo}</td>
+                <td className="mainTableData">{garnish}</td>
+                <td className="mainTableData">{ratingWordOne}</td>
+                <td className="mainTableData">{ratingWordTwo}</td>
+                <td className="mainTableData">{score}</td>
+                <td className="mainTableData">{brand}</td>
+                <td className="mainTableData">{collabOne}</td>
+                <td className="mainTableData">{collabTwo}</td>
+                <td className="mainTableDataRightmost">{company}</td>
+              </tr>
+          )
       })
     }
 
-     renderTableData = () => {
-      {console.log(this.state.drinks)}
-       if(this.state.drinks.data === [] || undefined) {
-         return <h1>Please Wait</h1>
-       } else {
-        return this.state.drinks.data.map((drink, index) => {
-           const { name, date, drinkMain, drinkType, mixerOne, mixerTwo, garnish, ratingWordOne, ratingWordTwo, score, brand, collabOne, collabTwo, company} = drink
-           return (
-                <tr key={index}>
-                  <td className="mainTableDataLeftmost">{name}</td>
-                  <td className="mainTableData">{date}</td>
-                  <td className="mainTableData">{drinkMain}</td>
-                  <td className="mainTableData">{drinkType}</td>
-                  <td className="mainTableData">{mixerOne}</td>
-                  <td className="mainTableData">{mixerTwo}</td>
-                  <td className="mainTableData">{garnish}</td>
-                  <td className="mainTableData">{ratingWordOne}</td>
-                  <td className="mainTableData">{ratingWordTwo}</td>
-                  <td className="mainTableData">{score}</td>
-                  <td className="mainTableData">{brand}</td>
-                  <td className="mainTableData">{collabOne}</td>
-                  <td className="mainTableData">{collabTwo}</td>
-                  <td className="mainTableDataRightmost">{company}</td>
-                </tr>
-           )
-        })
-     }}
 
   render() {
     {console.log(this.state.drinks)}

@@ -24,26 +24,12 @@ class Drinks extends Component {
 
     }
 
-    renderTableHeader = () => {
-      return (
-        <tr>
-          <td className="mainTableDataLeftmost">Name</td>
-          <td className="mainTableData">Date</td>
-          <td className="mainTableData">Main Drink Component</td>
-          <td className="mainTableData">Drink Type</td>
-          <td className="mainTableData">Mixer One</td>
-          <td className="mainTableData">Mixer Two</td>
-          <td className="mainTableData">Garnish</td>
-          <td className="mainTableData">Rating Word One</td>
-          <td className="mainTableData">Rating Word Two</td>
-          <td className="mainTableData">Score</td>
-          <td className="mainTableData">Brand</td>
-          <td className="mainTableData">Collaboration One</td>
-          <td className="mainTableData">Collaboration Two</td>
-          <td className="mainTableDataRightmost">Company</td>
-        </tr>
-      )
-    }
+    renderTableHeader() {
+      const headers = ["Drinker","Date","Main Component","Drink Type","Mixer One","Mixer Two","Garnish","Rating Word One","Rating Word Two","Score","Brewery / Brand","Collab Brewery One","Collab Brewery Two","Company"]
+        return headers.map((header, index) => {
+          return <th className="mainTableHeader" key={index}>{header}</th>
+        })
+      }
 
     renderTableData = () => {
       return this.state.drinks.data.map((drink, index) => {
@@ -81,7 +67,7 @@ class Drinks extends Component {
           <h1 className="mainTitle">Drinks Table</h1>
           <table className="mainTable">
             <tbody className="mainTableBody">
-              <tr className="mainTableHeader">{this.renderTableHeader()}</tr>
+              <tr>{this.renderTableHeader()}</tr>
               {this.renderTableData()}
             </tbody>
           </table>

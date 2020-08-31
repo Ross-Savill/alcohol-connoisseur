@@ -20,10 +20,6 @@ class Drinks extends Component {
       .catch(error => console.log(error))
   }
 
-  componentDidUpdate(prevProps, prevState) {
-
-    }
-
     renderTableHeader() {
       const headers = ["Drinker","Date","Main Component","Drink Type","Mixer One","Mixer Two","Garnish","Rating Word One","Rating Word Two","Score","Brewery / Brand","Collab Brewery One","Collab Brewery Two","Company"]
         return headers.map((header, index) => {

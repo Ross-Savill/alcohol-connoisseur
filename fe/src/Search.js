@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Search.css';
 
@@ -17,7 +16,6 @@ class Search extends Component {
     super(props);
     this.state = {
       drinks: [],
-      activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
       userInput: ""
@@ -41,7 +39,6 @@ class Search extends Component {
         drink.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
     this.setState({
-      activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: true,
       userInput: e.currentTarget.value
@@ -54,7 +51,6 @@ class Search extends Component {
       onChange,
       state: {
         drinks,
-        activeSuggestion,
         filteredSuggestions,
         showSuggestions,
         userInput
@@ -67,16 +63,18 @@ class Search extends Component {
     if (showSuggestions && userInput && drinks) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul class="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
-              let className;
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-
+          <ul className="suggestions">
+            <p>{filteredSuggestions.length} Results</p>
+            {filteredSuggestions.map((suggestion) => {
               return (
-                <li className={className} key={suggestion}>
-                  {JSON.stringify(suggestion)}
+                <li className="drinkMatch" key={suggestion.id}>
+                  <p>{suggestion.name} - {suggestion.date.slice(0,10)} -
+                  {suggestion.drinkMain} - {suggestion.drinkType} -
+                  {suggestion.mixerOne} - {suggestion.mixerTwo} -
+                  {suggestion.score} - {suggestion.ratingWordOne} -
+                  {suggestion.ratingWordTwo} - {suggestion.brand} -
+                  {suggestion.collabOne} - {suggestion.collabTwo}
+                  {suggestion.company}</p>
                 </li>
               );
             })}

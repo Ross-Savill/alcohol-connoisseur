@@ -1,0 +1,64 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+  }
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  }
+
+table td {
+  font-size: 12.5px;
+  margin: 0;
+  padding: 0.5rem;
+  border-bottom: 1px solid #ededed;
+  border-right: 1px solid #ededed;
+  position: relative;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.sort-desc {
+  content: "▼";
+  float: right;
+  margin-right: 16px;
+  }
+  .sort-asc {
+  content: "▲";
+  float: right;
+  margin-right: 16px;
+  }
+
+.goodBadge {
+  background-color: #9ae6b4;
+  color: #22543d;
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.averageBadge {
+  background-color: #fbff00;
+  color: #000000;
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.badBadge {
+  background-color: #ff0000;
+  color: #000000;
+  margin-right: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './App.css';
-import Search from './Search';
 import Table from './Table';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -118,7 +117,6 @@ function App() {
         </div>
 
         <BrowserRouter>
-          <Route exact path="/search" component={Search}></Route>
           <Route exact path="/table" component={Table}></Route>
         </BrowserRouter>
       </div>

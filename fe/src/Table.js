@@ -38,6 +38,20 @@ export default function Table({ columns, data }) {
 
   return (
     <>
+    <form>
+      <p>Add a Drink:</p>
+      <p>Person Name</p><input placeholder={"Name"}></input>
+      <p>Main Drink Component</p><input placeholder={"Main Drink Component"}></input>
+      <p>Drink Type</p><input placeholder={"Drink Type"}></input>
+      <p>Brand or Brewery</p><input placeholder={"Brand or Brewery"}></input>
+      <p>Mixer One</p><input placeholder={"Mixer One"}></input>
+      <p>Mixer Two</p><input placeholder={"Mixer Two"}></input>
+      <p>Garnish</p><input placeholder={"Garnish"}></input>
+      <p>Rating Word One</p><input placeholder={"Rating Word One"}></input>
+      <p>Rating Word Two</p><input placeholder={"Rating Word Two"}></input>
+      <p>Score</p><input placeholder={"Score"}></input>
+    </form>
+
       <p>Search for a Drink:{' '}
         <input
         value={filterInput}

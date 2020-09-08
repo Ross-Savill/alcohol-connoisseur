@@ -7,7 +7,7 @@ class AddDrinkForm extends Component {
     return (
       <Container className="AddDrinkFormContainer">
         <h2>Add Drink</h2>
-        <form className="addDrinkForm">
+        <Form inline className="addDrinkForm">
           <Col>
             <FormGroup>
               <Label for="personNameInput">Person Name</Label>
@@ -37,7 +37,7 @@ class AddDrinkForm extends Component {
                 type="select"
                 name="drinkTypeEntry"
                 id="drinkTypeInput"
-                placeholder="Main Drink Component"
+                placeholder="Select Drink Type"
               >
                 <option>Beer</option>
                 <option>Cider</option>
@@ -56,23 +56,105 @@ class AddDrinkForm extends Component {
           </Col>
           <Col>
             <FormGroup>
-              <Label>Drink Type</Label>
+              <Label for="brandNameInput">Brand or Brewery</Label>
               <Input
                 type="text"
-                name="mainDrinkComponent"
-                placeholder="Main Drink Component"
+                name="brandNameEntry"
+                id="brandNameInput"
+                placeholder="Brand or Brewery Name"
               />
             </FormGroup>
           </Col>
-          <input placeholder={"Drink Type"}></input>
-          <p>Brand or Brewery</p><input placeholder={"Brand or Brewery"}></input>
-          <p>Mixer One</p><input placeholder={"Mixer One"}></input>
-          <p>Mixer Two</p><input placeholder={"Mixer Two"}></input>
-          <p>Garnish</p><input placeholder={"Garnish"}></input>
-          <p>Rating Word One</p><input placeholder={"Rating Word One"}></input>
-          <p>Rating Word Two</p><input placeholder={"Rating Word Two"}></input>
-          <p>Score</p><input placeholder={"Score"}></input>
-        </form>
+          <Col>
+            <FormGroup>
+              <Label for="abvInput">ABV(%)</Label>
+              <Input
+                type="number"
+                name="abvEntry"
+                id="abvInput"
+                placeholder="Drink ABV(%)"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="mixerOneInput">Mixer One</Label>
+              <Input
+                type="text"
+                name="mixerOneEntry"
+                id="mixerOneInput"
+                placeholder="Mixer One"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="mixerTwoInput">Mixer Two</Label>
+              <Input
+                type="text"
+                name="mixerTwoEntry"
+                id="mixerTwoInput"
+                placeholder="Mixer Two"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="garnishInput">Garnish</Label>
+              <Input
+                type="text"
+                name="garnishEntry"
+                id="garnishInput"
+                placeholder="Garnish"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="ratingWordOneInput">Rating Word One</Label>
+              <Input
+                type="text"
+                name="ratingWordOneEntry"
+                id="ratingWordOneInput"
+                placeholder="Rating Word One"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="ratingWordTwoInput">Rating Word Two</Label>
+              <Input
+                type="text"
+                name="ratingWordTwoEntry"
+                id="ratingWordTwoInput"
+                placeholder="Rating Word Two"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="scoreInput">Score</Label>
+              <Input
+                type="number"
+                name="scoreEntry"
+                id="scoreInput"
+                placeholder="Score"
+              />
+            </FormGroup>
+          </Col>
+          <Col>
+            <FormGroup>
+              <Label for="notesInput">Notes</Label>
+              <Input
+                type="textarea"
+                name="notesEntry"
+                id="notesInput"
+                placeholder="Drink notes here"
+              />
+            </FormGroup>
+          </Col>
+          <Button>Submit Drink</Button>
+        </Form>
       </Container>
     )
   }

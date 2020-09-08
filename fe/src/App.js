@@ -3,6 +3,7 @@ import './App.css';
 import Table from './Table';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
+import AddDrinkForm from './AddDrinkForm';
 
 const Dates = ({ values }) => {
   return values.slice(0,10)
@@ -112,6 +113,9 @@ function App() {
 
     return (
       <div>
+        <div>
+          <AddDrinkForm />
+        </div>
         <div className="App">
           <Table columns={columns} data={data} />
         </div>

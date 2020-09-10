@@ -1,7 +1,7 @@
-.hideTheAddForm {
-
+.hiddenAddDrinkForm {
+  display: none;
 }
 
-.showTheAddForm {
-
+.shownAddDrinkForm {
+  display: block;
 }

@@ -5,3 +5,7 @@
 .shownAddDrinkForm {
   display: block;
 }
+
+select.placeholder {
+  font: bold;
+}

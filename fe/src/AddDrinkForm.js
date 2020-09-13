@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input, Button} from 'reactstrap';
 import './AddDrinkForm.css';
+
+const initialState = {
+  isActive: false,
+  peopleNames: []
+}
 
 class AddDrinkForm extends Component {
   constructor(props) {
     super(props)
-    this.state = { isActive: false };
+    this.state = initialState;
   };
+
+  componentDidMount() {
+    let drinkersArray = []
+    axios("http://localhost:5000/peoplenames")
+      .then(data => {
+        drinkersArray = data.data.map((drinker) => {
+          return drinker
+      });
+      console.log(drinkersArray);
+      this.setState({ peopleNames: drinkersArray })
+      }).catch(error => {
+        console.log(error);
+      });
+  }
 
   toggleAddFormClass = () => {
     const currentState = this.state.isActive;
@@ -14,23 +34,42 @@ class AddDrinkForm extends Component {
     console.log(this.state.isActive)
   };
 
+  validate = () => {
+    let blankError = '';
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const isValid = this.validate();
+    if (isValid) {
+      console.log(this.state)
+    }
+  }
+
   render() {
+    let drinkerNames = this.state.peopleNames;
+    let drinkerNameSelect = drinkerNames.map((name) =>
+            <option key={name.id}>{name.drinker}</option>
+        );
+
     return (
       <>
         <h2 onClick={this.toggleAddFormClass} >Add Drink</h2>
         <Container className={this.state.isActive ?
           'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
-          <Form inline className="addDrinkForm">
+          <Form inline className="addDrinkForm" onSubmit={this.handleSubmit}>
             {console.log("render")}
             <Col>
               <FormGroup>
                 <Label for="personNameInput">Person Name</Label>
                 <Input
-                  type="text"
+                  type="select"
                   name="personNameEntry"
                   id="personNameInput"
-                  placeholder="Drinker's Name"
-                />
+                >
+                <option className="placeholder" value="">Select Drinker:</option>
+                {drinkerNameSelect}
+                </Input>
               </FormGroup>
             </Col>
             <Col>

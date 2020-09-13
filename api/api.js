@@ -5,6 +5,7 @@ const cors = require('cors')
 mongoose.connect('mongodb://localhost:27017/drinkdb')
 
 const Drinks = require('./models/Drinks')
+const PeopleNames = require('./models/PeoplesNames')
 
 const app = new express();
 const port = process.env.PORT || 5000;
@@ -17,10 +18,9 @@ app.get('/drinks', (req,res) => {
   .then(docs => res.send(docs))
 })
 
-app.get('/drinks/:id', (req,res) =>{
-  const id = req.params;
-  Drinks.findOne({id})
-    .then(doc => res.send(doc))
+app.get('/peoplenames', (req,res) => {
+  PeopleNames.find({})
+  .then(docs => res.send(docs))
 })
 
 app.listen(port , () => {

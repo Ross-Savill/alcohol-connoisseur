@@ -2,7 +2,6 @@ const mongoose = require('mongoose')
 
 const drinksSchema = new mongoose.Schema({
   name: String,
-  id: Number,
   date: Date,
   drinkMain: String,
   drinkType: String,

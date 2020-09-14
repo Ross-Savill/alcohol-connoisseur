@@ -21,7 +21,6 @@ class AddDrinkForm extends Component {
         drinkersArray = data.data.map((drinker) => {
           return drinker
       });
-      console.log(drinkersArray);
       this.setState({ peopleNames: drinkersArray })
       }).catch(error => {
         console.log(error);
@@ -31,7 +30,6 @@ class AddDrinkForm extends Component {
   toggleAddFormClass = () => {
     const currentState = this.state.isActive;
     this.setState({ isActive: !currentState });
-    console.log(this.state.isActive)
   };
 
   validate = () => {
@@ -49,9 +47,10 @@ class AddDrinkForm extends Component {
   render() {
     let drinkerNames = this.state.peopleNames;
     let drinkerNameSelect = drinkerNames.map((name) =>
-            <option key={name.id}>{name.drinker}</option>
+            <option key={name.drinker}>{name.drinker}</option>
         );
 
+        console.log(drinkerNames)
     return (
       <>
         <h2 onClick={this.toggleAddFormClass} >Add Drink</h2>
@@ -92,6 +91,7 @@ class AddDrinkForm extends Component {
                   id="drinkTypeInput"
                   placeholder="Select Drink Type"
                 >
+                  <option className="placeholder" value="">Select Drink Type:</option>
                   <option>Beer</option>
                   <option>Cider</option>
                   <option>Wine</option>
@@ -130,6 +130,12 @@ class AddDrinkForm extends Component {
               </FormGroup>
             </Col>
             <Col>
+              <FormGroup check>
+                <Label check>Mixer(s)?</Label>
+                <Input type="checkbox" />{' '}
+              </FormGroup>
+            </Col>
+            <Col className="optionalQuestion">
               <FormGroup>
                 <Label for="mixerOneInput">Mixer One</Label>
                 <Input
@@ -140,7 +146,7 @@ class AddDrinkForm extends Component {
                 />
               </FormGroup>
             </Col>
-            <Col>
+            <Col className="optionalQuestion">
               <FormGroup>
                 <Label for="mixerTwoInput">Mixer Two</Label>
                 <Input
@@ -148,17 +154,6 @@ class AddDrinkForm extends Component {
                   name="mixerTwoEntry"
                   id="mixerTwoInput"
                   placeholder="Mixer Two"
-                />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="garnishInput">Garnish</Label>
-                <Input
-                  type="text"
-                  name="garnishEntry"
-                  id="garnishInput"
-                  placeholder="Garnish"
                 />
               </FormGroup>
             </Col>
@@ -192,6 +187,45 @@ class AddDrinkForm extends Component {
                   name="scoreEntry"
                   id="scoreInput"
                   placeholder="Score"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup check>
+                <Label check>Collabaratory Brewery?</Label>
+                <Input type="checkbox" />{' '}
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="collabOneInput">Collabaratory Brewery One</Label>
+                <Input
+                  type="text"
+                  name="collabOneEntry"
+                  id="collabOneInput"
+                  placeholder="First Collabaratory Brewery"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="collabTwoInput">Collabaratory Brewery Two</Label>
+                <Input
+                  type="text"
+                  name="collabTwoEntry"
+                  id="collabTwoInput"
+                  placeholder="Second Collabaratory Brewery"
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="companyInput">Company</Label>
+                <Input
+                  type="text"
+                  name="companyEntry"
+                  id="companyInput"
+                  placeholder="Main Component Company"
                 />
               </FormGroup>
             </Col>

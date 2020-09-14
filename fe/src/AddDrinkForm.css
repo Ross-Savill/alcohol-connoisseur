@@ -4,6 +4,9 @@
 
 .shownAddDrinkForm {
   display: block;
+  border-width: 10px;
+  border-color: #000000;
+  margin-bottom: 50px;
 }
 
 select.placeholder {

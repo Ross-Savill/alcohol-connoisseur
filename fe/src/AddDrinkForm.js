@@ -4,8 +4,23 @@ import { Container, Col, Form, FormGroup, Label, Input, Button} from 'reactstrap
 import './AddDrinkForm.css';
 
 const initialState = {
-  isActive: false,
-  peopleNames: []
+  showForm: false,
+  peopleNames: [],
+  personName: '',
+  mainDrink: '',
+  drinkType: '',
+  brandBrewery: '',
+  abv: '',
+  hasMixer: false,
+  mixerOne: '',
+  mixerTwo: '',
+  ratingWordOne: '',
+  ratingWordTwo: '',
+  score: '',
+  collabOne: '',
+  collabTwo: '',
+  company: '',
+  notes: ''
 }
 
 class AddDrinkForm extends Component {
@@ -28,12 +43,17 @@ class AddDrinkForm extends Component {
   }
 
   toggleAddFormClass = () => {
-    const currentState = this.state.isActive;
-    this.setState({ isActive: !currentState });
+    const currentState = this.state.showForm;
+    this.setState({ showForm: !currentState });
   };
 
-  validate = () => {
-    let blankError = '';
+  toggleHasMixerClass = () => {
+    const currentState = this.state.hasMixer;
+    this.setState({ hasMixer: !currentState });
+  };
+
+  validate = (event) => {
+    let nam = event.target.name;
   }
 
   handleSubmit = event => {
@@ -54,7 +74,7 @@ class AddDrinkForm extends Component {
     return (
       <>
         <h2 onClick={this.toggleAddFormClass} >Add Drink</h2>
-        <Container className={this.state.isActive ?
+        <Container className={this.state.showForm ?
           'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
           <Form inline className="addDrinkForm" onSubmit={this.handleSubmit}>
             {console.log("render")}
@@ -65,6 +85,7 @@ class AddDrinkForm extends Component {
                   type="select"
                   name="personNameEntry"
                   id="personNameInput"
+                  value={this.state.personName}
                 >
                 <option className="placeholder" value="">Select Drinker:</option>
                 {drinkerNameSelect}
@@ -79,6 +100,7 @@ class AddDrinkForm extends Component {
                   name="mainDrinkComponentEntry"
                   id="mainDrinkComponentInput"
                   placeholder="Main Drink Component"
+                  value={this.state.mainDrink}
                 />
               </FormGroup>
             </Col>
@@ -90,6 +112,7 @@ class AddDrinkForm extends Component {
                   name="drinkTypeEntry"
                   id="drinkTypeInput"
                   placeholder="Select Drink Type"
+                  value={this.state.drinkType}
                 >
                   <option className="placeholder" value="">Select Drink Type:</option>
                   <option>Beer</option>
@@ -115,6 +138,7 @@ class AddDrinkForm extends Component {
                   name="brandNameEntry"
                   id="brandNameInput"
                   placeholder="Brand or Brewery Name"
+                  value={this.state.brandBrewery}
                 />
               </FormGroup>
             </Col>
@@ -126,16 +150,17 @@ class AddDrinkForm extends Component {
                   name="abvEntry"
                   id="abvInput"
                   placeholder="Drink ABV(%)"
+                  value={this.state.abv}
                 />
               </FormGroup>
             </Col>
             <Col>
               <FormGroup check>
                 <Label check>Mixer(s)?</Label>
-                <Input type="checkbox" />{' '}
+                <Input type="checkbox"/>
               </FormGroup>
             </Col>
-            <Col className="optionalQuestion">
+            <Col className={this.state.hasMixer ? 'showMixerQuestion': 'hideMixerQuestion'}>
               <FormGroup>
                 <Label for="mixerOneInput">Mixer One</Label>
                 <Input
@@ -143,10 +168,11 @@ class AddDrinkForm extends Component {
                   name="mixerOneEntry"
                   id="mixerOneInput"
                   placeholder="Mixer One"
+                  value={this.state.mixerOne}
                 />
               </FormGroup>
             </Col>
-            <Col className="optionalQuestion">
+            <Col className={this.state.hasMixer ? 'showMixerQuestion': 'hideMixerQuestion'}>
               <FormGroup>
                 <Label for="mixerTwoInput">Mixer Two</Label>
                 <Input
@@ -154,6 +180,7 @@ class AddDrinkForm extends Component {
                   name="mixerTwoEntry"
                   id="mixerTwoInput"
                   placeholder="Mixer Two"
+                  value={this.state.mixerTwo}
                 />
               </FormGroup>
             </Col>
@@ -165,6 +192,7 @@ class AddDrinkForm extends Component {
                   name="ratingWordOneEntry"
                   id="ratingWordOneInput"
                   placeholder="Rating Word One"
+                  value={this.state.ratingWordOne}
                 />
               </FormGroup>
             </Col>
@@ -176,6 +204,7 @@ class AddDrinkForm extends Component {
                   name="ratingWordTwoEntry"
                   id="ratingWordTwoInput"
                   placeholder="Rating Word Two"
+                  value={this.state.ratingWordTwo}
                 />
               </FormGroup>
             </Col>
@@ -187,16 +216,17 @@ class AddDrinkForm extends Component {
                   name="scoreEntry"
                   id="scoreInput"
                   placeholder="Score"
+                  value={this.state.score}
                 />
               </FormGroup>
             </Col>
             <Col>
               <FormGroup check>
                 <Label check>Collabaratory Brewery?</Label>
-                <Input type="checkbox" />{' '}
+                <Input type="checkbox" />
               </FormGroup>
             </Col>
-            <Col>
+            <Col className={this.state.hasCollab ? 'showCollabQuestion': 'hideCollabQuestion'}>
               <FormGroup>
                 <Label for="collabOneInput">Collabaratory Brewery One</Label>
                 <Input
@@ -204,10 +234,11 @@ class AddDrinkForm extends Component {
                   name="collabOneEntry"
                   id="collabOneInput"
                   placeholder="First Collabaratory Brewery"
+                  value={this.state.collabOne}
                 />
               </FormGroup>
             </Col>
-            <Col>
+            <Col className={this.state.hasCollab ? 'showCollabQuestion': 'hideCollabQuestion'}>
               <FormGroup>
                 <Label for="collabTwoInput">Collabaratory Brewery Two</Label>
                 <Input
@@ -215,6 +246,7 @@ class AddDrinkForm extends Component {
                   name="collabTwoEntry"
                   id="collabTwoInput"
                   placeholder="Second Collabaratory Brewery"
+                  value={this.state.collabTwo}
                 />
               </FormGroup>
             </Col>
@@ -226,6 +258,7 @@ class AddDrinkForm extends Component {
                   name="companyEntry"
                   id="companyInput"
                   placeholder="Main Component Company"
+                  value={this.state.company}
                 />
               </FormGroup>
             </Col>
@@ -237,6 +270,7 @@ class AddDrinkForm extends Component {
                   name="notesEntry"
                   id="notesInput"
                   placeholder="Drink notes here"
+                  value={this.state.notes}
                 />
               </FormGroup>
             </Col>

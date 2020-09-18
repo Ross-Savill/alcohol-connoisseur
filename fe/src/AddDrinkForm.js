@@ -17,6 +17,7 @@ const initialState = {
   ratingWordOne: '',
   ratingWordTwo: '',
   score: '',
+  hasCollab: false,
   collabOne: '',
   collabTwo: '',
   company: '',
@@ -47,9 +48,14 @@ class AddDrinkForm extends Component {
     this.setState({ showForm: !currentState });
   };
 
-  toggleHasMixerClass = () => {
+  toggleHasMixer = () => {
     const currentState = this.state.hasMixer;
     this.setState({ hasMixer: !currentState });
+  };
+
+  toggleHasCollab = () => {
+    const currentState = this.state.hasCollab;
+    this.setState({ hasCollab: !currentState });
   };
 
   validate = (event) => {
@@ -77,7 +83,6 @@ class AddDrinkForm extends Component {
         <Container className={this.state.showForm ?
           'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
           <Form inline className="addDrinkForm" onSubmit={this.handleSubmit}>
-            {console.log("render")}
             <Col>
               <FormGroup>
                 <Label for="personNameInput">Person Name</Label>
@@ -157,7 +162,8 @@ class AddDrinkForm extends Component {
             <Col>
               <FormGroup check>
                 <Label check>Mixer(s)?</Label>
-                <Input type="checkbox"/>
+                <Input type="checkbox"
+                       onChange={this.toggleHasMixer}/>
               </FormGroup>
             </Col>
             <Col className={this.state.hasMixer ? 'showMixerQuestion': 'hideMixerQuestion'}>
@@ -223,7 +229,8 @@ class AddDrinkForm extends Component {
             <Col>
               <FormGroup check>
                 <Label check>Collabaratory Brewery?</Label>
-                <Input type="checkbox" />
+                <Input type="checkbox"
+                       onChange={this.toggleHasCollab} />
               </FormGroup>
             </Col>
             <Col className={this.state.hasCollab ? 'showCollabQuestion': 'hideCollabQuestion'}>

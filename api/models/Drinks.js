@@ -8,14 +8,14 @@ const drinksSchema = new mongoose.Schema({
   abv: Number,
   mixerOne: String,
   mixerTwo: String,
-  garnish: String,
   ratingWordOne: String,
   ratingWordTwo: String,
   score: Number,
   brand: String,
   collabOne: String,
   collabTwo: String,
-  company: String
+  company: String,
+  notes: String
 })
 
 module.exports = mongoose.model('Drink', drinksSchema)

@@ -44,8 +44,6 @@ class TotalData extends Component {
 
   render () {
 
-
-
     if(this.state.firstRatingWords === []) {
       return <h1>Please Wait</h1>
     } else {

@@ -98,7 +98,7 @@ class AddDrinkForm extends Component {
                   type="select"
                   name="personNameEntry"
                   id="personNameInput"
-                  value={this.state.personName}
+                  value={this.personName}
                   onChange={this.handlePersonName}
                 >
                 <option className="placeholder" value="">Select Drinker:</option>
@@ -114,8 +114,8 @@ class AddDrinkForm extends Component {
                   name="drinkTypeEntry"
                   id="drinkTypeInput"
                   placeholder="Select Drink Type"
-                  onChange={this.handleDrinkType}
                   value={this.drinkType}
+                  onChange={this.handleDrinkType}
                 >
                   <option className="placeholder" value="">Select Drink Type:</option>
                   <option value="beer">Beer</option>

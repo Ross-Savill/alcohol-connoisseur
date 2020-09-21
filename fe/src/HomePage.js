@@ -5,9 +5,9 @@ import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';
 
 
-const Dates = ({ values }) => {
-  return values.slice(0,10)
-}
+// const Dates = ({ values }) => {
+//   return values.slice(0,10)
+// }
 
 const Scores = ({ values }) => {
   if(values > 7.5) {
@@ -54,7 +54,7 @@ function HomePage() {
           {
             Header: "Date",
             accessor: "date",
-            Cell: ({ cell: { value } }) => <Dates values={value} />
+            // Cell: ({ cell: { value } }) => <Dates values={value} />
           },
           {
             Header: "Main Component",
@@ -75,10 +75,6 @@ function HomePage() {
           {
             Header: "Mixer Two",
             accessor: "mixerTwo"
-          },
-          {
-            Header: "Garnish",
-            accessor: "garnish"
           },
           {
             Header: "Rating Word One",
@@ -104,7 +100,11 @@ function HomePage() {
           {
             Header: "Company",
             accessor: "company"
-          }
+          },
+          {
+            Header: "Notes",
+            accessor: "notes"
+          },
         ]
       }
     ],

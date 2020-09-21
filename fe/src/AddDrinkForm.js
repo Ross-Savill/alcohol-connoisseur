@@ -43,6 +43,14 @@ class AddDrinkForm extends Component {
       });
   }
 
+  handlePersonName = (newPersonName) => {
+    this.setState({ personName: newPersonName })
+  }
+
+  handleDrinkType = (newDrinkType) => {
+    this.setState({ drinkType: newDrinkType })
+  }
+
   toggleAddFormClass = () => {
     const currentState = this.state.showForm;
     this.setState({ showForm: !currentState });
@@ -73,7 +81,7 @@ class AddDrinkForm extends Component {
   render() {
     let drinkerNames = this.state.peopleNames;
     let drinkerNameSelect = drinkerNames.map((name) =>
-            <option key={name.drinker}>{name.drinker}</option>
+            <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
         );
 
         console.log(drinkerNames)
@@ -91,22 +99,11 @@ class AddDrinkForm extends Component {
                   name="personNameEntry"
                   id="personNameInput"
                   value={this.state.personName}
+                  onChange={this.handlePersonName}
                 >
                 <option className="placeholder" value="">Select Drinker:</option>
                 {drinkerNameSelect}
                 </Input>
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label for="mainDrinkComponentInput">Main Drink Component</Label>
-                <Input
-                  type="text"
-                  name="mainDrinkComponentEntry"
-                  id="mainDrinkComponentInput"
-                  placeholder="Main Drink Component"
-                  value={this.state.mainDrink}
-                />
               </FormGroup>
             </Col>
             <Col>
@@ -117,21 +114,22 @@ class AddDrinkForm extends Component {
                   name="drinkTypeEntry"
                   id="drinkTypeInput"
                   placeholder="Select Drink Type"
-                  value={this.state.drinkType}
+                  onChange={this.handleDrinkType}
+                  value={this.drinkType}
                 >
                   <option className="placeholder" value="">Select Drink Type:</option>
-                  <option>Beer</option>
-                  <option>Cider</option>
-                  <option>Wine</option>
-                  <option>Fortified Wine</option>
-                  <option>Gin</option>
-                  <option>Vodka</option>
-                  <option>Whisky</option>
-                  <option>Rum</option>
-                  <option>Brandy</option>
-                  <option>Liqueur</option>
-                  <option>Soft Drink</option>
-                  <option>Other</option>
+                  <option value="beer">Beer</option>
+                  <option value="cider">Cider</option>
+                  <option value="wine">Wine</option>
+                  <option value="fortifiedWine">Fortified Wine</option>
+                  <option value="gin">Gin</option>
+                  <option value="vodka">Vodka</option>
+                  <option value="whiskey">Whisky</option>
+                  <option value="rum">Rum</option>
+                  <option value="brandy">Brandy</option>
+                  <option value="liqueur">Liqueur</option>
+                  <option value="softDrink">Soft Drink</option>
+                  <option value="other">Other</option>
                 </Input>
               </FormGroup>
             </Col>
@@ -144,6 +142,18 @@ class AddDrinkForm extends Component {
                   id="brandNameInput"
                   placeholder="Brand or Brewery Name"
                   value={this.state.brandBrewery}
+                />
+              </FormGroup>
+            </Col>
+            <Col>
+              <FormGroup>
+                <Label for="mainDrinkComponentInput">Main Drink Component</Label>
+                <Input
+                  type="text"
+                  name="mainDrinkComponentEntry"
+                  id="mainDrinkComponentInput"
+                  placeholder="Main Drink Component"
+                  value={this.state.mainDrink}
                 />
               </FormGroup>
             </Col>

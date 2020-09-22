@@ -188,42 +188,46 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               {this.state.hasMixer &&
+              <>
               <Col xs="3">
-                  <FormGroup>
-                    <Label for="mixerOneInput">Mixer One</Label>
-                    <Input
-                      type="text"
-                      name="mixerOne"
-                      id="mixerOneInput"
-                      placeholder="Mixer One"
-                      value={this.state.mixerOne}
-                      onChange={this.handleFormChange}
-                    />
-                    <Label for="mixerTwoInput">Mixer Two</Label>
-                    <Input
-                      type="text"
-                      name="mixerTwo"
-                      id="mixerTwoInput"
-                      placeholder="Mixer Two (optional)"
-                      value={this.state.mixerTwo}
-                      onChange={this.handleFormChange}
-                    />
-                  </FormGroup>
+                <FormGroup className="mixerQuestion">
+                  <Label for="mixerOneInput">Mixer One</Label>
+                  <Input
+                    type="text"
+                    name="mixerOne"
+                    id="mixerOneInput"
+                    placeholder="Mixer One"
+                    value={this.state.mixerOne}
+                    onChange={this.handleFormChange}/>
+                </FormGroup>
               </Col>
+              <Col xs="3">
+              <FormGroup className="mixerQuestion">
+                  <Label for="mixerTwoInput">Mixer Two</Label>
+                  <Input
+                    type="text"
+                    name="mixerTwo"
+                    id="mixerTwoInput"
+                    placeholder="Mixer Two (optional)"
+                    value={this.state.mixerTwo}
+                    onChange={this.handleFormChange}/>
+                </FormGroup>
+              </Col>
+              </>
               }
             </Row>
-            <Row xs="6">
-              <Col>
+            <Row xs="4">
+              <Col xs="3">
                   <FormGroup check>
                     <Label check>
                     <Input type="checkbox"
                           onChange={this.toggleHasCollab} />
-                    Collabaratory Brewery?
+                    Collabaratory Brewery(s)?
                     </Label>
                   </FormGroup>
                 </Col>
                 {this.state.hasCollab &&
-                <div>
+                <>
                 <Col>
                   <FormGroup>
                     <Label for="collabOneInput">Collabaratory Brewery One</Label>
@@ -237,7 +241,7 @@ class AddDrinkForm extends Component {
                     />
                   </FormGroup>
                 </Col>
-                <Col className={this.state.hasCollab ? 'showCollabQuestion': 'hideCollabQuestion'}>
+                <Col>
                   <FormGroup>
                     <Label for="collabTwoInput">Collabaratory Brewery Two</Label>
                     <Input
@@ -250,12 +254,13 @@ class AddDrinkForm extends Component {
                     />
                   </FormGroup>
                 </Col>
-                </div>
+                </>
                 }
             </Row>
+            <Row xs="3">
               <Col>
                 <FormGroup>
-                  <Label for="ratingWordOneInput">Rating Word One</Label>
+                  {/* <Label for="ratingWordOneInput">Rating Word One</Label> */}
                   <Input
                     type="text"
                     name="ratingWordOne"
@@ -268,7 +273,7 @@ class AddDrinkForm extends Component {
               </Col>
               <Col>
                 <FormGroup>
-                  <Label for="ratingWordTwoInput">Rating Word Two</Label>
+                  {/* <Label for="ratingWordTwoInput">Rating Word Two</Label> */}
                   <Input
                     type="text"
                     name="ratingWordTwo"
@@ -281,7 +286,7 @@ class AddDrinkForm extends Component {
               </Col>
               <Col>
                 <FormGroup>
-                  <Label for="scoreInput">Score</Label>
+                  {/* <Label for="scoreInput">Score</Label> */}
                   <Input
                     type="number"
                     name="score"
@@ -292,7 +297,9 @@ class AddDrinkForm extends Component {
                   />
                 </FormGroup>
               </Col>
-              <Col>
+            </Row>
+            <Row>
+              <Col xs="4">
                 <FormGroup>
                   <Label for="companyInput">Company</Label>
                   <Input
@@ -305,7 +312,7 @@ class AddDrinkForm extends Component {
                   />
                 </FormGroup>
               </Col>
-              <Col>
+              <Col xs="6">
                 <FormGroup>
                   <Label for="notesInput">Notes</Label>
                   <Input
@@ -318,6 +325,7 @@ class AddDrinkForm extends Component {
                   />
                 </FormGroup>
               </Col>
+            </Row>
               <Button>Submit Drink</Button>
           </Form>
         </Container>

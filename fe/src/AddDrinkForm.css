@@ -1,27 +1,11 @@
 .hiddenAddDrinkForm {
   display: none;
-}
+};
 
 .shownAddDrinkForm {
   display: block;
   border-width: 10px;
   border-color: #000000;
-  margin-bottom: 50px;
-}
-
-.showMixerQuestion {
-
-}
-
-.hideMixerQuestion {
-
-}
-
-.showCollabQuestion {
-
-}
-
-.hideCollabQuestion {
-
-}
+  margin: 50px, 50px, 50px, 50px;
+};
 

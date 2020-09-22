@@ -69,12 +69,11 @@ function HomePage() {
             accessor: "brand"
           },
           {
-            Header: "Mixer One",
-            accessor: "mixerOne"
-          },
-          {
-            Header: "Mixer Two",
-            accessor: "mixerTwo"
+            Header: "Other Component(s) and/or Mixer(s)",
+            accessor: d => (d.mixerTwo ?
+                           `${d.mixerOne}, ${d.mixerTwo}`:
+                            d.mixerOne ?
+                           `${d.mixerOne}` : "")
           },
           {
             Header: "Rating Word One",

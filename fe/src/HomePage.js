@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import './App.css';
+import './HomePage.css';
 import Table from './Table';
 import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';
 
 
-// const Dates = ({ values }) => {
-//   return values.slice(0,10)
-// }
+const Dates = ({ date }) => {
+  const fixedDate = new Date(date);
+  return fixedDate.getUTCDate
+}
 
 const Scores = ({ values }) => {
   if(values > 7.5) {
@@ -54,7 +55,7 @@ function HomePage() {
           {
             Header: "Date",
             accessor: "date",
-            // Cell: ({ cell: { value } }) => <Dates values={value} />
+            Cell: ({ cell: { date } }) => <Dates values={date} />
           },
           {
             Header: "Main Component",
@@ -113,6 +114,7 @@ function HomePage() {
   return (
     <div>
       <div>
+        <h1 className="mainTitle">Welcome to Drink And Rate!!!</h1>
         <AddDrinkForm />
       </div>
       <div className="App">

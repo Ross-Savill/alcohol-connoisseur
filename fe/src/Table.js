@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useTable, useFilters, useSortBy, usePagination } from "react-table";
+import './Table.css'
 
 export default function Table({ columns, data }) {
 
@@ -37,7 +38,7 @@ export default function Table({ columns, data }) {
   };
 
   return (
-    <>
+    <div className="fullTableAndSearch">
       <p>Search for a Drink:{' '}
         <input
         value={filterInput}
@@ -111,6 +112,6 @@ export default function Table({ columns, data }) {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

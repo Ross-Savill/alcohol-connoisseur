@@ -86,8 +86,8 @@ class AddDrinkForm extends Component {
         );
         {console.log(this.state)}
     return (
-      <>
-        <button onClick={this.toggleAddFormClass} >Add Drink</button>
+      <div className="addFormContainer">
+        <button className="addButton" onClick={this.toggleAddFormClass} >Add Drink</button>
         <Container className={this.state.showForm ?
           'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
           <Form className="addDrinkForm" onSubmit={this.handleSubmit}>
@@ -189,30 +189,34 @@ class AddDrinkForm extends Component {
               </Col>
               {this.state.hasMixer &&
               <>
-              <Col xs="3">
-                <FormGroup className="mixerQuestion">
-                  <Label for="mixerOneInput">Mixer One</Label>
-                  <Input
-                    type="text"
-                    name="mixerOne"
-                    id="mixerOneInput"
-                    placeholder="Mixer One"
-                    value={this.state.mixerOne}
-                    onChange={this.handleFormChange}/>
-                </FormGroup>
-              </Col>
-              <Col xs="3">
-              <FormGroup className="mixerQuestion">
-                  <Label for="mixerTwoInput">Mixer Two</Label>
-                  <Input
-                    type="text"
-                    name="mixerTwo"
-                    id="mixerTwoInput"
-                    placeholder="Mixer Two (optional)"
-                    value={this.state.mixerTwo}
-                    onChange={this.handleFormChange}/>
-                </FormGroup>
-              </Col>
+                <Col xs="3">
+                  <FormGroup>
+                    <div className="mixerQuestion">
+                    <Label for="mixerOneInput">Mixer One</Label>
+                    <Input
+                      type="text"
+                      name="mixerOne"
+                      id="mixerOneInput"
+                      placeholder="Mixer One"
+                      value={this.state.mixerOne}
+                      onChange={this.handleFormChange}/>
+                      </div>
+                  </FormGroup>
+                </Col>
+                <Col xs="3">
+                  <FormGroup>
+                  <div className="mixerQuestion">
+                    <Label for="mixerTwoInput">Mixer Two</Label>
+                    <Input
+                      type="text"
+                      name="mixerTwo"
+                      id="mixerTwoInput"
+                      placeholder="Mixer Two (optional)"
+                      value={this.state.mixerTwo}
+                      onChange={this.handleFormChange}/>
+                      </div>
+                  </FormGroup>
+                </Col>
               </>
               }
             </Row>
@@ -260,7 +264,7 @@ class AddDrinkForm extends Component {
             <Row xs="3">
               <Col>
                 <FormGroup>
-                  {/* <Label for="ratingWordOneInput">Rating Word One</Label> */}
+                  <Label for="ratingWordOneInput">Rating Word One</Label>
                   <Input
                     type="text"
                     name="ratingWordOne"
@@ -273,7 +277,7 @@ class AddDrinkForm extends Component {
               </Col>
               <Col>
                 <FormGroup>
-                  {/* <Label for="ratingWordTwoInput">Rating Word Two</Label> */}
+                  <Label for="ratingWordTwoInput">Rating Word Two</Label>
                   <Input
                     type="text"
                     name="ratingWordTwo"
@@ -286,7 +290,7 @@ class AddDrinkForm extends Component {
               </Col>
               <Col>
                 <FormGroup>
-                  {/* <Label for="scoreInput">Score</Label> */}
+                  <Label for="scoreInput">Score</Label>
                   <Input
                     type="number"
                     name="score"
@@ -326,10 +330,10 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
             </Row>
-              <Button>Submit Drink</Button>
+              <Button className="submitButton">Submit Drink</Button>
           </Form>
         </Container>
-      </>
+      </div>
     )
   }
 }

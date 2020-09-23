@@ -1,19 +1,30 @@
-.addDrinkForm {
-  margin: 10px;
-  background-color: gray;
+.addFormContainer {
+  position: relative;
+  padding: 0px, 50px, 50px, 50px;
+}
+
+.addButton {
+  margin-left: 30px;
+  position: absolute;
 }
 
 .hiddenAddDrinkForm {
   display: none;
-};
+}
+
+.collabBreweryCheckbox {
+  padding-bottom: 15px;
+}
 
 .shownAddDrinkForm {
   display: block;
-  border-width: 10px;
-  border-color: #000000;
-  margin: 50px, 50px, 50px, 50px;
-};
+  border: 3px solid green;
+  background-color: #f1f1f1;
+  margin-bottom: 30px;
+}
 
-.mixerQuestion{
-  background-color: green;
+.mixerQuestion {
+  border-width: 10px;
+  border-color: green;
+  background-color: greenyellow;
 }

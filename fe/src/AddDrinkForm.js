@@ -91,6 +91,11 @@ class AddDrinkForm extends Component {
         <Container className={this.state.showForm ?
           'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
           <Form className="addDrinkForm" onSubmit={this.handleSubmit}>
+            <Row>
+              <div>
+                <p>Drink Details:</p>
+              </div>
+            </Row>
             <Row xs="3">
               <Col>
                 <FormGroup>
@@ -330,7 +335,9 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
             </Row>
+            <div className="text-center">
               <Button className="submitButton">Submit Drink</Button>
+            </div>
           </Form>
         </Container>
       </div>

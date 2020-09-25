@@ -8,8 +8,18 @@
   position: absolute;
 }
 
+.submitButton{
+  margin-bottom: 15px;
+}
+
 .hiddenAddDrinkForm {
   display: none;
+}
+
+.formGroupQuestion {
+  display: flex;
+  flex-direction: row;
+  font-size: 14;
 }
 
 .collabBreweryCheckbox {

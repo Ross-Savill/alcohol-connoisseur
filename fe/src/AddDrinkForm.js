@@ -98,8 +98,8 @@ class AddDrinkForm extends Component {
             </Row>
             <Row xs="3">
               <Col>
-                <FormGroup>
-                  <Label for="personNameInput">Person Name</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Person Name</Label>
                   <Input
                     type="select"
                     name="personName"
@@ -113,8 +113,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col>
-                <FormGroup>
-                  <Label for="drinkTypeInput">Drink Type</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Drink Type</Label>
                   <Input
                     type="select"
                     name="drinkType"
@@ -140,8 +140,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col>
-                <FormGroup>
-                  <Label for="brandNameInput">Brand or Brewery</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Brand or Brewery</Label>
                   <Input
                     type="text"
                     name="brandBrewery"
@@ -155,8 +155,8 @@ class AddDrinkForm extends Component {
             </Row>
             <Row xs="2">
               <Col>
-                <FormGroup>
-                  <Label for="mainDrinkComponentInput">Main Drink Component</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Main Drink Component</Label>
                   <Input
                     type="text"
                     name="mainDrink"
@@ -168,8 +168,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col xs="2">
-                <FormGroup>
-                  <Label for="abvInput">ABV(%)</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>ABV(%)</Label>
                   <Input
                     type="number"
                     name="abv"
@@ -197,7 +197,7 @@ class AddDrinkForm extends Component {
                 <Col xs="3">
                   <FormGroup>
                     <div className="mixerQuestion">
-                    <Label for="mixerOneInput">Mixer One</Label>
+                    <Label>Mixer One</Label>
                     <Input
                       type="text"
                       name="mixerOne"
@@ -211,7 +211,7 @@ class AddDrinkForm extends Component {
                 <Col xs="3">
                   <FormGroup>
                   <div className="mixerQuestion">
-                    <Label for="mixerTwoInput">Mixer Two</Label>
+                    <Label>Mixer Two</Label>
                     <Input
                       type="text"
                       name="mixerTwo"
@@ -239,7 +239,7 @@ class AddDrinkForm extends Component {
                 <>
                 <Col>
                   <FormGroup>
-                    <Label for="collabOneInput">Collabaratory Brewery One</Label>
+                    <Label>Collabaratory Brewery One</Label>
                     <Input
                       type="text"
                       name="collabOne"
@@ -252,7 +252,7 @@ class AddDrinkForm extends Component {
                 </Col>
                 <Col>
                   <FormGroup>
-                    <Label for="collabTwoInput">Collabaratory Brewery Two</Label>
+                    <Label>Collabaratory Brewery Two</Label>
                     <Input
                       type="text"
                       name="collabTwo"
@@ -268,8 +268,8 @@ class AddDrinkForm extends Component {
             </Row>
             <Row xs="3">
               <Col>
-                <FormGroup>
-                  <Label for="ratingWordOneInput">Rating Word One</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Rating Word One</Label>
                   <Input
                     type="text"
                     name="ratingWordOne"
@@ -281,8 +281,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col>
-                <FormGroup>
-                  <Label for="ratingWordTwoInput">Rating Word Two</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Rating Word Two</Label>
                   <Input
                     type="text"
                     name="ratingWordTwo"
@@ -294,8 +294,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col>
-                <FormGroup>
-                  <Label for="scoreInput">Score</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Score</Label>
                   <Input
                     type="number"
                     name="score"
@@ -309,8 +309,8 @@ class AddDrinkForm extends Component {
             </Row>
             <Row>
               <Col xs="4">
-                <FormGroup>
-                  <Label for="companyInput">Company</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Company</Label>
                   <Input
                     type="text"
                     name="company"
@@ -322,8 +322,8 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
               <Col xs="6">
-                <FormGroup>
-                  <Label for="notesInput">Notes</Label>
+                <FormGroup className="formGroupQuestion">
+                  <Label>Notes</Label>
                   <Input
                     type="textarea"
                     name="notes"

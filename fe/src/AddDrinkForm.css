@@ -12,6 +12,15 @@
   margin-bottom: 15px;
 }
 
+.addDrinkTitle {
+  /* width: 50px; */
+}
+
+.questionLabel {
+  font-size: 13px;
+  margin: 20px;
+}
+
 .hiddenAddDrinkForm {
   display: none;
 }
@@ -19,7 +28,7 @@
 .formGroupQuestion {
   display: flex;
   flex-direction: row;
-  font-size: 14;
+  font-size: 12;
 }
 
 .collabBreweryCheckbox {

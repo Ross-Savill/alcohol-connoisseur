@@ -13,12 +13,31 @@
 }
 
 .addDrinkTitle {
-  /* width: 50px; */
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  height: 30px;
 }
 
 .questionLabel {
   font-size: 13px;
-  margin: 20px;
+  margin: 20px 0px 20px 20px;
+}
+
+.questionInputTopRow {
+  margin: 20px 20px 0px 0px;
+}
+
+.questionInputSecondRow {
+  margin: 20px 0px 0px 0px;
+}
+
+.questionInputThirdRow {
+  margin: 20px 0px 0px 0px;
+}
+
+.questionInputBottomRow {
+  margin: 20px 0px 0px 0px;
 }
 
 .hiddenAddDrinkForm {
@@ -29,6 +48,7 @@
   display: flex;
   flex-direction: row;
   font-size: 12;
+  height: 60px;
 }
 
 .collabBreweryCheckbox {

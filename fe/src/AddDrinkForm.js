@@ -156,6 +156,9 @@ class AddDrinkForm extends Component {
                 </FormGroup>
               </Col>
             </Row>
+            {this.state.personName && this.state.drinkType && this.state.brandBrewery &&
+            <>
+            {/* <div> */}
             <Row xs="3">
               <Col>
                 <FormGroup className="formGroupQuestion">
@@ -171,7 +174,7 @@ class AddDrinkForm extends Component {
                   />
                 </FormGroup>
               </Col>
-              <Col xs="3">
+              <Col xs="2">
                 <FormGroup className="formGroupQuestion">
                   <Label className="questionLabel">ABV(%)</Label>
                   <Input
@@ -185,30 +188,27 @@ class AddDrinkForm extends Component {
                   />
                 </FormGroup>
               </Col>
-              <Col xs="3">
-                <FormGroup check>
+              <Col xs="4.5" className="questionInputCheckboxes">
+                <FormGroup className="mixerCheck">
                   <Label check>
                   <Input type="checkbox"
                          name="hasMixer"
                          onChange={this.toggleHasMixer}
-                         className="questionInputMiddleRow"/>
+                         />
                   Mixer(s)?
                   </Label>
                 </FormGroup>
+                <FormGroup check className="collabCheck">
+                    <Label check>
+                    <Input type="checkbox"
+                          onChange={this.toggleHasCollab}
+                          className="questionInput"/>
+                    Collabaratory Brewery(s)?
+                    </Label>
+                  </FormGroup>
               </Col>
             </Row>
             <Row xs="4">
-              <Col xs="1">
-                <FormGroup check>
-                  <Label check>
-                  <Input type="checkbox"
-                         name="hasMixer"
-                         onChange={this.toggleHasMixer}
-                         className="questionInputMiddleRow"/>
-                  Mixer(s)?
-                  </Label>
-                </FormGroup>
-              </Col>
               {this.state.hasMixer &&
               <>
                 <Col xs="3">
@@ -245,16 +245,6 @@ class AddDrinkForm extends Component {
               }
             </Row>
             <Row xs="4">
-              <Col xs="3">
-                  <FormGroup check>
-                    <Label check>
-                    <Input type="checkbox"
-                          onChange={this.toggleHasCollab}
-                          className="questionInput"/>
-                    Collabaratory Brewery(s)?
-                    </Label>
-                  </FormGroup>
-                </Col>
                 {this.state.hasCollab &&
                 <>
                 <Col>
@@ -365,6 +355,9 @@ class AddDrinkForm extends Component {
             <div className="text-center">
               <Button className="submitButton">Submit Drink</Button>
             </div>
+            {/* </div> */}
+            </>
+  }
           </Form>
         </Container>
       </div>

@@ -50,24 +50,29 @@ function HomePage() {
         columns: [
           {
             Header: "Name",
-            accessor: "name"
+            accessor: "name",
+            width: "130"
           },
           {
             Header: "Date",
             accessor: "date",
+            width: "80",
             Cell: ({ cell: { date } }) => <Dates values={date} />
           },
           {
             Header: "Main Component",
-            accessor: "drinkMain"
+            accessor: "drinkMain",
+            width: "250"
           },
           {
             Header: "Drink Type",
-            accessor: "drinkType"
+            accessor: "drinkType",
+            width: "70"
           },
           {
             Header: "Brand or Brewery",
-            accessor: "brand"
+            accessor: "brand",
+            width: "130"
           },
           {
             Header: "Other Component(s) and/or Mixer(s)",
@@ -78,28 +83,32 @@ function HomePage() {
           },
           {
             Header: "Rating Word One",
-            accessor: "ratingWordOne"
+            accessor: "ratingWordOne",
+            width: "100"
           },
           {
             Header: "Rating Word Two",
-            accessor: "ratingWordTwo"
+            accessor: "ratingWordTwo",
+            width: "100"
           },
           {
             Header: "Score",
             accessor: "score",
+            width: "60",
             Cell: ({ cell: { value } }) => <Scores values={value} />
           },
           {
-            Header: "Collaborator",
-            accessor: "collabOne"
-          },
-          {
-            Header: "Additional Collaborator",
-            accessor: "collabTwo"
+            Header: "Collaborator(s)",
+            width: "120",
+            accessor: d => (d.collabTwo ?
+              `${d.collabOne}, ${d.collabTwo}`:
+               d.collabOne ?
+              `${d.collabOne}`: "")
           },
           {
             Header: "Company",
-            accessor: "company"
+            accessor: "company",
+            width: "100"
           },
           {
             Header: "Notes",

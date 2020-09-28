@@ -157,207 +157,205 @@ class AddDrinkForm extends Component {
               </Col>
             </Row>
             {this.state.personName && this.state.drinkType && this.state.brandBrewery &&
-            <>
-            {/* <div> */}
-            <Row xs="3">
-              <Col>
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Main Drink Component</Label>
-                  <Input
-                    type="text"
-                    name="mainDrink"
-                    id="mainDrinkComponentInput"
-                    placeholder="Main Drink Component"
-                    value={this.state.mainDrink}
-                    onChange={this.handleFormChange}
-                    className="questionInputSecondRow"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="2">
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">ABV(%)</Label>
-                  <Input
-                    type="number"
-                    name="abv"
-                    id="abvInput"
-                    placeholder="Drink ABV(%)"
-                    value={this.state.abv}
-                    onChange={this.handleFormChange}
-                    className="questionInputSecondRow"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="4.5" className="questionInputCheckboxes">
-                <FormGroup className="mixerCheck">
-                  <Label check>
-                  <Input type="checkbox"
-                         name="hasMixer"
-                         onChange={this.toggleHasMixer}
-                         />
-                  Mixer(s)?
-                  </Label>
-                </FormGroup>
-                <FormGroup check className="collabCheck">
-                    <Label check>
-                    <Input type="checkbox"
-                          onChange={this.toggleHasCollab}
-                          className="questionInput"/>
-                    Collabaratory Brewery(s)?
-                    </Label>
-                  </FormGroup>
-              </Col>
-            </Row>
-            <Row xs="4">
-              {this.state.hasMixer &&
               <>
-                <Col xs="3">
-                  <FormGroup>
-                    <div className="mixerQuestion">
-                    <Label className="questionLabel">Mixer One</Label>
-                    <Input
-                      type="text"
-                      name="mixerOne"
-                      id="mixerOneInput"
-                      placeholder="Mixer One"
-                      value={this.state.mixerOne}
-                      onChange={this.handleFormChange}
-                      className="questionInput"/>
-                      </div>
-                  </FormGroup>
-                </Col>
-                <Col xs="3">
-                  <FormGroup>
-                  <div className="mixerQuestion">
-                    <Label className="questionLabel">Mixer Two</Label>
-                    <Input
-                      type="text"
-                      name="mixerTwo"
-                      id="mixerTwoInput"
-                      placeholder="Mixer Two (optional)"
-                      value={this.state.mixerTwo}
-                      onChange={this.handleFormChange}
-                      className="questionInput"/>
-                      </div>
-                  </FormGroup>
-                </Col>
+                <Row xs="3">
+                  <Col>
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Main Drink Component</Label>
+                      <Input
+                        type="text"
+                        name="mainDrink"
+                        id="mainDrinkComponentInput"
+                        placeholder="Main Drink Component"
+                        value={this.state.mainDrink}
+                        onChange={this.handleFormChange}
+                        className="questionInputSecondRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="2">
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">ABV(%)</Label>
+                      <Input
+                        type="number"
+                        name="abv"
+                        id="abvInput"
+                        placeholder="Drink ABV(%)"
+                        value={this.state.abv}
+                        onChange={this.handleFormChange}
+                        className="questionInputSecondRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4.5" className="questionInputCheckboxes">
+                    <FormGroup className="mixerCheck">
+                      <Label check>
+                      <Input type="checkbox"
+                            name="hasMixer"
+                            onChange={this.toggleHasMixer}
+                            />
+                      Mixer(s)?
+                      </Label>
+                    </FormGroup>
+                    <FormGroup check className="collabCheck">
+                        <Label check>
+                        <Input type="checkbox"
+                              onChange={this.toggleHasCollab}
+                              className="questionInput"/>
+                        Collabaratory Brewery(s)?
+                        </Label>
+                      </FormGroup>
+                  </Col>
+                </Row>
+                <Row xs="4">
+                  {this.state.hasMixer &&
+                  <>
+                    <Col xs="3">
+                      <FormGroup>
+                        <div className="mixerQuestion">
+                        <Label className="questionLabel">Mixer One</Label>
+                        <Input
+                          type="text"
+                          name="mixerOne"
+                          id="mixerOneInput"
+                          placeholder="Mixer One"
+                          value={this.state.mixerOne}
+                          onChange={this.handleFormChange}
+                          className="questionInput"/>
+                          </div>
+                      </FormGroup>
+                    </Col>
+                    <Col xs="3">
+                      <FormGroup>
+                      <div className="mixerQuestion">
+                        <Label className="questionLabel">Mixer Two</Label>
+                        <Input
+                          type="text"
+                          name="mixerTwo"
+                          id="mixerTwoInput"
+                          placeholder="Mixer Two (optional)"
+                          value={this.state.mixerTwo}
+                          onChange={this.handleFormChange}
+                          className="questionInput"/>
+                          </div>
+                      </FormGroup>
+                    </Col>
+                  </>
+                  }
+                </Row>
+                <Row xs="4">
+                    {this.state.hasCollab &&
+                    <>
+                    <Col>
+                      <FormGroup>
+                        <Label className="questionLabel">Collabaratory Brewery One</Label>
+                        <Input
+                          type="text"
+                          name="collabOne"
+                          id="collabOneInput"
+                          placeholder="First Collab"
+                          value={this.state.collabOne}
+                          onChange={this.handleFormChange}
+                          className="questionInput"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <Label className="questionLabel">Collabaratory Brewery Two</Label>
+                        <Input
+                          type="text"
+                          name="collabTwo"
+                          id="collabTwoInput"
+                          placeholder="Second Collab (optional)"
+                          value={this.state.collabTwo}
+                          onChange={this.handleFormChange}
+                          className="questionInput"
+                        />
+                      </FormGroup>
+                    </Col>
+                    </>
+                    }
+                </Row>
+                <Row xs="3">
+                  <Col>
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Rating Word One</Label>
+                      <Input
+                        type="text"
+                        name="ratingWordOne"
+                        id="ratingWordOneInput"
+                        placeholder="Rating Word One"
+                        value={this.state.ratingWordOne}
+                        onChange={this.handleFormChange}
+                        className="questionInputThirdRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Rating Word Two</Label>
+                      <Input
+                        type="text"
+                        name="ratingWordTwo"
+                        id="ratingWordTwoInput"
+                        placeholder="Rating Word Two"
+                        value={this.state.ratingWordTwo}
+                        onChange={this.handleFormChange}
+                        className="questionInputThirdRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Score</Label>
+                      <Input
+                        type="number"
+                        name="score"
+                        id="scoreInput"
+                        placeholder="Score"
+                        value={this.state.score}
+                        onChange={this.handleFormChange}
+                        className="questionInputThirdRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col xs="4">
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Company</Label>
+                      <Input
+                        type="text"
+                        name="company"
+                        id="companyInput"
+                        placeholder="Main Component Company"
+                        value={this.state.company}
+                        onChange={this.handleFormChange}
+                        className="questionInputBottomRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                  <Col xs="6">
+                    <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Notes</Label>
+                      <Input
+                        type="textarea"
+                        name="notes"
+                        id="notesInput"
+                        placeholder="Drink notes here"
+                        value={this.state.notes}
+                        onChange={this.handleFormChange}
+                        className="questionInputBottomRow"
+                      />
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <div className="text-center">
+                  <Button className="submitButton">Submit Drink</Button>
+                </div>
               </>
-              }
-            </Row>
-            <Row xs="4">
-                {this.state.hasCollab &&
-                <>
-                <Col>
-                  <FormGroup>
-                    <Label className="questionLabel">Collabaratory Brewery One</Label>
-                    <Input
-                      type="text"
-                      name="collabOne"
-                      id="collabOneInput"
-                      placeholder="First Collab"
-                      value={this.state.collabOne}
-                      onChange={this.handleFormChange}
-                      className="questionInput"
-                    />
-                  </FormGroup>
-                </Col>
-                <Col>
-                  <FormGroup>
-                    <Label className="questionLabel">Collabaratory Brewery Two</Label>
-                    <Input
-                      type="text"
-                      name="collabTwo"
-                      id="collabTwoInput"
-                      placeholder="Second Collab (optional)"
-                      value={this.state.collabTwo}
-                      onChange={this.handleFormChange}
-                      className="questionInput"
-                    />
-                  </FormGroup>
-                </Col>
-                </>
-                }
-            </Row>
-            <Row xs="3">
-              <Col>
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Rating Word One</Label>
-                  <Input
-                    type="text"
-                    name="ratingWordOne"
-                    id="ratingWordOneInput"
-                    placeholder="Rating Word One"
-                    value={this.state.ratingWordOne}
-                    onChange={this.handleFormChange}
-                    className="questionInputThirdRow"
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Rating Word Two</Label>
-                  <Input
-                    type="text"
-                    name="ratingWordTwo"
-                    id="ratingWordTwoInput"
-                    placeholder="Rating Word Two"
-                    value={this.state.ratingWordTwo}
-                    onChange={this.handleFormChange}
-                    className="questionInputThirdRow"
-                  />
-                </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Score</Label>
-                  <Input
-                    type="number"
-                    name="score"
-                    id="scoreInput"
-                    placeholder="Score"
-                    value={this.state.score}
-                    onChange={this.handleFormChange}
-                    className="questionInputThirdRow"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="4">
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Company</Label>
-                  <Input
-                    type="text"
-                    name="company"
-                    id="companyInput"
-                    placeholder="Main Component Company"
-                    value={this.state.company}
-                    onChange={this.handleFormChange}
-                    className="questionInputBottomRow"
-                  />
-                </FormGroup>
-              </Col>
-              <Col xs="6">
-                <FormGroup className="formGroupQuestion">
-                  <Label className="questionLabel">Notes</Label>
-                  <Input
-                    type="textarea"
-                    name="notes"
-                    id="notesInput"
-                    placeholder="Drink notes here"
-                    value={this.state.notes}
-                    onChange={this.handleFormChange}
-                    className="questionInputBottomRow"
-                  />
-                </FormGroup>
-              </Col>
-            </Row>
-            <div className="text-center">
-              <Button className="submitButton">Submit Drink</Button>
-            </div>
-            {/* </div> */}
-            </>
-  }
+            }
           </Form>
         </Container>
       </div>

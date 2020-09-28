@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTable, useFilters, useSortBy, usePagination } from "react-table";
+import { useTable, useFilters, useSortBy, usePagination, useBlockLayout } from "react-table";
 import './Table.css'
 
 export default function Table({ columns, data }) {
@@ -28,7 +28,8 @@ export default function Table({ columns, data }) {
   },
     useFilters,
     useSortBy,
-    usePagination
+    usePagination,
+    useBlockLayout
   );
 
   const handleFilterChange = e => {
@@ -39,13 +40,15 @@ export default function Table({ columns, data }) {
 
   return (
     <div className="fullTableAndSearch">
-      <p>Search for a Drink:{' '}
-        <input
-        value={filterInput}
-        onChange={handleFilterChange}
-        placeholder={"Search Drink Name"}
-        />
-      </p>
+      <div className="drinkSearch">
+        <p>Search for a Drink:{' '}
+          <input
+          value={filterInput}
+          onChange={handleFilterChange}
+          placeholder={"Search Drink Name"}
+          />
+        </p>
+      </div>
       <div className="pagination">
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
@@ -78,10 +81,10 @@ export default function Table({ columns, data }) {
           ))}
         </select>
       </div>
-      <table {...getTableProps()}>
+      <table {...getTableProps()} className="table">
         <thead>
         {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr {...headerGroup.getHeaderGroupProps()} className="tr">
               {headerGroup.headers.map(column => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
@@ -90,7 +93,7 @@ export default function Table({ columns, data }) {
                       ? column.isSortedDesc
                         ? "sort-desc"
                         : "sort-asc"
-                      : ""
+                      : "initial-column"
                   }
                 >
                   {column.render("Header")}
@@ -103,9 +106,10 @@ export default function Table({ columns, data }) {
           {page.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} className="tr">
                 {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  return <td {...cell.getCellProps()} className="td">
+                    {cell.render("Cell")}</td>;
                 })}
               </tr>
             );

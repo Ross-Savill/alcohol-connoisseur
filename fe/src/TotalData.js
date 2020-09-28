@@ -58,7 +58,6 @@ class TotalData extends Component {
           <p>
             {mapDisplay}
           </p>
-    // <RatingWordsTable />
     )}
   }
 }

@@ -1,11 +1,16 @@
 .addFormContainer {
-  position: relative;
-  padding: 0px, 50px, 50px, 50px;
+  /* display: flex;
+  justify-content: center; */
+  position: absolute;
+  margin: auto;
+  /* padding: 0px, 50px, 50px, 50px; */
 }
 
 .addButton {
-  margin-left: 30px;
+  /* display: flex;
+  justify-content: center; */
   position: absolute;
+  margin: auto;
 }
 
 .submitButton{

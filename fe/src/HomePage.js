@@ -4,7 +4,6 @@ import Table from './Table';
 import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';
 
-
 const Dates = ({ date }) => {
   const fixedDate = new Date(date);
   return fixedDate.getUTCDate

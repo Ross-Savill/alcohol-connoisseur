@@ -1,7 +1,8 @@
 .mainTitle {
+  position: relative;
   text-align: center;
   font-weight: bold;
-  padding: 30px;
+  padding: 20px;
   background-color: green;
 }
 

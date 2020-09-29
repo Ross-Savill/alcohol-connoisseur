@@ -1,19 +1,26 @@
-.addFormContainer {
-  /* display: flex;
-  justify-content: center; */
-  position: absolute;
-  margin: auto;
-  /* padding: 0px, 50px, 50px, 50px; */
+.outerContainerWithButton {
+  display: flex;
+  justify-content: center;
 }
 
 .addButton {
-  /* display: flex;
-  justify-content: center; */
-  position: absolute;
-  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* position: relative; */
+  float: none;
+  margin: 10px;
 }
 
-.submitButton{
+.addFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0px, 50px, 50px, 50px;
+}
+
+.submitButton {
   margin-bottom: 15px;
 }
 
@@ -82,7 +89,7 @@ margin: 20px;
   display: block;
   border: 3px solid green;
   background-color: #f1f1f1;
-  margin-bottom: 30px;
+
 }
 
 .mixerQuestion {

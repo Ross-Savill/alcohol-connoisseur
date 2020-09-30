@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+
 import './AddDrinkForm.css';
 
 const initialState = {
@@ -22,6 +23,12 @@ const initialState = {
   collabTwo: '',
   company: '',
   notes: ''
+}
+
+const Auto = () => {
+  const [display, setDisplay] = useEffect(false);
+  const
+
 }
 
 class AddDrinkForm extends Component {

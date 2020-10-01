@@ -27,8 +27,23 @@ const initialState = {
 
 const Auto = () => {
   const [display, setDisplay] = useEffect(false);
-  const
+  const [options, setOptions] = useState([]);
+  const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    const possibleDrinks =[];
+    const promises = new Array(20)
+    .fill()
+    .map((value, index) => axios("http://localhost:5000/drinks"))
+      Promise.all(promises).then((drinksArray) =>  {
+      return drinksArray.map(res => res.json()
+        .then(({ drinkMain, mixerOne, mixerTwo }) => {
+        return possibleDrinks.push({ brand, drinkMain, mixerOne, mixerTwo })
+        })
+      )
+    })
+    setOptions(possibleDrinks)
+  },[])
 }
 
 class AddDrinkForm extends Component {
@@ -164,6 +179,15 @@ class AddDrinkForm extends Component {
                         onChange={this.handleFormChange}
                         className="questionInputTopRow"
                       />
+                      {display && (
+                        <div className="autoContainer">
+                          {options.map((drinkOption, index) => {
+                              return <div className="option">
+                                <span>{drinkOption.brand}</span>
+                              </div>
+                          })}
+                        </div>
+                      )}
                     </FormGroup>
                   </Col>
                 </Row>

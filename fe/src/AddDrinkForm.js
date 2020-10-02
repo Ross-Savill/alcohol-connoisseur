@@ -1,7 +1,7 @@
-import React, { Component, useEffect, useState, useRef } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 import './AddDrinkForm.css';
 
 const initialState = {
@@ -25,28 +25,12 @@ const initialState = {
   notes: ''
 }
 
-const Auto = () => {
-  const [display, setDisplay] = useEffect(false);
-  const [options, setOptions] = useState([]);
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    const possibleDrinks =[];
-    const promises = new Array(20)
-    .fill()
-    .map((value, index) => axios("http://localhost:5000/drinks"))
-      Promise.all(promises).then((drinksArray) =>  {
-      return drinksArray.map(res => res.json()
-        .then(({ drinkMain, mixerOne, mixerTwo }) => {
-        return possibleDrinks.push({ brand, drinkMain, mixerOne, mixerTwo })
-        })
-      )
-    })
-    setOptions(possibleDrinks)
-  },[])
-}
-
 class AddDrinkForm extends Component {
+
+  static propTypes = {
+    options: PropTypes.instanceOf(Array).isRequired
+  };
+
   constructor(props) {
     super(props)
     this.state = initialState;
@@ -112,7 +96,6 @@ class AddDrinkForm extends Component {
         <div className="buttonDiv">
           <button className="addButton" onClick={this.toggleAddFormClass} >Add Drink</button>
         </div>
-        {/* <div className="outerContainerWithButton"> */}
           <div className="addFormContainer">
             <Container className={this.state.showForm ?
               'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
@@ -179,15 +162,6 @@ class AddDrinkForm extends Component {
                         onChange={this.handleFormChange}
                         className="questionInputTopRow"
                       />
-                      {display && (
-                        <div className="autoContainer">
-                          {options.map((drinkOption, index) => {
-                              return <div className="option">
-                                <span>{drinkOption.brand}</span>
-                              </div>
-                          })}
-                        </div>
-                      )}
                     </FormGroup>
                   </Col>
                 </Row>
@@ -398,7 +372,6 @@ class AddDrinkForm extends Component {
               </Form>
             </Container>
           </div>
-        {/* </div> */}
       </div>
     )
   }

@@ -22,7 +22,11 @@ const initialState = {
   collabOne: '',
   collabTwo: '',
   company: '',
-  notes: ''
+  notes: '',
+  activeOption: 0,
+  filteredOptions: [],
+  showOptions: false,
+  userInput: ''
 }
 
 class AddDrinkForm extends Component {
@@ -57,7 +61,8 @@ class AddDrinkForm extends Component {
   handleFormChange = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
-    console.log(this.state)
+
+
   }
 
   toggleHasMixer = () => {
@@ -90,7 +95,12 @@ class AddDrinkForm extends Component {
     let drinkerNameSelect = drinkerNames.map((name) =>
             <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
         );
-        {console.log(this.state)}
+        // autocorrect names to change
+    const {
+      onKeyDown,
+      state: { activeOption, filteredOptions, showOptions, userInput }
+    } = this;
+    let optionList;
     return (
       <div>
         <div className="buttonDiv">
@@ -162,6 +172,8 @@ class AddDrinkForm extends Component {
                         onChange={this.handleFormChange}
                         className="questionInputTopRow"
                       />
+                      {/* Here is autocorrect list option */}
+                      {optionList}
                     </FormGroup>
                   </Col>
                 </Row>

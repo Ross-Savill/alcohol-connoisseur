@@ -58,11 +58,75 @@ class AddDrinkForm extends Component {
     this.setState({ showForm: !currentState });
   };
 
-  handleFormChange = (event) => {
+  handleFormChangeandBrandAutocomplete = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
 
+    const { options } = this.props;
+    const userInput = event.currentTarget.value;
+    const nonUniquefilteredOptions = options.filter(
+      (option) => option.brand.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
+    const filteredOptions = [...new Set(nonUniquefilteredOptions.map(
+      (option) => (option.brand)))];
+    this.setState({
+      activeOption: 0,
+      filteredOptions,
+      showOptions: true,
+      userInput
+    });
+  }
 
+  handleFormChangeandMainComponentAutocomplete = (event) => {
+    const { target: { name, value } } = event
+    this.setState({ [name]: value })
+
+    const { options } = this.props;
+    const brandBreweryValue = this.state.brandBrewery;
+    const userInput = event.currentTarget.value;
+    if(brandBreweryValue === '') {
+      const filteredOptions = options.filter(
+        (option) => option.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
+      this.setState({
+        activeOption: 0,
+        filteredOptions,
+        showOptions: true,
+        userInput
+      });
+    }
+  }
+
+  browseOrSelectOptions = (e) => {
+    const { activeOption, filteredOptions } = this.state;
+    if (e.keyCode === 13) {
+      this.setState({
+        activeOption: 0,
+        showSuggestions: false,
+        userInput: filteredOptions[activeOption]
+      });
+    } else if (e.keyCode === 38) {
+      if (activeOption === 0) {
+        return;
+      }this.setState({ activeOption: activeOption - 1 });
+    } else if (e.keyCode === 40) {
+      if (activeOption - 1 === filteredOptions.length) {
+        return;
+      }this.setState({ activeOption: activeOption + 1 });
+    }
+  };
+
+  onAutocompleteOptionClick = (e) => {
+    this.setState({
+      activeOption: 0,
+      filteredOption: [],
+      showOptions: false,
+      userInput: e.currentTarget.innerText,
+      brandBrewery: e.currentTarget.innerText
+    });
+  };
+
+  handleFormChange = (event) => {
+    const { target: { name, value } } = event
+    this.setState({ [name]: value })
   }
 
   toggleHasMixer = () => {
@@ -95,12 +159,34 @@ class AddDrinkForm extends Component {
     let drinkerNameSelect = drinkerNames.map((name) =>
             <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
         );
-        // autocorrect names to change
-    const {
-      onKeyDown,
-      state: { activeOption, filteredOptions, showOptions, userInput }
-    } = this;
+    const { state: { activeOption, filteredOptions, showOptions, userInput }} = this;
     let optionList;
+    if (showOptions && userInput) {
+      if (filteredOptions.length) {
+        optionList = (
+          <ul className="options">
+            {filteredOptions.map((optionName, index) => {
+              let className;
+              if (index === activeOption) {
+                className = 'option-active';
+              }
+              return (
+                <li className={className} key={index} onClick={this.onAutocompleteOptionClick}>
+                  {optionName}
+                </li>
+              );
+            })}
+          </ul>
+        );
+      } else {
+        optionList = (
+          <div className="no-options">
+            <em>No Option!</em>
+          </div>
+        );
+      }
+    }
+
     return (
       <div>
         <div className="buttonDiv">
@@ -161,27 +247,7 @@ class AddDrinkForm extends Component {
                     </FormGroup>
                   </Col>
                   <Col>
-                    <FormGroup className="formGroupQuestion">
-                      <Label className="questionLabel">Brand or Brewery</Label>
-                      <Input
-                        type="text"
-                        name="brandBrewery"
-                        id="brandNameInput"
-                        placeholder="Brand or Brewery Name"
-                        value={this.state.brandBrewery}
-                        onChange={this.handleFormChange}
-                        className="questionInputTopRow"
-                      />
-                      {/* Here is autocorrect list option */}
-                      {optionList}
-                    </FormGroup>
-                  </Col>
-                </Row>
-                {this.state.personName && this.state.drinkType && this.state.brandBrewery &&
-                  <>
-                    <Row xs="3">
-                      <Col>
-                        <FormGroup className="formGroupQuestion">
+                  <FormGroup className="formGroupQuestion">
                           <Label className="questionLabel">Main Drink Component</Label>
                           <Input
                             type="text"
@@ -189,10 +255,31 @@ class AddDrinkForm extends Component {
                             id="mainDrinkComponentInput"
                             placeholder="Main Drink Component"
                             value={this.state.mainDrink}
-                            onChange={this.handleFormChange}
+                            onKeyDown={this.browseOrSelectOptions}
+                            onChange={this.handleFormChangeandMainComponentAutocomplete}
                             className="questionInputSecondRow"
                           />
                         </FormGroup>
+                  </Col>
+                  {optionList}
+                </Row>
+                {this.state.personName && this.state.drinkType && this.state.mainDrink &&
+                  <>
+                    <Row xs="3">
+                      <Col>
+                        <FormGroup className="formGroupQuestion">
+                      <Label className="questionLabel">Brand or Brewery</Label>
+                      <Input
+                        type="text"
+                        name="brandBrewery"
+                        id="brandNameInput"
+                        placeholder="Brand or Brewery Name"
+                        value={this.state.brandBrewery}
+                        onKeyDown={this.browseOrSelectOptions}
+                        onChange={this.handleFormChangeandBrandAutocomplete}
+                        className="questionInputTopRow"
+                      />
+                    </FormGroup>
                       </Col>
                       <Col xs="2">
                         <FormGroup className="formGroupQuestion">

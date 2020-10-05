@@ -23,9 +23,9 @@ const initialState = {
   collabTwo: '',
   company: '',
   notes: '',
-  activeOption: 0,
   filteredOptions: [],
-  showOptions: false,
+  showMainOptions: false,
+  showBrandOptions: false,
   userInput: ''
 }
 
@@ -69,9 +69,8 @@ class AddDrinkForm extends Component {
     const filteredOptions = [...new Set(nonUniquefilteredOptions.map(
       (option) => (option.brand)))];
     this.setState({
-      activeOption: 0,
       filteredOptions,
-      showOptions: true,
+      showBrandOptions: true,
       userInput
     });
   }
@@ -81,50 +80,58 @@ class AddDrinkForm extends Component {
     this.setState({ [name]: value })
 
     const { options } = this.props;
-    const brandBreweryValue = this.state.brandBrewery;
     const userInput = event.currentTarget.value;
-    if(brandBreweryValue === '') {
-      const filteredOptions = options.filter(
-        (option) => option.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
-      this.setState({
-        activeOption: 0,
-        filteredOptions,
-        showOptions: true,
-        userInput
-      });
-    }
+    const nonUniquefilteredOptions = options.filter(
+      (option) => option.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1);
+    const filteredOptions = [...new Set(nonUniquefilteredOptions.map(
+      (option) => (option)
+      ))];
+    this.setState({
+      filteredOptions,
+      showMainOptions: true,
+      userInput
+    });
   }
 
-  browseOrSelectOptions = (e) => {
-    const { activeOption, filteredOptions } = this.state;
-    if (e.keyCode === 13) {
+  onAutocompleteMainClick = (e) => {
+    this.setState({
+      filteredOption: [],
+      showMainOptions: false,
+      userInput: e.drinkMain,
+      mainDrink: e.drinkMain,
+      drinkType: e.drinkType,
+      brandBrewery: e.brand,
+      abv: e.abv,
+      company: e.company
+    });
+    if(e.mixerOne) {
       this.setState({
-        activeOption: 0,
-        showSuggestions: false,
-        userInput: filteredOptions[activeOption]
-      });
-    } else if (e.keyCode === 38) {
-      if (activeOption === 0) {
-        return;
-      }this.setState({ activeOption: activeOption - 1 });
-    } else if (e.keyCode === 40) {
-      if (activeOption - 1 === filteredOptions.length) {
-        return;
-      }this.setState({ activeOption: activeOption + 1 });
+        hasMixer: true,
+        mixerOne: e.mixerOne,
+        mixerTwo: e.mixerTwo
+      })
     }
+    if(e.collabOne) {
+      this.setState({
+        hasCollab: true,
+        collabOne: e.collabOne,
+        collabTwo: e.collabTwo
+      })
+    }
+    console.log(e)
   };
 
-  onAutocompleteOptionClick = (e) => {
+  onAutocompleteBrandClick = (e) => {
     this.setState({
-      activeOption: 0,
       filteredOption: [],
-      showOptions: false,
+      showBrandOptions: false,
       userInput: e.currentTarget.innerText,
       brandBrewery: e.currentTarget.innerText
     });
   };
 
   handleFormChange = (event) => {
+    console.log(event.target)
     const { target: { name, value } } = event
     this.setState({ [name]: value })
   }
@@ -157,36 +164,61 @@ class AddDrinkForm extends Component {
   render() {
     let drinkerNames = this.state.peopleNames;
     let drinkerNameSelect = drinkerNames.map((name) =>
-            <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
-        );
-    const { state: { activeOption, filteredOptions, showOptions, userInput }} = this;
-    let optionList;
-    if (showOptions && userInput) {
+      <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
+    );
+    const { state: { filteredOptions, showMainOptions, showBrandOptions, userInput }} = this;
+
+    let brandOptionList;
+    let mainOptionList;
+
+    if (showMainOptions && userInput) {
       if (filteredOptions.length) {
-        optionList = (
+        mainOptionList = (
+          <ul className="options">
+            {filteredOptions.map((optionChoice, index) => {
+              let className;
+              if(!optionChoice.mixerOne) {
+                return (
+                  <li className={className} key={index} onClick={() => this.onAutocompleteMainClick(optionChoice)}>
+                    <p>{optionChoice.drinkMain}</p>
+                  </li>
+                )
+              } else if(!optionChoice.mixerTwo) {
+                return (
+                  <li className={className} key={index} onClick={() => this.onAutocompleteMainClick(optionChoice)}>
+                    <p>{optionChoice.drinkMain} WITH <span className="mixerOneAutocompleteLine">{optionChoice.mixerOne}</span></p>
+                  </li>
+                )
+              } else {
+                return (
+                  <li className={className} key={index} onClick={() => this.onAutocompleteMainClick(optionChoice)}>
+                    <p>{optionChoice.drinkMain} WITH {optionChoice.mixerOne} AND {optionChoice.mixerTwo}</p>
+                  </li>
+                )
+              }
+            })}
+          </ul>
+        );
+      }
+    }
+
+    if (showBrandOptions && userInput) {
+      if (filteredOptions.length) {
+        brandOptionList = (
           <ul className="options">
             {filteredOptions.map((optionName, index) => {
               let className;
-              if (index === activeOption) {
-                className = 'option-active';
-              }
               return (
-                <li className={className} key={index} onClick={this.onAutocompleteOptionClick}>
+                <li className={className} key={index} onClick={this.onAutocompleteBrandClick}>
                   {optionName}
                 </li>
               );
             })}
           </ul>
         );
-      } else {
-        optionList = (
-          <div className="no-options">
-            <em>No Option!</em>
-          </div>
-        );
       }
     }
-
+    console.log(this.state.drinkType)
     return (
       <div>
         <div className="buttonDiv">
@@ -221,8 +253,7 @@ class AddDrinkForm extends Component {
                   <Col>
                     <FormGroup className="formGroupQuestion">
                       <Label className="questionLabel">Drink Type</Label>
-                      <Input
-                        type="select"
+                      <select
                         name="drinkType"
                         id="drinkTypeInput"
                         placeholder="Select Drink Type"
@@ -243,7 +274,7 @@ class AddDrinkForm extends Component {
                         <option value="liqueur">Liqueur</option>
                         <option value="softDrink">Soft Drink</option>
                         <option value="other">Other</option>
-                      </Input>
+                      </select>
                     </FormGroup>
                   </Col>
                   <Col>
@@ -261,7 +292,7 @@ class AddDrinkForm extends Component {
                           />
                         </FormGroup>
                   </Col>
-                  {optionList}
+                  {mainOptionList}
                 </Row>
                 {this.state.personName && this.state.drinkType && this.state.mainDrink &&
                   <>
@@ -281,6 +312,7 @@ class AddDrinkForm extends Component {
                       />
                     </FormGroup>
                       </Col>
+                      {brandOptionList}
                       <Col xs="2">
                         <FormGroup className="formGroupQuestion">
                           <Label className="questionLabel">ABV(%)</Label>

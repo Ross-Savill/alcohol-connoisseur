@@ -89,7 +89,6 @@ margin: 20px;
   display: block;
   border: 3px solid green;
   background-color: #f1f1f1;
-
 }
 
 .mixerQuestion {
@@ -129,11 +128,7 @@ ul.options li:hover {
   transition: 0.3s all;
 }
 
-ul.options li.option-active {
-  background: whitesmoke;
-  font-size: 1.5rem;
-  color: #00b4cc;
+.mixerOneAutocompleteLine {
+  font-style: italic;
 }
-.no-options {
-  color: white;
-}
+

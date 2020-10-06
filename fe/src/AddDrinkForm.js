@@ -256,7 +256,6 @@ class AddDrinkForm extends Component {
                       <select
                         name="drinkType"
                         id="drinkTypeInput"
-                        placeholder="Select Drink Type"
                         value={this.drinkType}
                         onChange={this.handleFormChange}
                         className="questionInputTopRow"

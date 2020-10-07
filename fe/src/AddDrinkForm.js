@@ -61,7 +61,6 @@ class AddDrinkForm extends Component {
   handleFormChangeandBrandAutocomplete = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
-
     const { options } = this.props;
     const userInput = event.currentTarget.value;
     const nonUniquefilteredOptions = options.filter(
@@ -78,7 +77,6 @@ class AddDrinkForm extends Component {
   handleFormChangeandMainComponentAutocomplete = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
-
     const { options } = this.props;
     const userInput = event.currentTarget.value;
     const nonUniquefilteredOptions = options.filter(
@@ -105,20 +103,15 @@ class AddDrinkForm extends Component {
       company: e.company
     });
     if(e.mixerOne) {
-      this.setState({
-        hasMixer: true,
-        mixerOne: e.mixerOne,
-        mixerTwo: e.mixerTwo
-      })
+      this.setState({ hasMixer: true, mixerOne: e.mixerOne, mixerTwo: e.mixerTwo })
+    } else {
+      this.setState({ hasMixer: false, mixerOne: '', mixerTwo: '' })
     }
     if(e.collabOne) {
-      this.setState({
-        hasCollab: true,
-        collabOne: e.collabOne,
-        collabTwo: e.collabTwo
-      })
+      this.setState({ hasCollab: true, collabOne: e.collabOne, collabTwo: e.collabTwo })
+    } else {
+      this.setState({ hasCollab: false, collabOne: '', collabTwo: '' })
     }
-    console.log(e)
   };
 
   onAutocompleteBrandClick = (e) => {
@@ -131,23 +124,18 @@ class AddDrinkForm extends Component {
   };
 
   handleFormChange = (event) => {
-    console.log(event.target)
     const { target: { name, value } } = event
     this.setState({ [name]: value })
   }
 
   toggleHasMixer = () => {
     const currentState = this.state.hasMixer;
-    this.setState({ hasMixer: !currentState,
-                    mixerOne: '',
-                    mixerTwo: ''  });
+    this.setState({ hasMixer: !currentState, mixerOne: '', mixerTwo: ''  });
   };
 
   toggleHasCollab = () => {
     const currentState = this.state.hasCollab;
-    this.setState({ hasCollab: !currentState,
-                    collabOne: '',
-                    collabTwo: '' });
+    this.setState({ hasCollab: !currentState, collabOne: '', collabTwo: '' });
   };
 
   validate = (event) => {
@@ -219,6 +207,7 @@ class AddDrinkForm extends Component {
       }
     }
     console.log(this.state.drinkType)
+    console.log(this.state.mixerOne)
     return (
       <div>
         <div className="buttonDiv">
@@ -228,7 +217,7 @@ class AddDrinkForm extends Component {
             <Container className={this.state.showForm ?
               'shownAddDrinkForm': 'hiddenAddDrinkForm'}>
               <Form className="addDrinkForm" onSubmit={this.handleSubmit}>
-                <Row div className="addDrinkTitle">
+                <Row className="addDrinkTitle">
                   <div>
                     <p>Drink Details:</p>
                   </div>
@@ -253,7 +242,8 @@ class AddDrinkForm extends Component {
                   <Col>
                     <FormGroup className="formGroupQuestion">
                       <Label className="questionLabel">Drink Type</Label>
-                      <select
+                      <Input
+                        type="select"
                         name="drinkType"
                         id="drinkTypeInput"
                         value={this.drinkType}
@@ -273,7 +263,7 @@ class AddDrinkForm extends Component {
                         <option value="liqueur">Liqueur</option>
                         <option value="softDrink">Soft Drink</option>
                         <option value="other">Other</option>
-                      </select>
+                      </Input>
                     </FormGroup>
                   </Col>
                   <Col>
@@ -330,8 +320,9 @@ class AddDrinkForm extends Component {
                         <FormGroup className="mixerCheck">
                           <Label check>
                           <Input type="checkbox"
-                                name="hasMixer"
-                                onChange={this.toggleHasMixer}
+                                 name="hasMixer"
+                                 onChange={this.toggleHasMixer}
+                                 checked={this.state.hasMixer}
                                 />
                           Mixer(s)?
                           </Label>
@@ -340,7 +331,9 @@ class AddDrinkForm extends Component {
                             <Label check>
                             <Input type="checkbox"
                                   onChange={this.toggleHasCollab}
-                                  className="questionInput"/>
+                                  className="questionInput"
+                                  checked={this.state.hasCollab}
+                                  />
                             Collabaratory Brewery(s)?
                             </Label>
                           </FormGroup>

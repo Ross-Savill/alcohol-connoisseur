@@ -40,8 +40,8 @@ export default function Table({ columns, data }) {
 
   return (
     <div className="fullTableAndSearch">
-      <div className="drinkSearch">
-        <p>Search for a Drink:{' '}
+      <div className="drinkSearchDiv">
+        <p className="drinkSearchPtag">Search for a Drink:{' '}
           <input
           value={filterInput}
           onChange={handleFilterChange}

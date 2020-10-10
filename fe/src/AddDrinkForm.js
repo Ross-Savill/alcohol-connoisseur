@@ -207,7 +207,6 @@ class AddDrinkForm extends Component {
       }
     }
     console.log(this.state.drinkType)
-    console.log(this.state.mixerOne)
     return (
       <div>
         <div className="buttonDiv">

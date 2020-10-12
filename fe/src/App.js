@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import TotalData from './TotalData';
+import RatingWord from './RatingWord';
 import './App.css';
 
 class App extends Component {
@@ -11,7 +11,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Route exact path="/" component={HomePage}></Route>
-          <Route exact path="/totaldata" component={TotalData}></Route>
+          <Route exact path="/ratingwords" component={RatingWord}></Route>
         </div>
       </BrowserRouter>
     )

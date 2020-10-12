@@ -97,7 +97,6 @@ class AddDrinkForm extends Component {
       showMainOptions: false,
       userInput: e.drinkMain,
       mainDrink: e.drinkMain,
-      drinkType: e.drinkType,
       brandBrewery: e.brand,
       abv: e.abv,
       company: e.company
@@ -250,18 +249,18 @@ class AddDrinkForm extends Component {
                         className="questionInputTopRow"
                         >
                         <option className="placeholder" value="">Select Drink Type:</option>
-                        <option value="beer">Beer</option>
-                        <option value="cider">Cider</option>
-                        <option value="wine">Wine</option>
-                        <option value="fortifiedWine">Fortified Wine</option>
-                        <option value="gin">Gin</option>
-                        <option value="vodka">Vodka</option>
-                        <option value="whiskey">Whisky</option>
-                        <option value="rum">Rum</option>
-                        <option value="brandy">Brandy</option>
-                        <option value="liqueur">Liqueur</option>
-                        <option value="softDrink">Soft Drink</option>
-                        <option value="other">Other</option>
+                        <option value="Beer">Beer</option>
+                        <option value="Cider">Cider</option>
+                        <option value="Wine">Wine</option>
+                        <option value="Fortified Wine">Fortified Wine</option>
+                        <option value="Gin">Gin</option>
+                        <option value="Vodka">Vodka</option>
+                        <option value="Whiskey">Whisky</option>
+                        <option value="Rum">Rum</option>
+                        <option value="Brandy">Brandy</option>
+                        <option value="Liqueur">Liqueur</option>
+                        <option value="Soft Drink">Soft Drink</option>
+                        <option value="Other">Other</option>
                       </Input>
                     </FormGroup>
                   </Col>

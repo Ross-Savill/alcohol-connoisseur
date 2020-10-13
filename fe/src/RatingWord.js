@@ -11,7 +11,8 @@ class RatingWord extends Component {
         ratingWordOne: [],
         ratingWordTwo: [],
         allRatingWords: [],
-        uniqueRatingWords: []
+        countedUniqueWords: []
+        // uniqueRatingWords: []
       }
    }
 
@@ -37,18 +38,23 @@ class RatingWord extends Component {
     const setAllWordsState = () => {
       if(prevState.drinks !== this.state.drinks) {
         this.setState({ allRatingWords: allWords })
-        let uniqueRatingWords = [...new Set(allWords)]
-        this.setState({ uniqueRatingWords: uniqueRatingWords })
+        // let uniqueRatingWords = [...new Set(allWords)]
+        // this.setState({ uniqueRatingWords: uniqueRatingWords })
+        console.log(allWords)
+        const countedUniqueWords = allWords.reduce(function(occ, word) {
+          occ[word] = (occ[word] || 0) + 1;
+        }, {});
+        this.setState({ countedUniqueWords: countedUniqueWords })
       }
     }
     setUpWordArray()
   }
 
   renderDrinksData() {
-      return this.state.uniqueRatingWords.map((uniqueWord, index) => {
+      return this.state.countedUniqueWords.map((countedWord, index) => {
         return (
           <tr>
-            <td>{uniqueWord}</td>
+            <td>{countedWord}</td>
           </tr>
         )
       })

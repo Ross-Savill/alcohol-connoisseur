@@ -11,6 +11,7 @@ class RatingWord extends Component {
         ratingWordOne: [],
         ratingWordTwo: [],
         allRatingWords: [],
+        uniqueRatingWords: []
       }
    }
 
@@ -23,30 +24,47 @@ class RatingWord extends Component {
   async componentDidUpdate(prevProps, prevState) {
 
     let allWords = []
-    let merged = []
 
     const setUpWordArray = () => {
-      const { ratingWordOne, ratingWordTwo } = this.state.drinks
-      allWords.push(ratingWordOne, ratingWordTwo)
-      allWords = [].concat.apply([], allWords)
-      console.log(allWords)
+      this.state.drinks.map((drink, index) => {
+        allWords.push(drink.ratingWordOne)
+        allWords.push(drink.ratingWordTwo)
+      })
+      // allWords = [].concat.apply([], allWords)
       setAllWordsState()
     }
 
     const setAllWordsState = () => {
       if(prevState.drinks !== this.state.drinks) {
-      this.setState({ allRatingWords: allWords })
+        this.setState({ allRatingWords: allWords })
+        let uniqueRatingWords = [...new Set(allWords)]
+        this.setState({ uniqueRatingWords: uniqueRatingWords })
       }
     }
     setUpWordArray()
   }
 
+  renderDrinksData() {
+      return this.state.uniqueRatingWords.map((uniqueWord, index) => {
+        return (
+          <tr>
+            <td>{uniqueWord}</td>
+          </tr>
+        )
+      })
+  }
+
   render () {
-    return(
+   return (
     <div>
-      <h1>React Dynamic Table</h1>
+       <h1 id='title'>React Dynamic Table</h1>
+       <table id='drinks'>
+          <tbody>
+             {this.renderDrinksData()}
+          </tbody>
+       </table>
     </div>
-    )
+ )
   }
 }
 

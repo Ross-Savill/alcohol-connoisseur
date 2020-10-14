@@ -11,8 +11,8 @@ class RatingWord extends Component {
         ratingWordOne: [],
         ratingWordTwo: [],
         allRatingWords: [],
-        countedUniqueWords: []
-        // uniqueRatingWords: []
+        sortedUniqueWords: null,
+        wordSearch: null
       }
    }
 
@@ -31,55 +31,79 @@ class RatingWord extends Component {
         allWords.push(drink.ratingWordOne)
         allWords.push(drink.ratingWordTwo)
       })
-      // allWords = [].concat.apply([], allWords)
       setAllWordsState()
     }
 
     const setAllWordsState = () => {
       if(prevState.drinks !== this.state.drinks) {
         this.setState({ allRatingWords: allWords })
-        // let uniqueRatingWords = [...new Set(allWords)]
-        // this.setState({ uniqueRatingWords: uniqueRatingWords })
-        // console.log(allWords)
         const countedUniqueWords = allWords.reduce(function(occ, word) {
           occ[word] = (occ[word] || 0) + 1;
           return occ;
         }, {});
-        this.setState({ countedUniqueWords: countedUniqueWords })
+        const sortedUniqueWords = [];
+        for (const word in countedUniqueWords) {
+          sortedUniqueWords.push([word, countedUniqueWords[word]]);
+        }
+        sortedUniqueWords.sort(function(a, b) {
+          return b[1] - a[1];
+        });
+        this.setState({ sortedUniqueWords: sortedUniqueWords })
       }
     }
     setUpWordArray()
   }
 
+  searchWord=(event)=>{
+    let enteredLetters = event.target.value;
+    this.setState({ wordSearch: enteredLetters})
+  }
+
+  renderWordHeader() {
+    return (
+    <tr>
+      <th>Rating Word</th>
+      <th>Times Used</th>
+    </tr>
+    )
+  }
+
   renderWordData() {
-    return Object.entries(this.state.countedUniqueWords).map((word, index) => {
+    if(!this.state.sortedUniqueWords) {
       return (
-        <tr key={index}>
-          <td>{word[0]}</td>
-          <td>{word[1]}</td>
+        <tr>
+          <td>LOADING...</td>
         </tr>
       )
-    })
+    } else {
+      return this.state.sortedUniqueWords
+      .filter((word) => {
+        if(this.state.wordSearch === null)
+            return word
+        else if(word[0].toLowerCase().includes(this.state.wordSearch.toLowerCase())){
+          console.log(this.state.wordSearch)
+            return word
+        }})
+      .map((word, index) => {
+        return (
+          <tr key={index}>
+            <td>{word[0]}</td>
+            <td>{word[1]}</td>
+          </tr>
+        )
+      })
+    }
   }
 
   render () {
+    // console.log(this.state.sortedUniqueWords)
       return (
         <div>
-          <h1 id='title'>React Dynamic Table</h1>
+          <h1 id='title'>Rating Word Data</h1>
+          <input type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
           <table id='drinks'>
             <tbody>
-              <tr>
-                <th>Rating Word</th>
-                <th>Times Used</th>
-              </tr>
-            {/* {Object.entries(this.state.countedUniqueWords).map((word, index) => {
-              return (
-                <tr key={index}>
-                  <td>{word[0]}</td>
-                  <td>{word[1]}</td>
-                </tr>
-              )
-            })} */}
+              {this.renderWordHeader()}
               {this.renderWordData()}
             </tbody>
           </table>

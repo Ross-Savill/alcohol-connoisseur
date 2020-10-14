@@ -40,9 +40,10 @@ class RatingWord extends Component {
         this.setState({ allRatingWords: allWords })
         // let uniqueRatingWords = [...new Set(allWords)]
         // this.setState({ uniqueRatingWords: uniqueRatingWords })
-        console.log(allWords)
+        // console.log(allWords)
         const countedUniqueWords = allWords.reduce(function(occ, word) {
           occ[word] = (occ[word] || 0) + 1;
+          return occ;
         }, {});
         this.setState({ countedUniqueWords: countedUniqueWords })
       }
@@ -50,27 +51,40 @@ class RatingWord extends Component {
     setUpWordArray()
   }
 
-  renderDrinksData() {
-      return this.state.countedUniqueWords.map((countedWord, index) => {
-        return (
-          <tr>
-            <td>{countedWord}</td>
-          </tr>
-        )
-      })
+  renderWordData() {
+    return Object.entries(this.state.countedUniqueWords).map((word, index) => {
+      return (
+        <tr key={index}>
+          <td>{word[0]}</td>
+          <td>{word[1]}</td>
+        </tr>
+      )
+    })
   }
 
   render () {
-   return (
-    <div>
-       <h1 id='title'>React Dynamic Table</h1>
-       <table id='drinks'>
-          <tbody>
-             {this.renderDrinksData()}
-          </tbody>
-       </table>
-    </div>
- )
+      return (
+        <div>
+          <h1 id='title'>React Dynamic Table</h1>
+          <table id='drinks'>
+            <tbody>
+              <tr>
+                <th>Rating Word</th>
+                <th>Times Used</th>
+              </tr>
+            {/* {Object.entries(this.state.countedUniqueWords).map((word, index) => {
+              return (
+                <tr key={index}>
+                  <td>{word[0]}</td>
+                  <td>{word[1]}</td>
+                </tr>
+              )
+            })} */}
+              {this.renderWordData()}
+            </tbody>
+          </table>
+        </div>
+    )
   }
 }
 

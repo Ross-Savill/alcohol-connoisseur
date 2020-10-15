@@ -1,0 +1,26 @@
+.container {
+  border: 5px solid orange;
+}
+
+.title {
+  text-align: center;
+}
+
+.wordSearchInput {
+  display: block;
+  position: relative;
+}
+
+.drinksTable {
+  position: relative;
+  display: inline-block;
+  width: 40%;
+}
+
+.selectedWordData {
+  display: inline-block;
+  position: fixed;
+  width: 30em;
+  height: 25em;
+  /* background-color: royalblue; */
+}

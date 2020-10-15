@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './RatingWord.css';
-// import RatingWordsTable from './RatingWordsTable';
 import axios from 'axios';
+import { Pie } from 'react-chartjs-2';
 
 class RatingWord extends Component {
   constructor(props) {
@@ -12,9 +12,12 @@ class RatingWord extends Component {
         ratingWordTwo: [],
         allRatingWords: [],
         sortedUniqueWords: null,
-        wordSearch: null
-      }
-   }
+        wordSearch: null,
+        clickedWord: '',
+        wordPieChartData: null,
+        whoSaidIt: null
+    }
+  }
 
   componentDidMount() {
     axios.get("http://localhost:5000/drinks")
@@ -42,7 +45,7 @@ class RatingWord extends Component {
           return occ;
         }, {});
         const sortedUniqueWords = [];
-        for (const word in countedUniqueWords) {
+        for(const word in countedUniqueWords) {
           sortedUniqueWords.push([word, countedUniqueWords[word]]);
         }
         sortedUniqueWords.sort(function(a, b) {
@@ -52,11 +55,6 @@ class RatingWord extends Component {
       }
     }
     setUpWordArray()
-  }
-
-  searchWord=(event)=>{
-    let enteredLetters = event.target.value;
-    this.setState({ wordSearch: enteredLetters})
   }
 
   renderWordHeader() {
@@ -87,7 +85,7 @@ class RatingWord extends Component {
       .map((word, index) => {
         return (
           <tr key={index}>
-            <td>{word[0]}</td>
+            <td onClick={() => this.setChartData(word[0])}>{word[0]}</td>
             <td>{word[1]}</td>
           </tr>
         )
@@ -95,38 +93,99 @@ class RatingWord extends Component {
     }
   }
 
-  render () {
-    // console.log(this.state.sortedUniqueWords)
-      return (
-        <div>
-          <h1 id='title'>Rating Word Data</h1>
-          <input type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
-          <table id='drinks'>
+  searchWord=(event)=>{
+    let enteredLetters = event.target.value;
+    this.setState({ wordSearch: enteredLetters})
+  }
+
+  setChartData(clickedWord) {
+    this.setState({ clickedWord })
+    const whoSaidIt = [];
+    this.state.drinks.map((drinkInfo, index) => {
+      if(drinkInfo.ratingWordOne == clickedWord ||
+        drinkInfo.ratingWordTwo == clickedWord) {
+          whoSaidIt.push(drinkInfo.name)
+      }
+    })
+    const countedUniqueDrinkers = whoSaidIt.reduce(function(occ, name) {
+      occ[name] = (occ[name] || 0) + 1;
+      return occ;
+    }, {});
+    const useableDrinkerData = [];
+    for(const name in countedUniqueDrinkers) {
+      useableDrinkerData.push([name, countedUniqueDrinkers[name]]);
+    }
+    const drinkerNames = []
+    const datacopy = []
+    useableDrinkerData.map((drinkInfo) => {
+      drinkerNames.push(drinkInfo[0])
+      datacopy.push(drinkInfo[1])
+    })
+
+    const chartData = {
+      labels: drinkerNames,
+      datasets: [{
+        label: `Who Said ${clickedWord}?`,
+        data: [],
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.6',
+        'rgba(54, 162, 235, 0.6',
+        'rgba(255, 206, 86, 0.6',
+        'rgba(75, 192, 192, 0.6',
+        'rgba(153, 102, 255, 0.6',
+        'rgba(255, 159, 64, 0.6',
+        'rgba(255, 99, 132, 0.6'
+        ],
+        hoverBackgroundColor: [
+        '#36A2EB',
+        '#36A2EB',
+        '#36A2EB',
+        '#36A2EB',
+        '#36A2EB',
+        '#36A2EB',
+        '#36A2EB'
+        ]
+      }]
+    };
+    chartData.datasets[0].data.push(datacopy)
+    this.setState({ wordPieChartData: chartData})
+  }
+
+  renderClickedWordData() {
+    if(!this.state.clickedWord) {
+      return(
+        <p>No Word Clicked</p>
+      )
+    } else {
+      return(
+        <Pie
+          data={this.state.wordPieChartData}
+          // width={100}
+          // height={50}
+          options={{ maintainAspectRatio: false }}
+        />
+      )
+    }
+  }
+
+  render() {
+    console.log(this.state.wordPieChartData)
+    return (
+        <div className="container">
+          <h1 className='title'>Rating Word Data</h1>
+          <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
+          <table className='drinksTable'>
             <tbody>
               {this.renderWordHeader()}
               {this.renderWordData()}
             </tbody>
           </table>
+          <div className="selectedWordData">
+          {this.renderClickedWordData()}
+          </div>
         </div>
     )
   }
 }
 
-export default RatingWord;
-
-
-// if(this.state.firstRatingWords === []) {
-//   return <h1>Please Wait</h1>
-// } else {
-//   {console.log(this.state.allRatingWords)}
-//   const firstWords = this.state.allRatingWords.map((word, i) => <li key={i}>{i}.{word}</li>)
-
-//   const map = this.state.allRatingWords.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
-//   const entriesMap = ([...map.entries()].sort((a,b) => a[1] - b[1]))
-//   const mapDisplay = entriesMap.map((word, i) => <li key={i}>{word}</li>)
-//   console.log(entriesMap)
-//   return (
-//       <p>
-//         {mapDisplay}
-//       </p>
-// )}
+export default RatingWord

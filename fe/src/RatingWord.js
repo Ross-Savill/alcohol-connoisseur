@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './RatingWord.css';
 import axios from 'axios';
-import { Pie } from 'react-chartjs-2';
+import { Pie, Bar } from 'react-chartjs-2';
 
 class RatingWord extends Component {
   constructor(props) {
@@ -15,7 +15,9 @@ class RatingWord extends Component {
         wordSearch: null,
         clickedWord: '',
         wordPieChartData: null,
-        whoSaidIt: null
+        whoSaidIt: null,
+        chartTypePie: true,
+        chartTypeBar: false
     }
   }
 
@@ -93,9 +95,16 @@ class RatingWord extends Component {
     }
   }
 
-  searchWord=(event)=>{
+  searchWord=(event) => {
     let enteredLetters = event.target.value;
     this.setState({ wordSearch: enteredLetters})
+  }
+
+  handleChartChange = () => {
+    const currentStatePie = this.state.chartTypePie;
+    const currentStateBar = this.state.chartTypeBar;
+    this.setState({ chartTypePie: !currentStatePie,
+                    chartTypeBar: !currentStateBar });
   }
 
   setChartData(clickedWord) {
@@ -115,11 +124,18 @@ class RatingWord extends Component {
     for(const name in countedUniqueDrinkers) {
       useableDrinkerData.push([name, countedUniqueDrinkers[name]]);
     }
+
+    function sortByWordFrequency(a, b) {
+      if (a[1] < b[1]) return 1;
+      if (a[1] > b[1]) return -1;
+      return 0;
+    }
+
+    const sortedDrinkerData = useableDrinkerData.sort(sortByWordFrequency)
+
     const drinkerNames = []
-    const datacopy = []
-    useableDrinkerData.map((drinkInfo) => {
+    sortedDrinkerData.map((drinkInfo) => {
       drinkerNames.push(drinkInfo[0])
-      datacopy.push(drinkInfo[1])
     })
 
     const chartData = {
@@ -128,27 +144,31 @@ class RatingWord extends Component {
         label: `Who Said ${clickedWord}?`,
         data: [],
         backgroundColor: [
-        'rgba(255, 99, 132, 0.6',
-        'rgba(54, 162, 235, 0.6',
-        'rgba(255, 206, 86, 0.6',
-        'rgba(75, 192, 192, 0.6',
-        'rgba(153, 102, 255, 0.6',
-        'rgba(255, 159, 64, 0.6',
-        'rgba(255, 99, 132, 0.6'
+          '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
+          '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff',
+          '#9a6324', '#fffac8', '#800000', '#aaffc3', '#808000', '#ffd8b1',
+          '#000075', '#808080', '#ffffff'
+        ],
+        borderWidth: 1,
+        borderColor: [
+          '#008080', '#008080', '#008080', '#008080', '#008080', '#008080',
+          '#008080', '#008080', '#008080', '#008080', '#008080', '#008080',
+          '#008080', '#008080', '#008080', '#008080', '#008080', '#008080',
+          '#008080', '#008080', '#008080'
         ],
         hoverBackgroundColor: [
-        '#36A2EB',
-        '#36A2EB',
-        '#36A2EB',
-        '#36A2EB',
-        '#36A2EB',
-        '#36A2EB',
-        '#36A2EB'
+          '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB',
+          '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB',
+          '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB',
+          '#36A2EB', '#36A2EB', '#36A2EB'
         ]
       }]
     };
-    chartData.datasets[0].data.push(datacopy)
-    this.setState({ wordPieChartData: chartData})
+
+    sortedDrinkerData.map((drinkInfo) => {
+      chartData.datasets[0].data.push(drinkInfo[1])
+    })
+    this.setState({ wordPieChartData: chartData })
   }
 
   renderClickedWordData() {
@@ -158,12 +178,46 @@ class RatingWord extends Component {
       )
     } else {
       return(
-        <Pie
-          data={this.state.wordPieChartData}
-          // width={100}
-          // height={50}
-          options={{ maintainAspectRatio: false }}
-        />
+        <div>
+          <select
+            className="chartTypeSelect"
+            value={this.chartTypePie}
+            onChange={this.handleChartChange}
+            >
+            <option>Pie Chart</option>
+            <option>Bar Chart</option>
+          </select>
+          <div className={this.state.chartTypePie ?
+              'showPieChart': 'hidePieChart'}>
+            <Pie
+              data={this.state.wordPieChartData}
+              width={120}
+              height={70}
+              options={{ maintainAspectRatio: false,
+                title: {
+                  display: true,
+                  text: `Who said ${this.state.clickedWord}?`,
+                  fontSize: 25
+                }
+              }}
+            />
+          </div>
+          <div className={this.state.chartTypeBar ?
+              'showBarChart': 'hideBarChart'}>
+            <Bar
+              data={this.state.wordPieChartData}
+              width={120}
+              height={70}
+              options={{ maintainAspectRatio: false,
+                title: {
+                  display: true,
+                  text: `Who said ${this.state.clickedWord}?`,
+                  fontSize: 25
+                }
+              }}
+            />
+          </div>
+        </div>
       )
     }
   }

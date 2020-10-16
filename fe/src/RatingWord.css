@@ -1,5 +1,5 @@
 .container {
-  border: 5px solid orange;
+  /* border: 5px solid orange; */
 }
 
 .title {
@@ -22,5 +22,24 @@
   position: fixed;
   width: 30em;
   height: 25em;
-  /* background-color: royalblue; */
+}
+
+.showPieChart {
+  width: 30em;
+  height: 25em;
+  display: block;
+}
+
+.hidePieChart {
+  display: none;
+}
+
+.showBarChart {
+  width: 30em;
+  height: 25em;
+  display: block;
+}
+
+.hideBarChart {
+  display: none;
 }

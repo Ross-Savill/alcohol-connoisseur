@@ -141,7 +141,7 @@ class RatingWord extends Component {
     const chartData = {
       labels: drinkerNames,
       datasets: [{
-        label: `Who Said ${clickedWord}?`,
+        label: `Which drinkers have used ${clickedWord} as a rating word?`,
         data: [],
         backgroundColor: [
           '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
@@ -198,6 +198,9 @@ class RatingWord extends Component {
                   display: true,
                   text: `Who said ${this.state.clickedWord}?`,
                   fontSize: 25
+                },
+                legend: {
+                  position: "right"
                 }
               }}
             />
@@ -213,6 +216,14 @@ class RatingWord extends Component {
                   display: true,
                   text: `Who said ${this.state.clickedWord}?`,
                   fontSize: 25
+                },
+                scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true,
+                          stepSize: 1
+                      }
+                  }]
                 }
               }}
             />

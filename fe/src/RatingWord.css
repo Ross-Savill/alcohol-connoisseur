@@ -20,13 +20,13 @@
 .selectedWordData {
   display: inline-block;
   position: fixed;
-  width: 30em;
-  height: 25em;
+  width: 50em;
+  height: 35em;
 }
 
 .showPieChart {
-  width: 30em;
-  height: 25em;
+  width: 50em;
+  height: 35em;
   display: block;
 }
 
@@ -35,8 +35,8 @@
 }
 
 .showBarChart {
-  width: 30em;
-  height: 25em;
+  width: 50em;
+  height: 35em;
   display: block;
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './RatingWord.css';
 import axios from 'axios';
 import { Pie, Bar } from 'react-chartjs-2';
+import 'chartjs-plugin-labels'
 
 class RatingWord extends Component {
   constructor(props) {
@@ -156,6 +157,7 @@ class RatingWord extends Component {
           '#008080', '#008080', '#008080', '#008080', '#008080', '#008080',
           '#008080', '#008080', '#008080'
         ],
+        hoverBorderWidth: 4,
         hoverBackgroundColor: [
           '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB',
           '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB', '#36A2EB',
@@ -191,9 +193,10 @@ class RatingWord extends Component {
               'showPieChart': 'hidePieChart'}>
             <Pie
               data={this.state.wordPieChartData}
-              width={120}
-              height={70}
-              options={{ maintainAspectRatio: false,
+              width={150}
+              height={100}
+              options={{
+                // maintainAspectRatio: false,
                 title: {
                   display: true,
                   text: `Who said ${this.state.clickedWord}?`,
@@ -201,6 +204,14 @@ class RatingWord extends Component {
                 },
                 legend: {
                   position: "right"
+                },
+                plugins: {
+                  labels: {
+                    display: "auto",
+                    render: "label",
+                    fontColor: "black",
+                    position: "outside",
+                  }
                 }
               }}
             />
@@ -224,9 +235,15 @@ class RatingWord extends Component {
                           stepSize: 1
                       }
                   }]
+                },
+                plugins: {
+                    labels: false
                 }
               }}
             />
+          </div>
+          <div>
+            {/* List of matching drinks */}
           </div>
         </div>
       )
@@ -246,7 +263,7 @@ class RatingWord extends Component {
             </tbody>
           </table>
           <div className="selectedWordData">
-          {this.renderClickedWordData()}
+            {this.renderClickedWordData()}
           </div>
         </div>
     )

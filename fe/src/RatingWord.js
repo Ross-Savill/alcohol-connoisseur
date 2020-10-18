@@ -15,6 +15,8 @@ class RatingWord extends Component {
         sortedUniqueWords: null,
         wordSearch: null,
         clickedWord: '',
+        clickedName: '',
+        clickedWordDrinks: '',
         wordPieChartData: null,
         whoSaidIt: null,
         chartTypePie: true,
@@ -87,7 +89,7 @@ class RatingWord extends Component {
       .map((word, index) => {
         return (
           <tr key={index}>
-            <td onClick={() => this.setChartData(word[0])}>{word[0]}</td>
+            <td className="ratingWord" onClick={() => this.setChartData(word[0])}>{word[0]}</td>
             <td>{word[1]}</td>
           </tr>
         )
@@ -108,14 +110,17 @@ class RatingWord extends Component {
   }
 
   setChartData(clickedWord) {
-    this.setState({ clickedWord })
+    this.setState({ clickedWord, clickedName: '' })
     const whoSaidIt = [];
+    const clickedWordDrinks = [];
     this.state.drinks.map((drinkInfo, index) => {
       if(drinkInfo.ratingWordOne == clickedWord ||
         drinkInfo.ratingWordTwo == clickedWord) {
           whoSaidIt.push(drinkInfo.name)
-      }
-    })
+          clickedWordDrinks.push(drinkInfo)
+        }
+      })
+    this.setState({ clickedWordDrinks })
     const countedUniqueDrinkers = whoSaidIt.reduce(function(occ, name) {
       occ[name] = (occ[name] || 0) + 1;
       return occ;
@@ -172,25 +177,91 @@ class RatingWord extends Component {
     this.setState({ wordPieChartData: chartData })
   }
 
-  renderClickedWordDrinks() {
-    if(!this.state.clickedWord) {
-      return("No Drinks")
+  renderClickedWordsDrinksHeader() {
+    const { clickedWordDrinks, clickedWord, clickedName } = this.state
+    if(!clickedName) {
+      return(
+        <tr>
+          <th>{clickedWordDrinks.length} Drinks called "{clickedWord}"</th>
+        </tr>
+      )
     } else {
-      return this.state.drinks.map((drink) => {
-        if(drink.ratingWordOne || drink.ratingWordTwo === this.state.clickedWord) {
-            console.log(drink.drinkMain)
+      let numOfDrinks = 0;
+      clickedWordDrinks.map((drink) => {
+        if(drink.name === clickedName) {
+          numOfDrinks = numOfDrinks + 1
+        }
+      })
+      return (
+      <tr>
+        <th>{clickedName} has used "{clickedWord}" for {numOfDrinks} drink(s).</th>
+      </tr>
+      )
+    }
+  }
+
+  renderClickedWordDrinks() {
+    const { clickedWord, clickedWordDrinks, clickedName } = this.state
+    if(!clickedWord) {
+      return("No Data")
+    } else if(!clickedName) {
+        return clickedWordDrinks.map((drink, index) => {
+          if(drink.mixerTwo) {
             return(
-              <tr>
+              <tr key={drink._id}>
                 <td>
-                  <p>{drink.name} {drink.ratingWordOne} {drink.ratingWordTwo}</p>
+                {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
                 </td>
               </tr>
+            )
+          } else if(drink.mixerOne) {
+              return(
+                <tr key={drink._id}>
+                  <td>
+                  {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  </td>
+                </tr>
+              )
+          } else {
+              return(
+                <tr key={drink._id}>
+                  <td>
+                    {index + 1}) {drink.name}'s {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  </td>
+                </tr>
+              )
+          }
+        })
+    } else {
+        return clickedWordDrinks.map((drink, index) => {
+          if(drink.mixerTwo && drink.name === clickedName) {
+            return(
+              <tr key={drink._id}>
+                <td>
+                  {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                </td>
+              </tr>
+            )
+          } else if(drink.mixerOne && drink.name === clickedName) {
+              return(
+                <tr key={drink._id}>
+                  <td>
+                    {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  </td>
+                </tr>
+              )
+          } else if(drink.name === clickedName) {
+              return(
+                <tr key={drink._id}>
+                  <td>
+                    {index + 1}) {drink.name}'s {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  </td>
+                </tr>
               )
           }
         })
     }
   }
-
 
   renderClickedWordData() {
     if(!this.state.clickedWord) {
@@ -198,6 +269,8 @@ class RatingWord extends Component {
         <p>No Word Clicked</p>
       )
     } else {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
       return(
         <div>
           <select
@@ -214,6 +287,10 @@ class RatingWord extends Component {
               data={this.state.wordPieChartData}
               width={150}
               height={100}
+              onElementsClick={element => {
+                this.setState({ clickedName: this.state.wordPieChartData.labels[element[0]._index] })
+                this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
+                }}
               options={{
                 title: {
                   display: true,
@@ -240,6 +317,10 @@ class RatingWord extends Component {
               data={this.state.wordPieChartData}
               width={120}
               height={70}
+              onElementsClick={element => {
+                this.setState({ clickedName: this.state.wordPieChartData.labels[element[0]._index] })
+                this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
+                }}
               options={{ maintainAspectRatio: false,
                 title: {
                   display: true,
@@ -286,6 +367,9 @@ class RatingWord extends Component {
           </div>
           <div className="clickedWordDrinksTable">
               <table className='clickedWordTable'>
+                <thead>
+                  {this.renderClickedWordsDrinksHeader()}
+                </thead>
                 <tbody>
                   {this.renderClickedWordDrinks()}
                 </tbody>

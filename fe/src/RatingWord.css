@@ -17,7 +17,6 @@
 }
 
 .wordSearchInput {
-  /* display: block; */
   position: relative;
 }
 
@@ -25,6 +24,17 @@
   position: relative;
   width: 20%;
   flex: 1
+}
+
+.ratingWord {
+  font-size: 12px;
+  transition:  0.2s;
+}
+
+.ratingWord:hover{
+  font-size: 30px;
+  cursor: pointer;
+  padding: 5px;
 }
 
 .chart {

@@ -1,27 +1,44 @@
-.container {
-  /* border: 5px solid orange; */
+.fullPage {
+
+}
+
+.underTitle {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .title {
   text-align: center;
 }
 
+.searchAndTable {
+
+}
+
 .wordSearchInput {
-  display: block;
+  /* display: block; */
   position: relative;
 }
 
 .drinksTable {
   position: relative;
-  display: inline-block;
-  width: 40%;
+  width: 20%;
+  flex: 1
+}
+
+.chart {
+
 }
 
 .selectedWordData {
-  display: inline-block;
-  position: fixed;
+  float: top;
   width: 50em;
   height: 35em;
+}
+
+.clickedWordDrinksTable {
+
 }
 
 .showPieChart {

@@ -82,7 +82,6 @@ class RatingWord extends Component {
         if(this.state.wordSearch === null)
             return word
         else if(word[0].toLowerCase().includes(this.state.wordSearch.toLowerCase())){
-          console.log(this.state.wordSearch)
             return word
         }})
       .map((word, index) => {
@@ -173,6 +172,26 @@ class RatingWord extends Component {
     this.setState({ wordPieChartData: chartData })
   }
 
+  renderClickedWordDrinks() {
+    if(!this.state.clickedWord) {
+      return("No Drinks")
+    } else {
+      return this.state.drinks.map((drink) => {
+        if(drink.ratingWordOne || drink.ratingWordTwo === this.state.clickedWord) {
+            console.log(drink.drinkMain)
+            return(
+              <tr>
+                <td>
+                  <p>{drink.name} {drink.ratingWordOne} {drink.ratingWordTwo}</p>
+                </td>
+              </tr>
+              )
+          }
+        })
+    }
+  }
+
+
   renderClickedWordData() {
     if(!this.state.clickedWord) {
       return(
@@ -196,7 +215,6 @@ class RatingWord extends Component {
               width={150}
               height={100}
               options={{
-                // maintainAspectRatio: false,
                 title: {
                   display: true,
                   text: `Who said ${this.state.clickedWord}?`,
@@ -242,30 +260,39 @@ class RatingWord extends Component {
               }}
             />
           </div>
-          <div>
-            {/* List of matching drinks */}
-          </div>
         </div>
       )
     }
   }
 
   render() {
-    console.log(this.state.wordPieChartData)
     return (
-        <div className="container">
-          <h1 className='title'>Rating Word Data</h1>
-          <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
-          <table className='drinksTable'>
-            <tbody>
-              {this.renderWordHeader()}
-              {this.renderWordData()}
-            </tbody>
-          </table>
-          <div className="selectedWordData">
-            {this.renderClickedWordData()}
+      <div className="fullPage">
+        <h1 className='title'>Rating Word Data</h1>
+        <div className="underTitle">
+          <div className ="searchAndTable">
+            <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
+            <table className='drinksTable'>
+              <tbody>
+                {this.renderWordHeader()}
+                {this.renderWordData()}
+              </tbody>
+            </table>
           </div>
+          <div className="chart">
+            <div className="selectedWordData">
+              {this.renderClickedWordData()}
+            </div>
+          </div>
+          <div className="clickedWordDrinksTable">
+              <table className='clickedWordTable'>
+                <tbody>
+                  {this.renderClickedWordDrinks()}
+                </tbody>
+              </table>
+            </div>
         </div>
+      </div>
     )
   }
 }

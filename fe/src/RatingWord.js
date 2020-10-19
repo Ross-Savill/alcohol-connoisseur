@@ -238,7 +238,7 @@ class RatingWord extends Component {
             return(
               <tr key={drink._id}>
                 <td>
-                  {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  {index + 1}) {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
                 </td>
               </tr>
             )
@@ -246,7 +246,7 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                    {index + 1}) {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
                   </td>
                 </tr>
               )
@@ -254,7 +254,7 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) {drink.name}'s {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                    {index + 1}) {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
                   </td>
                 </tr>
               )

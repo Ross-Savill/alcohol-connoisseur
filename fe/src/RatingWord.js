@@ -88,9 +88,9 @@ class RatingWord extends Component {
         }})
       .map((word, index) => {
         return (
-          <tr key={index}>
-            <td className="ratingWord" onClick={() => this.setChartData(word[0])}>{word[0]}</td>
-            <td>{word[1]}</td>
+          <tr key={index} onClick={() => this.setChartData(word[0])}>
+            <td className="ratingWord">{word[0]}</td>
+            <td className="ratingWord">{word[1]}</td>
           </tr>
         )
       })
@@ -200,6 +200,11 @@ class RatingWord extends Component {
     }
   }
 
+  resetDrinkerName() {
+    this.setState({ clickedName: '' })
+    this.renderClickedWordDrinks()
+  }
+
   renderClickedWordDrinks() {
     const { clickedWord, clickedWordDrinks, clickedName } = this.state
     if(!clickedWord) {
@@ -266,7 +271,10 @@ class RatingWord extends Component {
   renderClickedWordData() {
     if(!this.state.clickedWord) {
       return(
-        <p>No Word Clicked</p>
+        <div className="noWordDiv">
+          <p>Click A Rating Word For Info!</p>
+          <p>←←←←←</p>
+        </div>
       )
     } else {
       document.body.scrollTop = 0;
@@ -306,6 +314,7 @@ class RatingWord extends Component {
                     render: "label",
                     fontColor: "black",
                     position: "outside",
+                    textMargin: 6
                   }
                 }
               }}
@@ -349,13 +358,23 @@ class RatingWord extends Component {
   render() {
     return (
       <div className="fullPage">
-        <h1 className='title'>Rating Word Data</h1>
+        <div className="titleDiv">
+          {(!this.state.clickedWord ?
+            <h1 className='title'>Rating Word Data Page</h1> :
+            <h1 className='title' onClick={()=>this.resetDrinkerName()}
+            >Info on "<span className="titleClickedWord">{this.state.clickedWord}</span>"</h1>
+          )}
+        </div>
         <div className="underTitle">
           <div className ="searchAndTable">
+            <p className="searchLabel">Search for a Rating Word below!</p>
+            <p className="searchLabel">↓↓↓↓↓</p>
             <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
-            <table className='drinksTable'>
-              <tbody>
+            <table className="drinksTable">
+              <thead>
                 {this.renderWordHeader()}
+              </thead>
+              <tbody>
                 {this.renderWordData()}
               </tbody>
             </table>
@@ -366,14 +385,14 @@ class RatingWord extends Component {
             </div>
           </div>
           <div className="clickedWordDrinksTable">
-              <table className='clickedWordTable'>
-                <thead>
-                  {this.renderClickedWordsDrinksHeader()}
-                </thead>
-                <tbody>
-                  {this.renderClickedWordDrinks()}
-                </tbody>
-              </table>
+            <table className='clickedWordTable'>
+              <thead>
+                {this.renderClickedWordsDrinksHeader()}
+              </thead>
+              <tbody>
+                {this.renderClickedWordDrinks()}
+              </tbody>
+            </table>
             </div>
         </div>
       </div>

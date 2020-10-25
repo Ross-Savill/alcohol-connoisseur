@@ -20,10 +20,6 @@
   width: 100%;
 }
 
-.title:hover {
-  cursor: pointer;
-}
-
 .titleClickedWord {
   font-style: italic;
   font-weight: bold;
@@ -78,6 +74,10 @@
   height: 0%;
 }
 
+.pieSegments:hover {
+  cursor: pointer;
+}
+
 .selectedWordData {
   float: top;
   width: 50em;
@@ -91,6 +91,25 @@
 
 .clickedWordDrinksTable tbody td {
   font-size: 16px;
+}
+
+.ratingWordsInTable {
+  font-weight: bold;
+  background-color: #FFFF00;
+}
+
+.drinkNameInTable {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.scoreInTable {
+  font-weight: bold;
+}
+
+.drinkerNameClickedWordTable {
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .showPieChart {

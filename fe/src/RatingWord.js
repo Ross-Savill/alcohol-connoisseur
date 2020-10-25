@@ -146,7 +146,7 @@ class RatingWord extends Component {
     const chartData = {
       labels: drinkerNames,
       datasets: [{
-        label: `Which drinkers have used ${clickedWord} as a rating word?`,
+        label: `${clickedWord}`,
         data: [],
         backgroundColor: [
           '#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
@@ -215,7 +215,10 @@ class RatingWord extends Component {
             return(
               <tr key={drink._id}>
                 <td>
-                {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
+                <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
+                <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                <span className="scoreInTable"> {drink.score}/10</span>.
                 </td>
               </tr>
             )
@@ -223,7 +226,10 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                  {index + 1}) {drink.name}'s {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
+                  <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne}</span> -
+                  <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                  <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
               )
@@ -231,7 +237,10 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) {drink.name}'s {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                    {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
+                    <span className="drinkNameInTable">{drink.drinkMain}</span> -
+                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                    <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
               )
@@ -243,7 +252,9 @@ class RatingWord extends Component {
             return(
               <tr key={drink._id}>
                 <td>
-                  {index + 1}) {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                  {index + 1}) <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
+                  <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                  <span className="scoreInTable"> {drink.score}/10</span>.
                 </td>
               </tr>
             )
@@ -251,7 +262,9 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) {drink.drinkMain} with {drink.mixerOne} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                    {index + 1}) <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne}</span> -
+                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                    <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
               )
@@ -259,7 +272,9 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) {drink.drinkMain} - {drink.ratingWordOne}, {drink.ratingWordTwo} - {drink.score}/10.
+                    {index + 1}) <span className="drinkNameInTable">{drink.drinkMain}</span> -
+                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                    <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
               )
@@ -300,19 +315,25 @@ class RatingWord extends Component {
                 this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
                 }}
               options={{
+                events: ['mousemove'],
+                onHover: (event, chartElement) => {
+                  event.target.style.cursor = chartElement[0] ? 'pointer' : 'default'
+                },
                 title: {
                   display: true,
-                  text: `Who said ${this.state.clickedWord}?`,
+                  text: `Who said ${this.state.clickedWord}? (Total - ${this.state.clickedWordDrinks.length})`,
                   fontSize: 25
                 },
                 legend: {
-                  position: "right"
+                  position: "bottom"
                 },
                 plugins: {
                   labels: {
-                    display: "auto",
-                    render: "label",
+                    render: function (args) {
+                      return `${args.label} ` + `(${args.value})`
+                    },
                     fontColor: "black",
+                    fontSize: 16,
                     position: "outside",
                     textMargin: 6
                   }
@@ -330,10 +351,14 @@ class RatingWord extends Component {
                 this.setState({ clickedName: this.state.wordPieChartData.labels[element[0]._index] })
                 this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
                 }}
-              options={{ maintainAspectRatio: false,
+              options={{
+                events: ['mousemove'],
+                onHover: (event, chartElement) => {
+                  event.target.style.cursor = chartElement[0] ? 'pointer' : 'default'
+                },
                 title: {
                   display: true,
-                  text: `Who said ${this.state.clickedWord}?`,
+                  text: `Who said ${this.state.clickedWord}? (Total - ${this.state.clickedWordDrinks.length})`,
                   fontSize: 25
                 },
                 scales: {
@@ -361,7 +386,7 @@ class RatingWord extends Component {
         <div className="titleDiv">
           {(!this.state.clickedWord ?
             <h1 className='title'>Rating Word Data Page</h1> :
-            <h1 className='title' onClick={()=>this.resetDrinkerName()}
+            <h1 className='title'
             >Info on "<span className="titleClickedWord">{this.state.clickedWord}</span>"</h1>
           )}
         </div>
@@ -392,8 +417,11 @@ class RatingWord extends Component {
               <tbody>
                 {this.renderClickedWordDrinks()}
               </tbody>
+              {(this.state.clickedName ?
+                <button onClick={() => this.resetDrinkerName()}>Click to Reset Drinkers</button> :
+                "")}
             </table>
-            </div>
+          </div>
         </div>
       </div>
     )

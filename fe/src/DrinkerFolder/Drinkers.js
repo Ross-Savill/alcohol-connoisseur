@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import RadarChart from './RadarChart';
 
 class Drinkers extends Component {
   constructor(props) {
     super(props)
       this.state = {
-        drinks: []
+        drinks: null
       }
   }
 
@@ -21,7 +22,10 @@ class Drinkers extends Component {
 
   render() {
     return(
-      <p>Drinkers Page</p>
+      <div>
+        <p>Drinkers Page</p>
+        <RadarChart drinks={this.state.drinks} />
+      </div>
     )
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import RatingWord from './RatingWord';
-import Drinkers from './Drinkers';
+import Drinkers from './DrinkerFolder/Drinkers';
 import './App.css';
 
 class App extends Component {

@@ -25,18 +25,24 @@ class Drinkers extends Component {
 
   }
 
+  regularAttendees() {
+    return <option>Regular Attendee</option>
+  }
+
+  irregularAttendees() {
+    return <option>Irregular Attendee</option>
+  }
+
   render() {
     return(
       <div>
         <p>Drinkers Page</p>
         <select>Choose Your Drinker!
           <optgroup label="Regular Attendees">
-            <option value="test">Test Person</option>
-            <option value="test2">Test Person</option>
+            {this.regularAttendees()}
           </optgroup>
-          <optgroup label="Others">
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
+          <optgroup label="Irregular Attendees">
+            {this.irregularAttendees()}
           </optgroup>
         </select>
         <RadarChart drinks={this.state.drinks}

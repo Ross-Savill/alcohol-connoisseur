@@ -1,39 +1,47 @@
 import React, { Component } from 'react';
+import { Radar } from 'react-chartjs-2';
+import 'chartjs-plugin-labels'
 
 class RadarChart extends Component {
   constructor(props) {
     super(props)
       this.state = {
-        drinks: null
+        drinks: null,
+        drinkers: null
       }
   }
 
   componentDidUpdate(prevProps, prevState) {
     const currentPropDrinks = this.props.drinks
+    const currentPropDrinkers = this.props.drinkers
     if(currentPropDrinks !== this.state.drinks) {
-      this.setState({ drinks: currentPropDrinks })
+      this.setState({ drinks: currentPropDrinks,
+                      drinkers: currentPropDrinkers })
     }
   }
 
-
-  showDrinks() {
-    const { drinks } = this.state
-    if(!drinks) {
-      return(<p>Loading Drinks...</p>)
-    } else {
-      return drinks.map((drink) => {
-        return <li>{drink.name}</li>
-      })
-    }
-  }
+  // renderRadar() {
+  //   <Radar
+  //     data={this.state.wordPieChartData}
+  //     width={150}
+  //     height={100}
+  //     options={{
+  //       title: {
+  //         display: true,
+  //         text: "Drinker Name",
+  //         // fontSize: 25
+  //       },
+  //       // legend: {
+  //       //   position: "bottom"
+  //       // }
+  //     }}
+  //   />
+  // }
 
   render(){
     return(
       <div>
         <h1>RadarData Here</h1>
-        <ul>
-          {this.showDrinks()}
-        </ul>
       </div>
     )
   }

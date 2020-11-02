@@ -12,9 +12,19 @@ const drinksSchema = new mongoose.Schema({
   ratingWordTwo: String,
   score: Number,
   brand: String,
+  company: String,
+  country: String,
+  ukUsa: String,
+  firstCollabBrand: String,
+  firstCollabCompany: String,
+  firstCollabCountry: String,
+  firstUkUsa: String,
+  secondCollabBrand: String,
+  secondCollabCompany: String,
+  secondCollabCountry: String,
+  secondUkUsa: String,
   collabOne: String,
   collabTwo: String,
-  company: String,
   notes: String
 })
 

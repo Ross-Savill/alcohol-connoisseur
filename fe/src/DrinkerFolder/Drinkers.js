@@ -19,7 +19,7 @@ class Drinkers extends Component {
       .then(resp => this.setState({ drinkers: resp[0].data,
                                     drinks: resp[1].data }))
       .catch(error => console.log(error))
-    }
+  }
 
   async componentDidUpdate(prevProps, prevState) {
 

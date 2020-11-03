@@ -7,7 +7,8 @@ class Maps extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null
+        drinkers: null,
+        mapData: null
       }
   }
 
@@ -18,7 +19,29 @@ class Maps extends Component {
       this.setState({ drinks: currentPropDrinks,
                       drinkers: currentPropDrinkers })
     }
-    console.log(currentPropDrinks)
+      let countryData = []
+      const { drinks } = this.state
+      drinks.map((drink) => {
+        if(drink.secondCollabCountry) {
+          countryData.push(drink.secondCollabCountry, drink.firstCollabCountry, drink.country)
+        } else if (drink.firstCollabCountry) {
+          countryData.push(drink.firstCollabCountry, drink.country)
+        } else {
+          countryData.push(drink.country)
+        }
+      })
+      this.setState({ mapData: countryData })
+
+      //TURN THE ABOVE INTO AN OBJECT OF COUNTRY CODES AND NUMBER OF APPEARANCES AS BELOW (not object bit)
+
+      // const countedUniqueDrinkers = whoSaidIt.reduce(function(occ, name) {
+      //   occ[name] = (occ[name] || 0) + 1;
+      //   return occ;
+      // }, {});
+      // const useableDrinkerData = [];
+      // for(const name in countedUniqueDrinkers) {
+      //   useableDrinkerData.push([name, countedUniqueDrinkers[name]]);
+      // }
   }
 
   handleClick = (e, countryCode) => {
@@ -26,18 +49,6 @@ class Maps extends Component {
   };
 
   render() {
-
-    const mapData = {
-      CN: 100000,
-      IN: 9900,
-      SA: 86,
-      EG: 70,
-      SE: 0,
-      FI: 0,
-      FR: 0,
-      US: 20
-    };
-
     return(
       <div>
         <VectorMap

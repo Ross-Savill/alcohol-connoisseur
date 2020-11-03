@@ -51,5 +51,4 @@ class Drinkers extends Component {
     )
   }
 }
-
   export default Drinkers

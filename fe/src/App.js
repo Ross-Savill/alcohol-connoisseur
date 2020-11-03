@@ -33,8 +33,11 @@ class App extends Component {
           <Route exact path="/" component={HomePage}></Route>
           <Route exact path="/drinkers" component={Drinkers}></Route>
           <Route exact path="/ratingwords" component={RatingWord}></Route>
-          <Route exact path="/maps" component={Maps}
-                 drinks={this.state.drinks} drinkers={this.state.drinkers}></Route>
+          <Route
+            exact path="/maps" render={(props) => (
+            <Maps {...props} drinks={this.state.drinks} drinkers={this.state.Drinkers} />
+            )}
+          />
         </div>
       </BrowserRouter>
     )

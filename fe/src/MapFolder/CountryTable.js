@@ -4,16 +4,20 @@ class CountryTable extends Component {
   constructor(props) {
     super(props)
       this.state = {
-        country: null,
+        countryCode: null,
+        countryName: null,
         drinks: null
       }
   }
   componentDidUpdate(prevProps, prevState) {
-    const currentPropCountry = this.props.countryCode
+    const currentPropCountryCode = this.props.countryCode
+    const currentPropCountryName = this.props.countryName
     const currentPropDrinks = this.props.drinks
-    if(currentPropCountry !== this.state.country) {
-      this.setState({ country: currentPropCountry ,
-                      drinks: currentPropDrinks})
+    if(currentPropCountryCode !== this.state.countryCode) {
+      this.setState({ countryCode: currentPropCountryCode,
+                      countryName: currentPropCountryName,
+                      drinks: currentPropDrinks
+                      })
     }
   }
 
@@ -31,9 +35,9 @@ class CountryTable extends Component {
   }
 
   renderClickedCountryData() {
-    const { country, drinks } = this.state
+    const { countryCode, drinks } = this.state
     return drinks
-      .filter(drink => drink.country === country)
+      .filter(drink => drink.country === countryCode)
       .map((drink, index) => {
         if(drink.mixerTwo) {
           return(
@@ -73,8 +77,8 @@ class CountryTable extends Component {
   }
 
   render() {
-    const { country } = this.state
-    if(!this.state.country) {
+    const { countryName } = this.state
+    if(!this.state.countryCode) {
       return <p>Select a Country for Data</p>
     } else {
       return (
@@ -82,7 +86,7 @@ class CountryTable extends Component {
           <table className='selectedCountryTable'>
             <thead>
               <tr>
-                <th>{country}</th>
+                <th>{countryName}</th>
               </tr>
                 {this.renderClickedCountryHeader()}
             </thead>

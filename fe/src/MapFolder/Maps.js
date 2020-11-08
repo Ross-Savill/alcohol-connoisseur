@@ -10,7 +10,8 @@ class Maps extends Component {
         drinks: null,
         drinkers: null,
         mapData: null,
-        selectedCountry: null
+        selectedCountry: null,
+        fullRegionName: null
       }
   }
 
@@ -46,7 +47,10 @@ class Maps extends Component {
   }
 
   handleClick = (e, countryCode) => {
-    this.setState({ selectedCountry: countryCode })
+    const fullRegionName = getName(countryCode)
+    this.setState({ selectedCountry: countryCode,
+                    fullRegionName
+                  })
   };
 
   render() {
@@ -99,6 +103,7 @@ class Maps extends Component {
             <CountryTable
               drinks={this.state.drinks}
               countryCode={this.state.selectedCountry}
+              countryName={this.state.fullRegionName}
             />
           </div>
         </div>

@@ -22,6 +22,10 @@ class CountryTable extends Component {
       <tr>
           <th>Drinker</th>
           <th>Drink</th>
+          <th>Drink Type</th>
+          <th>Score</th>
+          <th>Brand</th>
+          <th>Company</th>
       </tr>
     )
   }
@@ -31,13 +35,40 @@ class CountryTable extends Component {
     return drinks
       .filter(drink => drink.country === country)
       .map((drink, index) => {
-        {console.log(drink)}
-        return (
-          <tr key={index}>
-            <td className="drinkData">{drink.name}</td>
-            <td className="drinkData">{drink.drinkMain}</td>
-          </tr>
-        )
+        if(drink.mixerTwo) {
+          return(
+            <tr key={index}>
+              <td className="drinkData">{drink.name}</td>
+              <td className="drinkData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
+              <td className="drinkData">{drink.drinkType}</td>
+              <td className="drinkData">{drink.score}</td>
+              <td className="drinkData">{drink.brand}</td>
+              <td className="drinkData">{drink.company}</td>
+            </tr>
+          )
+        } else if(drink.mixerOne) {
+            return(
+            <tr key={index}>
+              <td className="drinkData">{drink.name}</td>
+              <td className="drinkData">{drink.drinkMain} with {drink.mixerOne}</td>
+              <td className="drinkData">{drink.drinkType}</td>
+              <td className="drinkData">{drink.score}</td>
+              <td className="drinkData">{drink.brand}</td>
+              <td className="drinkData">{drink.company}</td>
+            </tr>
+            )
+        } else {
+            return (
+              <tr key={index}>
+                <td className="drinkData">{drink.name}</td>
+                <td className="drinkData">{drink.drinkMain}</td>
+                <td className="drinkData">{drink.drinkType}</td>
+                <td className="drinkData">{drink.score}</td>
+                <td className="drinkData">{drink.brand}</td>
+                <td className="drinkData">{drink.company}</td>
+              </tr>
+            )
+        }
       })
   }
 

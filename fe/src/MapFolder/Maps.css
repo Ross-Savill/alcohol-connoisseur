@@ -1,4 +1,19 @@
+.mainTitle {
+
+}
+
 .map {
+  display: flex;
   border: solid 3px black;
   width: 80%;
+}
+
+.drinkerDataTable {
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+}
+
+.regionDataTable {
+  display: flex;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { VectorMap } from "react-jvectormap";
-import CountryTable from './CountryTable';
+import RegionDataTable from './RegionDataTable';
+import DrinkerDataTable from './DrinkerDataTable';
 import './Maps.css';
 import { USStateList } from './USStateList';
 const { getCode, getName, getData } = require("country-list");
@@ -102,6 +103,7 @@ class Maps extends Component {
     } else if(this.state.chosenMap === "world") {
       return(
         <div>
+          <h1 className="mainTitle">Drinks Geography</h1>
           <div className="map">
             <VectorMap
               map={"world_mill"}
@@ -144,8 +146,19 @@ class Maps extends Component {
             />
           </div>
           <div>
-            <CountryTable
+            <DrinkerDataTable
+              classname="drinkerDataTable"
               drinks={this.state.drinks}
+              chosenMap={this.state.chosenMap}
+              regionCode={this.state.selectedRegion}
+              regionName={this.state.fullRegionName}
+            />
+          </div>
+          <div>
+            <RegionDataTable
+              className="regionDataTable"
+              drinks={this.state.drinks}
+              chosenMap={this.state.chosenMap}
               countryCode={this.state.selectedRegion}
               countryName={this.state.fullRegionName}
             />
@@ -155,6 +168,7 @@ class Maps extends Component {
     } else if(this.state.chosenMap === "usa") {
       return(
         <div>
+          <h1>Drinks Geography</h1>
           <div className="map">
             <VectorMap
               map={"us_aea"}
@@ -177,12 +191,13 @@ class Maps extends Component {
                 },
                 hover: {
                   "fill-opacity": 0.6,
-                  cursor: 'pointer'
                 },
                 selected: {
                   fill: "#2938bc", //color for the clicked country
                 },
-                selectedHover: {}
+                selectedHover: {
+                  cursor: "pointer"
+                }
               }}
               regionsSelectable={true}
               series={{
@@ -197,7 +212,17 @@ class Maps extends Component {
             />
           </div>
           <div>
-            <CountryTable
+            <DrinkerDataTable
+              classname="drinkerDataTable"
+              drinks={this.state.drinks}
+              chosenMap={this.state.chosenMap}
+              regionCode={this.state.selectedRegion}
+              regionName={this.state.fullRegionName}
+            />
+          </div>
+          <div>
+            <RegionDataTable
+              className="regionDataTable"
               drinks={this.state.drinks}
               chosenMap={this.state.chosenMap}
               regionCode={this.state.selectedRegion}

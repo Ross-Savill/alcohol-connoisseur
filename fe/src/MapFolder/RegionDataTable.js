@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class CountryTable extends Component {
+class RegionDataTable extends Component {
   constructor(props) {
     super(props)
       this.state = {
@@ -114,5 +114,5 @@ class CountryTable extends Component {
   }
 }
 
-export default CountryTable;
+export default RegionDataTable;
 

@@ -15,6 +15,7 @@ class RegionDataTable extends Component {
     if(regionCode !== this.state.regionCode) {
       this.setState({ regionCode, regionName, drinks, chosenMap })
     }
+    console.log(regionCode)
   }
 
   renderClickedCountryHeader() {

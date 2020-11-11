@@ -80,19 +80,35 @@ class Maps extends Component {
       }
   }
 
-  handleCountryClick = (e, countryCode) => {
-    this.refs.map.$mapObject.tip.hide();
-    const fullRegionName = getName(countryCode)
-    this.setState({ selectedRegion: countryCode,
-                    fullRegionName
-                  })
-  };
+  chosenMap() {
+    const { chosenMap } = this.state
+    if(chosenMap === "world") {
+      return "world_mill"
+    } else if(chosenMap === "usa") {
+      return "us_aea"
+    }
+  }
 
-  handleStateClick = (e, stateCode) => {
+  chosenMapData() {
+    const { chosenMap } = this.state
+    if(chosenMap === "world") {
+      return this.state.worldMapData
+    } else if(chosenMap === "usa") {
+      return this.state.usMapData
+    }
+  }
+
+  handleRegionClick = (e, stateCode) => {
+    const { chosenMap } = this.state
     this.refs.map.$mapObject.tip.hide();
-    for (const [selectedRegion, fullRegionName] of Object.entries(USStateList)) {
-      if (stateCode === selectedRegion) {
-        this.setState({ selectedRegion, fullRegionName })
+    if(chosenMap === "world") {
+      const fullRegionName = getName(stateCode)
+      this.setState({ selectedRegion: stateCode, fullRegionName })
+    } else if(chosenMap === "usa") {
+      for (const [selectedRegion, fullRegionName] of Object.entries(USStateList)) {
+        if (stateCode === selectedRegion) {
+          this.setState({ selectedRegion, fullRegionName })
+        }
       }
     }
   };
@@ -100,13 +116,13 @@ class Maps extends Component {
   render() {
     if(!this.state.worldMapData) {
       return("Please Wait")
-    } else if(this.state.chosenMap === "world") {
+    } else {
       return(
         <div>
           <h1 className="mainTitle">Drinks Geography</h1>
           <div className="map">
             <VectorMap
-              map={"world_mill"}
+              map={this.chosenMap()}
               ref={"map"}
               backgroundColor="#0077be" //change it to ocean blue: #0077be
               zoomOnScroll={false}
@@ -114,7 +130,7 @@ class Maps extends Component {
                 width: "100%",
                 height: "520px"
               }}
-              onRegionClick={this.handleCountryClick} //gets the country code
+              onRegionClick={this.handleRegionClick} //gets the country code
               containerClassName="map"
               regionStyle={{
                 initial: {
@@ -137,73 +153,7 @@ class Maps extends Component {
               series={{
                 regions: [
                   {
-                    values: this.state.worldMapData, //this is your data
-                    scale: ["#146804"], //your color game's here
-                    normalizeFunction: "polynomial"
-                  }
-                ]
-              }}
-            />
-          </div>
-          <div>
-            <DrinkerDataTable
-              classname="drinkerDataTable"
-              drinks={this.state.drinks}
-              chosenMap={this.state.chosenMap}
-              regionCode={this.state.selectedRegion}
-              regionName={this.state.fullRegionName}
-            />
-          </div>
-          <div>
-            <RegionDataTable
-              className="regionDataTable"
-              drinks={this.state.drinks}
-              chosenMap={this.state.chosenMap}
-              countryCode={this.state.selectedRegion}
-              countryName={this.state.fullRegionName}
-            />
-          </div>
-        </div>
-      )
-    } else if(this.state.chosenMap === "usa") {
-      return(
-        <div>
-          <h1>Drinks Geography</h1>
-          <div className="map">
-            <VectorMap
-              map={"us_aea"}
-              ref={"map"}
-              backgroundColor="#0077be" //change it to ocean blue: #0077be
-              zoomOnScroll={false}
-              containerStyle={{
-                width: "100%",
-                height: "520px"
-              }}
-              onRegionClick={this.handleStateClick} //gets the country code
-              containerClassName="map"
-              regionStyle={{
-                initial: {
-                  fill: "#e4e4e4",
-                  "fill-opacity": 0.9,
-                  stroke: "none",
-                  "stroke-width": 0,
-                  "stroke-opacity": 0
-                },
-                hover: {
-                  "fill-opacity": 0.6,
-                },
-                selected: {
-                  fill: "#2938bc", //color for the clicked country
-                },
-                selectedHover: {
-                  cursor: "pointer"
-                }
-              }}
-              regionsSelectable={true}
-              series={{
-                regions: [
-                  {
-                    values: this.state.usMapData, //this is your data
+                    values: this.chosenMapData(), //this is your data
                     scale: ["#146804"], //your color game's here
                     normalizeFunction: "polynomial"
                   }

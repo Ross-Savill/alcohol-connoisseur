@@ -199,8 +199,9 @@ class Maps extends Component {
           <div>
             <CountryTable
               drinks={this.state.drinks}
-              countryCode={this.state.selectedRegion}
-              countryName={this.state.fullRegionName}
+              chosenMap={this.state.chosenMap}
+              regionCode={this.state.selectedRegion}
+              regionName={this.state.fullRegionName}
             />
           </div>
         </div>

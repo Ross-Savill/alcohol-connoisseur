@@ -1,19 +1,29 @@
-.mainTitle {
+.mapContainer {
+display: grid;
+grid-template-areas:
+"title title title title title"
+"map map map map drinkerTable"
+"drinkTable drinkTable drinkTable drinkTable drinkTable";
+}
 
+.mainTitle {
+  grid-area: title;
 }
 
 .map {
-  display: flex;
   border: solid 3px black;
-  width: 80%;
+  grid-area: map;
+  height: 100%;
 }
 
-.drinkerDataTable {
-  width: 15%;
-  display: flex;
-  flex-direction: row;
+.drinkerTableData {
+  width: 10%;
+  grid-area: drinkerTable;
+  /* display: flex;
+  flex-direction: row; */
 }
 
 .regionDataTable {
-  display: flex;
+  grid-area: drinkTable;
+  width: 100%;
 }

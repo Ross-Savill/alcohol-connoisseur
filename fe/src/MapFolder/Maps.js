@@ -14,7 +14,7 @@ class Maps extends Component {
         drinkers: null,
         worldMapData: null,
         usMapData: null,
-        chosenMap: "usa",
+        chosenMap: "world",
         selectedRegion: null,
         fullRegionName: null
       }
@@ -118,7 +118,7 @@ class Maps extends Component {
       return("Please Wait")
     } else {
       return(
-        <div>
+        <div className="mapContainer">
           <h1 className="mainTitle">Drinks Geography</h1>
           <div className="map">
             <VectorMap
@@ -161,9 +161,8 @@ class Maps extends Component {
               }}
             />
           </div>
-          <div>
+          <div classname="drinkerTableData">
             <DrinkerDataTable
-              classname="drinkerDataTable"
               drinks={this.state.drinks}
               chosenMap={this.state.chosenMap}
               regionCode={this.state.selectedRegion}

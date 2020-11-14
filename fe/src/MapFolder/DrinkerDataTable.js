@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './DrinkerDataTable.css';
 
 class DrinkerDataTable extends Component {
   constructor(props) {
@@ -68,7 +69,7 @@ class DrinkerDataTable extends Component {
     const averageScores = averageScoresArray.map((drinkerArray) => {
       const sum = drinkerArray.reduce((a, b) => a + b, 0)
       const avg = (sum / drinkerArray.length) || 0;
-      return avg
+      return avg.toFixed(4)
     })
 
     //BRING ALL TOGETHER IN AN OBJECT
@@ -102,7 +103,7 @@ class DrinkerDataTable extends Component {
           <table className='selectedCountryTable'>
             <thead>
               <tr>
-                <th>{regionName}</th>
+                <th colSpan="3" className="drinkerRegionName">{regionName}</th>
               </tr>
                 {this.renderClickedDrinkerHeader()}
             </thead>

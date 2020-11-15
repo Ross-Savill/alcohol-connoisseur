@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
+import Navbar from './Navbar';
 import HomePage from './HomePage';
 import RatingWord from './RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
@@ -29,13 +30,20 @@ class App extends Component {
   render () {
     return (
       <BrowserRouter>
+      <Navbar />
         <div>
-          <Route exact path="/" component={HomePage}></Route>
-          <Route exact path="/drinkers" component={Drinkers}></Route>
-          <Route exact path="/ratingwords" component={RatingWord}></Route>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route exact path="/drinkers">
+            <Drinkers />
+          </Route>
+          <Route exact path="/ratingwords">
+            <RatingWord />
+          </Route>
           <Route
             exact path="/maps" render={(props) => (
-            <Maps {...props} drinks={this.state.drinks} drinkers={this.state.Drinkers} />
+              <Maps {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
             )}
           />
         </div>

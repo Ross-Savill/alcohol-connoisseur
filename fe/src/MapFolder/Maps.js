@@ -12,6 +12,8 @@ class Maps extends Component {
       this.state = {
         drinks: null,
         drinkers: null,
+        downloadedDrinks: null,
+        downloadedDrinkers: null,
         worldMapData: null,
         usMapData: null,
         chosenMap: "world",
@@ -20,12 +22,28 @@ class Maps extends Component {
       }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
+    if(this.props.drinks !== this.state.downloadedDrinks) {
     const currentPropDrinks = this.props.drinks
+    console.log(currentPropDrinks)
     const currentPropDrinkers = this.props.drinkers
+    this.setState({ downloadedDrinks: currentPropDrinks,
+                    downloadedDrinkers: currentPropDrinkers})
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // const currentPropDrinks = this.props.drinks
+    // const currentPropDrinkers = this.props.drinkers
+    const currentPropDrinks = this.state.downloadedDrinks
+    const currentPropDrinkers = this.state.downloadedDrinkers
 
     let countryData = []
     let usStateData = []
+
+    if(currentPropDrinks === null) {
+      return
+    } else {
 
     currentPropDrinks
       .filter(drink => drink.country !== "Barbados" && drink.country !== "-")
@@ -78,11 +96,12 @@ class Maps extends Component {
                       usMapData: countedUniqueUSStates
                     })
       }
+    }
   }
 
-  handleSelectRegion(region) {
-    this.setState({ chosenMap: "usa" })
-  }
+  // handleSelectRegion(region) {
+  //   this.setState({ chosenMap: "usa" })
+  // }
 
   chosenMap() {
     const { chosenMap } = this.state
@@ -118,6 +137,7 @@ class Maps extends Component {
   };
 
   render() {
+    console.log(this.state.worldMapData)
     if(!this.state.worldMapData) {
       return("Please Wait")
     } else {
@@ -125,10 +145,10 @@ class Maps extends Component {
         <div className="totalContainer">
           <div className="titleAndInput">
             <h1 className="mainTitle">Drinks Geography
-              <select onChange={this.handleSelectRegion.bind(this)}>
+              {/* <select onChange={this.handleSelectRegion.bind(this)}>
                 <option value="world">World</option>
                 <option value="usa">USA</option>
-              </select>
+              </select> */}
             </h1>
           </div>
           <div className="mapAndRegionTable">

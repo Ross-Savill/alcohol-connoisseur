@@ -205,7 +205,6 @@ class AddDrinkForm extends Component {
         );
       }
     }
-    console.log(this.state.drinkType)
     return (
       <div>
         <div className="buttonDiv">

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './RegionDataTable.css'
 
 class RegionDataTable extends Component {
   constructor(props) {
@@ -33,7 +34,6 @@ class RegionDataTable extends Component {
 
   renderClickedCountryData() {
     const selectedDrinks = []
-
     const { chosenMap, regionCode, drinks } = this.state
 
     if(chosenMap === "world") {
@@ -48,7 +48,9 @@ class RegionDataTable extends Component {
       .map(drink => selectedDrinks.push(drink))
     }
 
-    return selectedDrinks.map((drink, index) => {
+    const orderedSelectedDrinks = selectedDrinks.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+    return orderedSelectedDrinks.map((drink, index) => {
       if(drink.mixerTwo) {
         return(
           <tr key={index}>
@@ -99,7 +101,7 @@ class RegionDataTable extends Component {
           <table className='selectedCountryTable'>
             <thead>
               <tr>
-                <th>{regionName}</th>
+                <th colSpan="7" className="regionTableHeader">{regionName}</th>
               </tr>
                 {this.renderClickedCountryHeader()}
             </thead>

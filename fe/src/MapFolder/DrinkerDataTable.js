@@ -69,17 +69,20 @@ class DrinkerDataTable extends Component {
     const averageScores = averageScoresArray.map((drinkerArray) => {
       const sum = drinkerArray.reduce((a, b) => a + b, 0)
       const avg = (sum / drinkerArray.length) || 0;
-      return avg.toFixed(4)
+      return avg.toFixed(2)
     })
 
     //BRING ALL TOGETHER IN AN OBJECT
-    const finalDrinkersData = uniqueDrinkerNames.map((name, index) => {
+    const unorganisedDrinkersData = uniqueDrinkerNames.map((name, index) => {
       return {
         name: uniqueDrinkerNames[index],
         drinksNumber: drinksPerPerson[index],
         averageScore: averageScores[index]
       }
     });
+
+    //ORGANISE THE OBJECTS
+    const finalDrinkersData = unorganisedDrinkersData.sort(function(a,b){return b.averageScore-a.averageScore})
 
     //RENDER IN TABLE DATA
     return finalDrinkersData.map((drinkObj, index) => {

@@ -118,60 +118,61 @@ class Maps extends Component {
       return("Please Wait")
     } else {
       return(
-        <div className="mapContainer">
+        <div class="totalContainer">
           <h1 className="mainTitle">Drinks Geography</h1>
-          <div className="map">
-            <VectorMap
-              map={this.chosenMap()}
-              ref={"map"}
-              backgroundColor="#0077be" //change it to ocean blue: #0077be
-              zoomOnScroll={false}
-              containerStyle={{
-                width: "100%",
-                height: "520px"
-              }}
-              onRegionClick={this.handleRegionClick} //gets the country code
-              containerClassName="map"
-              regionStyle={{
-                initial: {
-                  fill: "#e4e4e4",
-                  "fill-opacity": 0.9,
-                  stroke: "none",
-                  "stroke-width": 0,
-                  "stroke-opacity": 0
-                },
-                hover: {
-                  "fill-opacity": 0.6,
-                  cursor: 'pointer'
-                },
-                selected: {
-                  fill: "#2938bc", //color for the clicked country
-                },
-                selectedHover: {}
-              }}
-              regionsSelectable={true}
-              series={{
-                regions: [
-                  {
-                    values: this.chosenMapData(), //this is your data
-                    scale: ["#146804"], //your color game's here
-                    normalizeFunction: "polynomial"
-                  }
-                ]
-              }}
-            />
+          <div className="mapAndRegionTable">
+            <div className="map">
+              <VectorMap
+                map={this.chosenMap()}
+                ref={"map"}
+                backgroundColor="#0077be" //change it to ocean blue: #0077be
+                zoomOnScroll={false}
+                containerStyle={{
+                  width: "100%",
+                  height: "520px"
+                }}
+                onRegionClick={this.handleRegionClick} //gets the country code
+                containerClassName="map"
+                regionStyle={{
+                  initial: {
+                    fill: "#e4e4e4",
+                    "fill-opacity": 0.9,
+                    stroke: "none",
+                    "stroke-width": 0,
+                    "stroke-opacity": 0
+                  },
+                  hover: {
+                    "fill-opacity": 0.6,
+                    cursor: 'pointer'
+                  },
+                  selected: {
+                    fill: "#2938bc", //color for the clicked country
+                  },
+                  selectedHover: {}
+                }}
+                regionsSelectable={true}
+                series={{
+                  regions: [
+                    {
+                      values: this.chosenMapData(), //this is your data
+                      scale: ["#146804"], //your color game's here
+                      normalizeFunction: "polynomial"
+                    }
+                  ]
+                }}
+              />
+            </div>
+            <div className="regionDataTable">
+              <RegionDataTable
+                drinks={this.state.drinks}
+                chosenMap={this.state.chosenMap}
+                regionCode={this.state.selectedRegion}
+                regionName={this.state.fullRegionName}
+              />
+            </div>
           </div>
-          <div classname="drinkerTableData">
+          <div className="drinkerDataTable">
             <DrinkerDataTable
-              drinks={this.state.drinks}
-              chosenMap={this.state.chosenMap}
-              regionCode={this.state.selectedRegion}
-              regionName={this.state.fullRegionName}
-            />
-          </div>
-          <div>
-            <RegionDataTable
-              className="regionDataTable"
               drinks={this.state.drinks}
               chosenMap={this.state.chosenMap}
               regionCode={this.state.selectedRegion}

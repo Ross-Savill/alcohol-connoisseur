@@ -1,29 +1,29 @@
-.mapContainer {
-display: grid;
-grid-template-areas:
-"title title title title title"
-"map map map map drinkerTable"
-"drinkTable drinkTable drinkTable drinkTable drinkTable";
+.totalContainer {
+  display: grid;
+  grid-template-columns: repeat(4, [col-start] 1fr);
 }
 
 .mainTitle {
-  grid-area: title;
+  grid-column: col-start / span 5;
+}
+
+.mapAndRegionTable {
+  grid-column: col-start 1 / span 3;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-flow: column wrap;
 }
 
 .map {
-  border: solid 3px black;
-  grid-area: map;
-  height: 100%;
+  flex: 1;
+  border: solid 3px rgb(77, 71, 71);
 }
 
-.drinkerTableData {
-  width: 10%;
-  grid-area: drinkerTable;
-  /* display: flex;
-  flex-direction: row; */
+.drinkerDataTable {
+  border: solid 3px green;
 }
 
 .regionDataTable {
-  grid-area: drinkTable;
-  width: 100%;
+  flex: 1;
+  border: solid 3px blue;
 }

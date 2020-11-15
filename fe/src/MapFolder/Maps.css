@@ -3,8 +3,9 @@
   grid-template-columns: repeat(4, [col-start] 1fr);
 }
 
-.mainTitle {
+.titleAndInput {
   grid-column: col-start / span 5;
+  margin-top: 0;
 }
 
 .mapAndRegionTable {

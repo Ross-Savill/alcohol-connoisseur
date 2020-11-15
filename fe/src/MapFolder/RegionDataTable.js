@@ -20,7 +20,7 @@ class RegionDataTable extends Component {
 
   renderClickedCountryHeader() {
     return(
-      <tr>
+      <tr className="drinkRegionHeader">
           <th>Drinker</th>
           <th>Drink</th>
           <th>Drink Type</th>
@@ -54,37 +54,37 @@ class RegionDataTable extends Component {
       if(drink.mixerTwo) {
         return(
           <tr key={index}>
-            <td className="drinkData">{drink.name}</td>
-            <td className="drinkData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
-            <td className="drinkData">{drink.drinkType}</td>
-            <td className="drinkData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="drinkData">{drink.score}</td>
-            <td className="drinkData">{drink.brand}</td>
-            <td className="drinkData">{drink.company}</td>
+            <td className="drinkRegionData">{drink.name}</td>
+            <td className="drinkRegionData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
+            <td className="drinkRegionData">{drink.drinkType}</td>
+            <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+            <td className="drinkRegionData">{drink.score}</td>
+            <td className="drinkRegionData">{drink.brand}</td>
+            <td className="drinkRegionData">{drink.company}</td>
           </tr>
         )
       } else if(drink.mixerOne) {
           return(
           <tr key={index}>
-            <td className="drinkData">{drink.name}</td>
-            <td className="drinkData">{drink.drinkMain} with {drink.mixerOne}</td>
-            <td className="drinkData">{drink.drinkType}</td>
-            <td className="drinkData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="drinkData">{drink.score}</td>
-            <td className="drinkData">{drink.brand}</td>
-            <td className="drinkData">{drink.company}</td>
+            <td className="drinkRegionData">{drink.name}</td>
+            <td className="drinkRegionData">{drink.drinkMain} with {drink.mixerOne}</td>
+            <td className="drinkRegionData">{drink.drinkType}</td>
+            <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+            <td className="drinkRegionData">{drink.score}</td>
+            <td className="drinkRegionData">{drink.brand}</td>
+            <td className="drinkRegionData">{drink.company}</td>
           </tr>
           )
       } else {
           return (
             <tr key={index}>
-              <td className="drinkData">{drink.name}</td>
-              <td className="drinkData">{drink.drinkMain}</td>
-              <td className="drinkData">{drink.drinkType}</td>
-              <td className="drinkData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-              <td className="drinkData">{drink.score}</td>
-              <td className="drinkData">{drink.brand}</td>
-              <td className="drinkData">{drink.company}</td>
+              <td className="drinkRegionData">{drink.name}</td>
+              <td className="drinkRegionData">{drink.drinkMain}</td>
+              <td className="drinkRegionData">{drink.drinkType}</td>
+              <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+              <td className="drinkRegionData">{drink.score}</td>
+              <td className="drinkRegionData">{drink.brand}</td>
+              <td className="drinkRegionData">{drink.company}</td>
             </tr>
           )
       }
@@ -94,14 +94,14 @@ class RegionDataTable extends Component {
   render() {
     const { regionName } = this.state
     if(!this.state.regionCode) {
-      return <p>Select a Country for Data</p>
+      return <h2 className="selectRegionText">Select a Region for Data</h2>
     } else {
       return (
         <div className="selectedCountry">
           <table className='selectedCountryTable'>
             <thead>
               <tr>
-                <th colSpan="7" className="regionTableHeader">{regionName}</th>
+                <th colSpan="7" className="regionRegionHeader">{regionName}</th>
               </tr>
                 {this.renderClickedCountryHeader()}
             </thead>

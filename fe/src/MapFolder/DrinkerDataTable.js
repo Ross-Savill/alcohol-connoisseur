@@ -21,7 +21,7 @@ class DrinkerDataTable extends Component {
 
   renderClickedDrinkerHeader() {
     return(
-      <tr>
+      <tr className="drinkerTableRowHeader">
           <th>Drinker</th>
           <th>Drink Count</th>
           <th>Avg Score</th>
@@ -88,9 +88,9 @@ class DrinkerDataTable extends Component {
     return finalDrinkersData.map((drinkObj, index) => {
       return(
         <tr key={index}>
-          <td className="drinkData">{drinkObj.name}</td>
-          <td className="drinkData">{drinkObj.drinksNumber}</td>
-          <td className="drinkData">{drinkObj.averageScore}</td>
+          <td className="drinkDataNameText">{drinkObj.name}</td>
+          <td className="drinkDataNumberText">{drinkObj.drinksNumber}</td>
+          <td className="drinkDataAvgScoreText">{drinkObj.averageScore}</td>
         </tr>
       )
     })
@@ -99,7 +99,7 @@ class DrinkerDataTable extends Component {
   render() {
     const { regionName } = this.state
     if(!this.state.regionCode) {
-      return <p>Select a Country for Drinker Info</p>
+      return <h2 className="selectRegionText">Select a Region for Drinker Info</h2>
     } else {
       return (
         <div className="selectedCountry">

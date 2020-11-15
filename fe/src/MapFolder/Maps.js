@@ -80,6 +80,10 @@ class Maps extends Component {
       }
   }
 
+  handleSelectRegion(region) {
+    this.setState({ chosenMap: "usa" })
+  }
+
   chosenMap() {
     const { chosenMap } = this.state
     if(chosenMap === "world") {
@@ -118,8 +122,15 @@ class Maps extends Component {
       return("Please Wait")
     } else {
       return(
-        <div class="totalContainer">
-          <h1 className="mainTitle">Drinks Geography</h1>
+        <div className="totalContainer">
+          <div className="titleAndInput">
+            <h1 className="mainTitle">Drinks Geography
+              <select onChange={this.handleSelectRegion.bind(this)}>
+                <option value="world">World</option>
+                <option value="usa">USA</option>
+              </select>
+            </h1>
+          </div>
           <div className="mapAndRegionTable">
             <div className="map">
               <VectorMap

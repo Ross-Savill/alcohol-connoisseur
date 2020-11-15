@@ -1,3 +1,33 @@
+.selectRegionText {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .drinkerRegionName {
   text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.drinkerTableRowHeader {
+  border: solid 3px black;
+}
+
+.drinkDataNameText{
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.drinkDataNumberText {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.drinkDataAvgScoreText {
+  font-weight: bold;
+  font-size: 1em;
 }

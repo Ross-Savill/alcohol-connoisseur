@@ -81,14 +81,9 @@ function HomePage() {
                            `${d.mixerOne}` : "")
           },
           {
-            Header: "Rating Word One",
-            accessor: "ratingWordOne",
-            width: "100"
-          },
-          {
-            Header: "Rating Word Two",
-            accessor: "ratingWordTwo",
-            width: "100"
+            Header: "Rating Words",
+            accessor: d => `${d.ratingWordOne}, ${d.ratingWordTwo}`,
+            width: "150"
           },
           {
             Header: "Score",
@@ -107,7 +102,7 @@ function HomePage() {
           {
             Header: "Company",
             accessor: "company",
-            width: "100"
+            width: "150"
           },
           {
             Header: "Notes",
@@ -118,7 +113,6 @@ function HomePage() {
     ],
     []
   );
-
   return (
     <div>
       <div>

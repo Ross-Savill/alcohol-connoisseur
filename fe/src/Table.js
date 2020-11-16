@@ -38,6 +38,9 @@ export default function Table({ columns, data }) {
     setFilterInput(value);
   };
 
+  if(pageCount === 0) {
+    return <h1>HOLD YOUR HORSES ONE SEC...</h1>
+  } else {
   return (
     <div className="fullTableAndSearch">
       <div className="drinkSearchDiv">
@@ -118,4 +121,5 @@ export default function Table({ columns, data }) {
       </table>
     </div>
   );
+        }
 }

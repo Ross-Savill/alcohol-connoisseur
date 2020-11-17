@@ -5,7 +5,8 @@ import Navbar from './Navbar';
 import HomePage from './HomePage';
 import RatingWord from './RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
-import Maps from './MapFolder/Maps';
+import WorldMap from './MapFolder/WorldMap';
+import USMap from './MapFolder/USMap';
 import './App.css';
 
 class App extends Component {
@@ -42,8 +43,13 @@ class App extends Component {
             <RatingWord />
           </Route>
           <Route
-            exact path="/maps" render={(props) => (
-              <Maps {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+            exact path="/world-map" render={(props) => (
+              <WorldMap {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+            )}
+          />
+          <Route
+            exact path="/us-map" render={(props) => (
+              <USMap {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
             )}
           />
         </div>

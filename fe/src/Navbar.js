@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import './Navbar.css';
-import Maps from './MapFolder/Maps';
+import WorldMap from './MapFolder/WorldMap';
+import USMap from './MapFolder/USMap';
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 const DRINKS_URL = "http://localhost:5000/drinks";
 const DRINKERS_URL = "http://localhost:5000/peopleNames";
-
-// const componentDidMount = () => {
-//   axios.all([requestDrinkers, requestDrinks])
-//     .then(resp => this.setState({ drinkers: resp[0].data,
-//                                   drinks: resp[1].data }))
-//     .catch(error => console.log(error))
-// }
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
@@ -91,15 +85,29 @@ const Navbar = () => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
-              to="/maps"
+              to="/world-map"
               render={(props) => (
-                <Maps {...props}
+                <WorldMap {...props}
                 drinks={drinkData}
                 drinkers={drinkerData}
                 isFetching={drinkData.isFetching} />
               )}
             >
-              Drink Geography
+              World Map
+            </NavLink>
+
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
+              to="/us-map"
+              render={(props) => (
+                <USMap {...props}
+                drinks={drinkData}
+                drinkers={drinkerData}
+                isFetching={drinkData.isFetching} />
+              )}
+            >
+              USA Map
             </NavLink>
           </div>
         </div>

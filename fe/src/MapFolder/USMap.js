@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { VectorMap } from "react-jvectormap";
 import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
-import './Maps.css';
+import './USMap.css';
 import { USStateList } from './USStateList';
 const { getCode, getName, getData } = require("country-list");
 
-class Maps extends Component {
+class USMap extends Component {
   constructor(props) {
     super(props)
       this.state = {
@@ -16,7 +16,6 @@ class Maps extends Component {
         downloadedDrinkers: null,
         worldMapData: null,
         usMapData: null,
-        chosenMap: "world",
         selectedRegion: null,
         fullRegionName: null
       }
@@ -33,29 +32,14 @@ class Maps extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // const currentPropDrinks = this.props.drinks
-    // const currentPropDrinkers = this.props.drinkers
     const currentPropDrinks = this.state.downloadedDrinks
     const currentPropDrinkers = this.state.downloadedDrinkers
 
-    let countryData = []
     let usStateData = []
 
     if(currentPropDrinks === null) {
       return
     } else {
-
-    currentPropDrinks
-      .filter(drink => drink.country !== "Barbados" && drink.country !== "-")
-      .map((drink) => {
-        if(drink.secondCollabCountry) {
-          countryData.push(drink.secondCollabCountry, drink.firstCollabCountry, drink.country)
-        } else if (drink.firstCollabCountry) {
-          countryData.push(drink.firstCollabCountry, drink.country)
-        } else {
-          countryData.push(drink.country)
-        }
-      })
 
       currentPropDrinks
       .filter(drink => drink.country === "US")
@@ -79,11 +63,6 @@ class Maps extends Component {
         }}
       )
 
-    const countedUniqueCountries = countryData.reduce(function(occ, name) {
-      occ[name] = (occ[name] || 0) + 1;
-      return occ;
-    }, {});
-
     const countedUniqueUSStates = usStateData.reduce(function(occ, name) {
       occ[name] = (occ[name] || 0) + 1;
       return occ;
@@ -92,69 +71,34 @@ class Maps extends Component {
     if(currentPropDrinks !== this.state.drinks) {
       this.setState({ drinks: currentPropDrinks,
                       drinkers: currentPropDrinkers,
-                      worldMapData: countedUniqueCountries,
                       usMapData: countedUniqueUSStates
                     })
       }
     }
   }
 
-  // handleSelectRegion(region) {
-  //   this.setState({ chosenMap: "usa" })
-  // }
-
-  chosenMap() {
-    const { chosenMap } = this.state
-    if(chosenMap === "world") {
-      return "world_mill"
-    } else if(chosenMap === "usa") {
-      return "us_aea"
-    }
-  }
-
-  chosenMapData() {
-    const { chosenMap } = this.state
-    if(chosenMap === "world") {
-      return this.state.worldMapData
-    } else if(chosenMap === "usa") {
-      return this.state.usMapData
-    }
-  }
-
   handleRegionClick = (e, stateCode) => {
-    const { chosenMap } = this.state
     this.refs.map.$mapObject.tip.hide();
-    if(chosenMap === "world") {
-      const fullRegionName = getName(stateCode)
-      this.setState({ selectedRegion: stateCode, fullRegionName })
-    } else if(chosenMap === "usa") {
-      for (const [selectedRegion, fullRegionName] of Object.entries(USStateList)) {
-        if (stateCode === selectedRegion) {
-          this.setState({ selectedRegion, fullRegionName })
-        }
+    for (const [selectedRegion, fullRegionName] of Object.entries(USStateList)) {
+      if (stateCode === selectedRegion) {
+        this.setState({ selectedRegion, fullRegionName })
       }
     }
   };
 
   render() {
-    console.log(this.state.worldMapData)
-    if(!this.state.worldMapData) {
+    if(!this.state.usMapData) {
       return("Please Wait")
     } else {
       return(
         <div className="totalContainer">
           <div className="titleAndInput">
-            <h1 className="mainTitle">Drinks Geography
-              {/* <select onChange={this.handleSelectRegion.bind(this)}>
-                <option value="world">World</option>
-                <option value="usa">USA</option>
-              </select> */}
-            </h1>
+            <h1 className="mainTitle">US States</h1>
           </div>
           <div className="mapAndRegionTable">
             <div className="map">
               <VectorMap
-                map={this.chosenMap()}
+                map="us_aea"
                 ref={"map"}
                 backgroundColor="#0077be" //change it to ocean blue: #0077be
                 zoomOnScroll={false}
@@ -185,7 +129,7 @@ class Maps extends Component {
                 series={{
                   regions: [
                     {
-                      values: this.chosenMapData(), //this is your data
+                      values: this.state.usMapData, //this is your data
                       scale: ["#146804"], //your color game's here
                       normalizeFunction: "polynomial"
                     }
@@ -195,8 +139,8 @@ class Maps extends Component {
             </div>
             <div className="regionDataTable">
               <RegionDataTable
+                chosenMap="usa"
                 drinks={this.state.drinks}
-                chosenMap={this.state.chosenMap}
                 regionCode={this.state.selectedRegion}
                 regionName={this.state.fullRegionName}
               />
@@ -204,8 +148,8 @@ class Maps extends Component {
           </div>
           <div className="drinkerDataTable">
             <DrinkerDataTable
+              chosenMap="usa"
               drinks={this.state.drinks}
-              chosenMap={this.state.chosenMap}
               regionCode={this.state.selectedRegion}
               regionName={this.state.fullRegionName}
             />
@@ -216,4 +160,4 @@ class Maps extends Component {
   }
 };
 
-export default Maps;
+export default USMap;

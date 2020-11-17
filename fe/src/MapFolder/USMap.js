@@ -4,7 +4,6 @@ import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
 import './USMap.css';
 import { USStateList } from './USStateList';
-const { getCode, getName, getData } = require("country-list");
 
 class USMap extends Component {
   constructor(props) {
@@ -12,9 +11,6 @@ class USMap extends Component {
       this.state = {
         drinks: null,
         drinkers: null,
-        downloadedDrinks: null,
-        downloadedDrinkers: null,
-        worldMapData: null,
         usMapData: null,
         selectedRegion: null,
         fullRegionName: null
@@ -22,59 +18,57 @@ class USMap extends Component {
   }
 
   componentDidMount() {
-    if(this.props.drinks !== this.state.downloadedDrinks) {
-    const currentPropDrinks = this.props.drinks
-    console.log(currentPropDrinks)
-    const currentPropDrinkers = this.props.drinkers
-    this.setState({ downloadedDrinks: currentPropDrinks,
-                    downloadedDrinkers: currentPropDrinkers})
+    const { drinks } = this.props
+    if(drinks) {
+      this.haveDrinks()
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const currentPropDrinks = this.state.downloadedDrinks
-    const currentPropDrinkers = this.state.downloadedDrinkers
+    const { drinks } = this.state
+    if(this.props.drinks !== drinks) {
+      this.haveDrinks()
+    }
+  }
+
+  haveDrinks = () => {
+    const { drinks, drinkers } = this.props
+    this.setState({ drinks, drinkers })
 
     let usStateData = []
 
-    if(currentPropDrinks === null) {
-      return
-    } else {
-
-      currentPropDrinks
-      .filter(drink => drink.country === "US")
-      .map((drink) => {
-        if(drink.country === "US") {
-          usStateData.push(drink.ukUsa)
-        }},
-      )
-      currentPropDrinks
-      .filter(drink => drink.country === "US")
-      .map((drink) => {
-        if(drink.firstCollabCountry === "US") {
-          usStateData.push(drink.firstUkUsa)
-        }}
-      )
-      currentPropDrinks
-      .filter(drink => drink.country === "US")
-      .map((drink) => {
-        if(drink.secondCollabCountry === "US") {
-          usStateData.push(drink.secondUkUsa)
-        }}
-      )
+    drinks
+    .filter(drink => drink.country === "US")
+    .map((drink) => {
+      if(drink.country === "US") {
+        usStateData.push(drink.ukUsa)
+      }},
+    )
+    drinks
+    .filter(drink => drink.country === "US")
+    .map((drink) => {
+      if(drink.firstCollabCountry === "US") {
+        usStateData.push(drink.firstUkUsa)
+      }}
+    )
+    drinks
+    .filter(drink => drink.country === "US")
+    .map((drink) => {
+      if(drink.secondCollabCountry === "US") {
+        usStateData.push(drink.secondUkUsa)
+      }}
+    )
 
     const countedUniqueUSStates = usStateData.reduce(function(occ, name) {
       occ[name] = (occ[name] || 0) + 1;
       return occ;
     }, {});
 
-    if(currentPropDrinks !== this.state.drinks) {
-      this.setState({ drinks: currentPropDrinks,
-                      drinkers: currentPropDrinkers,
+    if(drinks !== this.state.drinks) {
+      this.setState({ drinks, drinkers,
                       usMapData: countedUniqueUSStates
                     })
       }
-    }
   }
 
   handleRegionClick = (e, stateCode) => {
@@ -87,13 +81,13 @@ class USMap extends Component {
   };
 
   render() {
-    if(!this.state.usMapData) {
+    if(!this.props.drinks) {
       return("Please Wait")
     } else {
       return(
         <div className="totalContainer">
           <div className="titleAndInput">
-            <h1 className="mainTitle">US States</h1>
+            <h1 className="mainTitle">US Map</h1>
           </div>
           <div className="mapAndRegionTable">
             <div className="map">

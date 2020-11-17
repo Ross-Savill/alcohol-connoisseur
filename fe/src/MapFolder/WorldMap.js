@@ -3,45 +3,47 @@ import { VectorMap } from "react-jvectormap";
 import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
 import './WorldMap.css';
-import { USStateList } from './USStateList';
 const { getCode, getName, getData } = require("country-list");
 
-class Maps extends Component {
+class WorldMap extends Component {
   constructor(props) {
     super(props)
       this.state = {
         drinks: null,
         drinkers: null,
-        downloadedDrinks: null,
-        downloadedDrinkers: null,
         worldMapData: null,
-        usMapData: null,
         selectedRegion: null,
         fullRegionName: null
       }
   }
 
   componentDidMount() {
-    if(this.props.drinks !== this.state.downloadedDrinks) {
-    const currentPropDrinks = this.props.drinks
-    console.log(currentPropDrinks)
-    const currentPropDrinkers = this.props.drinkers
-    this.setState({ downloadedDrinks: currentPropDrinks,
-                    downloadedDrinkers: currentPropDrinkers})
+    const { drinks } = this.props
+    if(drinks) {
+      this.haveDrinks()
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const currentPropDrinks = this.state.downloadedDrinks
-    const currentPropDrinkers = this.state.downloadedDrinkers
+    const { drinks } = this.state
+    if(this.props.drinks !== drinks) {
+      this.haveDrinks()
+    }
+  }
+
+  handleRegionClick = (e, stateCode) => {
+    this.refs.map.$mapObject.tip.hide();
+      const fullRegionName = getName(stateCode)
+      this.setState({ selectedRegion: stateCode, fullRegionName })
+  };
+
+  haveDrinks = () => {
+    const { drinks, drinkers } = this.props
+    this.setState({ drinks, drinkers })
 
     let countryData = []
 
-    if(currentPropDrinks === null) {
-      return
-    } else {
-
-    currentPropDrinks
+    drinks
       .filter(drink => drink.country !== "Barbados" && drink.country !== "-")
       .map((drink) => {
         if(drink.secondCollabCountry) {
@@ -58,30 +60,20 @@ class Maps extends Component {
       return occ;
     }, {});
 
-    if(currentPropDrinks !== this.state.drinks) {
-      this.setState({ drinks: currentPropDrinks,
-                      drinkers: currentPropDrinkers,
+    this.setState({ drinks, drinkers,
                       worldMapData: countedUniqueCountries,
-                    })
-      }
-    }
+    })
   }
 
-  handleRegionClick = (e, stateCode) => {
-    this.refs.map.$mapObject.tip.hide();
-      const fullRegionName = getName(stateCode)
-      this.setState({ selectedRegion: stateCode, fullRegionName })
-  };
-
   render() {
-    console.log(this.state.worldMapData)
-    if(!this.state.worldMapData) {
+    if(!this.props.drinks) {
       return("Please Wait")
     } else {
+      console.log("render map")
       return(
         <div className="totalContainer">
           <div className="titleAndInput">
-            <h1 className="mainTitle">Drinks Geography</h1>
+            <h1 className="mainTitle">World Map</h1>
           </div>
           <div className="mapAndRegionTable">
             <div className="map">
@@ -148,4 +140,4 @@ class Maps extends Component {
   }
 };
 
-export default Maps;
+export default WorldMap;

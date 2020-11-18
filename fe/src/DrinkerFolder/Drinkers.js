@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import RadarChart from './RadarChart';
+import Navbar from '../Navbar.js'
 
 class Drinkers extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class Drinkers extends Component {
     return(
       <div>
         <p>Drinkers Page</p>
+        <Navbar />
         <select>Choose Your Drinker!
           <optgroup label="Regular Attendees">
             {this.regularAttendees()}

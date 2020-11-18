@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from '../Navbar'
 import { VectorMap } from "react-jvectormap";
 import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
@@ -88,6 +89,7 @@ class USMap extends Component {
         <div className="totalContainer">
           <div className="titleAndInput">
             <h1 className="mainTitle">US Map</h1>
+            <Navbar />
           </div>
           <div className="mapAndRegionTable">
             <div className="map">

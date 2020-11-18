@@ -31,7 +31,6 @@ class App extends Component {
   render () {
     return (
       <BrowserRouter>
-      <Navbar />
         <div>
           <Route exact path="/">
             <HomePage />

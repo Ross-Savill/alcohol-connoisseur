@@ -1,0 +1,30 @@
+.totalContainer {
+  display: grid;
+  grid-template-columns: repeat(4, [col-start] 1fr);
+}
+
+.titleAndInput {
+  grid-column: col-start / span 5;
+  margin-top: 0;
+}
+
+.mapAndRegionTable {
+  grid-column: col-start 1 / span 3;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.map {
+  flex: 1;
+  border: solid 3px rgb(77, 71, 71);
+}
+
+.drinkerDataTable {
+  border: solid 3px green;
+}
+
+.regionDataTable {
+  flex: 1;
+  border: solid 3px blue;
+}

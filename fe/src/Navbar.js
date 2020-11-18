@@ -46,7 +46,7 @@ const Navbar = () => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="container">
+      <div className="nav-container">
       <div className="navbar-brand">
           <a
             role="button"

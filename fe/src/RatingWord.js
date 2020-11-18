@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Navbar from './Navbar'
 import './RatingWord.css';
 import axios from 'axios';
 import { Pie, Bar } from 'react-chartjs-2';
@@ -215,10 +216,10 @@ class RatingWord extends Component {
             return(
               <tr key={drink._id}>
                 <td>
-                {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
-                <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
-                <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                <span className="scoreInTable"> {drink.score}/10</span>.
+                {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
+                <span className="drinkNameInTable"> {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
+                <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                <span className="scoreInTable">{drink.score}/10</span>.
                 </td>
               </tr>
             )
@@ -226,9 +227,9 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                  {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
-                  <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne}</span> -
-                  <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                  {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
+                  <span className="drinkNameInTable"> {drink.drinkMain} with {drink.mixerOne}</span> -
+                  <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
                   <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
@@ -237,9 +238,9 @@ class RatingWord extends Component {
               return(
                 <tr key={drink._id}>
                   <td>
-                    {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s </span>
-                    <span className="drinkNameInTable">{drink.drinkMain}</span> -
-                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
+                    {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
+                    <span className="drinkNameInTable"> {drink.drinkMain}</span> -
+                    <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
                     <span className="scoreInTable"> {drink.score}/10</span>.
                   </td>
                 </tr>
@@ -390,6 +391,7 @@ class RatingWord extends Component {
             >Info on "<span className="titleClickedWord">{this.state.clickedWord}</span>"</h1>
           )}
         </div>
+        <Navbar />
         <div className="underTitle">
           <div className ="searchAndTable">
             <p className="searchLabel">Search for a Rating Word below!</p>
@@ -410,7 +412,7 @@ class RatingWord extends Component {
             </div>
           </div>
           <div className="clickedWordDrinksTable">
-            <table className='clickedWordTable'>
+            <table className="clickedWordTable">
               <thead>
                 {this.renderClickedWordsDrinksHeader()}
               </thead>

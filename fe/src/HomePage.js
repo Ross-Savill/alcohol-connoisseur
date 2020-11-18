@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import Navbar from './Navbar';
 import './HomePage.css';
 import Table from './Table';
 import axios from 'axios';
@@ -117,6 +118,7 @@ function HomePage() {
     <div>
       <div>
         <h1 className="mainTitle">Welcome to Drink And Rate!!!</h1>
+        <Navbar />
         <AddDrinkForm options={data}/>
       </div>
       <div className="App">

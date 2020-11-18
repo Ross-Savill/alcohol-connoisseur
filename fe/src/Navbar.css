@@ -1,4 +1,15 @@
+.nav-container {
+  width: 100%;
+}
+
 .navbar-start {
+  width: 100%;
+  background-color: chocolate;
   display: flex;
   justify-content: space-around;
+}
+
+.navbar-item {
+  font-weight: bold;
+  color: black;
 }

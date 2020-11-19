@@ -10,7 +10,7 @@ class Drinkers extends Component {
       this.state = {
         drinks: null,
         drinkers: null,
-        chosenDrinker: null,
+        selectedDrinker: "All Drinkers",
         drinksPerPerson: null,
         regularDrinkers: [],
         irregularDrinkers: []
@@ -62,27 +62,31 @@ class Drinkers extends Component {
   regularDrinkers() {
     const { regularDrinkers } = this.state
       return regularDrinkers.map((drinker) => {
-        return <option>{drinker}</option>
+        return <option value={drinker}>{drinker}</option>
       })
   }
 
   irregularDrinkers() {
     const { irregularDrinkers } = this.state
       return irregularDrinkers.map((drinker) => {
-        return <option>{drinker}</option>
+        return <option value={drinker}>{drinker}</option>
       })
+  }
+
+  onSelectDrinker (event) {
+    this.setState({ selectedDrinker: event.target.value });
+    console.log(this.state.selectedDrinker)
   }
 
   render() {
     if(!this.state.drinks) {
       return("Please Wait")
     } else {
-      console.log("main render")
       return(
       <div>
         <h1 className="drinkersPageTitle">Drinkers Page</h1>
         <Navbar />
-        <select>Choose Your Drinker!
+        <select onChange={this.onSelectDrinker.bind(this)} value={this.state.selectedDrinker}>
           <option>ALL DRINKERS</option>
           <optgroup label="Regular Attendees">
             {this.regularDrinkers()}

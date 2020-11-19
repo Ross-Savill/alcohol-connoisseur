@@ -71,7 +71,14 @@ const Navbar = () => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
-              to="/drinkers">
+              to="/drinkers"
+                render={(props) => (
+                <WorldMap {...props}
+                drinks={drinkData}
+                drinkers={drinkerData}
+                isFetching={drinkData.isFetching} />
+                )}
+              >
               Drinkers
             </NavLink>
 

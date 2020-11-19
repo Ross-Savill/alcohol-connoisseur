@@ -70,7 +70,6 @@ class WorldMap extends Component {
     if(!this.props.drinks) {
       return("Please Wait")
     } else {
-      console.log("render map")
       return(
         <div className="totalContainer">
           <div className="titleAndInput">

@@ -35,8 +35,11 @@ class App extends Component {
           <Route exact path="/">
             <HomePage />
           </Route>
-          <Route exact path="/drinkers">
-            <Drinkers />
+          <Route
+            exact path="/drinkers" render={(props) => (
+              <Drinkers {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+            )}
+          >
           </Route>
           <Route exact path="/ratingwords">
             <RatingWord />

@@ -20,28 +20,25 @@ class RadarChart extends Component {
     }
   }
 
-  // renderRadar() {
-  //   <Radar
-  //     data={this.state.wordPieChartData}
-  //     width={150}
-  //     height={100}
-  //     options={{
-  //       title: {
-  //         display: true,
-  //         text: "Drinker Name",
-  //         // fontSize: 25
-  //       },
-  //       // legend: {
-  //       //   position: "bottom"
-  //       // }
-  //     }}
-  //   />
-  // }
-
   render(){
     return(
       <div>
         <h1>RadarData Here</h1>
+        <Radar
+          data={this.state.wordPieChartData}
+          width={150}
+          height={100}
+          options={{
+            title: {
+              display: true,
+              text: "Drinker Name",
+              fontSize: 25
+            },
+            legend: {
+              position: "bottom"
+            }
+      }}
+    />
       </div>
     )
   }

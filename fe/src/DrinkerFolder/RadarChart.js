@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Radar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
+import './RadarChart.css'
 
 class RadarChart extends Component {
   constructor(props) {
@@ -63,21 +64,23 @@ class RadarChart extends Component {
     } else {
       console.log(this.state.drinkerRadarData)
       return(
-        <Radar
-          data={this.state.drinkerRadarData}
-          width={150}
-          height={100}
-          options={{
-            title: {
-              display: true,
-              text: "Drinker Name",
-              fontSize: 25
-            },
-            legend: {
-              position: "bottom"
-            }
-          }}
-        />
+        <div className="radarDiv">
+          <Radar
+            data={this.state.drinkerRadarData}
+            width={50}
+            height={50}
+            options={{
+              title: {
+                display: true,
+                text: "Drinker Name",
+                fontSize: 25
+              },
+              legend: {
+                position: "bottom"
+              }
+            }}
+          />
+        </div>
       )
     }
   }

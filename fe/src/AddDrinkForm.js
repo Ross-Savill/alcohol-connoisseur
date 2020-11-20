@@ -7,6 +7,7 @@ import './AddDrinkForm.css';
 const initialState = {
   showForm: false,
   peopleNames: [],
+  drinkTypes:[],
   personName: '',
   mainDrink: '',
   drinkType: '',
@@ -51,6 +52,17 @@ class AddDrinkForm extends Component {
       }).catch(error => {
         console.log(error);
       });
+
+      let drinkTypesArray = []
+      axios("http://localhost:5000/drinktypes")
+        .then(data => {
+          drinkTypesArray = data.data.map((drinkType) => {
+            return drinkType
+        });
+        this.setState({ drinkTypes: drinkTypesArray })
+        }).catch(error => {
+          console.log(error);
+        });
   }
 
   toggleAddFormClass = () => {
@@ -149,10 +161,15 @@ class AddDrinkForm extends Component {
   }
 
   render() {
-    let drinkerNames = this.state.peopleNames;
-    let drinkerNameSelect = drinkerNames.map((name) =>
+    const drinkerNames = this.state.peopleNames;
+    const drinkTypes = this.state.drinkTypes
+    const drinkerNameSelect = drinkerNames.map((name) =>
       <option key={name.drinker} value={name.drinker}>{name.drinker}</option>
     );
+    const drinkTypeSelect = drinkTypes.map((drinkType) =>
+      <option key={drinkType.drinkType} value={drinkType.drinkType}>{drinkType.drinkType}</option>
+    )
+
     const { state: { filteredOptions, showMainOptions, showBrandOptions, userInput }} = this;
 
     let brandOptionList;
@@ -248,18 +265,7 @@ class AddDrinkForm extends Component {
                         className="questionInputTopRow"
                         >
                         <option className="placeholder" value="">Select Drink Type:</option>
-                        <option value="Beer">Beer</option>
-                        <option value="Cider">Cider</option>
-                        <option value="Wine">Wine</option>
-                        <option value="Fortified Wine">Fortified Wine</option>
-                        <option value="Gin">Gin</option>
-                        <option value="Vodka">Vodka</option>
-                        <option value="Whiskey">Whisky</option>
-                        <option value="Rum">Rum</option>
-                        <option value="Brandy">Brandy</option>
-                        <option value="Liqueur">Liqueur</option>
-                        <option value="Soft Drink">Soft Drink</option>
-                        <option value="Other">Other</option>
+                        {drinkTypeSelect}
                       </Input>
                     </FormGroup>
                   </Col>

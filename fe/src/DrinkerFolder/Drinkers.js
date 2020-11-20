@@ -10,6 +10,7 @@ class Drinkers extends Component {
       this.state = {
         drinks: null,
         drinkers: null,
+        drinkTypes: null,
         selectedDrinker: "All Drinkers",
         drinksPerPerson: null,
         regularDrinkers: [],
@@ -33,8 +34,8 @@ class Drinkers extends Component {
 
   haveDrinks = () => {
     // SET STATE WITH DRINKS AND DRINKERS
-    const { drinks, drinkers } = this.props
-    this.setState({ drinks, drinkers })
+    const { drinks, drinkers, drinkTypes } = this.props
+    this.setState({ drinks, drinkers, drinkTypes })
 
     // SET STATE - DRINKS PER PERSON
     const drinksPerPerson = drinks.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
@@ -75,7 +76,6 @@ class Drinkers extends Component {
 
   onSelectDrinker (event) {
     this.setState({ selectedDrinker: event.target.value });
-    console.log(this.state.selectedDrinker)
   }
 
   render() {
@@ -87,7 +87,7 @@ class Drinkers extends Component {
         <h1 className="drinkersPageTitle">Drinkers Page</h1>
         <Navbar />
         <select onChange={this.onSelectDrinker.bind(this)} value={this.state.selectedDrinker}>
-          <option>ALL DRINKERS</option>
+          <option value="All Drinkers">ALL DRINKERS</option>
           <optgroup label="Regular Attendees">
             {this.regularDrinkers()}
           </optgroup>
@@ -96,7 +96,9 @@ class Drinkers extends Component {
           </optgroup>
         </select>
         <RadarChart drinks={this.state.drinks}
-                    drinkers={this.state.drinkers} />
+                    drinkers={this.state.drinkers}
+                    drinkTypes={this.state.drinkTypes}
+                    selectedDrinker={this.state.selectedDrinker} />
       </div>
       )
     }

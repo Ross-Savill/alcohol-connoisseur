@@ -15,16 +15,20 @@ class App extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null
+        drinkers: null,
+        drinkTypes: null
       }
   }
 
   componentDidMount() {
-    const requestDrinkers = axios.get("http://localhost:5000/peopleNames")
+    const requestDrinkers = axios.get("http://localhost:5000/peoplenames")
     const requestDrinks = axios.get("http://localhost:5000/drinks")
-    axios.all([requestDrinkers, requestDrinks])
+    const requestDrinkTypes = axios.get("http://localhost:5000/drinktypes")
+    axios.all([requestDrinkers, requestDrinks, requestDrinkTypes])
       .then(resp => this.setState({ drinkers: resp[0].data,
-                                    drinks: resp[1].data }))
+                                    drinks: resp[1].data,
+                                    drinkTypes: resp[2].data
+                                  }))
       .catch(error => console.log(error))
   }
 
@@ -36,8 +40,13 @@ class App extends Component {
             <HomePage />
           </Route>
           <Route
-            exact path="/drinkers" render={(props) => (
-              <Drinkers {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+            exact path="/drinkers"
+            render={(props) => (
+              <Drinkers {...props}
+              drinks={this.state.drinks}
+              drinkers={this.state.drinkers}
+              drinkTypes={this.state.drinkTypes}
+              />
             )}
           >
           </Route>

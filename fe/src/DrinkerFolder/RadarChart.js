@@ -41,18 +41,36 @@ class RadarChart extends Component {
     const { drinks, drinkers, drinkTypes, selectedDrinker } = this.props
     this.setState({ drinks, drinkers, drinkTypes, selectedDrinker })
 
-    // PREP DRINK TYPE LABELS
+    // PREP DRINK TYPE LABELS AND DRINK TYPE DRINK ARRAY
     let allDrinkTypes = []
-    drinkTypes.map((object) => {
-      allDrinkTypes.push(object.drinkType)
+    let drinkTypeCount = []
+
+    drinkTypes.map((typeObj) => {
+      allDrinkTypes.push(typeObj.drinkType)
+      let drinksFromDrinkType = []
+      drinks.map((drinkObj) => {
+        if(drinkObj.drinkType === typeObj.drinkType) {
+          drinksFromDrinkType.push(drinkObj)
+        }
+      })
+      drinkTypeCount.push(drinksFromDrinkType)
     })
+
+    // GET NUMBER OF DRINKS PER TYPE
+    let drinkCountPerType = []
+    drinkTypeCount.map((array) => {
+      drinkCountPerType.push(array.length)
+    })
+    console.log(drinkCountPerType)
 
     // SET RADAR DATA
     const drinkerRadarData = {
       labels: allDrinkTypes,
         datasets: [{
-          data: [20, 10, 4, 2]
-        }]
+          data: drinkCountPerType,
+          backgroundColor: 'rgb(250, 222, 229)',
+          borderColor: 'rgb(238, 97, 131)'
+        }],
     }
     this.setState({ drinkerRadarData })
 
@@ -72,7 +90,7 @@ class RadarChart extends Component {
             options={{
               title: {
                 display: true,
-                text: "Drinker Name",
+                text: `${this.state.selectedDrinker}`,
                 fontSize: 25
               },
               legend: {

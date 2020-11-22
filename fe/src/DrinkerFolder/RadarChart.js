@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Radar } from 'react-chartjs-2';
+import { Radar, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
 import './RadarChart.css'
 
@@ -11,7 +11,12 @@ class RadarChart extends Component {
         drinkers: null,
         drinkTypes: null,
         selectedDrinker: 'All Drinkers',
-        drinkerRadarData: null
+        drinkerRadarData: null,
+        showRadar: true,
+        showBar: false,
+        radarColor: ["rgb(250, 222, 229)"],
+        barColor: ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
+        '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff']
       }
   }
 
@@ -34,12 +39,18 @@ class RadarChart extends Component {
                       selectedDrinker: currentSelectedDrinker
                     })
     }
+
+    if(prevState.selectedDrinker !== currentSelectedDrinker ||
+       prevState.showRadar !== this.state.showRadar) {
+       this.haveDrinks()
+    }
   }
 
   haveDrinks = () => {
     // SET STATE WITH DRINKS AND DRINKERS
     const { drinks, drinkers, drinkTypes, selectedDrinker } = this.props
     this.setState({ drinks, drinkers, drinkTypes, selectedDrinker })
+    const { radarColor, barColor } = this.state
 
     // PREP DRINK TYPE LABELS AND DRINK TYPE DRINK ARRAY
     let allDrinkTypes = []
@@ -49,7 +60,9 @@ class RadarChart extends Component {
       allDrinkTypes.push(typeObj.drinkType)
       let drinksFromDrinkType = []
       drinks.map((drinkObj) => {
-        if(drinkObj.drinkType === typeObj.drinkType) {
+        if(selectedDrinker === "All Drinkers" && drinkObj.drinkType === typeObj.drinkType) {
+          drinksFromDrinkType.push(drinkObj)
+        } else if(drinkObj.drinkType === typeObj.drinkType && selectedDrinker === drinkObj.name) {
           drinksFromDrinkType.push(drinkObj)
         }
       })
@@ -61,14 +74,14 @@ class RadarChart extends Component {
     drinkTypeCount.map((array) => {
       drinkCountPerType.push(array.length)
     })
-    console.log(drinkCountPerType)
 
     // SET RADAR DATA
     const drinkerRadarData = {
       labels: allDrinkTypes,
         datasets: [{
+          label: this.state.selectedDrinker,
           data: drinkCountPerType,
-          backgroundColor: 'rgb(250, 222, 229)',
+          backgroundColor: this.state.showRadar ? radarColor: barColor,
           borderColor: 'rgb(238, 97, 131)'
         }],
     }
@@ -76,28 +89,75 @@ class RadarChart extends Component {
 
   }
 
+  handleChartChange = () => {
+    const currentStateRadar = this.state.showRadar;
+    const currentStateBar = this.state.showBar;
+    this.setState({ showRadar: !currentStateRadar,
+                    showBar: !currentStateBar });
+  }
+
   renderDrinkerChart() {
     if(!this.state.drinks) {
       return <p>Wait for Data</p>
     } else {
-      console.log(this.state.drinkerRadarData)
       return(
-        <div className="radarDiv">
-          <Radar
-            data={this.state.drinkerRadarData}
-            width={50}
-            height={50}
-            options={{
-              title: {
-                display: true,
-                text: `${this.state.selectedDrinker}`,
-                fontSize: 25
-              },
-              legend: {
-                position: "bottom"
-              }
-            }}
-          />
+        <div>
+          <h2 className="selectedDrinkerHeader">{this.state.selectedDrinker}</h2>
+          <div>
+            <select
+              className="chartTypeSelect"
+              value={this.showRadar}
+              onChange={this.handleChartChange}
+              >
+              <option>Radar Chart</option>
+              <option>Bar Chart</option>
+            </select>
+
+            <div className={this.state.showRadar ?
+              'shownRadarChart': 'hiddenRadarChart'}>
+              <Radar
+                data={this.state.drinkerRadarData}
+                width={75}
+                height={75}
+                options={{
+                  title: {
+                    display: true,
+                    text: `${this.state.selectedDrinker}`,
+                    fontSize: 25
+                  },
+                  scale: {
+                    ticks: {
+                      z: 1,
+                      callback: function (value) { if (Number.isInteger(value)) { return value; } else { return ""} }
+                    }
+                  },
+                  legend: {
+                    position: "bottom"
+                  }
+                }}
+              />
+              </div>
+              <div className={this.state.showBar ?
+                'shownBarChart': 'hiddenBarChart'}>
+                <Bar
+                  data={this.state.drinkerRadarData}
+                  width={120}
+                  height={70}
+                  options={{
+                    plugins: {
+                      labels: {
+                        render: function (args) {
+                          return `${args.value}`
+                        },
+                      },
+                    },
+                    legend: {
+                      position: "bottom"
+                    }
+                  }}
+                />
+            </div>
+          </div>
         </div>
       )
     }
@@ -106,12 +166,7 @@ class RadarChart extends Component {
   render(){
     return(
       <div>
-        <div>
-          <h1>RadarData Here</h1>
-        </div>
-        <div>
-          {this.renderDrinkerChart()}
-        </div>
+        {this.renderDrinkerChart()}
       </div>
     )
   }

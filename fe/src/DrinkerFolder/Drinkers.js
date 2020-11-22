@@ -14,7 +14,7 @@ class Drinkers extends Component {
         selectedDrinker: "All Drinkers",
         drinksPerPerson: null,
         regularDrinkers: [],
-        irregularDrinkers: []
+        irregularDrinkers: [],
       }
   }
 
@@ -83,10 +83,14 @@ class Drinkers extends Component {
       return("Please Wait")
     } else {
       return(
-      <div>
+      <div className="drinkersContainer">
         <h1 className="drinkersPageTitle">Drinkers Page</h1>
         <Navbar />
-        <select onChange={this.onSelectDrinker.bind(this)} value={this.state.selectedDrinker}>
+        <select
+          className="drinkerSelect"
+          onChange={this.onSelectDrinker.bind(this)}
+          value={this.state.selectedDrinker}
+        >
           <option value="All Drinkers">ALL DRINKERS</option>
           <optgroup label="Regular Attendees">
             {this.regularDrinkers()}

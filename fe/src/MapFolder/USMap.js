@@ -3,7 +3,7 @@ import Navbar from '../Navbar'
 import { VectorMap } from "react-jvectormap";
 import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
-import './USMap.css';
+import '../Stylesheets/USMap.css';
 import { USStateList } from './USStateList';
 
 class USMap extends Component {

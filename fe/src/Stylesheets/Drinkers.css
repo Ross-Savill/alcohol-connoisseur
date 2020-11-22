@@ -2,6 +2,11 @@
 
 }
 
+.selectedDrinkerHeader {
+  display: flex;
+  justify-content: center;
+}
+
 .chartsAndTable {
   display: flex;
   flex-flow: row nowrap;

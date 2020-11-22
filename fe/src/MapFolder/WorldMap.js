@@ -3,7 +3,7 @@ import Navbar from '../Navbar';
 import { VectorMap } from "react-jvectormap";
 import RegionDataTable from './RegionDataTable';
 import DrinkerDataTable from './DrinkerDataTable';
-import './WorldMap.css';
+import '../Stylesheets/WorldMap.css';
 const { getCode, getName, getData } = require("country-list");
 
 class WorldMap extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './DrinkerDataTable.css';
+import '../Stylesheets/DrinkerDataTable.css';
 
 class DrinkerDataTable extends Component {
   constructor(props) {

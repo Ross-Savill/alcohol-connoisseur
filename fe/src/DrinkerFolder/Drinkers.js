@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import RadarChart from './RadarChart';
 import DrinkersTable from './DrinkersTable';
 import Navbar from '../Navbar.js'
-import './Drinkers.css'
+import '../Stylesheets/Drinkers.css'
 
 class Drinkers extends Component {
   constructor(props) {
@@ -99,6 +99,7 @@ class Drinkers extends Component {
             {this.irregularDrinkers()}
           </optgroup>
         </select>
+        <h2 className="selectedDrinkerHeader">{this.state.selectedDrinker}</h2>
         <div className="chartsAndTable">
           <div className="radarAndBarChart">
             <RadarChart drinks={this.state.drinks}

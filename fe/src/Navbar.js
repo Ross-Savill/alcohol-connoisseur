@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import './Navbar.css';
+import './Stylesheets/Navbar.css';
 import WorldMap from './MapFolder/WorldMap';
 import USMap from './MapFolder/USMap';
 import { NavLink } from "react-router-dom";

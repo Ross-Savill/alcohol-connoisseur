@@ -7,7 +7,7 @@ import RatingWord from './RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
 import WorldMap from './MapFolder/WorldMap';
 import USMap from './MapFolder/USMap';
-import './App.css';
+import './Stylesheets/App.css';
 
 class App extends Component {
 

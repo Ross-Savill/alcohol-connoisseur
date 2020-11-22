@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from './Navbar';
-import './HomePage.css';
+import './Stylesheets/HomePage.css';
 import Table from './Table';
 import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';

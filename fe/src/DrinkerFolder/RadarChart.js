@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Radar, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
-import './RadarChart.css'
+import '../Stylesheets/RadarChart.css'
 
 class RadarChart extends Component {
   constructor(props) {
@@ -102,8 +102,7 @@ class RadarChart extends Component {
     } else {
       return(
         <div>
-          <h2 className="selectedDrinkerHeader">{this.state.selectedDrinker}</h2>
-          <div>
+          {/* <div> */}
             <select
               className="chartTypeSelect"
               value={this.showRadar}
@@ -168,7 +167,7 @@ class RadarChart extends Component {
                   }}
                 />
             </div>
-          </div>
+          {/* </div> */}
         </div>
       )
     }

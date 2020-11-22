@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './RegionDataTable.css'
+import '../Stylesheets/RegionDataTable.css'
 
 class RegionDataTable extends Component {
   constructor(props) {

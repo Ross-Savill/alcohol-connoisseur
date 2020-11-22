@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Stylesheets/DrinkersTable.css';
 
 class DrinkersTable extends Component {
   constructor(props) {

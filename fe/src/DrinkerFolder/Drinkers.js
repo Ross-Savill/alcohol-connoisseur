@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import RadarChart from './RadarChart';
+import DrinkersTable from './DrinkersTable';
 import Navbar from '../Navbar.js'
 import './Drinkers.css'
 
@@ -99,11 +99,24 @@ class Drinkers extends Component {
             {this.irregularDrinkers()}
           </optgroup>
         </select>
-        <RadarChart drinks={this.state.drinks}
-                    drinkers={this.state.drinkers}
-                    drinkTypes={this.state.drinkTypes}
-                    selectedDrinker={this.state.selectedDrinker} />
+        <div className="chartsAndTable">
+          <div className="radarAndBarChart">
+            <RadarChart drinks={this.state.drinks}
+                        drinkers={this.state.drinkers}
+                        drinkTypes={this.state.drinkTypes}
+                        selectedDrinker={this.state.selectedDrinker} />
+          </div>
+          <div className="drinkersTable">
+            <DrinkersTable drinks={this.state.drinks}
+                        drinkers={this.state.drinkers}
+                        drinkTypes={this.state.drinkTypes}
+                        selectedDrinker={this.state.selectedDrinker}
+                        regularDrinkers={this.state.regularDrinkers}
+                        irregularDrinkers={this.state.irregularDrinkers}/>
+          </div>
+        </div>
       </div>
+
       )
     }
   }

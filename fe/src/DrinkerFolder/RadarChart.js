@@ -129,10 +129,16 @@ class RadarChart extends Component {
                     ticks: {
                       z: 1,
                       callback: function (value) { if (Number.isInteger(value)) { return value; } else { return ""} }
+                    },
+                    pointLabels: {
+                      fontSize: 15
                     }
                   },
                   legend: {
-                    position: "bottom"
+                    position: "bottom",
+                    labels: {
+                      fontSize: 15
+                    }
                   }
                 }}
               />
@@ -142,14 +148,19 @@ class RadarChart extends Component {
                 <Bar
                   data={this.state.drinkerRadarData}
                   width={120}
-                  height={70}
+                  height={85}
                   options={{
                     plugins: {
                       labels: {
                         render: function (args) {
                           return `${args.value}`
-                        },
-                      },
+                        }
+                      }
+                    },
+                    layout: {
+                      padding: {
+                        top: 15
+                      }
                     },
                     legend: {
                       position: "bottom"

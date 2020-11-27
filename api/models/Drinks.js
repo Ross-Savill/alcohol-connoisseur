@@ -8,6 +8,10 @@ const drinksSchema = new mongoose.Schema({
   abv: Number,
   mixerOne: String,
   mixerTwo: String,
+  mixerThree: String,
+  mixerFour: String,
+  mixerFive: String,
+  mixerSix: String,
   ratingWordOne: String,
   ratingWordTwo: String,
   score: Number,
@@ -23,8 +27,6 @@ const drinksSchema = new mongoose.Schema({
   secondCollabCompany: String,
   secondCollabCountry: String,
   secondUkUsa: String,
-  collabOne: String,
-  collabTwo: String,
   notes: String
 })
 

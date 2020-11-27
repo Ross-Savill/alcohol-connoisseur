@@ -110,7 +110,7 @@ class AddDrinkForm extends Component {
       userInput: e.drinkMain,
       mainDrink: e.drinkMain,
       brandBrewery: e.brand,
-      abv: e.abv,
+      abv: e.abv*100,
       company: e.company
     });
     if(e.mixerOne) {

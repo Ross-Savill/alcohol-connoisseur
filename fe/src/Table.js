@@ -24,7 +24,8 @@ export default function Table({ columns, data }) {
     state: { pageIndex, pageSize }
   } = useTable({
     columns,
-    data
+    data,
+    initialState: { pageSize: 50 }
   },
     useFilters,
     useSortBy,
@@ -38,9 +39,52 @@ export default function Table({ columns, data }) {
     setFilterInput(value);
   };
 
-  if(pageCount === 0) {
-    return <h1>HOLD YOUR HORSES ONE SEC...</h1>
+  const tableIfPages = () => {
+    if(pageCount === 0) {
+      return <h1>No Data!</h1>
     } else {
+    return (<table {...getTableProps()} className="table">
+          <thead>
+          {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()} className="th">
+                {headerGroup.headers.map(column => (
+                  <th
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    className={
+                      column.isSorted
+                        ? column.isSortedDesc
+                          ? "sort-desc"
+                          : "sort-asc"
+                        : "initial-column"
+                    }
+                  >
+                    {column.render("Header")}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {page.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} className="tr">
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()} className="td">
+                      {cell.render("Cell")}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+    )
+      }
+    }
+
+  if(!data.length) {
+    return <h1>HOLD YOUR HORSES ONE SEC...</h1>
+  } else {
     return (
       <div className="fullTableAndSearch">
         <div className="drinkSearchDiv">
@@ -77,48 +121,14 @@ export default function Table({ columns, data }) {
               setPageSize(Number(e.target.value))
             }}
           >
-            {[20, 40, 60, 80, 100].map(pageSize => (
+            {[50, 75, 100, 150, 200].map(pageSize => (
               <option key={pageSize} value={pageSize}>
                 Show {pageSize}
               </option>
             ))}
           </select>
         </div>
-        <table {...getTableProps()} className="table">
-          <thead>
-          {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="tr">
-                {headerGroup.headers.map(column => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className={
-                      column.isSorted
-                        ? column.isSortedDesc
-                          ? "sort-desc"
-                          : "sort-asc"
-                        : "initial-column"
-                    }
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="tr">
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()} className="td">
-                      {cell.render("Cell")}</td>;
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {tableIfPages()}
       </div>
     );
   }

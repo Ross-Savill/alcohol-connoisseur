@@ -62,15 +62,15 @@ class Drinkers extends Component {
 
   regularDrinkers() {
     const { regularDrinkers } = this.state
-      return regularDrinkers.map((drinker) => {
-        return <option value={drinker}>{drinker}</option>
+      return regularDrinkers.map((drinker, index) => {
+        return <option key={index} value={drinker}>{drinker}</option>
       })
   }
 
   irregularDrinkers() {
     const { irregularDrinkers } = this.state
-      return irregularDrinkers.map((drinker) => {
-        return <option value={drinker}>{drinker}</option>
+      return irregularDrinkers.map((drinker, index) => {
+        return <option key={index} value={drinker}>{drinker}</option>
       })
   }
 

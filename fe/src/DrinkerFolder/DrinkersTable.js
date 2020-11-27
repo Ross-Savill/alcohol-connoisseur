@@ -1,3 +1,4 @@
+import { controllers } from 'chart.js';
 import React, { Component } from 'react';
 import '../Stylesheets/DrinkersTable.css';
 
@@ -10,7 +11,12 @@ class DrinkersTable extends Component {
         drinkTypes: null,
         selectedDrinker: 'All Drinkers',
         regularDrinkers: null,
-        irregularDrinkers: null
+        irregularDrinkers: null,
+        drinkerObjectsArray: null,
+        sort: {
+          column: null,
+          direction: 'desc',
+        },
       }
     }
 
@@ -19,23 +25,27 @@ class DrinkersTable extends Component {
       this.setState({ drinks, drinkers, drinkTypes, selectedDrinker, regularDrinkers, irregularDrinkers })
     }
 
+    componentDidUpdate() {
+      this.setDrinkerData()
+    }
+
     renderDrinkerHeader() {
       return(
         <tr>
-          <th>Name</th>
-          <th>Number of Drinks</th>
-          <th>Weeks Participated</th>
-          <th>Avg Drinks Had Per Visit</th>
-          <th>Favourite Drink Type</th>
-          <th>Highest Ever Score</th>
-          <th>Lowest Ever Score</th>
-          <th>Average Score</th>
-          <th>Percent of All Drinks Drunk</th>
+          <th onClick={e => this.onSort("drinkerName")}>Name</th>
+          <th onClick={e => this.onSort("drinksNum")}>Number of Drinks</th>
+          <th onClick={e => this.onSort("drinkerWeeks")}>Weeks Participated</th>
+          <th onClick={e => this.onSort("drinkerAvgConsume")}>Avg Drinks Had Per Visit</th>
+          <th onClick={e => this.onSort("drinkerFaveType")}>Favourite Drink Type</th>
+          <th onClick={e => this.onSort("drinkerHighScore")}>Highest Ever Score</th>
+          <th onClick={e => this.onSort("drinkerLowScore")}>Lowest Ever Score</th>
+          <th onClick={e => this.onSort("drinkerAvgScore")}>Average Score</th>
+          <th onClick={e => this.onSort("drinkerDrinkPercentage")}>Percent of All Drinks Drunk</th>
         </tr>
       )
     }
 
-    renderDrinkerData() {
+    setDrinkerData() {
       if(!this.state.drinks) {
         return "Please Wait"
       } else {
@@ -57,7 +67,6 @@ class DrinkersTable extends Component {
 
         //SET UP DRINKER OBJECTS
           allDrinkersArrays.map((aDrinkArray) => {
-            console.log("A new array map")
             // GET DRINKER NAME
             const drinkerName = aDrinkArray
             .map(drink => drink.name)
@@ -65,10 +74,19 @@ class DrinkersTable extends Component {
 
             // GET NUMBER OF DRINKS
             const numOfDrinks = aDrinkArray.length
+
             // GET WEEKS PARTICIPATED
-            const weeksParticipated =  "TBC"
+            let allDrinksDates = []
+            aDrinkArray.map((drink) => {
+              const drinkDate = new Date(drink.date)
+              const date = +drinkDate.getDate() + "/" + drinkDate.getMonth() + "/" + drinkDate.getFullYear()
+              allDrinksDates.push(date)
+            })
+            const weeksParticipated =  new Set(allDrinksDates).size
+
             // GET AVERAGE DRINK CONSUMED
-            const drinksAvg = "TBC"
+            const drinksAvg = (numOfDrinks / weeksParticipated).toFixed(2)
+
             // GET FAVOURITE DRINK TYPE
             let allDrinkerDrinkTypes = []
             aDrinkArray.map((drink) => allDrinkerDrinkTypes.push(drink.drinkType))
@@ -107,38 +125,116 @@ class DrinkersTable extends Component {
             }
             drinkerObjectsArray.push(drinkerObject)
           })
+        if(!this.state.drinkerObjectsArray) {
+          this.setState({ drinkerObjectsArray })
+        }
+      }
+    }
 
-      return drinkerObjectsArray.map((dataObject) => {
-        return(
-          <tr>
-            <td>{dataObject.drinkerName}</td>
-            <td>{dataObject.drinksNum}</td>
-            <td>{dataObject.drinkerWeeks}</td>
-            <td>{dataObject.drinkerAvgConsume}</td>
-            <td>{dataObject.drinkerFaveType}</td>
-            <td>{dataObject.drinkerHighScore}</td>
-            <td>{dataObject.drinkerLowScore}</td>
-            <td>{dataObject.drinkerAvgScore}</td>
-            <td>{dataObject.drinkerDrinkPercentage}</td>
-          </tr>
-        )
-      })
+    renderDrinkerData() {
+      const { drinks, drinkerObjectsArray } = this.state
+
+        // ESTABLISH TOTAL WEEKS SO FAR FOR LATER DATE COMPARISON
+        let totalWeeks = []
+        drinks.map((drink) => {
+          const thisDrinkDate = new Date(drink.date)
+          const oneDrinkDate =  +thisDrinkDate.getDate() + "/" + thisDrinkDate.getMonth() + "/" + thisDrinkDate.getFullYear()
+          totalWeeks.push(oneDrinkDate)
+        })
+        const totalWeeksNumber =  new Set(totalWeeks).size
+
+        // RETURN DATA TABLE INFO!
+        return drinkerObjectsArray.map((dataObject, index) => {
+          return(
+            <tr key={index}>
+              <td>{dataObject.drinkerName}</td>
+              <td>{dataObject.drinksNum}</td>
+              <td>{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
+              <td>{dataObject.drinkerAvgConsume}</td>
+              <td>{dataObject.drinkerFaveType}</td>
+              <td>{dataObject.drinkerHighScore}</td>
+              <td>{dataObject.drinkerLowScore}</td>
+              <td>{dataObject.drinkerAvgScore}</td>
+              <td>{dataObject.drinkerDrinkPercentage}</td>
+            </tr>
+          )
+        })
+    }
+
+    onSort(column){
+      const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
+
+      // SORT DATA BY PERSON NAME
+      const sortedNameData = () => {
+        const dataSortedByName = this.state.drinkerObjectsArray.sort((a, b) => {
+          const firstText = a.drinkerName.toUpperCase();
+          const secondText = b.drinkerName.toUpperCase();
+          if (firstText < secondText) return -1;
+          else if (firstText > secondText) return 1;
+          return 0;
+        });
+        if (direction === 'desc') dataSortedByName.reverse();
+        this.setState({ drinkerObjectsArray: dataSortedByName,
+                        sort: { column, direction }
+                      });
+      }
+
+      // SORT DATA BY DRINK TYPE
+      const sortedDrinkTypeData = () => {
+        const dataSortedByDrinkType = this.state.drinkerObjectsArray.sort((a, b) => {
+          const firstText = a.drinkerFaveType.toUpperCase();
+          const secondText = b.drinkerFaveType.toUpperCase();
+          if (firstText < secondText) return -1;
+          else if (firstText > secondText) return 1;
+          return 0;
+        });
+        if (direction === 'desc') dataSortedByDrinkType.reverse();
+        this.setState({ drinkerObjectsArray: dataSortedByDrinkType,
+                        sort: { column, direction }
+                      });
+      }
+
+      const sortedNumberColumn = () => {
+        const dataSortedByNumbers = this.state.drinkerObjectsArray.sort((a, b) => {
+          const firstNum = parseFloat(a[column])
+          const secondNum = parseFloat(b[column])
+          if (firstNum < secondNum) return -1;
+          else if (firstNum > secondNum) return 1;
+          return 0;
+        })
+        if (direction === 'desc') dataSortedByNumbers.reverse();
+        this.setState({ drinkerObjectsArray: dataSortedByNumbers,
+                        sort: { column, direction }
+                      });
+      }
+
+      if(column === "drinkerName") {
+        sortedNameData()
+      } else if(column === "drinkerFaveType") {
+        sortedDrinkTypeData()
+      } else {
+        sortedNumberColumn()
       }
     }
 
   render() {
-    return(
-      <div>
-        <table className="drinkersTable">
-          <thead>
-            {this.renderDrinkerHeader()}
-          </thead>
-          <tbody>
-            {this.renderDrinkerData()}
-          </tbody>
-        </table>
-      </div>
-    )
+    const { drinkerObjectsArray } = this.state
+    if (!drinkerObjectsArray) {
+      return <p>Awaiting Data</p>
+    } else {
+      return(
+        <div>
+          <table className="drinkersTable">
+            <thead>
+              {this.renderDrinkerHeader()}
+            </thead>
+            <tbody>
+              {this.renderDrinkerData()}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
   }
 }
 

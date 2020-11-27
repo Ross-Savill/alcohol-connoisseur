@@ -5,30 +5,11 @@ import Table from './Table';
 import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';
 
-const Dates = ({ date }) => {
-  const fixedDate = new Date(date);
-  return fixedDate.getUTCDate
-}
-
-const Scores = ({ values }) => {
-  if(values > 7.5) {
-    return (
-      <span className="goodBadge">
-        {values}
-      </span>
-    )
-  } else if (values <= 7.5 && values >= 4) {
-    return (
-      <span className="averageBadge">
-        {values}
-      </span>
-    )
-  } else {
-    return (
-      <span className="badBadge">
-        {values}
-      </span>
-    )
+const Dates = ( values ) => {
+  for (const [key, date] of Object.entries(values)) {
+    const newDate = new Date(date)
+    const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    return +newDate.getDate() + " " + (month[newDate.getMonth()]) + " " + newDate.getFullYear().toString().substr(-2)
   }
 }
 
@@ -51,13 +32,13 @@ function HomePage() {
           {
             Header: "Name",
             accessor: "name",
-            width: "130"
+            width: "120",
           },
           {
             Header: "Date",
             accessor: "date",
-            width: "80",
-            Cell: ({ cell: { date } }) => <Dates values={date} />
+            width: "70",
+            Cell: ({ cell: { value } }) => <Dates values={value} />
           },
           {
             Header: "Main Component",
@@ -70,13 +51,27 @@ function HomePage() {
             width: "70"
           },
           {
+            Header: "ABV%",
+            accessor: "abv",
+            width: "50",
+            Cell: ({ cell: { value } }) => parseFloat((value * 100).toFixed(1)) + '%'
+          },
+          {
             Header: "Brand or Brewery",
             accessor: "brand",
-            width: "130"
+            width: "120"
           },
           {
             Header: "Other Component(s) and/or Mixer(s)",
-            accessor: d => (d.mixerTwo ?
+            accessor: d => (d.mixerSix ?
+                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive}, ${d.mixerSix}`:
+                            d.mixerFive ?
+                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive}`:
+                            d.mixerFour ?
+                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}`:
+                            d.mixerThree ?
+                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}`:
+                            d.mixerTwo ?
                            `${d.mixerOne}, ${d.mixerTwo}`:
                             d.mixerOne ?
                            `${d.mixerOne}` : "")
@@ -90,20 +85,19 @@ function HomePage() {
             Header: "Score",
             accessor: "score",
             width: "60",
-            Cell: ({ cell: { value } }) => <Scores values={value} />
           },
           {
             Header: "Collaborator(s)",
             width: "120",
-            accessor: d => (d.collabTwo ?
-              `${d.collabOne}, ${d.collabTwo}`:
-               d.collabOne ?
-              `${d.collabOne}`: "")
+            accessor: d => (d.secondCollabCompany ?
+              `${d.firstCollabCompany}, ${d.secondCollabCompany}`:
+               d.firstCollabCompany ?
+              `${d.firstCollabCompany}`: "")
           },
           {
             Header: "Company",
             accessor: "company",
-            width: "150"
+            width: "130"
           },
           {
             Header: "Notes",

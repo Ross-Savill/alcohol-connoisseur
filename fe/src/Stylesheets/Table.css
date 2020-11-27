@@ -25,19 +25,56 @@
   font-size: 0.9em;
 }
 
-.td {
+.table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+
+.th {
+  display: flex;
+  align-items: center;
+}
+
+.table thead th {
+  border: none;
+  border-spacing: 0px;
+  border-collapse:collapse;
+}
+
+.table tbody td {
   text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  border-spacing: 0px;
+  border-collapse:collapse;
 }
 
-.fullTableAndSearch {
-  padding-top: 10px;
+.td.td {
+  padding: 0;
+  border-spacing: 0px;
+  border-collapse:collapse;
 }
 
-.drinkSearch {
-  position: absolute;
+.tr {
+  display: flex;
+  align-items: center;
+  border-top: 0.5px solid rgb(160,160,255);
+  border-bottom: 0.5px solid rgb(160,160,255);
+  border-spacing: 0px;
+  border-collapse:collapse;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.drinkSearchDiv {
+  justify-content: center;
   margin: auto;
 }
 
 .pagination {
-  justify-content: right;
+  justify-content: center;
 }

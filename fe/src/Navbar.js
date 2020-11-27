@@ -73,10 +73,10 @@ const Navbar = () => {
               activeClassName="is-active"
               to="/drinkers"
                 render={(props) => (
-                <WorldMap {...props}
-                drinks={drinkData}
-                drinkers={drinkerData}
-                isFetching={drinkData.isFetching} />
+                  <WorldMap {...props}
+                  drinks={drinkData}
+                  drinkers={drinkerData}
+                  isFetching={drinkData.isFetching} />
                 )}
               >
               Drinkers

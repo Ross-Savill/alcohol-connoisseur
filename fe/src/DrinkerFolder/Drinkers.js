@@ -99,7 +99,6 @@ class Drinkers extends Component {
             {this.irregularDrinkers()}
           </optgroup>
         </select>
-        <h2 className="selectedDrinkerHeader">{this.state.selectedDrinker}</h2>
         <div className="chartsAndTable">
           <div className="radarAndBarChart">
             <RadarChart drinks={this.state.drinks}

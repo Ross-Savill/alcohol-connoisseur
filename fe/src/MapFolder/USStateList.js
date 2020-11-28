@@ -42,7 +42,7 @@ export const USStateList =
     "US-MO": "Missouri",
     "US-MN": "Minnesota",
     "US-CA": "California",
-    "US-IA":	"Iowa",
+    "US-IA": "Iowa",
     "US-MI": "Michigan",
     "US-GA": "Georgia",
     "US-AZ": "Arizona",

@@ -32,15 +32,16 @@ class DrinkersTable extends Component {
     renderDrinkerHeader() {
       return(
         <tr>
-          <th onClick={e => this.onSort("drinkerName")}>Name</th>
-          <th onClick={e => this.onSort("drinksNum")}>Number of Drinks</th>
-          <th onClick={e => this.onSort("drinkerWeeks")}>Weeks Participated</th>
-          <th onClick={e => this.onSort("drinkerAvgConsume")}>Avg Drinks Had Per Visit</th>
-          <th onClick={e => this.onSort("drinkerFaveType")}>Favourite Drink Type</th>
-          <th onClick={e => this.onSort("drinkerHighScore")}>Highest Ever Score</th>
-          <th onClick={e => this.onSort("drinkerLowScore")}>Lowest Ever Score</th>
-          <th onClick={e => this.onSort("drinkerAvgScore")}>Average Score</th>
-          <th onClick={e => this.onSort("drinkerDrinkPercentage")}>Percent of All Drinks Drunk</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerName")}>Name</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinksNum")}>Number of Drinks</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerWeeks")}>Weeks Participated</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgConsume")}>Avg Drinks Per Visit</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgStrength")}>Avg Drink Strength</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerFaveType")}>Favourite Drink Type</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerHighScore")}>Highest Ever Score</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerLowScore")}>Lowest Ever Score</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgScore")}>Average Score</th>
+          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerDrinkPercentage")}>Percent of All Drinks Drunk</th>
         </tr>
       )
     }
@@ -87,6 +88,17 @@ class DrinkersTable extends Component {
             // GET AVERAGE DRINK CONSUMED
             const drinksAvg = (numOfDrinks / weeksParticipated).toFixed(2)
 
+            // GET AVERAGE DRINK STRENGTH
+            let allDrinkStrengths = []
+            aDrinkArray.map((drink) => {
+              allDrinkStrengths.push(drink.abv)
+              if(drink.abv === undefined) {
+                console.log(drink.drinkMain)
+              }
+            })
+            const sumOfAbvs = allDrinkStrengths.reduce((a, b) => a + b, 0);
+            const averageDrinkStrength = ((sumOfAbvs / allDrinkStrengths.length)*100).toFixed(2) + '%' || 0;
+
             // GET FAVOURITE DRINK TYPE
             let allDrinkerDrinkTypes = []
             aDrinkArray.map((drink) => allDrinkerDrinkTypes.push(drink.drinkType))
@@ -117,6 +129,7 @@ class DrinkersTable extends Component {
               drinksNum: numOfDrinks,
               drinkerWeeks: weeksParticipated,
               drinkerAvgConsume: drinksAvg,
+              drinkerAvgStrength: averageDrinkStrength,
               drinkerFaveType: favouriteDrinkType,
               drinkerHighScore: highestScore,
               drinkerLowScore: lowestScore,
@@ -151,6 +164,7 @@ class DrinkersTable extends Component {
               <td>{dataObject.drinksNum}</td>
               <td>{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
               <td>{dataObject.drinkerAvgConsume}</td>
+              <td>{dataObject.drinkerAvgStrength}</td>
               <td>{dataObject.drinkerFaveType}</td>
               <td>{dataObject.drinkerHighScore}</td>
               <td>{dataObject.drinkerLowScore}</td>

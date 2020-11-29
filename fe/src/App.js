@@ -36,9 +36,15 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
+          <Route
+            exact path="/"
+            render={(props) => (
+              <HomePage {...props}
+              drinks={this.state.drinks}
+              />
+            )}
+          />
+
           <Route
             exact path="/drinkers"
             render={(props) => (
@@ -48,21 +54,35 @@ class App extends Component {
               drinkTypes={this.state.drinkTypes}
               />
             )}
-          >
-          </Route>
-          <Route exact path="/ratingwords">
-            <RatingWord />
-          </Route>
+          />
+
+          <Route
+            exact path="/ratingwords"
+            render={(props) => (
+              <RatingWord {...props}
+                drinks={this.state.drinks}
+              />
+            )}
+          />
+
           <Route
             exact path="/world-map" render={(props) => (
-              <WorldMap {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+              <WorldMap {...props}
+                drinks={this.state.drinks}
+                drinkers={this.state.drinkers}
+              />
             )}
           />
+
           <Route
             exact path="/us-map" render={(props) => (
-              <USMap {...props} drinks={this.state.drinks} drinkers={this.state.drinkers} />
+              <USMap {...props}
+                drinks={this.state.drinks}
+                drinkers={this.state.drinkers}
+              />
             )}
           />
+
         </div>
       </BrowserRouter>
     )

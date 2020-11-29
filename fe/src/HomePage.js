@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from './Navbar';
 import './Stylesheets/HomePage.css';
 import Table from './Table';
-import axios from 'axios';
 import AddDrinkForm from './AddDrinkForm';
 
 const Dates = ( values ) => {
@@ -13,16 +12,16 @@ const Dates = ( values ) => {
   }
 }
 
-function HomePage() {
+function HomePage(props) {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(props.drinks);
 
   useEffect(() => {
     (async () => {
-      const allDrinks = await axios("http://localhost:5000/drinks");
-      setData(allDrinks.data);
+      setData(props.drinks)
     })();
-  }, []);
+  }, [props]);
+
 
   const columns = useMemo(
     () => [
@@ -108,6 +107,9 @@ function HomePage() {
     ],
     []
   );
+  if(!data) {
+    return <h1>Hold Your Horses One Sec...</h1>
+  } else {
   return (
     <div>
       <div>
@@ -121,5 +123,6 @@ function HomePage() {
     </div>
     )
   }
+}
 
   export default HomePage;

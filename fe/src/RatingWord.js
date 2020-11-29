@@ -9,7 +9,7 @@ class RatingWord extends Component {
   constructor(props) {
     super(props)
       this.state = {
-        drinks: [],
+        drinks: null,
         ratingWordOne: [],
         ratingWordTwo: [],
         allRatingWords: [],
@@ -26,25 +26,33 @@ class RatingWord extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:5000/drinks")
-      .then(resp => this.setState({ drinks: resp.data }))
-      .catch(error => console.log(error))
+    // axios.get("http://localhost:5000/drinks")
+    //   .then(resp => this.setState({ drinks: resp.data }))
+    //   .catch(error => console.log(error))
+    const { drinks } = this.props
+    this.setState({ drinks })
     }
 
-  async componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
+    const { drinks } = this.state
+
+    if(prevState.drinks !== this.props.drinks) {
+      this.setState({ drinks: this.props.drinks })
 
     let allWords = []
 
     const setUpWordArray = () => {
-      this.state.drinks.map((drink, index) => {
-        allWords.push(drink.ratingWordOne)
-        allWords.push(drink.ratingWordTwo)
-      })
-      setAllWordsState()
+      if(drinks){
+        this.state.drinks.map((drink) => {
+          allWords.push(drink.ratingWordOne)
+          allWords.push(drink.ratingWordTwo)
+        })
+        setAllWordsState()
+      }
     }
 
     const setAllWordsState = () => {
-      if(prevState.drinks !== this.state.drinks) {
+      // if(prevState.drinks !== this.state.drinks) {
         this.setState({ allRatingWords: allWords })
         const countedUniqueWords = allWords.reduce(function(occ, word) {
           occ[word] = (occ[word] || 0) + 1;
@@ -58,9 +66,10 @@ class RatingWord extends Component {
           return b[1] - a[1];
         });
         this.setState({ sortedUniqueWords: sortedUniqueWords })
-      }
+      // }
     }
     setUpWordArray()
+  }
   }
 
   renderWordHeader() {
@@ -382,51 +391,56 @@ class RatingWord extends Component {
   }
 
   render() {
-    return (
-      <div className="fullPage">
-        <div className="titleDiv">
-          {(!this.state.clickedWord ?
-            <h1 className='title'>Rating Word Data Page</h1> :
-            <h1 className='title'
-            >Info on "<span className="titleClickedWord">{this.state.clickedWord}</span>"</h1>
-          )}
-        </div>
-        <Navbar />
-        <div className="underTitle">
-          <div className ="searchAndTable">
-            <p className="searchLabel">Search for a Rating Word below!</p>
-            <p className="searchLabel">↓↓↓↓↓</p>
-            <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
-            <table className="drinksTable">
-              <thead>
-                {this.renderWordHeader()}
-              </thead>
-              <tbody>
-                {this.renderWordData()}
-              </tbody>
-            </table>
+    console.log(this.state.drinks)
+    if(!this.state.drinks) {
+      return <h1>One Moment Please</h1>
+    } else {
+      return (
+        <div className="fullPage">
+          <div className="titleDiv">
+            {(!this.state.clickedWord ?
+              <h1 className='title'>Rating Word Data Page</h1> :
+              <h1 className='title'
+              >Info on "<span className="titleClickedWord">{this.state.clickedWord}</span>"</h1>
+            )}
           </div>
-          <div className="chart">
-            <div className="selectedWordData">
-              {this.renderClickedWordData()}
+          <Navbar />
+          <div className="underTitle">
+            <div className ="searchAndTable">
+              <p className="searchLabel">Search for a Rating Word below!</p>
+              <p className="searchLabel">↓↓↓↓↓</p>
+              <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
+              <table className="drinksTable">
+                <thead>
+                  {this.renderWordHeader()}
+                </thead>
+                <tbody>
+                  {this.renderWordData()}
+                </tbody>
+              </table>
+            </div>
+            <div className="chart">
+              <div className="selectedWordData">
+                {this.renderClickedWordData()}
+              </div>
+            </div>
+            <div className="clickedWordDrinksTable">
+              <table className="clickedWordTable">
+                <thead>
+                  {this.renderClickedWordsDrinksHeader()}
+                </thead>
+                <tbody>
+                  {this.renderClickedWordDrinks()}
+                </tbody>
+                {(this.state.clickedName ?
+                  <button onClick={() => this.resetDrinkerName()}>Click to Reset Drinkers</button> :
+                  "")}
+              </table>
             </div>
           </div>
-          <div className="clickedWordDrinksTable">
-            <table className="clickedWordTable">
-              <thead>
-                {this.renderClickedWordsDrinksHeader()}
-              </thead>
-              <tbody>
-                {this.renderClickedWordDrinks()}
-              </tbody>
-              {(this.state.clickedName ?
-                <button onClick={() => this.resetDrinkerName()}>Click to Reset Drinkers</button> :
-                "")}
-            </table>
-          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
 }
 

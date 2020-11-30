@@ -22,7 +22,6 @@ function HomePage(props) {
     })();
   }, [props]);
 
-
   const columns = useMemo(
     () => [
       {

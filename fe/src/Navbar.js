@@ -47,24 +47,13 @@ const Navbar = () => {
       aria-label="main navigation"
     >
       <div className="nav-container">
-      <div className="navbar-brand">
-          <a
-            role="button"
-            className={`navbar-burger burger ${isOpen && "is-active"}`}
-            aria-label="menu"
-            aria-expanded="false"
-            onClick={() => setOpen(!isOpen)}
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
         <div className={`navbar-menu ${isOpen && "is-active"}`}>
           <div className="navbar-start">
             <NavLink
               className="navbar-item"
-              activeClassName="is-active" to="/">
+              activeClassName="is-active"
+              to="/"
+            >
               Main Table
             </NavLink>
 
@@ -72,20 +61,15 @@ const Navbar = () => {
               className="navbar-item"
               activeClassName="is-active"
               to="/drinkers"
-                render={(props) => (
-                  <WorldMap {...props}
-                  drinks={drinkData}
-                  drinkers={drinkerData}
-                  isFetching={drinkData.isFetching} />
-                )}
-              >
+            >
               Drinkers
             </NavLink>
 
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
-              to="/ratingwords">
+              to="/ratingwords"
+            >
               Rating Words
             </NavLink>
 
@@ -93,12 +77,6 @@ const Navbar = () => {
               className="navbar-item"
               activeClassName="is-active"
               to="/world-map"
-              render={(props) => (
-                <WorldMap {...props}
-                drinks={drinkData}
-                drinkers={drinkerData}
-                isFetching={drinkData.isFetching} />
-              )}
             >
               World Map
             </NavLink>
@@ -107,12 +85,6 @@ const Navbar = () => {
               className="navbar-item"
               activeClassName="is-active"
               to="/us-map"
-              render={(props) => (
-                <USMap {...props}
-                drinks={drinkData}
-                drinkers={drinkerData}
-                isFetching={drinkData.isFetching} />
-              )}
             >
               USA Map
             </NavLink>

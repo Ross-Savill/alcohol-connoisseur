@@ -26,9 +26,6 @@ class RatingWord extends Component {
   }
 
   componentDidMount() {
-    // axios.get("http://localhost:5000/drinks")
-    //   .then(resp => this.setState({ drinks: resp.data }))
-    //   .catch(error => console.log(error))
     const { drinks } = this.props
     this.setState({ drinks })
     }
@@ -39,20 +36,19 @@ class RatingWord extends Component {
     if(prevState.drinks !== this.props.drinks) {
       this.setState({ drinks: this.props.drinks })
 
-    let allWords = []
+      let allWords = []
 
-    const setUpWordArray = () => {
-      if(drinks){
-        this.state.drinks.map((drink) => {
-          allWords.push(drink.ratingWordOne)
-          allWords.push(drink.ratingWordTwo)
-        })
-        setAllWordsState()
+      const setUpWordArray = () => {
+        if(drinks){
+          this.state.drinks.map((drink) => {
+            allWords.push(drink.ratingWordOne)
+            allWords.push(drink.ratingWordTwo)
+          })
+          setAllWordsState()
+        }
       }
-    }
 
-    const setAllWordsState = () => {
-      // if(prevState.drinks !== this.state.drinks) {
+      const setAllWordsState = () => {
         this.setState({ allRatingWords: allWords })
         const countedUniqueWords = allWords.reduce(function(occ, word) {
           occ[word] = (occ[word] || 0) + 1;
@@ -66,10 +62,10 @@ class RatingWord extends Component {
           return b[1] - a[1];
         });
         this.setState({ sortedUniqueWords: sortedUniqueWords })
-      // }
+        }
+
+      setUpWordArray()
     }
-    setUpWordArray()
-  }
   }
 
   renderWordHeader() {
@@ -444,4 +440,4 @@ class RatingWord extends Component {
   }
 }
 
-export default RatingWord
+export default RatingWord;

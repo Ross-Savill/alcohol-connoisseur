@@ -188,7 +188,7 @@ class RatingWord extends Component {
     if(!clickedName) {
       return(
         <tr>
-          <th>{clickedWordDrinks.length} Drinks called "{clickedWord}"</th>
+          <th>{clickedWordDrinks.length} Drink(s) called "{clickedWord}"</th>
         </tr>
       )
     } else {

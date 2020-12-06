@@ -1,35 +1,64 @@
 const express = require('express');
-const mongoose = require('mongoose')
-const cors = require('cors')
-
-mongoose.connect('mongodb://localhost:27017/drinkdb')
-
-const Drinks = require('./models/Drinks')
-const PeopleNames = require('./models/PeoplesNames')
-const DrinkTypes = require('./models/DrinkTypes')
+const mongoose = require('mongoose');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const {MongoClient} = require('mongodb');
+const assert = require('assert');
+const uri = "mongodb+srv://auth0-custom-db-user:eprnsIh9PQQOXoTy@cluster0.uh6ue.mongodb.net/drinkandrate?retryWrites=true&w=majority";
 
 const app = new express();
-const port = process.env.PORT || 5000;
+app.use(helmet());
+app.use(bodyParser.json());
+app.use(cors());
+app.use(morgan('combined'));
+app.use(express.json());
 
-app.use(cors())
-app.use(express.json())
+// async function listDatabases(client){
+//   databasesList = await client.db().admin().listDatabases();
 
-app.get('/drinks', (req,res) => {
-  Drinks.find({})
-  .then(docs => res.send(docs))
-})
+//   console.log("Databases:");
+//   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+// };
 
-app.get('/peoplenames', (req,res) => {
-  PeopleNames.find({})
-  .then(docs => res.send(docs))
-})
+app.get('/drinks', (req, res) => {
+  MongoClient.connect(uri, function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      dbName.collection("drinks").find({}).toArray(function(err, result) {
+          if (err) throw err;
+          res.json(result);
+          db.close();
+      });
+  });
+});
 
-app.get('/drinktypes', (req,res) => {
-  DrinkTypes.find({})
-  .then(docs => res.send(docs))
-})
+app.get('/peoplenames', (req, res) => {
+  MongoClient.connect(uri, function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      dbName.collection("peoplenames").find({}).toArray(function(err, result) {
+          if (err) throw err;
+          res.json(result);
+          db.close();
+      });
+  });
+});
 
-app.listen(port , () => {
-  console.log(`listening at http://localhost:${port}`)
-})
+app.get('/drinktypes', (req, res) => {
+  MongoClient.connect(uri, function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      dbName.collection("drinktypes").find({}).toArray(function(err, result) {
+          if (err) throw err;
+          res.json(result);
+          db.close();
+      });
+  });
+});
+
+app.listen(5000, () => console.log("Server running on port 5000!"))
+
+// mongoose.connect('mongodb://localhost:27017/drinkdb')
 

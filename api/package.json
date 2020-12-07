@@ -4,10 +4,7 @@
   "description": "My MERN personal project to display drinking data relating to me and my friends.",
   "main": "app.js",
   "scripts": {
-    "start": "node api.js",
-    "build": "cd ../fe && npm run build",
-    "install-fe": "cd ../fe && npm install",
-    "heroku-postbuild": "npm run install-fe && npm run build"
+    "start": "node api.js"
   },
   "author": "Ross Savill",
   "license": "ISC",

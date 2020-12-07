@@ -23,9 +23,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const requestDrinkers = axios.get("http://localhost:5000/peoplenames")
-    const requestDrinks = axios.get("http://localhost:5000/drinks")
-    const requestDrinkTypes = axios.get("http://localhost:5000/drinktypes")
+    const requestDrinkers = axios.get("https://drinkandrate.herokuapp.com/peoplenames")
+    const requestDrinks = axios.get("https://drinkandrate.herokuapp.com/drinks")
+    const requestDrinkTypes = axios.get("https://drinkandrate.herokuapp.com/drinktypes")
     axios.all([requestDrinkers, requestDrinks, requestDrinkTypes])
       .then(resp => this.setState({ drinkers: resp[0].data,
                                     drinks: resp[1].data,

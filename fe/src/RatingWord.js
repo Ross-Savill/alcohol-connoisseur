@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar'
 import './Stylesheets/RatingWord.css';
-import axios from 'axios';
 import { Pie, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
 

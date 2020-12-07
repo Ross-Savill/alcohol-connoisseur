@@ -114,7 +114,7 @@ function HomePage(props) {
       <div>
         <h1 className="mainTitle">Welcome to Drink And Rate!!!</h1>
         <Navbar />
-        <AddDrinkForm options={data}/>
+        {/* <AddDrinkForm options={data}/> */}
       </div>
       <div className="App">
         <Table columns={columns} data={data} />

@@ -5,25 +5,29 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const {MongoClient} = require('mongodb');
+require('dotenv').config()
 const assert = require('assert');
-const uri = "mongodb+srv://auth0-custom-db-user:eprnsIh9PQQOXoTy@cluster0.uh6ue.mongodb.net/drinkandrate?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 5000;
 
 const app = new express();
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
-app.use(morgan('combined'));
+app.use(morgan('tiny'));
 app.use(express.json());
 
-// async function listDatabases(client){
-//   databasesList = await client.db().admin().listDatabases();
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/drinkandrate', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
 
-//   console.log("Databases:");
-//   databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-// };
+mongoose.connection.on('connected', () =>  {
+  console.log("Mongoose is connected!")
+})
+
 
 app.get('/drinks', (req, res) => {
-  MongoClient.connect(uri, function(err, db) {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       if (err) throw err;
       const dbName = db.db("drinkandrate");
       dbName.collection("drinks").find({}).toArray(function(err, result) {
@@ -35,7 +39,7 @@ app.get('/drinks', (req, res) => {
 });
 
 app.get('/peoplenames', (req, res) => {
-  MongoClient.connect(uri, function(err, db) {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       if (err) throw err;
       const dbName = db.db("drinkandrate");
       dbName.collection("peoplenames").find({}).toArray(function(err, result) {
@@ -47,7 +51,7 @@ app.get('/peoplenames', (req, res) => {
 });
 
 app.get('/drinktypes', (req, res) => {
-  MongoClient.connect(uri, function(err, db) {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
       if (err) throw err;
       const dbName = db.db("drinkandrate");
       dbName.collection("drinktypes").find({}).toArray(function(err, result) {
@@ -58,7 +62,8 @@ app.get('/drinktypes', (req, res) => {
   });
 });
 
-app.listen(5000, () => console.log("Server running on port 5000!"))
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('../fe/build'))
+}
 
-// mongoose.connect('mongodb://localhost:27017/drinkdb')
-
+app.listen(PORT, () => console.log("Server running on port 5000!"))

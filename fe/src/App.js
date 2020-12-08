@@ -39,13 +39,7 @@ class App extends Component {
     if(!user) {
       return (
         <div>
-          <div>
-            <LoginButton />
-            <p>Please sign in</p>
-          </div>
-          <div>
-            <button>Add Drinker</button>
-          </div>
+          <LoginButton />
         </div>
       )
     } else {

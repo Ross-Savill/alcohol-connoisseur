@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import './Stylesheets/Navbar.css';
-import WorldMap from './MapFolder/WorldMap';
-import USMap from './MapFolder/USMap';
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 const DRINKS_URL = "http://localhost:5000/drinks";
@@ -9,36 +7,6 @@ const DRINKERS_URL = "http://localhost:5000/peopleNames";
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
-  const [drinkData, setDrinkData] = useState({drinks: [], isFetching: false});
-  const [drinkerData, setDrinkerData] = useState({drinkers: [], isFetching: false});
-
-  useEffect(() => {
-    const fetchDrinks = async () => {
-        try {
-            setDrinkData({drinks: drinkData.drinks, isFetching: true});
-            const response = await axios.get(DRINKS_URL);
-            setDrinkData({drinks: response.data, isFetching: false});
-        } catch (e) {
-            console.log(e);
-            setDrinkData({drinks: drinkData.drinks, isFetching: false});
-        }
-    };
-    fetchDrinks();
-  }, []);
-
-  useEffect(() => {
-    const fetchDrinkers = async () => {
-        try {
-            setDrinkerData({drinkers: drinkerData.drinkers, isFetching: true});
-            const response = await axios.get(DRINKERS_URL);
-            setDrinkerData({drinkers: response.data, isFetching: false});
-        } catch (e) {
-            console.log(e);
-            setDrinkerData({drinkers: drinkerData.drinkers, isFetching: false});
-        }
-    };
-    fetchDrinkers();
-  }, []);
 
   return (
   	<nav

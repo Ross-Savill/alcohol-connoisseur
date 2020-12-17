@@ -386,7 +386,6 @@ class RatingWord extends Component {
   }
 
   render() {
-    console.log(this.state.drinks)
     if(!this.state.drinks) {
       return <h1>One Moment Please</h1>
     } else {

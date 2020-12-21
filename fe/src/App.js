@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import RatingWord from './RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
+import Sessions from './SessionsFolder/Sessions'
 import WorldMap from './MapFolder/WorldMap';
 import USMap from './MapFolder/USMap';
 import './Stylesheets/App.css';
@@ -77,6 +78,16 @@ const App = () => {
               render={(props) => (
                 <RatingWord {...props}
                   drinks={state.drinks}
+                />
+              )}
+            />
+            <Route
+              exact path="/sessions"
+              render={(props) => (
+                <Sessions {...props}
+                  drinks={state.drinks}
+                  drinkers={state.drinkers}
+                  drinkTypes={state.drinkTypes}
                 />
               )}
             />

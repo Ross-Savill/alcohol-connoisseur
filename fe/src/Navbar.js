@@ -44,6 +44,14 @@ const Navbar = () => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
+              to="/sessions"
+            >
+              Sessions
+            </NavLink>
+
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
               to="/world-map"
             >
               World Map

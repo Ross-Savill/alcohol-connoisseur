@@ -59,6 +59,9 @@ export default function Table({ columns, data }) {
                     }
                   >
                     {column.render("Header")}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
+                    </span>
                   </th>
                 ))}
               </tr>

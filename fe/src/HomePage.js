@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Navbar from './Navbar';
 import './Stylesheets/HomePage.css';
 import Table from './Table';
+import moment from 'moment';
 import AddDrinkForm from './AddDrinkForm';
 
 const Dates = ( values ) => {
@@ -15,17 +16,24 @@ const Dates = ( values ) => {
 function HomePage(props) {
 
   const [data, setData] = useState(props.drinks);
+  const [date, setDate] = useState("...")
+  const [drinkTotal, setDrinkTotal] = useState("...")
 
   useEffect(() => {
     (async () => {
       setData(props.drinks)
+      if(data) {
+        setDate(moment((data.map((drinks) => drinks.date)
+        .reduce(function (a, b) { return a > b ? a : b; }))).format('dddd Do MMMM YYYY'))
+        setDrinkTotal(data.length)
+      }
     })();
-  }, [props]);
+  }, [props, data]);
 
   const columns = useMemo(
     () => [
       {
-        Header: "All Drinks",
+        Header: `We've had ${drinkTotal} drinks as of our last session on ${date}`,
         columns: [
           {
             Header: "Name",
@@ -104,7 +112,7 @@ function HomePage(props) {
         ]
       }
     ],
-    []
+    [date, drinkTotal]
   );
   if(!data) {
     return <h1>Hold Your Horses One Sec...</h1>

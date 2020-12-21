@@ -102,72 +102,70 @@ class RadarChart extends Component {
     } else {
       return(
         <div>
-          {/* <div> */}
-            <select
-              className="chartTypeSelect"
-              value={this.showRadar}
-              onChange={this.handleChartChange}
-              >
-              <option>Radar Chart</option>
-              <option>Bar Chart</option>
-            </select>
+          <select
+            className="chartTypeSelect"
+            value={this.showRadar}
+            onChange={this.handleChartChange}
+            >
+            <option>Radar Chart</option>
+            <option>Bar Chart</option>
+          </select>
 
-            <div className={this.state.showRadar ?
-              'shownRadarChart': 'hiddenRadarChart'}>
-              <Radar
-                data={this.state.drinkerRadarData}
-                width={75}
-                height={75}
-                options={{
-                  title: {
-                    display: true,
-                    text: `${this.state.selectedDrinker}`,
-                    fontSize: 25
+          <div className={this.state.showRadar ?
+            'shownRadarChart': 'hiddenRadarChart'}>
+            <Radar
+              data={this.state.drinkerRadarData}
+              width={75}
+              height={75}
+              options={{
+                title: {
+                  display: true,
+                  text: `${this.state.selectedDrinker}`,
+                  fontSize: 25
+                },
+                scale: {
+                  ticks: {
+                    z: 1,
+                    callback: function (value) { if (Number.isInteger(value)) { return value; } else { return ""} }
                   },
-                  scale: {
-                    ticks: {
-                      z: 1,
-                      callback: function (value) { if (Number.isInteger(value)) { return value; } else { return ""} }
-                    },
-                    pointLabels: {
-                      fontSize: 15
+                  pointLabels: {
+                    fontSize: 15
+                  }
+                },
+                legend: {
+                  position: "bottom",
+                  labels: {
+                    fontSize: 15
+                  }
+                }
+              }}
+            />
+            </div>
+            <div className={this.state.showBar ?
+              'shownBarChart': 'hiddenBarChart'}>
+              <Bar
+                data={this.state.drinkerRadarData}
+                width={120}
+                height={85}
+                options={{
+                  plugins: {
+                    labels: {
+                      render: function (args) {
+                        return `${args.value}`
+                      }
+                    }
+                  },
+                  layout: {
+                    padding: {
+                      top: 15
                     }
                   },
                   legend: {
-                    position: "bottom",
-                    labels: {
-                      fontSize: 15
-                    }
+                    position: "bottom"
                   }
                 }}
               />
-              </div>
-              <div className={this.state.showBar ?
-                'shownBarChart': 'hiddenBarChart'}>
-                <Bar
-                  data={this.state.drinkerRadarData}
-                  width={120}
-                  height={85}
-                  options={{
-                    plugins: {
-                      labels: {
-                        render: function (args) {
-                          return `${args.value}`
-                        }
-                      }
-                    },
-                    layout: {
-                      padding: {
-                        top: 15
-                      }
-                    },
-                    legend: {
-                      position: "bottom"
-                    }
-                  }}
-                />
-            </div>
-          {/* </div> */}
+          </div>
         </div>
       )
     }

@@ -119,8 +119,8 @@ class RatingWord extends Component {
     const whoSaidIt = [];
     const clickedWordDrinks = [];
     this.state.drinks.map((drinkInfo, index) => {
-      if(drinkInfo.ratingWordOne == clickedWord ||
-        drinkInfo.ratingWordTwo == clickedWord) {
+      if(drinkInfo.ratingWordOne === clickedWord ||
+        drinkInfo.ratingWordTwo === clickedWord) {
           whoSaidIt.push(drinkInfo.name)
           clickedWordDrinks.push(drinkInfo)
         }

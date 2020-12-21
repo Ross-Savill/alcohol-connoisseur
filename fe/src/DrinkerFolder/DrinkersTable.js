@@ -65,7 +65,6 @@ class DrinkersTable extends Component {
           })
           allDrinkersArrays.push(oneDrinkerArray)
         })
-
         //SET UP DRINKER OBJECTS
           allDrinkersArrays.map((aDrinkArray) => {
             // GET DRINKER NAME

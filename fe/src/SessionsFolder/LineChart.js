@@ -85,12 +85,32 @@ class LineChart extends PureComponent {
       })
     }
 
-    const options = drinkers.map(d => ({
-      "value": d._id,
-      "label": d.drinker
-    }))
-    options.push({ "value": "allDrinks",
-                   "label": "All Drinkers" })
+    const options = [
+      {
+        label: "Regular Drinkers",
+        options:[]
+      },
+      {
+        label: "Irregular Drinkers",
+        options:[]
+      }
+    ]
+
+    drinkers.map((drinker) => {
+      let drinkerCount = 0
+      drinks.map((drink) => {
+        if(drinker.drinker === drink.name) {
+          drinkerCount = drinkerCount + 1
+        }
+      })
+      if(drinkerCount >= 20) {
+        options[0].options.push({"value": drinker._id, "label": drinker.drinker })
+      } else {
+        options[1].options.push({"value": drinker._id, "label": drinker.drinker })
+      }
+    })
+
+    options.unshift({ "value": "allDrinks", "label": "All Drinkers" })
     this.setState({selectOptions: options})
 
     const drinkerLineChartData = {

@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
+import Select from 'react-select';
 import { Line } from 'react-chartjs-2';
+import moment from 'moment';
 import '../Stylesheets/LineChart.css'
 
 class LineChart extends PureComponent {
@@ -9,20 +11,25 @@ class LineChart extends PureComponent {
         drinks: null,
         drinkers: null,
         drinkTypes: null,
-        drinkerLineChartData: null
+        drinkerLineChartData: null,
+        selectOptions:[],
+        drinkerSelection: [{ "value": "allDrinks", "label": "All Drinkers" }]
       }
   }
 
   componentDidMount() {
-    const { drinks, drinkers, drinkTypes } = this.props
+    const { drinks } = this.props
     if(drinks) {
       this.haveDrinks()
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { drinks } = this.state
+    const { drinks, drinkerSelection } = this.state
     if(this.props.drinks !== drinks) {
+      this.haveDrinks()
+    }
+    if(this.state.drinkerSelection !== prevState.drinkerSelection) {
       this.haveDrinks()
     }
   }
@@ -31,28 +38,71 @@ class LineChart extends PureComponent {
     const { drinks, drinkers, drinkTypes } = this.props
     this.setState({ drinks, drinkers, drinkTypes })
 
-    const allDates = [...new Set(drinks.map(drink => drink.date))]
-    let numOfDrinksOnDates = []
-
-    allDates.map((date) => {
-      let drinksOnThisDate = 0
-      drinks.map((drink) => {
-        if(drink.date === date) {
-          drinksOnThisDate = drinksOnThisDate + 1
-        }
-      })
-      numOfDrinksOnDates.push(drinksOnThisDate)
+    const allDates = [...new Set(drinks.map(drink => drink.date))].sort()
+    const presentableDates = allDates.map((date) => {
+      return moment(date).format("MMM-DD")
     })
 
+    const { drinkerSelection } = this.state
+
+    let datasets = []
+    if(drinkerSelection) {
+      const backgroundColours = ["rgba(228,26,28,0.3)", "rgba(55,126,184,0.3)", "rgba(77,175,74,0.3)",
+      "rgba(152,78,163,0.3)", "rgba(255,127,0, 0.3)","rgba(255,255,51,0.3)", "rgba(166,86,40,0.3)",
+      "rgba(247,129,191,0.3)", "rgba(153,153,153,0.3)"]
+
+      const borderColours = ["rgba(228,26,28,1)", "rgba(55,126,184,1)", "rgba(77,175,74,1)",
+      "rgba(152,78,163,1)", "rgba(255,127,0,1)","rgba(255,255,51,1)", "rgba(166,86,40,1)",
+      "rgba(247,129,191,1)", "rgba(153,153,153,1)"]
+
+      let colourPick = 0
+      drinkerSelection.map((selection) => {
+        let selectionAllDrinksOnDates = []
+        allDates.map((date) => {
+          let drinksOnThisDate = 0
+          drinks.map((drink) => {
+            if(selection.label === "All Drinkers") {
+              if(drink.date === date) {
+                drinksOnThisDate = drinksOnThisDate + 1
+              }
+            } else if (drink.date === date && drink.name === selection.label) {
+              drinksOnThisDate = drinksOnThisDate + 1
+            }
+          })
+          selectionAllDrinksOnDates.push(drinksOnThisDate)
+        })
+        const label = selection.label
+        const backgroundColourOptions = backgroundColours[colourPick];
+        const borderColourOptions =  borderColours[colourPick]
+
+        colourPick = colourPick + 1
+
+        datasets.push({"label":label,
+                       "data": selectionAllDrinksOnDates,
+                       borderColor: borderColourOptions,
+                       backgroundColor: backgroundColourOptions,
+        })
+      })
+    }
+
+    const options = drinkers.map(d => ({
+      "value": d._id,
+      "label": d.drinker
+    }))
+    options.push({ "value": "allDrinks",
+                   "label": "All Drinkers" })
+    this.setState({selectOptions: options})
+
     const drinkerLineChartData = {
-      labels: allDates,
-        datasets: [{
-          label: "Number of Drinks",
-          data: numOfDrinksOnDates,
-          borderColor: 'rgb(238, 97, 131)'
-        }]
+      labels: presentableDates,
+      datasets: datasets,
     }
     this.setState({ drinkerLineChartData })
+  }
+
+  handleSelecton(e) {
+    this.setState({drinkerSelection: e})
+    this.haveDrinks()
   }
 
   renderLineChart() {
@@ -61,8 +111,8 @@ class LineChart extends PureComponent {
         <div className="lineChartDiv">
           <Line
             data={this.state.drinkerLineChartData}
-            width={100}
-            height={50}
+            width={80}
+            height={35}
             options={{
               title: {
                 display: true,
@@ -83,11 +133,39 @@ class LineChart extends PureComponent {
   }
 
   render() {
-    return(
-      <div>
-        {this.renderLineChart()}
-      </div>
-    )
+    const { selectOptions, drinkerSelection } = this.state
+    console.log(drinkerSelection)
+    if(drinkerSelection === null || drinkerSelection.length === 0) {
+      return (
+        <div className="noLineChartScreen">
+          <h2>Select a Drinker or All Drinkers for Data</h2>
+          <div className="justSelectFields">
+            <Select
+            isMulti
+            value={drinkerSelection}
+            options={selectOptions}
+            onChange={this.handleSelecton.bind(this)}
+            />
+          </div>
+        </div>
+      )
+    } else {
+      return(
+        <div className="lineChartPlusFields">
+          <div className="justLineChart">
+            {this.renderLineChart()}
+          </div>
+          <div className="justSelectFields">
+              <Select
+                isMulti
+                value={drinkerSelection}
+                options={selectOptions}
+                onChange={this.handleSelecton.bind(this)}
+              />
+          </div>
+        </div>
+      )
+    }
   }
 }
 

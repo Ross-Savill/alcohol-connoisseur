@@ -111,7 +111,7 @@ class LineChart extends PureComponent {
     })
 
     options.unshift({ "value": "allDrinks", "label": "All Drinkers" })
-    this.setState({selectOptions: options})
+    this.setState({ selectOptions: options })
 
     const drinkerLineChartData = {
       labels: presentableDates,

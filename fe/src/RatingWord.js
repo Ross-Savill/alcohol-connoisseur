@@ -3,10 +3,15 @@ import Navbar from './Navbar'
 import './Stylesheets/RatingWord.css';
 import { Pie, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
+import ClickedRatingTable from './ClickedRatingTable';
+import RatingPieChart from './RatingPieChart';
+import RatingBarChart from './RatingBarChart';
+
 
 class RatingWord extends Component {
   constructor(props) {
     super(props)
+      this.handleChartNameClick = this.handleChartNameClick.bind(this)
       this.state = {
         drinks: null,
         ratingWordOne: [],
@@ -19,15 +24,14 @@ class RatingWord extends Component {
         clickedWordDrinks: '',
         wordPieChartData: null,
         whoSaidIt: null,
-        chartTypePie: true,
-        chartTypeBar: false
+        chartForm: "pie",
     }
   }
 
   componentDidMount() {
     const { drinks } = this.props
     this.setState({ drinks })
-    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     const { drinks } = this.state
@@ -60,9 +64,8 @@ class RatingWord extends Component {
         sortedUniqueWords.sort(function(a, b) {
           return b[1] - a[1];
         });
-        this.setState({ sortedUniqueWords: sortedUniqueWords })
+        this.setState({ sortedUniqueWords })
         }
-
       setUpWordArray()
     }
   }
@@ -108,13 +111,19 @@ class RatingWord extends Component {
   }
 
   handleChartChange = () => {
-    const currentStatePie = this.state.chartTypePie;
-    const currentStateBar = this.state.chartTypeBar;
-    this.setState({ chartTypePie: !currentStatePie,
-                    chartTypeBar: !currentStateBar });
+    // const currentStatePie = this.state.chartTypePie;
+    // const currentStateBar = this.state.chartTypeBar;
+    // this.setState({ chartTypePie: !currentStatePie,
+    //                 chartTypeBar: !currentStateBar });
+  }
+
+  handleChartNameClick(clickedName) {
+    this.setState({ clickedName })
   }
 
   setChartData(clickedWord) {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
     this.setState({ clickedWord, clickedName: '' })
     const whoSaidIt = [];
     const clickedWordDrinks = [];
@@ -182,112 +191,6 @@ class RatingWord extends Component {
     this.setState({ wordPieChartData: chartData })
   }
 
-  renderClickedWordsDrinksHeader() {
-    const { clickedWordDrinks, clickedWord, clickedName } = this.state
-    if(!clickedName) {
-      return(
-        <tr>
-          <th>{clickedWordDrinks.length} Drink(s) called "{clickedWord}"</th>
-        </tr>
-      )
-    } else {
-      let numOfDrinks = 0;
-      clickedWordDrinks.map((drink) => {
-        if(drink.name === clickedName) {
-          numOfDrinks = numOfDrinks + 1
-        }
-      })
-      return (
-      <tr>
-        <th>{clickedName} has used "{clickedWord}" for {numOfDrinks} drink(s).</th>
-      </tr>
-      )
-    }
-  }
-
-  resetDrinkerName() {
-    this.setState({ clickedName: '' })
-    this.renderClickedWordDrinks()
-  }
-
-  renderClickedWordDrinks() {
-    const { clickedWord, clickedWordDrinks, clickedName } = this.state
-    if(!clickedWord) {
-      return("No Data")
-    } else if(!clickedName) {
-        return clickedWordDrinks.map((drink, index) => {
-          if(drink.mixerTwo) {
-            return(
-              <tr key={drink._id}>
-                <td>
-                {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
-                <span className="drinkNameInTable"> {drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
-                <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                <span className="scoreInTable">{drink.score}/10</span>.
-                </td>
-              </tr>
-            )
-          } else if(drink.mixerOne) {
-              return(
-                <tr key={drink._id}>
-                  <td>
-                  {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
-                  <span className="drinkNameInTable"> {drink.drinkMain} with {drink.mixerOne}</span> -
-                  <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                  <span className="scoreInTable"> {drink.score}/10</span>.
-                  </td>
-                </tr>
-              )
-          } else {
-              return(
-                <tr key={drink._id}>
-                  <td>
-                    {index + 1}) <span className="drinkerNameClickedWordTable">{drink.name}'s</span>
-                    <span className="drinkNameInTable"> {drink.drinkMain}</span> -
-                    <span className="ratingWordsInTable">{drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                    <span className="scoreInTable"> {drink.score}/10</span>.
-                  </td>
-                </tr>
-              )
-          }
-        })
-    } else {
-        return clickedWordDrinks.map((drink, index) => {
-          if(drink.mixerTwo && drink.name === clickedName) {
-            return(
-              <tr key={drink._id}>
-                <td>
-                  {index + 1}) <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</span> -
-                  <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                  <span className="scoreInTable"> {drink.score}/10</span>.
-                </td>
-              </tr>
-            )
-          } else if(drink.mixerOne && drink.name === clickedName) {
-              return(
-                <tr key={drink._id}>
-                  <td>
-                    {index + 1}) <span className="drinkNameInTable">{drink.drinkMain} with {drink.mixerOne}</span> -
-                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                    <span className="scoreInTable"> {drink.score}/10</span>.
-                  </td>
-                </tr>
-              )
-          } else if(drink.name === clickedName) {
-              return(
-                <tr key={drink._id}>
-                  <td>
-                    {index + 1}) <span className="drinkNameInTable">{drink.drinkMain}</span> -
-                    <span className="ratingWordsInTable"> {drink.ratingWordOne}, {drink.ratingWordTwo}</span> -
-                    <span className="scoreInTable"> {drink.score}/10</span>.
-                  </td>
-                </tr>
-              )
-          }
-        })
-    }
-  }
-
   renderClickedWordData() {
     if(!this.state.clickedWord) {
       return(
@@ -296,90 +199,34 @@ class RatingWord extends Component {
           <p>←←←←←</p>
         </div>
       )
-    } else {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+    } else if (this.state.chartForm === "pie") {
+      // document.body.scrollTop = 0;
+      // document.documentElement.scrollTop = 0;
       return(
         <div>
-          <select
-            className="chartTypeSelect"
-            value={this.chartTypePie}
-            onChange={this.handleChartChange}
-            >
-            <option>Pie Chart</option>
-            <option>Bar Chart</option>
-          </select>
-          <div className={this.state.chartTypePie ?
-              'showPieChart': 'hidePieChart'}>
-            <Pie
-              data={this.state.wordPieChartData}
-              width={150}
-              height={100}
-              onElementsClick={element => {
-                this.setState({ clickedName: this.state.wordPieChartData.labels[element[0]._index] })
-                this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
-                }}
-              options={{
-                events: ['mousemove'],
-                onHover: (event, chartElement) => {
-                  event.target.style.cursor = chartElement[0] ? 'pointer' : 'default'
-                },
-                title: {
-                  display: true,
-                  text: `Who said ${this.state.clickedWord}? (Total - ${this.state.clickedWordDrinks.length})`,
-                  fontSize: 25
-                },
-                legend: {
-                  position: "bottom"
-                },
-                plugins: {
-                  labels: {
-                    render: function (args) {
-                      return `${args.label} ` + `(${args.value})`
-                    },
-                    fontColor: "black",
-                    fontSize: 16,
-                    position: "outside",
-                    textMargin: 6
-                  }
-                }
-              }}
+          <button onClick={() => this.handleChartChange("pie")}>Pie Chart</button>
+          <RatingPieChart
+            clickedWord={this.state.clickedWord}
+            clickedName={this.state.clickedName}
+            clickedWordDrinks={this.state.clickedWordDrinks}
+            wordPieChartData={this.state.wordPieChartData}
+            handleChartNameClick={this.handleChartNameClick}
             />
-          </div>
-          <div className={this.state.chartTypeBar ?
-              'showBarChart': 'hideBarChart'}>
-            <Bar
-              data={this.state.wordPieChartData}
-              width={120}
-              height={70}
-              onElementsClick={element => {
-                this.setState({ clickedName: this.state.wordPieChartData.labels[element[0]._index] })
-                this.renderClickedWordDrinks(this.state.wordPieChartData.labels[element[0]._index])
-                }}
-              options={{
-                events: ['mousemove'],
-                onHover: (event, chartElement) => {
-                  event.target.style.cursor = chartElement[0] ? 'pointer' : 'default'
-                },
-                title: {
-                  display: true,
-                  text: `Who said ${this.state.clickedWord}? (Total - ${this.state.clickedWordDrinks.length})`,
-                  fontSize: 25
-                },
-                scales: {
-                  yAxes: [{
-                      ticks: {
-                          beginAtZero: true,
-                          stepSize: 1
-                      }
-                  }]
-                },
-                plugins: {
-                    labels: false
-                }
-              }}
-            />
-          </div>
+        </div>
+      )
+    } else {
+      // document.body.scrollTop = 0;
+      // document.documentElement.scrollTop = 0;
+      return(
+        <div>
+          <button onClick={() => this.handleChartChange("bar")}>Bar Chart</button>
+          <RatingBarChart
+          clickedWord={this.state.clickedWord}
+          clickedName={this.state.clickedName}
+          clickedWordDrinks={this.state.clickedWordDrinks}
+          wordPieChartData={this.state.wordPieChartData}
+          handleChartNameClick={this.handleChartNameClick}
+          />
         </div>
       )
     }
@@ -418,19 +265,11 @@ class RatingWord extends Component {
                 {this.renderClickedWordData()}
               </div>
             </div>
-            <div className="clickedWordDrinksTable">
-              <table className="clickedWordTable">
-                <thead>
-                  {this.renderClickedWordsDrinksHeader()}
-                </thead>
-                <tbody>
-                  {this.renderClickedWordDrinks()}
-                </tbody>
-                {(this.state.clickedName ?
-                  <button onClick={() => this.resetDrinkerName()}>Click to Reset Drinkers</button> :
-                  "")}
-              </table>
-            </div>
+              <ClickedRatingTable
+                clickedWord={this.state.clickedWord}
+                clickedName={this.state.clickedName}
+                clickedWordDrinks={this.state.clickedWordDrinks}
+              />
           </div>
         </div>
       )

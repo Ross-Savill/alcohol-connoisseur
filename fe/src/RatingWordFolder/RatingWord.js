@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar'
-import './Stylesheets/RatingWord.css';
-import { Pie, Bar } from 'react-chartjs-2';
-import 'chartjs-plugin-labels'
+import Navbar from '../Navbar'
+import '../Stylesheets/RatingWord.css';
 import ClickedRatingTable from './ClickedRatingTable';
 import RatingPieChart from './RatingPieChart';
 import RatingBarChart from './RatingBarChart';
-
+import RatingWordCloud from './RatingWordCloud';
 
 class RatingWord extends Component {
   constructor(props) {
     super(props)
       this.handleChartNameClick = this.handleChartNameClick.bind(this)
+      this.handleClickedWordChange = this.handleClickedWordChange.bind(this)
       this.state = {
         drinks: null,
         ratingWordOne: [],
@@ -22,7 +21,7 @@ class RatingWord extends Component {
         clickedWord: '',
         clickedName: '',
         clickedWordDrinks: '',
-        wordPieChartData: null,
+        chartData: null,
         whoSaidIt: null,
         chartForm: "pie",
     }
@@ -110,15 +109,23 @@ class RatingWord extends Component {
     this.setState({ wordSearch: enteredLetters})
   }
 
-  handleChartChange = () => {
-    // const currentStatePie = this.state.chartTypePie;
-    // const currentStateBar = this.state.chartTypeBar;
-    // this.setState({ chartTypePie: !currentStatePie,
-    //                 chartTypeBar: !currentStateBar });
+  handleChartChange = (chartType) => {
+    if(chartType === "all") {
+      this.setState({ clickedName: "", clickedWord: "",
+                      clickedWordDrinks:"", chartData: null,
+                      chartForm: "pie" })
+    } else {
+      this.setState({ chartForm: chartType })
+    }
   }
 
   handleChartNameClick(clickedName) {
     this.setState({ clickedName })
+  }
+
+  handleClickedWordChange(clickedWord) {
+    this.setState({ clickedWord, clickedName: '' })
+    this.setChartData(clickedWord)
   }
 
   setChartData(clickedWord) {
@@ -184,48 +191,51 @@ class RatingWord extends Component {
         ]
       }]
     };
-
     sortedDrinkerData.map((drinkInfo) => {
       chartData.datasets[0].data.push(drinkInfo[1])
     })
-    this.setState({ wordPieChartData: chartData })
+    this.setState({ chartData })
   }
 
   renderClickedWordData() {
     if(!this.state.clickedWord) {
       return(
         <div className="noWordDiv">
-          <p>Click A Rating Word For Info!</p>
-          <p>←←←←←</p>
+          <RatingWordCloud
+            sortedUniqueWords={this.state.sortedUniqueWords}
+            handleClickedWordChange={this.handleClickedWordChange}
+          />
         </div>
       )
-    } else if (this.state.chartForm === "pie") {
-      // document.body.scrollTop = 0;
-      // document.documentElement.scrollTop = 0;
+    } else if (this.state.chartForm === "pie" && this.state.chartData) {
       return(
         <div>
-          <button onClick={() => this.handleChartChange("pie")}>Pie Chart</button>
+          <div className="buttonDiv">
+            <button onClick={() => this.handleChartChange("bar")}>Bar Chart</button>
+            <button onClick={() => this.handleChartChange("all")}>All Words</button>
+          </div>
           <RatingPieChart
             clickedWord={this.state.clickedWord}
             clickedName={this.state.clickedName}
             clickedWordDrinks={this.state.clickedWordDrinks}
-            wordPieChartData={this.state.wordPieChartData}
+            chartData={this.state.chartData}
             handleChartNameClick={this.handleChartNameClick}
-            />
+          />
         </div>
       )
-    } else {
-      // document.body.scrollTop = 0;
-      // document.documentElement.scrollTop = 0;
+    } else if (this.state.chartForm === "bar" && this.state.chartData) {
       return(
         <div>
-          <button onClick={() => this.handleChartChange("bar")}>Bar Chart</button>
+          <div className="buttonDiv">
+            <button onClick={() => this.handleChartChange("pie")}>Pie Chart</button>
+            <button onClick={() => this.handleChartChange("all")}>All Words</button>
+          </div>
           <RatingBarChart
-          clickedWord={this.state.clickedWord}
-          clickedName={this.state.clickedName}
-          clickedWordDrinks={this.state.clickedWordDrinks}
-          wordPieChartData={this.state.wordPieChartData}
-          handleChartNameClick={this.handleChartNameClick}
+            clickedWord={this.state.clickedWord}
+            clickedName={this.state.clickedName}
+            clickedWordDrinks={this.state.clickedWordDrinks}
+            chartData={this.state.chartData}
+            handleChartNameClick={this.handleChartNameClick}
           />
         </div>
       )

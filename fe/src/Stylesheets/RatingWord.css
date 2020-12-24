@@ -46,6 +46,9 @@
   width: 100%;
   border: black solid 3px;
 }
+.drinksTable tbody td {
+  transition: font-size 0.1s, padding 0.1s, font-style 0.1s;
+}
 
 .drinksTable tbody tr:hover {
   border: black solid 3px;
@@ -54,6 +57,7 @@
 
 .drinksTable tbody td:hover {
   font-size: 30px;
+  font-style: italic;
   cursor: pointer;
   padding: 5px;
 }
@@ -67,6 +71,11 @@
 .searchLabel {
   margin: 0px;
   ;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: space-between;
 }
 
 .chart {

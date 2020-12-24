@@ -21,7 +21,9 @@
     "react-scripts": "^4.0.1",
     "react-select": "^3.1.1",
     "react-table": "^7.5.0",
-    "reactstrap": "^8.5.1"
+    "react-wordcloud": "^1.2.7",
+    "reactstrap": "^8.5.1",
+    "tippy.js": "^6.2.7"
   },
   "scripts": {
     "start": "react-scripts start",

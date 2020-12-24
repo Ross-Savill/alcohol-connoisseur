@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Stylesheets/ClickedRatingTable.css';
+import '../Stylesheets/ClickedRatingTable.css';
 
 class ClickedRatingTable extends Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class ClickedRatingTable extends Component {
     const { clickedWord, clickedName, clickedWordDrinks } = this.props
     if(prevState.clickedWord !== clickedWord || prevState.clickedName !== clickedName) {
       this.setState({ clickedWord, clickedName, clickedWordDrinks })
-      console.log("triggered")
     }
   }
 
@@ -130,7 +129,7 @@ class ClickedRatingTable extends Component {
 
   render() {
     if(!this.state.clickedWordDrinks) {
-      return <h1>Click a Name!</h1>
+      return <h1>Get Clicking! 🙌</h1>
     } else {
       return (
         <div className="clickedWordDrinksTable">

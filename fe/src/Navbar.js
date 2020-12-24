@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './Stylesheets/Navbar.css';
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-const DRINKS_URL = "http://localhost:5000/drinks";
-const DRINKERS_URL = "http://localhost:5000/peopleNames";
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);

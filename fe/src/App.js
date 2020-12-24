@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import RatingWord from './RatingWord';
+import RatingWord from './RatingWordFolder/RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
 import Sessions from './SessionsFolder/Sessions'
 import WorldMap from './MapFolder/WorldMap';

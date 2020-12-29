@@ -1,5 +1,9 @@
-.drinkersContainer {
-
+.drinkersPageTitle {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  background-color: green;
 }
 
 .selectedDrinkerHeader {
@@ -10,11 +14,6 @@
 .chartsAndTable {
   display: flex;
   flex-flow: row nowrap;
-}
-
-.drinkersPageTitle {
-  display: flex;
-  justify-content: center;
 }
 
 .drinkerSelect {

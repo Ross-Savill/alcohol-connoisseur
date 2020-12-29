@@ -29,7 +29,7 @@ class LineChart extends PureComponent {
     if(this.props.drinks !== drinks) {
       this.haveDrinks()
     }
-    if(this.state.drinkerSelection !== prevState.drinkerSelection) {
+    if(drinkerSelection !== prevState.drinkerSelection) {
       this.haveDrinks()
     }
   }
@@ -120,8 +120,8 @@ class LineChart extends PureComponent {
     this.setState({ drinkerLineChartData })
   }
 
-  handleSelecton(e) {
-    this.setState({drinkerSelection: e})
+  handleSelection(e) {
+    this.setState({ drinkerSelection: e })
     this.haveDrinks()
   }
 
@@ -164,7 +164,7 @@ class LineChart extends PureComponent {
             isMulti
             value={drinkerSelection}
             options={selectOptions}
-            onChange={this.handleSelecton.bind(this)}
+            onChange={this.handleSelection.bind(this)}
             />
           </div>
         </div>
@@ -176,11 +176,12 @@ class LineChart extends PureComponent {
             {this.renderLineChart()}
           </div>
           <div className="justSelectFields">
+            <h3>Number of drink per week for:</h3>
               <Select
                 isMulti
                 value={drinkerSelection}
                 options={selectOptions}
-                onChange={this.handleSelecton.bind(this)}
+                onChange={this.handleSelection.bind(this)}
               />
           </div>
         </div>

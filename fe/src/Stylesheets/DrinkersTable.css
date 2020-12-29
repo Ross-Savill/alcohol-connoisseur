@@ -1,3 +1,21 @@
-.drinkerTableHeader{
+.tRDrinkerHeader {
+  border: 1px black solid;
+}
+
+.tRDrinkerHeader :hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.tHDrinkerHeader{
   font-size: 14px;
+}
+
+.tableRowDrinkersTable {
+  font-weight: bold;
+  border: 1px black solid;
+}
+
+.tableDataDrinkersTable {
+  text-align: center;
 }

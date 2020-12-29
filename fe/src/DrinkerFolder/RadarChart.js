@@ -12,8 +12,8 @@ class RadarChart extends Component {
         drinkTypes: null,
         selectedDrinker: 'All Drinkers',
         drinkerRadarData: null,
-        showRadar: true,
-        showBar: false,
+        showRadar: false,
+        showBar: true,
         radarColor: ["rgb(250, 222, 229)"],
         barColor: ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
         '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff']
@@ -75,12 +75,32 @@ class RadarChart extends Component {
       drinkCountPerType.push(array.length)
     })
 
+    // CREATE OBJECTS LINKING TYPE TO NUMBER
+    const arrayOfDrinkObjects = drinkCountPerType.map((num, i) => {
+      return {
+        drinkType: allDrinkTypes[i],
+        numberOfDrinksHad: num
+      }
+    })
+    // SORT THE DRINKS OBJECTS
+    const sortedArrayOfDrinksObjects = arrayOfDrinkObjects.sort(function(a, b) {
+      return b.numberOfDrinksHad - a.numberOfDrinksHad;
+    });
+
+    // PUSH THE SORTED OBJECT DATA INTO SORTED ARRAYS
+    let sortedDrinkTypes = [];
+    let sortedDrinkNumbers = [];
+    sortedArrayOfDrinksObjects.forEach(function(drink){
+      sortedDrinkTypes.push(drink.drinkType);
+      sortedDrinkNumbers.push(drink.numberOfDrinksHad);
+    });
+
     // SET RADAR DATA
     const drinkerRadarData = {
-      labels: allDrinkTypes,
+      labels: sortedDrinkTypes,
         datasets: [{
           label: this.state.selectedDrinker,
-          data: drinkCountPerType,
+          data: sortedDrinkNumbers,
           backgroundColor: this.state.showRadar ? radarColor: barColor,
           borderColor: 'rgb(238, 97, 131)'
         }],
@@ -107,8 +127,8 @@ class RadarChart extends Component {
             value={this.showRadar}
             onChange={this.handleChartChange}
             >
-            <option>Radar Chart</option>
             <option>Bar Chart</option>
+            <option>Radar Chart</option>
           </select>
 
           <div className={this.state.showRadar ?

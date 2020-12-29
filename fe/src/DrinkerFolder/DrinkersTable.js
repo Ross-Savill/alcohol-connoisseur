@@ -1,4 +1,3 @@
-import { controllers } from 'chart.js';
 import React, { Component } from 'react';
 import '../Stylesheets/DrinkersTable.css';
 
@@ -31,17 +30,17 @@ class DrinkersTable extends Component {
 
     renderDrinkerHeader() {
       return(
-        <tr>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerName")}>Name</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinksNum")}>Number of Drinks</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerWeeks")}>Weeks Participated</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgConsume")}>Avg Drinks Per Visit</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgStrength")}>Avg Drink Strength</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerFaveType")}>Favourite Drink Type</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerHighScore")}>Highest Ever Score</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerLowScore")}>Lowest Ever Score</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerAvgScore")}>Average Score</th>
-          <th className="drinkerTableHeader" onClick={e => this.onSort("drinkerDrinkPercentage")}>Percent of All Drinks Drunk</th>
+        <tr className="tRDrinkerHeader">
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerName")}>Name</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinksNum")}>Number of Drinks</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerWeeks")}>Weeks Participated</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerAvgConsume")}>Avg Drinks Per Visit</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerAvgStrength")}>Avg Strength (Beer/Cider)</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerFaveType")}>Favourite Drink Type</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerHighScore")}>Highest Ever Score</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerLowScore")}>Lowest Ever Score</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerAvgScore")}>Average Score</th>
+          <th className="tHDrinkerHeader" onClick={e => this.onSort("drinkerDrinkPercentage")}>Percent of All Drinks Drunk</th>
         </tr>
       )
     }
@@ -90,13 +89,18 @@ class DrinkersTable extends Component {
             // GET AVERAGE DRINK STRENGTH
             let allDrinkStrengths = []
             aDrinkArray.map((drink) => {
-              allDrinkStrengths.push(drink.abv)
-              if(drink.abv === undefined) {
-                console.log(drink.drinkMain)
+              if(drink.drinkType === "Beer" || drink.drinkType === "Cider") {
+                allDrinkStrengths.push(drink.abv)
               }
             })
-            const sumOfAbvs = allDrinkStrengths.reduce((a, b) => a + b, 0);
-            const averageDrinkStrength = ((sumOfAbvs / allDrinkStrengths.length)*100).toFixed(2) + '%' || 0;
+            let averageDrinkStrength = "";
+
+            if(allDrinkStrengths.length === 0) {
+              averageDrinkStrength = "-"
+            } else {
+              const sumOfAbvs = allDrinkStrengths.reduce((a, b) => a + b, 0);
+              averageDrinkStrength = ((sumOfAbvs / allDrinkStrengths.length)*100).toFixed(2) + '%' || 0;
+            }
 
             // GET FAVOURITE DRINK TYPE
             let allDrinkerDrinkTypes = []
@@ -158,17 +162,17 @@ class DrinkersTable extends Component {
         // RETURN DATA TABLE INFO!
         return drinkerObjectsArray.map((dataObject, index) => {
           return(
-            <tr key={index}>
-              <td>{dataObject.drinkerName}</td>
-              <td>{dataObject.drinksNum}</td>
-              <td>{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
-              <td>{dataObject.drinkerAvgConsume}</td>
-              <td>{dataObject.drinkerAvgStrength}</td>
-              <td>{dataObject.drinkerFaveType}</td>
-              <td>{dataObject.drinkerHighScore}</td>
-              <td>{dataObject.drinkerLowScore}</td>
-              <td>{dataObject.drinkerAvgScore}</td>
-              <td>{dataObject.drinkerDrinkPercentage}</td>
+            <tr key={index} className="tableRowDrinkersTable">
+              <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgConsume}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgStrength}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerFaveType}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerHighScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerLowScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerDrinkPercentage}</td>
             </tr>
           )
         })
@@ -211,9 +215,16 @@ class DrinkersTable extends Component {
         const dataSortedByNumbers = this.state.drinkerObjectsArray.sort((a, b) => {
           const firstNum = parseFloat(a[column])
           const secondNum = parseFloat(b[column])
-          if (firstNum < secondNum) return -1;
-          else if (firstNum > secondNum) return 1;
-          return 0;
+            if( !isFinite(firstNum) && !isFinite(secondNum) ) {
+                return 0;
+            }
+            if( !isFinite(firstNum) ) {
+                return -1;
+            }
+            if( !isFinite(secondNum) ) {
+                return 1;
+            }
+            return firstNum-secondNum;
         })
         if (direction === 'desc') dataSortedByNumbers.reverse();
         this.setState({ drinkerObjectsArray: dataSortedByNumbers,
@@ -237,6 +248,7 @@ class DrinkersTable extends Component {
     } else {
       return(
         <div>
+          <h4>Click a Header for Sorted Data</h4>
           <table className="drinkersTable">
             <thead>
               {this.renderDrinkerHeader()}

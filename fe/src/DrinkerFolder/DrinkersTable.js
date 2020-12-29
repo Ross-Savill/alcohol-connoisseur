@@ -12,6 +12,7 @@ class DrinkersTable extends Component {
         regularDrinkers: null,
         irregularDrinkers: null,
         drinkerObjectsArray: null,
+        irregDrinkersCheck: false,
         sort: {
           column: null,
           direction: 'desc',
@@ -161,24 +162,29 @@ class DrinkersTable extends Component {
 
         // RETURN DATA TABLE INFO!
         return drinkerObjectsArray.map((dataObject, index) => {
-          return(
-            <tr key={index} className="tableRowDrinkersTable">
-              <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgConsume}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgStrength}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerFaveType}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerHighScore}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerLowScore}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgScore}</td>
-              <td className="tableDataDrinkersTable">{dataObject.drinkerDrinkPercentage}</td>
-            </tr>
-          )
+          if(this.state.irregDrinkersCheck === false && dataObject.drinkerWeeks/totalWeeksNumber*100 < 15) {
+            return;
+          } else {
+            return(
+              <tr key={index} className="tableRowDrinkersTable">
+                <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgConsume}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgStrength}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerFaveType}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerHighScore}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerLowScore}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgScore}</td>
+                <td className="tableDataDrinkersTable">{dataObject.drinkerDrinkPercentage}</td>
+              </tr>
+            )
+          }
         })
     }
 
-    onSort(column){
+    onSort(column) {
+      console.log("triggered")
       const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
 
       // SORT DATA BY PERSON NAME
@@ -241,14 +247,26 @@ class DrinkersTable extends Component {
       }
     }
 
+    handleIrregDrinkersCheck() {
+      this.setState({ irregDrinkersCheck: !this.state.irregDrinkersCheck })
+    }
+
   render() {
     const { drinkerObjectsArray } = this.state
     if (!drinkerObjectsArray) {
       return <p>Awaiting Data</p>
     } else {
+      if(this.state.sort.column === null) {
+        this.onSort("drinksNum")
+      }
       return(
         <div>
-          <h4>Click a Header for Sorted Data</h4>
+          <h4 className="drinkerTableTitle">Click a Header for Sorted Data</h4>
+          <span className="includeDrinkersSpan">Include Drinkers with less than 15% attendance? </span>
+          <input type="checkbox"
+                 className="irregularDrinkersCheckbox"
+                 defaultChecked={this.state.irregDrinkersCheck}
+                 onChange={() => this.handleIrregDrinkersCheck()} />
           <table className="drinkersTable">
             <thead>
               {this.renderDrinkerHeader()}

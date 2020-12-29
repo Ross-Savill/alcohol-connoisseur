@@ -1,3 +1,7 @@
+.drinkerTableTitle {
+  text-align: center;
+}
+
 .tRDrinkerHeader {
   border: 1px black solid;
 }
@@ -9,6 +13,7 @@
 
 .tHDrinkerHeader{
   font-size: 14px;
+  text-align: center;
 }
 
 .tableRowDrinkersTable {
@@ -18,4 +23,13 @@
 
 .tableDataDrinkersTable {
   text-align: center;
+}
+
+.includeDrinkersSpan {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.irregularDrinkersCheckbox{
+  transform: scale(1.5);
 }

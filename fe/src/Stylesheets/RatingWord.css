@@ -35,6 +35,16 @@
   text-align: center;
 }
 
+.scrollRowBoth {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.scrollRowBoth:hover .scrollWordOnly, .scrollRowBoth:hover .scrollCountOnly {
+  background-color: lawngreen;
+}
+
 .wordSearchInput {
   position: relative;
 }

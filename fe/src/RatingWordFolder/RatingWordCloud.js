@@ -6,7 +6,6 @@ import 'tippy.js/dist/tippy.css';
 
 const RatingWordCloud = (props) => {
 
-  // const [words, setWords] = useState()
   let ratingWords = []
   useEffect(() => {
     if(props.sortedUniqueWords) {
@@ -14,7 +13,6 @@ const RatingWordCloud = (props) => {
         ratingWords.push({ "text": wordAndCount[0], "value": wordAndCount[1]})
       })
     }
-    // setWords({ ratingWords })
   },[props])
 
   const options = {
@@ -32,9 +30,9 @@ const RatingWordCloud = (props) => {
       const element = event.target
       const text = select(element);
       text.on("click", () =>  {
-          if (isActive) {
-            props.handleClickedWordChange(word.text)
-          }
+        if (isActive) {
+          props.handleClickedWordChange(word.text)
+        }
       })
     }
   }

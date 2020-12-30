@@ -1,12 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Navbar from '../Navbar'
 import '../Stylesheets/RatingWord.css';
 import ClickedRatingTable from './ClickedRatingTable';
 import RatingPieChart from './RatingPieChart';
 import RatingBarChart from './RatingBarChart';
 import RatingWordCloud from './RatingWordCloud';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
-class RatingWord extends Component {
+const styleWord = {
+  height: 30,
+  width: "75%",
+  border: "1px solid green",
+  margin: 2,
+  padding: 8,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontWeight: "bold"
+};
+
+const styleCount = {
+  height: 30,
+  width: "25%",
+  border: "1px solid green",
+  margin: 2,
+  padding: 8,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontWeight: "bold"
+}
+
+class RatingWord extends React.Component {
   constructor(props) {
     super(props)
       this.handleChartNameClick = this.handleChartNameClick.bind(this)
@@ -17,7 +42,9 @@ class RatingWord extends Component {
         ratingWordTwo: [],
         allRatingWords: [],
         sortedUniqueWords: null,
+        hasMore: true,
         wordSearch: null,
+        searchWordCount: [],
         clickedWord: '',
         clickedName: '',
         clickedWordDrinks: '',
@@ -51,8 +78,7 @@ class RatingWord extends Component {
       }
 
       const setAllWordsState = () => {
-        this.setState({ allRatingWords: allWords })
-        const countedUniqueWords = allWords.reduce(function(occ, word) {
+      const countedUniqueWords = allWords.reduce(function(occ, word) {
           occ[word] = (occ[word] || 0) + 1;
           return occ;
         }, {});
@@ -81,12 +107,11 @@ class RatingWord extends Component {
   renderWordData() {
     if(!this.state.sortedUniqueWords) {
       return (
-        <tr>
-          <td>LOADING...</td>
-        </tr>
+          <p>LOADING...</p>
       )
     } else {
-      return this.state.sortedUniqueWords
+      let finalWords = []
+      this.state.sortedUniqueWords
       .filter((word) => {
         if(this.state.wordSearch === null)
             return word
@@ -94,15 +119,38 @@ class RatingWord extends Component {
             return word
         }})
       .map((word, index) => {
-        return (
-          <tr key={index} onClick={() => this.setChartData(word[0])}>
-            <td className="ratingWord">{word[0]}</td>
-            <td className="ratingWord">{word[1]}</td>
-          </tr>
-        )
+        finalWords.push(word)
       })
+
+      if(this.state.searchWordCount.length !== finalWords.length) {
+        this.setState({ searchWordCount: finalWords })
+      }
+
+        if(finalWords) {
+          return(
+            <InfiniteScroll
+              dataLength={finalWords.length}
+              next={this.fetchMoreData}
+              loader={<h4>Loading...</h4>}
+              height={400}
+              width={200}
+            >
+              {finalWords.map((word, index) => (
+                <div className="scrollRowBoth" onClick={() => this.setChartData(word[0])} >
+                  <div className="scrollWordOnly" style={styleWord}>
+                    {word[0]}
+                  </div>
+                  <div className="scrollCountOnly" style={styleCount}>
+                    {word[1]}
+                  </div>
+                </div>
+              ))}
+            </InfiniteScroll>
+          )
+        }
+      }
     }
-  }
+
 
   searchWord=(event) => {
     let enteredLetters = event.target.value;
@@ -113,7 +161,10 @@ class RatingWord extends Component {
     if(chartType === "all") {
       this.setState({ clickedName: "", clickedWord: "",
                       clickedWordDrinks:"", chartData: null,
-                      chartForm: "pie" })
+                      chartForm: "pie", wordSearch: null
+                    })
+      const searchField = document.getElementById("wordSearchInput")
+      searchField.value = "";
     } else {
       this.setState({ chartForm: chartType })
     }
@@ -202,7 +253,7 @@ class RatingWord extends Component {
       return(
         <div className="noWordDiv">
           <RatingWordCloud
-            sortedUniqueWords={this.state.sortedUniqueWords}
+            sortedUniqueWords={this.state.searchWordCount}
             handleClickedWordChange={this.handleClickedWordChange}
           />
         </div>
@@ -260,15 +311,17 @@ class RatingWord extends Component {
             <div className ="searchAndTable">
               <p className="searchLabel">Search for a Rating Word below!</p>
               <p className="searchLabel">↓↓↓↓↓</p>
-              <input className="wordSearchInput" type="text" placeholder="Enter item to be searched" onChange={(e)=>this.searchWord(e)} />
-              <table className="drinksTable">
-                <thead>
-                  {this.renderWordHeader()}
-                </thead>
-                <tbody>
-                  {this.renderWordData()}
-                </tbody>
-              </table>
+              <input className="wordSearchInput"
+                     id="wordSearchInput"
+                     value={this.state.wordSearch}
+                     type="text"
+                     placeholder="Enter item to be searched"
+                     onChange={(e)=>this.searchWord(e)}
+              />
+              <div className="drinksTable">
+                {this.renderWordHeader()}
+                {this.renderWordData()}
+              </div>
             </div>
             <div className="chart">
               <div className="selectedWordData">

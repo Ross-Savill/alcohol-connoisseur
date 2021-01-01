@@ -1,0 +1,15 @@
+.entirePage {
+
+}
+
+.titleDiv {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  background-color: green;
+}
+
+.title {
+  font-weight: bold;
+}

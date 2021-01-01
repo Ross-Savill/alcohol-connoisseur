@@ -4,7 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import RatingWord from './RatingWordFolder/RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
-import Sessions from './SessionsFolder/Sessions'
+import Sessions from './SessionsFolder/Sessions';
+import Breweries from './BreweryFolder/Breweries';
 import WorldMap from './MapFolder/WorldMap';
 import USMap from './MapFolder/USMap';
 import './Stylesheets/App.css';
@@ -88,6 +89,15 @@ const App = () => {
                   drinks={state.drinks}
                   drinkers={state.drinkers}
                   drinkTypes={state.drinkTypes}
+                />
+              )}
+            />
+            <Route
+              exact path="/breweries"
+              render={(props) => (
+                <Breweries {...props}
+                  drinks={state.drinks}
+                  drinkers={state.drinkers}
                 />
               )}
             />

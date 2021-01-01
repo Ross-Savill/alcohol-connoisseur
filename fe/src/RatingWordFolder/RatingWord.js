@@ -130,7 +130,6 @@ class RatingWord extends React.Component {
           return(
             <InfiniteScroll
               dataLength={finalWords.length}
-              next={this.fetchMoreData}
               loader={<h4>Loading...</h4>}
               height={400}
               width={200}

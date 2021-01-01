@@ -49,6 +49,14 @@ const Navbar = () => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
+              to="/breweries"
+            >
+              Breweries
+            </NavLink>
+
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
               to="/world-map"
             >
               World Map

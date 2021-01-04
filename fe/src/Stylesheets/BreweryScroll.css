@@ -1,0 +1,19 @@
+.scrollAndCheckboxes {
+  display: flex;
+  flex-direction: row;
+}
+
+.checkboxDiv {
+  /* font-size: 40px; */
+  overflow: hidden;
+}
+
+.breweryScrollTable {
+  width: 100%;
+  height: 100%;
+}
+
+.breweryScrollTable .table tbody tr td {
+  font-size: 12px;
+  text-align: left;
+}

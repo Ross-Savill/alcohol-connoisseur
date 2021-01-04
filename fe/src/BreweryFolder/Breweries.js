@@ -8,33 +8,30 @@ class Breweries extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null
       }
   }
 
   componentDidMount() {
-    const { drinks, drinkers } = this.props
-    this.setState({ drinks, drinkers })
+    const { drinks } = this.props
+    this.setState({ drinks})
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { drinks, drinkers } = this.props
+    const { drinks } = this.props
     if(prevState.drinks !== drinks) {
-      this.setState({ drinks, drinkers })
+      this.setState({ drinks })
     }
   }
-
-    render(){
+  render(){
       return(
         <div className="entirePage">
           <div className="titleDiv">
             <h1 className='title'>Breweries Page</h1>
           </div>
           <Navbar />
-          <BreweryScroll
-            drinks={this.state.drinks}
-            drinkers={this.state.drinkers}
-          />
+          <div className="breweryScrollComponent">
+            <BreweryScroll drinks={this.state.drinks}/>
+          </div>
         </div>
       )
     }

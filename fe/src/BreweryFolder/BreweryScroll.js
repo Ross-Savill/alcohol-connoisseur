@@ -31,7 +31,6 @@ function BreweryScroll(props) {
   },[allBeersAndCiders])
 
   const makeBreweryData = () => {
-    console.log(allBeersAndCiders)
     if(!allBeersAndCiders.length) {
       return <h2>One Moment Please</h2>
     } else {
@@ -129,23 +128,45 @@ function BreweryScroll(props) {
   const columns = useMemo(
     () => [
       {
-        Header: "Brewery Name",
-        accessor: "breweryName",
+        Header: "All Brewery Drinks",
+        columns: [
+          {
+            Header: "Brewery Name",
+            accessor: "breweryName"
+          },
+          {
+            Header: "Drinkers",
+            accessor: "breweryDrinkers",
+            sortType: "sortDrinkers"
+          },
+          {
+            Header: "Total Drink Count",
+            accessor: "breweryTotalDrinksCount"
+          },
+          {
+            Header: "Total Drink Average",
+            accessor: "breweryTotalDrinkAvgScore"
+          },
+        ],
       },
       {
-        Header: "Drinkers",
-        accessor: "breweryDrinkers",
+        Header: "Own Drinks Vs Collabs",
+        columns: [
+          {
+            Header: "Solo Drink Count",
+            accessor: "breweryOwnDrinkCount"
+          },
+          {
+            Header: "Solo Drink Avg Score",
+            accessor: "breweryOwnDrinkAvgScore"
+          },
+          {
+            Header: "Collab Drink Count",
+            accessor: "breweryCollabDrinkCount"
+          },
+        ],
       },
-      {
-        Header: "Total Drink Count",
-        accessor: "breweryTotalDrinksCount",
-      },
-      {
-        Header: "Total Drink Average",
-        accessor: "breweryTotalDrinkAvgScore",
-      },
-    ],
-    []
+    ],[]
   )
 
     if(!breweryObjectsArray) {
@@ -154,9 +175,9 @@ function BreweryScroll(props) {
       return(
         <div className="scrollAndCheckboxes">
         <div>
-          <Container style={{ marginTop: 100 }}>
+          {/* <Container> */}
             <BreweryTableContainer columns={columns} data={breweryObjectsArray} />
-          </Container>
+          {/* </Container> */}
         </div>
           <div className="breweryScrollTable">
         </div>

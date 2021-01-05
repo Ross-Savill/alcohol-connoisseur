@@ -13,6 +13,14 @@
   height: 100%;
 }
 
+.dropdownCardDiv {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  margin: 5px;
+}
+
+
 .breweryScrollTable .table tbody tr td {
   font-size: 12px;
   text-align: left;

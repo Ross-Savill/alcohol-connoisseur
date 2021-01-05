@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Container } from "reactstrap";
+import { useFlexLayout } from "react-table";
+import { Container, Card, CardImg, CardText, CardBody, CardTitle, } from "reactstrap";
 import '../Stylesheets/BreweryScroll.css';
 import BreweryTableContainer from "./BreweryTableContainer";
+import { SearchColumnFilter } from './filters';
 
 function BreweryScroll(props) {
 
@@ -92,26 +94,23 @@ function BreweryScroll(props) {
 
       }) // THIS ENDS THE DRINK LOOP
         // GET UNIQUE DRINKERS LIST
-        const uniqueDrinkersPreFix = [...new Set(breweryDrinkers)]
-        const allUniqueDrinkers = uniqueDrinkersPreFix.map((drinker, i) => {
-          if(uniqueDrinkersPreFix.length === 1) {
-          return drinker
-          } else {
-          return `(${i+1}) ${drinker} `
-          }
-        })
+        const nonUniqueDrinkers = [...new Set(breweryDrinkers)]
+        const uniqueDrinkerNumber = nonUniqueDrinkers.length
+
         // GET TOTAL DRINKS
         const totalDrinkCount = ownDrinkCount + collabDrinkCount;
         // SET SOLO DRINKS AVERAGE
-        if(soloDrinkScores.length === 0) { soloDrinksAverage = "Collaborator Only" }
+        if(soloDrinkScores.length === 0) { soloDrinksAverage = "-" }
         else
         { soloDrinksAverage = parseFloat((soloDrinkScores.reduce((a,b) => a+b,0)/soloDrinkScores.length).toFixed(2)) }
+        if(ownDrinkCount === 0) {ownDrinkCount = "-"}
+        if(collabDrinkCount === 0) {collabDrinkCount = "-"}
         // SET ALL DRINKS AVERAGE
         const allDrinksAverage = parseFloat((allDrinkScores.reduce((a,b) => a+b,0)/allDrinkScores.length).toFixed(2))
 
         const breweryObject = {
           breweryName: brewery,
-          breweryDrinkers: allUniqueDrinkers,
+          breweryDrinkerCount: uniqueDrinkerNumber,
           breweryOwnDrinkCount: ownDrinkCount,
           breweryCollabDrinkCount: collabDrinkCount,
           breweryTotalDrinksCount: totalDrinkCount,
@@ -125,27 +124,61 @@ function BreweryScroll(props) {
     }
   }
 
+  const renderRowSubComponent = row => {
+    const {
+      breweryName
+    } = row.original
+
+    let breweryDrinks = [];
+    allBeersAndCiders.map((beerOrCider) => {
+      if(beerOrCider.company === breweryName ||
+         beerOrCider.firstCollabCompany === breweryName ||
+         beerOrCider.secondCollabCompany === breweryName) {
+           breweryDrinks.push(beerOrCider)
+      }
+    })
+
+    return breweryDrinks.map((drink, index) => {
+       return (
+        <div>{index + 1}) {drink.name} drank {drink.drinkMain} <br></br></div>
+       )
+      });
+
+  }
+
   const columns = useMemo(
     () => [
+      {
+        Header: () => null,
+        id: 'expander', // 'id' is required
+        Cell: ({ row, index }) => (
+          <span {...row.getToggleRowExpandedProps()}>
+            {row.isExpanded ? '👇' : '👉'}
+          </span>
+        )
+      },
       {
         Header: "All Brewery Drinks",
         columns: [
           {
-            Header: "Brewery Name",
-            accessor: "breweryName"
+            Header: "Brewery Name Search",
+            accessor: "breweryName",
+            Filter: SearchColumnFilter,
           },
           {
             Header: "Drinkers",
-            accessor: "breweryDrinkers",
-            sortType: "sortDrinkers"
+            accessor: "breweryDrinkerCount",
+            disableFilters: true
           },
           {
             Header: "Total Drink Count",
-            accessor: "breweryTotalDrinksCount"
+            accessor: "breweryTotalDrinksCount",
+            disableFilters: true
           },
           {
             Header: "Total Drink Average",
-            accessor: "breweryTotalDrinkAvgScore"
+            accessor: "breweryTotalDrinkAvgScore",
+            disableFilters: true
           },
         ],
       },
@@ -154,15 +187,18 @@ function BreweryScroll(props) {
         columns: [
           {
             Header: "Solo Drink Count",
-            accessor: "breweryOwnDrinkCount"
-          },
-          {
-            Header: "Solo Drink Avg Score",
-            accessor: "breweryOwnDrinkAvgScore"
+            accessor: "breweryOwnDrinkCount",
+            disableFilters: true
           },
           {
             Header: "Collab Drink Count",
-            accessor: "breweryCollabDrinkCount"
+            accessor: "breweryCollabDrinkCount",
+            disableFilters: true
+          },
+          {
+            Header: "Solo Drink Avg Score",
+            accessor: "breweryOwnDrinkAvgScore",
+            disableFilters: true
           },
         ],
       },
@@ -175,9 +211,12 @@ function BreweryScroll(props) {
       return(
         <div className="scrollAndCheckboxes">
         <div>
-          {/* <Container> */}
-            <BreweryTableContainer columns={columns} data={breweryObjectsArray} />
-          {/* </Container> */}
+          <Container>
+            <BreweryTableContainer
+              columns={columns}
+              data={breweryObjectsArray}
+              renderRowSubComponent={renderRowSubComponent} />
+          </Container>
         </div>
           <div className="breweryScrollTable">
         </div>

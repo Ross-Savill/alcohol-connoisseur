@@ -1,29 +1,28 @@
-import React from "react"
-import { useTable, useSortBy } from "react-table";
+import React, { Fragment } from "react"
+import { useTable, useSortBy, useFilters, useExpanded } from "react-table";
 import { Table } from 'reactstrap';
+import { Filter, DefaultColumnFilter } from './filters';
+import "../Stylesheets/BreweryTableContainer.css"
 
-const BreweryTableContainer = ({ columns, data }) => {
+const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
     prepareRow,
+    visibleColumns
   } = useTable({
     columns,
     data,
-    sortTypes: React.useMemo(
-      () => ({
-        sortDrinkers: (rowA, rowB, id, desc) => {
-          if (rowB.original[id].length > rowA.original[id].length) return -1;
-          if (rowA.original[id].length > rowB.original[id].length) return 1;
-          return 0;
-        }
-      }),
-      []
-    ),
+    defaultColumn: { Filter: DefaultColumnFilter },
+    initialState: {
+      sortBy: [{ id: 'breweryTotalDrinksCount', desc: true }]
+    }
   },
-    useSortBy
+    useFilters,
+    useSortBy,
+    useExpanded
   )
   const generateSortingIndicator = column => {
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
@@ -35,24 +34,38 @@ const BreweryTableContainer = ({ columns, data }) => {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                {column.render("Header")}
-                {generateSortingIndicator(column)}
-              </th>
+              <th {...column.getHeaderProps()}>
+                <div {...column.getSortByToggleProps()}>
+                  {column.render("Header")}
+                  {generateSortingIndicator(column)}
+                </div>
+                <Filter column={column} />
+            </th>
             ))}
           </tr>
         ))}
       </thead>
-
+              {console.log(visibleColumns.length)}
       <tbody {...getTableBodyProps()}>
         {rows.map(row => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-              })}
-            </tr>
+            <Fragment key={row.getRowProps().key}>
+              <tr>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                })}
+              </tr>
+              {row.isExpanded && (
+                <tr>
+                  <td colSpan={visibleColumns.length}>
+                      <div className="expandedRowDiv">
+                        {renderRowSubComponent(row)}
+                      </div>
+                    </td>
+                </tr>
+              )}
+            </Fragment>
           )
         })}
       </tbody>

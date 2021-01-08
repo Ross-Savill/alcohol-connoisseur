@@ -3,6 +3,7 @@ import { useTable, useSortBy, useFilters, useExpanded } from "react-table";
 import { Table } from 'reactstrap';
 import { Filter, DefaultColumnFilter } from './filters';
 import "../Stylesheets/BreweryTableContainer.css"
+import { useMemo } from "react";
 
 const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
   const {
@@ -19,8 +20,12 @@ const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
     data,
     defaultColumn: { Filter: DefaultColumnFilter },
     disableSortRemove: true,
+    sortTypes: { sortAvgSolo: useMemo(() => (a, b, id, desc) => {
+      const rowA = a.original[id];
+      const rowB = b.original[id];
+      return rowA === rowB ? 0 : rowA > rowB || rowB === "-" ? 1 : -1;
+    })},
     initialState: {
-      // sortBy: [{ id: sortedColumnIDtoSave, desc: true }],
       hiddenColumns: [ "breweryOwnDrinkCount", "breweryCollabDrinkCount", "breweryOwnDrinkAvgScore" ]
     }
   },
@@ -45,7 +50,7 @@ const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
     }
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
   }
-console.log(sortedColumnDesc)
+
   return (
     <div className="mainTableAndChckboxes">
       <div className="additionalColumnsChckboxes">
@@ -86,22 +91,11 @@ console.log(sortedColumnDesc)
       <Table bordered hover size="sm" variant="dark" {...getTableProps()}>
         <thead className="mainTableHeader">
           {headerGroups.map(headerGroup => (
-            <tr className="topHeader" {...headerGroup.getHeaderGroupProps()}
-              style={{
-                zIndex:"1",
-                top: 0,
-                position: "sticky",
-                textAlign: "center",
-              }}
-            >
+            <tr className="topHeader" {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}
+                <th className="subHeaders"
+                    {...column.getHeaderProps()}
                     {...column.getSortByToggleProps()}
-                  style={{
-                    zIndex:"1",
-                    top: 0,
-                    position: "sticky",
-                  }}
                 >
                   <div>
                     {column.render("Header")}

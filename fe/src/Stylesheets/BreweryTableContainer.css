@@ -1,7 +1,7 @@
 .mainTableAndChckboxes {
   display: flex;
   flex-direction: column-reverse;
-  width: 80vw;
+  width: 50vw;
 }
 
 Table tbody td {
@@ -12,6 +12,17 @@ Table tbody td {
 
 .topHeader {
   background-color: green;
+  z-index: 1;
+  top: 0;
+  position: sticky;
+  text-align: center;
+}
+
+.subHeaders {
+  z-index: 1;
+  top: 0;
+  position: sticky;
+  /* cursor: pointer; */
 }
 
 .mainTable {

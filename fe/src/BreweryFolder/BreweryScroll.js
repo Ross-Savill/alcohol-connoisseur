@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Container } from "reactstrap";
+import { Container, Spinner } from "reactstrap";
 import '../Stylesheets/BreweryScroll.css';
 import BreweryTableContainer from "./BreweryTableContainer";
 import { SearchColumnFilter } from './filters';
+import LoadingSpin from '../LoadingSpin';
 
 function BreweryScroll(props) {
 
@@ -61,7 +62,6 @@ function BreweryScroll(props) {
         let collabDrinkCount = 0;
         let soloDrinkScores = [];
         let allDrinkScores = [];
-        let soloDrinksAverage = '';
         allBeersAndCiders.map((beerOrCider) => {
 
         // GRAB DRINKERS OF THIS BREWERY
@@ -103,21 +103,22 @@ function BreweryScroll(props) {
         const totalDrinkCount = ownDrinkCount + collabDrinkCount;
         // CANCEL IF NOT ENOUGH DRINKS AS PER SELECTION
         if(totalDrinkCount < chosenDrinkNum) { return }
-                  // SET SOLO DRINKS AVERAGE
-        if(soloDrinkScores.length === 0) { soloDrinksAverage = "-" }
-        else
-        { soloDrinksAverage = parseFloat((soloDrinkScores.reduce((a,b) => a+b,0)/soloDrinkScores.length).toFixed(2)) }
+        // REPLACE 0s WITH HYPHENS FOR VISUAL APPEAL
         if(ownDrinkCount === 0) {ownDrinkCount = "-"}
         if(collabDrinkCount === 0) {collabDrinkCount = "-"}
+        // SET SOLO DRINKS AVERAGE
+        const allSoloDrinksAverage = soloDrinkScores.length > 0 ? parseFloat((soloDrinkScores.reduce((a,b) => a+b,0)/soloDrinkScores.length).toFixed(2)) : "-";
         // SET ALL DRINKS AVERAGE
         const allDrinksAverage = parseFloat((allDrinkScores.reduce((a,b) => a+b,0)/allDrinkScores.length).toFixed(2))
+
+        // SET THE DATA OBJECT!
         const breweryObject = {
           breweryName: brewery,
           breweryDrinkerCount: uniqueDrinkerNumber,
           breweryOwnDrinkCount: ownDrinkCount,
           breweryCollabDrinkCount: collabDrinkCount,
           breweryTotalDrinksCount: totalDrinkCount,
-          breweryOwnDrinkAvgScore: soloDrinksAverage,
+          breweryOwnDrinkAvgScore: allSoloDrinksAverage,
           breweryTotalDrinkAvgScore: allDrinksAverage
         }
         localBreweryObjectsArray.push(breweryObject)
@@ -163,7 +164,7 @@ function BreweryScroll(props) {
   const columns = useMemo(
     () => [
       {
-        Header: "TOP OF THE SCROLL",
+        Header: "TOP OF THE SCROLL - CLICK A HEADER TO SORT",
         columns: [
           {
             Header: "Brewery Name Search",
@@ -183,7 +184,7 @@ function BreweryScroll(props) {
             sortDescFirst: true
           },
           {
-            Header: "Total Drink Average",
+            Header: "Total Drink Avg Score",
             accessor: "breweryTotalDrinkAvgScore",
             disableFilters: true,
             sortType: "basic",
@@ -205,7 +206,8 @@ function BreweryScroll(props) {
             Header: "Solo Drink Avg Score",
             accessor: "breweryOwnDrinkAvgScore",
             disableFilters: true,
-            sortType: "basic",
+            sortType: "sortAvgSolo",
+            // sortType: "basic",
             sortDescFirst: true
           },
         ],
@@ -214,7 +216,11 @@ function BreweryScroll(props) {
   )
 
     if(!breweryObjectsArray) {
-      return <p> No Drinks</p>
+      return (
+        <div className="breweryPageLoadingDiv">
+          <LoadingSpin />
+        </div>
+      )
     } else {
       return(
         <div className="scrollAndCheckboxes">
@@ -230,7 +236,7 @@ function BreweryScroll(props) {
             <div className="dataEditChckboxes">
               <h4>Edits</h4>
               <label>
-                Min Number Of Brewery Drinkers:
+                Minimum Number Of Unique Drinkers:
                 <select value={chosenDrinkerNum} onChange={e => setChosenDrinkerNum(e.currentTarget.value)}>
                   {selectQuestionNumber("Drinker")}
                 </select>

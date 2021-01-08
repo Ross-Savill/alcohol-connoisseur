@@ -1,3 +1,11 @@
+.breweryPageLoadingDiv {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .scrollAndCheckboxes {
   display: flex;
   flex-direction: row;
@@ -16,6 +24,8 @@
 }
 
 .dataEditChckboxes {
+  display: inline-block;
+  width: 300px;
   height: fit-content;
   padding: 5px;
   margin: 5px;

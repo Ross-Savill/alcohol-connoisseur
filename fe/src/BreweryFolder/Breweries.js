@@ -32,7 +32,7 @@ class Breweries extends Component {
           <div className="breweryScrollComponent">
             <BreweryScroll drinks={this.state.drinks}/>
           </div>
-        </div>
+        // </div>
       )
     }
 }

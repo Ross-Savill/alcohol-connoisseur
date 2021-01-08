@@ -5,7 +5,7 @@ import HomePage from './HomePage';
 import RatingWord from './RatingWordFolder/RatingWord';
 import Drinkers from './DrinkerFolder/Drinkers';
 import Sessions from './SessionsFolder/Sessions';
-import Breweries from './BreweryFolder/Breweries';
+import BreweryScroll from './BreweryFolder/BreweryScroll';
 import WorldMap from './MapFolder/WorldMap';
 import USMap from './MapFolder/USMap';
 import './Stylesheets/App.css';
@@ -95,9 +95,8 @@ const App = () => {
             <Route
               exact path="/breweries"
               render={(props) => (
-                <Breweries {...props}
+                <BreweryScroll {...props}
                   drinks={state.drinks}
-                  drinkers={state.drinkers}
                 />
               )}
             />

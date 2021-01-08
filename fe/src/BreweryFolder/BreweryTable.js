@@ -2,10 +2,10 @@ import React, { useState, Fragment } from "react"
 import { useTable, useSortBy, useFilters, useExpanded } from "react-table";
 import { Table } from 'reactstrap';
 import { Filter, DefaultColumnFilter } from './filters';
-import "../Stylesheets/BreweryTableContainer.css"
+import "../Stylesheets/BreweryTable.css"
 import { useMemo } from "react";
 
-const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
+const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -112,7 +112,7 @@ const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
             prepareRow(row)
             return (
               <Fragment key={row.getRowProps().key}>
-                <tr {...row.getToggleRowExpandedProps()} >
+                <tr {...row.getToggleRowExpandedProps()}>
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}
@@ -136,4 +136,4 @@ const BreweryTableContainer = ({ columns, data, renderRowSubComponent }) => {
   )
 }
 
-export default BreweryTableContainer;
+export default BreweryTable;

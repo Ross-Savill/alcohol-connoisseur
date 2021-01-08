@@ -20,9 +20,7 @@ Table tbody td {
 
 .subHeaders {
   z-index: 1;
-  top: 0;
-  position: sticky;
-  /* cursor: pointer; */
+  top: 1;
 }
 
 .mainTable {
@@ -34,9 +32,7 @@ Table tbody td {
 }
 
 .expandedRowDiv {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  text-align: left;
 }
 
 .noCollabDrinksDiv {
@@ -45,7 +41,7 @@ Table tbody td {
 
 .additionalColumnsChckboxes {
   display: inline-block;
-  width: fit-content;
+  width: 100%;
   margin: 5px;
   padding: 5px;
   border: 1px solid green;

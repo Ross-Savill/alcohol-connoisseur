@@ -41,7 +41,7 @@ export const SearchColumnFilter = ({
   return (
     <CustomInput
       id="custom-select"
-      class="w-75"
+      className="w-75"
       type="text"
       value={filterValue}
       onChange={e => {

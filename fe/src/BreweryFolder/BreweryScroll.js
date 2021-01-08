@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Container, Spinner } from "reactstrap";
+import { Container } from "reactstrap";
+import Navbar from '../Navbar';
 import '../Stylesheets/BreweryScroll.css';
-import BreweryTableContainer from "./BreweryTableContainer";
+import BreweryTable from "./BreweryTable";
+import BreweryDrinksTable from "./BreweryDrinksTable";
 import { SearchColumnFilter } from './filters';
 import LoadingSpin from '../LoadingSpin';
 
@@ -12,23 +14,25 @@ function BreweryScroll(props) {
   const [breweryObjectsArray, setBreweryObjectsArray] = useState()
   const [chosenDrinkerNum, setChosenDrinkerNum] = useState(1)
   const [chosenDrinkNum, setChosenDrinkNum] = useState(1)
+  const [expandedBreweryName, setExpandedBreweryName] = useState("")
 
   useEffect(() => {
-    if(props.drinks) {
-      (async () => {
-        setDrinks(props.drinks)
+    setDrinks(props.drinks)
+  },[props.drinks])
+
+  useEffect(() => {
+    if(drinks){
+      (async() => {
         let drunkBeersAndCiders = []
-        if(drinks) {
-          drinks.map((drink) => {
+          await drinks.map((drink) => {
             if((drink.drinkType === "Beer" || drink.drinkType === "Cider") && drink.mixerOne === "") {
               drunkBeersAndCiders.push(drink)
             }
           })
-        }
         setAllBeersAndCiders(drunkBeersAndCiders)
       })();
     }
-  }, [props, chosenDrinkerNum, chosenDrinkNum])
+  }, [drinks, chosenDrinkerNum, chosenDrinkNum])
 
   useEffect(() => {
     makeBreweryData();
@@ -129,6 +133,7 @@ function BreweryScroll(props) {
   }
 
   const renderRowSubComponent = row => {
+    setExpandedBreweryName(row.values.breweryName)
     const {
       breweryName
     } = row.original
@@ -143,7 +148,10 @@ function BreweryScroll(props) {
     })
     return breweryDrinks.map((drink, index) => {
        return (
-        <div>{index + 1}) {drink.name} drank {drink.drinkMain} <br></br></div>
+         <div>
+          <div>{index + 1}) {drink.name} had a {drink.drinkMain}: </div>
+          <div>"{drink.ratingWordOne}" and "{drink.ratingWordTwo}" - {drink.score}</div>
+        </div>
        )
       });
   }
@@ -164,7 +172,7 @@ function BreweryScroll(props) {
   const columns = useMemo(
     () => [
       {
-        Header: "TOP OF THE SCROLL - CLICK A HEADER TO SORT",
+        Header: "A LIST OF EVERY BEER BREWER AND CIDERY RATED ON DnR",
         columns: [
           {
             Header: "Brewery Name Search",
@@ -172,14 +180,14 @@ function BreweryScroll(props) {
             Filter: SearchColumnFilter,
           },
           {
-            Header: "Drinkers",
-            accessor: "breweryDrinkerCount",
+            Header: "Total Drink Count",
+            accessor: "breweryTotalDrinksCount",
             disableFilters: true,
             sortDescFirst: true
           },
           {
-            Header: "Total Drink Count",
-            accessor: "breweryTotalDrinksCount",
+            Header: "Drinkers",
+            accessor: "breweryDrinkerCount",
             disableFilters: true,
             sortDescFirst: true
           },
@@ -207,7 +215,6 @@ function BreweryScroll(props) {
             accessor: "breweryOwnDrinkAvgScore",
             disableFilters: true,
             sortType: "sortAvgSolo",
-            // sortType: "basic",
             sortDescFirst: true
           },
         ],
@@ -223,31 +230,48 @@ function BreweryScroll(props) {
       )
     } else {
       return(
-        <div className="scrollAndCheckboxes">
-          <Container>
-            <div className="insideContainerTable">
-              <BreweryTableContainer
-                columns={columns}
-                data={breweryObjectsArray}
-                renderRowSubComponent={renderRowSubComponent}
-              />
-            </div>
-          </Container>
-            <div className="dataEditChckboxes">
-              <h4>Edits</h4>
-              <label>
-                Minimum Number Of Unique Drinkers:
-                <select value={chosenDrinkerNum} onChange={e => setChosenDrinkerNum(e.currentTarget.value)}>
-                  {selectQuestionNumber("Drinker")}
-                </select>
-              </label>
-              <label>
-                Min Number of Drinks By Brewery
-                <select value={chosenDrinkNum} onChange={e => setChosenDrinkNum(e.currentTarget.value)}>
-                  {selectQuestionNumber("Drink")}
-                </select>
-              </label>
-            </div>
+        <div className="breweryPage">
+          <div className="titleDiv">
+            <h1 className='title'>Breweries Page</h1>
+          </div>
+          <Navbar />
+          <div className="scrollAndCheckboxes">
+            <Container>
+              <div className="insideContainerTable">
+                <BreweryTable
+                  columns={columns}
+                  data={breweryObjectsArray}
+                  renderRowSubComponent={renderRowSubComponent}
+                  setExpandedBreweryName={setExpandedBreweryName}
+                />
+                <div className="dataEditChckboxesAndDrinksTable">
+                  <div className="dataEditChckboxes">
+                  <h4>Edits</h4>
+                    <label>
+                      Minimum Number Of Unique Drinkers:
+                      <select value={chosenDrinkerNum} onChange={e => setChosenDrinkerNum(e.currentTarget.value)}>
+                        {selectQuestionNumber("Drinker")}
+                      </select>
+                    </label>
+                    <label>
+                      Min Number of Drinks By Brewery
+                      <select value={chosenDrinkNum} onChange={e => setChosenDrinkNum(e.currentTarget.value)}>
+                        {selectQuestionNumber("Drink")}
+                      </select>
+                    </label>
+                  </div>
+                {/* {expandedBreweryName && (
+                  <div className="breweryDrinksTable">
+                    <BreweryDrinksTable
+                      breweryObjectsArray={breweryObjectsArray}
+                      expandedBreweryName={expandedBreweryName}
+                    />
+                  </div>
+                )} */}
+                </div>
+              </div>
+            </Container>
+          </div>
         </div>
       )
     }

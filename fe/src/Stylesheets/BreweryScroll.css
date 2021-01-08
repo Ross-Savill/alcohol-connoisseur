@@ -1,3 +1,15 @@
+.titleDiv {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  background-color: green;
+}
+
+.title {
+  font-weight: bold;
+}
+
 .breweryPageLoadingDiv {
   width: 100vw;
   height: 100vh;
@@ -6,14 +18,20 @@
   align-items: center;
 }
 
+.container {
+  display: inline-flex;
+}
+
 .scrollAndCheckboxes {
   display: flex;
   flex-direction: row;
+  width: 100vw;
 }
 
 .insideContainerTable {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .dropdownCardDiv {
@@ -21,6 +39,10 @@
   height: 100%;
   padding: 5px;
   margin: 5px;
+}
+
+.dataEditChckboxesAndDrinksTable {
+
 }
 
 .dataEditChckboxes {

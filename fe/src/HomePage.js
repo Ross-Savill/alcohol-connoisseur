@@ -4,6 +4,7 @@ import './Stylesheets/HomePage.css';
 import Table from './Table';
 import moment from 'moment';
 import AddDrinkForm from './AddDrinkForm';
+import LoadingSpin from './LoadingSpin';
 
 const Dates = ( values ) => {
   for (const [key, date] of Object.entries(values)) {
@@ -115,7 +116,7 @@ function HomePage(props) {
     [date, drinkTotal]
   );
   if(!data) {
-    return <h1>Hold Your Horses One Sec...</h1>
+    return <div className="mainPageLoadingDiv"><LoadingSpin /></div>
   } else {
   return (
     <div>

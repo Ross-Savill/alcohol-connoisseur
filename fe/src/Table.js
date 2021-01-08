@@ -43,7 +43,7 @@ export default function Table({ columns, data }) {
     if(pageCount === 0) {
       return <h1>No Data!</h1>
     } else {
-    return (<table {...getTableProps()} className="table">
+    return (<table {...getTableProps()} className="MainPagetable">
           <thead>
           {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()} className="th">

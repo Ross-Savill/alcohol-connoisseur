@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useFlexLayout } from "react-table";
-import { Container, Card, CardImg, CardText, CardBody, CardTitle, } from "reactstrap";
+import { Container } from "reactstrap";
 import '../Stylesheets/BreweryScroll.css';
 import BreweryTableContainer from "./BreweryTableContainer";
 import { SearchColumnFilter } from './filters';
@@ -10,6 +9,8 @@ function BreweryScroll(props) {
   const [drinks, setDrinks] = useState(props.drinks)
   const [allBeersAndCiders, setAllBeersAndCiders] = useState([])
   const [breweryObjectsArray, setBreweryObjectsArray] = useState()
+  const [chosenDrinkerNum, setChosenDrinkerNum] = useState(1)
+  const [chosenDrinkNum, setChosenDrinkNum] = useState(1)
 
   useEffect(() => {
     if(props.drinks) {
@@ -26,7 +27,7 @@ function BreweryScroll(props) {
         setAllBeersAndCiders(drunkBeersAndCiders)
       })();
     }
-  }, [props])
+  }, [props, chosenDrinkerNum, chosenDrinkNum])
 
   useEffect(() => {
     makeBreweryData();
@@ -96,10 +97,13 @@ function BreweryScroll(props) {
         // GET UNIQUE DRINKERS LIST
         const nonUniqueDrinkers = [...new Set(breweryDrinkers)]
         const uniqueDrinkerNumber = nonUniqueDrinkers.length
-
+        // CANCEL IF NOT ENOUGH DRINKERS AS PER SELECTION
+        if(uniqueDrinkerNumber < chosenDrinkerNum) { return }
         // GET TOTAL DRINKS
         const totalDrinkCount = ownDrinkCount + collabDrinkCount;
-        // SET SOLO DRINKS AVERAGE
+        // CANCEL IF NOT ENOUGH DRINKS AS PER SELECTION
+        if(totalDrinkCount < chosenDrinkNum) { return }
+                  // SET SOLO DRINKS AVERAGE
         if(soloDrinkScores.length === 0) { soloDrinksAverage = "-" }
         else
         { soloDrinksAverage = parseFloat((soloDrinkScores.reduce((a,b) => a+b,0)/soloDrinkScores.length).toFixed(2)) }
@@ -107,7 +111,6 @@ function BreweryScroll(props) {
         if(collabDrinkCount === 0) {collabDrinkCount = "-"}
         // SET ALL DRINKS AVERAGE
         const allDrinksAverage = parseFloat((allDrinkScores.reduce((a,b) => a+b,0)/allDrinkScores.length).toFixed(2))
-
         const breweryObject = {
           breweryName: brewery,
           breweryDrinkerCount: uniqueDrinkerNumber,
@@ -137,28 +140,30 @@ function BreweryScroll(props) {
            breweryDrinks.push(beerOrCider)
       }
     })
-
     return breweryDrinks.map((drink, index) => {
        return (
         <div>{index + 1}) {drink.name} drank {drink.drinkMain} <br></br></div>
        )
       });
+  }
 
+  const selectQuestionNumber = (drinkOrDrinker) => {
+    let numbers = [];
+    let noun = drinkOrDrinker;
+      for (let i = 0; i < 10; i++) {
+        if(i === 0) {
+        numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}`}</option>);
+        } else {
+        numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}s`}</option>);
+        }
+      }
+    return numbers;
   }
 
   const columns = useMemo(
     () => [
       {
-        Header: () => null,
-        id: 'expander', // 'id' is required
-        Cell: ({ row, index }) => (
-          <span {...row.getToggleRowExpandedProps()}>
-            {row.isExpanded ? '👇' : '👉'}
-          </span>
-        )
-      },
-      {
-        Header: "All Brewery Drinks",
+        Header: "TOP OF THE SCROLL",
         columns: [
           {
             Header: "Brewery Name Search",
@@ -168,37 +173,40 @@ function BreweryScroll(props) {
           {
             Header: "Drinkers",
             accessor: "breweryDrinkerCount",
-            disableFilters: true
+            disableFilters: true,
+            sortDescFirst: true
           },
           {
             Header: "Total Drink Count",
             accessor: "breweryTotalDrinksCount",
-            disableFilters: true
+            disableFilters: true,
+            sortDescFirst: true
           },
           {
             Header: "Total Drink Average",
             accessor: "breweryTotalDrinkAvgScore",
-            disableFilters: true
+            disableFilters: true,
+            sortType: "basic",
+            sortDescFirst: true
           },
-        ],
-      },
-      {
-        Header: "Own Drinks Vs Collabs",
-        columns: [
           {
             Header: "Solo Drink Count",
             accessor: "breweryOwnDrinkCount",
-            disableFilters: true
+            disableFilters: true,
+            sortDescFirst: true
           },
           {
             Header: "Collab Drink Count",
             accessor: "breweryCollabDrinkCount",
-            disableFilters: true
+            disableFilters: true,
+            sortDescFirst: true
           },
           {
             Header: "Solo Drink Avg Score",
             accessor: "breweryOwnDrinkAvgScore",
-            disableFilters: true
+            disableFilters: true,
+            sortType: "basic",
+            sortDescFirst: true
           },
         ],
       },
@@ -210,23 +218,30 @@ function BreweryScroll(props) {
     } else {
       return(
         <div className="scrollAndCheckboxes">
-        <div>
           <Container>
-            <BreweryTableContainer
-              columns={columns}
-              data={breweryObjectsArray}
-              renderRowSubComponent={renderRowSubComponent} />
-          </Container>
-        </div>
-          <div className="breweryScrollTable">
-        </div>
-          <div className="checkboxDiv">
-            <div className="hideColumnsChbxAndLabel">
-            <label className="hideCollabInfoLabel">Show Collaboration Info <br/>
-              <input type="checkbox" className="hideCollabInfo" a/>
-            </label>
+            <div className="insideContainerTable">
+              <BreweryTableContainer
+                columns={columns}
+                data={breweryObjectsArray}
+                renderRowSubComponent={renderRowSubComponent}
+              />
             </div>
-          </div>
+          </Container>
+            <div className="dataEditChckboxes">
+              <h4>Edits</h4>
+              <label>
+                Min Number Of Brewery Drinkers:
+                <select value={chosenDrinkerNum} onChange={e => setChosenDrinkerNum(e.currentTarget.value)}>
+                  {selectQuestionNumber("Drinker")}
+                </select>
+              </label>
+              <label>
+                Min Number of Drinks By Brewery
+                <select value={chosenDrinkNum} onChange={e => setChosenDrinkNum(e.currentTarget.value)}>
+                  {selectQuestionNumber("Drink")}
+                </select>
+              </label>
+            </div>
         </div>
       )
     }

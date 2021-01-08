@@ -23,7 +23,7 @@
   font-size: 0.9em;
 }
 
-.table {
+.MainPagetable {
   border-spacing: 0px;
   border-collapse: collapse;
 }
@@ -33,12 +33,12 @@
   align-items: center;
 }
 
-.table thead th {
+.MainPagetable thead th {
   border-spacing: 0px;
   border-collapse:collapse;
 }
 
-.table tbody td {
+.MainPagetable tbody td {
   text-align: center;
   font-size: 12px;
   font-weight: bold;

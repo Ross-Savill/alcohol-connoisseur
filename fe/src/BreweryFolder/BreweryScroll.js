@@ -183,39 +183,39 @@ function BreweryScroll(props) {
             Header: "Total Drink Count",
             accessor: "breweryTotalDrinksCount",
             disableFilters: true,
-            sortDescFirst: true
+            sortDescFirst: true,
           },
           {
             Header: "Drinkers",
             accessor: "breweryDrinkerCount",
             disableFilters: true,
-            sortDescFirst: true
+            sortDescFirst: true,
           },
           {
             Header: "Total Drink Avg Score",
             accessor: "breweryTotalDrinkAvgScore",
             disableFilters: true,
             sortType: "basic",
-            sortDescFirst: true
+            sortDescFirst: true,
           },
           {
             Header: "Solo Drink Count",
             accessor: "breweryOwnDrinkCount",
             disableFilters: true,
-            sortDescFirst: true
+            sortDescFirst: true,
           },
           {
             Header: "Collab Drink Count",
             accessor: "breweryCollabDrinkCount",
             disableFilters: true,
-            sortDescFirst: true
+            sortDescFirst: true,
           },
           {
             Header: "Solo Drink Avg Score",
             accessor: "breweryOwnDrinkAvgScore",
             disableFilters: true,
             sortType: "sortAvgSolo",
-            sortDescFirst: true
+            sortDescFirst: true,
           },
         ],
       },

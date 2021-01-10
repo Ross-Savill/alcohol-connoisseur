@@ -112,7 +112,20 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
             prepareRow(row)
             return (
               <Fragment key={row.getRowProps().key}>
-                <tr {...row.getToggleRowExpandedProps()}>
+                <tr {...row.getToggleRowExpandedProps({onClick: () => {
+                    const expandedRow = rows.find(row => row.isExpanded);
+                    if(expandedRow) {
+                      if(row.id === expandedRow.id) {
+                        row.toggleRowExpanded()
+                        return;
+                      } else {
+                        expandedRow.toggleRowExpanded();
+                        console.log("triggered")
+                      }
+                    }
+                    row.toggleRowExpanded();
+                  }})}>
+                {/* <tr {...row.getRowProps()}> */}
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}

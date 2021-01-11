@@ -15,6 +15,7 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
     setSortBy,
     visibleColumns,
     allColumns,
+    setHiddenColumns
   } = useTable({
     columns,
     data,
@@ -26,13 +27,24 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
       return rowA === rowB ? 0 : rowA > rowB || rowB === "-" ? 1 : -1;
     })},
     initialState: {
-      hiddenColumns: [ "breweryOwnDrinkCount", "breweryCollabDrinkCount", "breweryOwnDrinkAvgScore" ]
+      // hiddenColumns: [ "breweryOwnDrinkCount", "breweryCollabDrinkCount", "breweryOwnDrinkAvgScore" ]
+      hiddenColumns: columns[0].columns.filter(column => !column.show).map(column => column.id)
+
     }
   },
     useFilters,
     useSortBy,
     useExpanded,
   )
+
+  React.useEffect(
+    () => {
+      setHiddenColumns(
+        columns[0].columns.filter(column => !column.show).map(column => column.id)
+      );
+    },
+    [columns]
+  );
 
   const [savedSortedColumn, setSavedSortedColumn] = useState("breweryTotalDrinksCount")
   const [sortedColumnDesc, setSortedColumnDesc] = useState(true)
@@ -50,45 +62,10 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
     }
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
   }
-
+  console.log(columns[0].columns)
   return (
-    <div className="mainTableAndChckboxes">
-      <div className="additionalColumnsChckboxes">
-        {<h4>Additional Columns</h4>}
-        {allColumns.map(column =>
-          {if(column.id === "breweryOwnDrinkCount") {
-            return (
-            <div className="additionalColumnChckbx" key={column.id}>
-              <label>
-                <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
-                Number of Drinks Without Collaborations
-              </label>
-            </div>
-            )
-          } else if(column.id === "breweryCollabDrinkCount") {
-            return (
-            <div className="additionalColumnChckbx" key={column.id}>
-              <label>
-                <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
-                Number of Drinks With Collaborations
-              </label>
-            </div>
-            )
-          } else if(column.id === "breweryOwnDrinkAvgScore") {
-            return (
-              <div className="additionalColumnChckbx" key={column.id}>
-                <label>
-                  <input type="checkbox" {...column.getToggleHiddenProps()} />{' '}
-                  Drinks Score Excluding Collaborations
-                </label>
-              </div>
-            )
-          }}
-        )}
-        <br />
-      </div>
-      <div className="mainTable">
-      <Table bordered hover size="sm" variant="dark" {...getTableProps()}>
+    <div className="mainTable">
+      <Table bordered hover size="sm" {...getTableProps()}>
         <thead className="mainTableHeader">
           {headerGroups.map(headerGroup => (
             <tr className="topHeader" {...headerGroup.getHeaderGroupProps()}>
@@ -120,12 +97,10 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
                         return;
                       } else {
                         expandedRow.toggleRowExpanded();
-                        console.log("triggered")
                       }
                     }
                     row.toggleRowExpanded();
                   }})}>
-                {/* <tr {...row.getRowProps()}> */}
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}
@@ -144,7 +119,6 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
           })}
         </tbody>
       </Table>
-    </div>
     </div>
   )
 }

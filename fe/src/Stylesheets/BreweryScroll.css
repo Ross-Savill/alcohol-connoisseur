@@ -20,6 +20,7 @@
 
 .container {
   display: inline-flex;
+  margin-left: 5px;
 }
 
 .scrollAndCheckboxes {
@@ -34,22 +35,21 @@
   width: 100%;
 }
 
-.dropdownCardDiv {
-  width: 100%;
-  height: 100%;
-  padding: 5px;
-  margin: 5px;
-}
-
-.dataEditChckboxesAndDrinksTable {
-
+.brewTableFiltersAndAdditional {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .dataEditChckboxes {
   display: inline-block;
-  width: 300px;
   height: fit-content;
+  min-width: 400px;
+  font-size: 14px;
   padding: 5px;
-  margin: 5px;
+  margin: 0px 5px 5px 5px;
   border: solid 1px green;
+}
+
+.filterLabelOne {
+  max-height: 50px;
 }

@@ -15,6 +15,7 @@ function BreweryScroll(props) {
   const [chosenDrinkerNum, setChosenDrinkerNum] = useState(1)
   const [chosenDrinkNum, setChosenDrinkNum] = useState(1)
   const [expandedBreweryName, setExpandedBreweryName] = useState("")
+  const [additionalColumns, setAdditionalColumns] = useState(false)
 
   useEffect(() => {
     setDrinks(props.drinks)
@@ -72,8 +73,8 @@ function BreweryScroll(props) {
           if(beerOrCider.company === brewery ||
             beerOrCider.firstCollabCompany === brewery ||
             beerOrCider.secondCollabCompany === brewery) {
-              breweryDrinkers.push(beerOrCider.name)
-            }
+            breweryDrinkers.push(beerOrCider.name)
+          }
 
         // GRAB BREWERY OWN DRINK COUNT
           if(beerOrCider.company === brewery && beerOrCider.firstCollabCompany === "") {
@@ -99,8 +100,8 @@ function BreweryScroll(props) {
 
       }) // THIS ENDS THE DRINK LOOP
         // GET UNIQUE DRINKERS LIST
-        const nonUniqueDrinkers = [...new Set(breweryDrinkers)]
-        const uniqueDrinkerNumber = nonUniqueDrinkers.length
+        const uniqueDrinkers = [...new Set(breweryDrinkers)]
+        const uniqueDrinkerNumber = uniqueDrinkers.length
         // CANCEL IF NOT ENOUGH DRINKERS AS PER SELECTION
         if(uniqueDrinkerNumber < chosenDrinkerNum) { return }
         // GET TOTAL DRINKS
@@ -120,6 +121,8 @@ function BreweryScroll(props) {
           breweryName: brewery,
           breweryDrinkerCount: uniqueDrinkerNumber,
           breweryOwnDrinkCount: ownDrinkCount,
+          breweryUneditedDrinkersArray: breweryDrinkers,
+          breweryDrinkersArray: uniqueDrinkers,
           breweryCollabDrinkCount: collabDrinkCount,
           breweryTotalDrinksCount: totalDrinkCount,
           breweryOwnDrinkAvgScore: allSoloDrinksAverage,
@@ -148,7 +151,7 @@ function BreweryScroll(props) {
     })
     return breweryDrinks.map((drink, index) => {
        return (
-         <div>
+        <div>
           <div>{index + 1}) {drink.name} had a {drink.drinkMain}: </div>
           <div>"{drink.ratingWordOne}" and "{drink.ratingWordTwo}" - {drink.score}</div>
         </div>
@@ -169,6 +172,10 @@ function BreweryScroll(props) {
     return numbers;
   }
 
+  const handleAdditionalColumns = () => {
+    setAdditionalColumns(!additionalColumns)
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -176,50 +183,64 @@ function BreweryScroll(props) {
         columns: [
           {
             Header: "Brewery Name Search",
+            id: "breweryName",
             accessor: "breweryName",
             Filter: SearchColumnFilter,
-          },
-          {
-            Header: "Total Drink Count",
-            accessor: "breweryTotalDrinksCount",
-            disableFilters: true,
-            sortDescFirst: true,
-          },
-          {
-            Header: "Drinkers",
-            accessor: "breweryDrinkerCount",
-            disableFilters: true,
-            sortDescFirst: true,
-          },
-          {
-            Header: "Total Drink Avg Score",
-            accessor: "breweryTotalDrinkAvgScore",
-            disableFilters: true,
-            sortType: "basic",
-            sortDescFirst: true,
+            show: true
           },
           {
             Header: "Solo Drink Count",
+            id: "breweryOwnDrinkCount",
             accessor: "breweryOwnDrinkCount",
             disableFilters: true,
             sortDescFirst: true,
+            show: additionalColumns
           },
           {
             Header: "Collab Drink Count",
+            id: "breweryCollabDrinkCount",
             accessor: "breweryCollabDrinkCount",
             disableFilters: true,
             sortDescFirst: true,
+            show: additionalColumns
+          },
+          {
+            Header: "Total Drink Count",
+            id: "breweryTotalDrinksCount",
+            accessor: "breweryTotalDrinksCount",
+            disableFilters: true,
+            sortDescFirst: true,
+            show: true
+          },
+          {
+            Header: "Drinkers",
+            id: "breweryDrinkerCount",
+            accessor: "breweryDrinkerCount",
+            disableFilters: true,
+            sortDescFirst: true,
+            show: true
           },
           {
             Header: "Solo Drink Avg Score",
+            id: "breweryOwnDrinkAvgScore",
             accessor: "breweryOwnDrinkAvgScore",
             disableFilters: true,
             sortType: "sortAvgSolo",
             sortDescFirst: true,
+            show: additionalColumns
+          },
+          {
+            Header: "Total Drink Avg Score",
+            id: "breweryTotalDrinkAvgScore",
+            accessor: "breweryTotalDrinkAvgScore",
+            disableFilters: true,
+            sortType: "basic",
+            sortDescFirst: true,
+            show: true
           },
         ],
       },
-    ],[]
+    ],[additionalColumns]
   )
 
     if(!breweryObjectsArray) {
@@ -236,38 +257,42 @@ function BreweryScroll(props) {
           </div>
           <Navbar />
           <div className="scrollAndCheckboxes">
-            <Container>
+            <Container className="themed-container" fluid={true}>
               <div className="insideContainerTable">
-                <BreweryTable
-                  columns={columns}
-                  data={breweryObjectsArray}
-                  renderRowSubComponent={renderRowSubComponent}
-                  setExpandedBreweryName={setExpandedBreweryName}
-                />
-                <div className="dataEditChckboxesAndDrinksTable">
+                <div className="brewTableFiltersAndAdditional">
                   <div className="dataEditChckboxes">
-                  <h4>Edits</h4>
-                    <label>
+                    <h4>Filters</h4>
+                    <label className="filterLabelOne">
                       Minimum Number Of Unique Drinkers:
                       <select value={chosenDrinkerNum} onChange={e => setChosenDrinkerNum(e.currentTarget.value)}>
                         {selectQuestionNumber("Drinker")}
                       </select>
                     </label>
-                    <label>
+                    <label className="filterLabelTwo">
                       Min Number of Drinks By Brewery
                       <select value={chosenDrinkNum} onChange={e => setChosenDrinkNum(e.currentTarget.value)}>
                         {selectQuestionNumber("Drink")}
                       </select>
                     </label>
+                    <h4>Additional Columns</h4>
+                    <label className="additionalLabelOne">
+                      See Data On Collab/Solo Made Drinks
+                      <input type="checkbox" onClick={() => handleAdditionalColumns()}></input>
+                    </label>
+
                   </div>
-                {/* {expandedBreweryName && (
-                  <div className="breweryDrinksTable">
-                    <BreweryDrinksTable
-                      breweryObjectsArray={breweryObjectsArray}
-                      expandedBreweryName={expandedBreweryName}
-                    />
-                  </div>
-                )} */}
+                  <BreweryTable
+                    columns={columns}
+                    data={breweryObjectsArray}
+                    renderRowSubComponent={renderRowSubComponent}
+                    setExpandedBreweryName={setExpandedBreweryName}
+                  />
+                </div>
+                <div className="breweryDrinksTable">
+                  <BreweryDrinksTable
+                    breweryObjectsArray={breweryObjectsArray}
+                    expandedBreweryName={expandedBreweryName}
+                  />
                 </div>
               </div>
             </Container>

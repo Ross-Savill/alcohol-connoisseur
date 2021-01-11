@@ -1,9 +1,3 @@
-.mainTableAndChckboxes {
-  display: flex;
-  flex-direction: column-reverse;
-  width: 50vw;
-}
-
 Table tbody td {
   font-size: 16px;
   font-weight: bold;
@@ -11,7 +5,7 @@ Table tbody td {
 }
 
 .topHeader {
-  background-color: green;
+  background-color: lightgreen;
   z-index: 1;
   top: 0;
   position: sticky;
@@ -37,14 +31,6 @@ Table tbody td {
 
 .noCollabDrinksDiv {
   display: inline-block;
-}
-
-.additionalColumnsChckboxes {
-  display: inline-block;
-  width: 100%;
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid green;
 }
 
 .additionalColumnChckbx {

@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from "react"
-import { useTable, useSortBy, useFilters, useExpanded } from "react-table";
+import { useTable, useSortBy, useFilters } from "react-table";
 import { Table } from 'reactstrap';
 import { Filter, DefaultColumnFilter } from './filters';
 import "../Stylesheets/BreweryTable.css"
 import { useMemo } from "react";
 
-const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
+const BreweryTable = ({ columns, data, renderRowSubComponent, handleRowExpansion }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -13,8 +13,6 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
     prepareRow,
     rows,
     setSortBy,
-    visibleColumns,
-    allColumns,
     setHiddenColumns
   } = useTable({
     columns,
@@ -27,14 +25,11 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
       return rowA === rowB ? 0 : rowA > rowB || rowB === "-" ? 1 : -1;
     })},
     initialState: {
-      // hiddenColumns: [ "breweryOwnDrinkCount", "breweryCollabDrinkCount", "breweryOwnDrinkAvgScore" ]
       hiddenColumns: columns[0].columns.filter(column => !column.show).map(column => column.id)
-
     }
   },
     useFilters,
     useSortBy,
-    useExpanded,
   )
 
   React.useEffect(
@@ -62,17 +57,17 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
     }
     return column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""
   }
-  console.log(columns[0].columns)
+
   return (
     <div className="mainTable">
-      <Table bordered hover size="sm" {...getTableProps()}>
+      <Table bordered size="sm" {...getTableProps()}>
         <thead className="mainTableHeader">
           {headerGroups.map(headerGroup => (
             <tr className="topHeader" {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 <th className="subHeaders"
-                    {...column.getHeaderProps()}
-                    {...column.getSortByToggleProps()}
+                  {...column.getHeaderProps()}
+                  {...column.getSortByToggleProps()}
                 >
                   <div>
                     {column.render("Header")}
@@ -89,31 +84,11 @@ const BreweryTable = ({ columns, data, renderRowSubComponent }) => {
             prepareRow(row)
             return (
               <Fragment key={row.getRowProps().key}>
-                <tr {...row.getToggleRowExpandedProps({onClick: () => {
-                    const expandedRow = rows.find(row => row.isExpanded);
-                    if(expandedRow) {
-                      if(row.id === expandedRow.id) {
-                        row.toggleRowExpanded()
-                        return;
-                      } else {
-                        expandedRow.toggleRowExpanded();
-                      }
-                    }
-                    row.toggleRowExpanded();
-                  }})}>
+                <tr>
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}
                 </tr>
-                {row.isExpanded && (
-                  <tr>
-                    <td colSpan={visibleColumns.length}>
-                      <div className="expandedRowDiv">
-                        {renderRowSubComponent(row)}
-                      </div>
-                    </td>
-                  </tr>
-                )}
               </Fragment>
             )
           })}

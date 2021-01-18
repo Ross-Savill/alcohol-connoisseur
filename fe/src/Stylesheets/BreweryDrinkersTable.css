@@ -1,0 +1,54 @@
+.noBrewerySelected {
+  margin: 0px 5px 5px 5px;
+  border: 1px solid green;
+  max-height: 50vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.noBrewerySelectedDrinkersTable {
+  min-width: 20vw;
+  max-height: 400px;
+  text-align: center;
+}
+
+.noBrewerySelectedDrinkersHeaders {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: lightgreen;
+}
+
+.noBrewerySelectedTableBody {
+  max-height: 400px;
+}
+
+.brewerySelectedDiv {
+  margin: 0px 5px 5px 5px;
+  border: 1px solid green;
+  max-height: 50vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.brewerySelectedDrinkersTable {
+  min-width: 45vw;
+  max-height: 400px;
+  text-align: center;
+}
+
+.brewerySelectedDrinkersHeaders {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: lightgreen;
+}
+
+.breweryNameSpan {
+  display: flex;
+  align-items: center;
+}
+
+.backToDrinkersLink {
+  float: left;
+}

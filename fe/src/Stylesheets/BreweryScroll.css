@@ -38,18 +38,16 @@
 .brewTableFiltersAndAdditional {
   display: flex;
   flex-direction: column-reverse;
+  width: 45vw;
 }
 
 .dataEditChckboxes {
   display: inline-block;
+  padding: 5px;
+  margin: 5px 0px 0px 0px;
   height: fit-content;
   min-width: 400px;
-  font-size: 14px;
-  padding: 5px;
-  margin: 0px 5px 5px 5px;
   border: solid 1px green;
-}
-
-.filterLabelOne {
-  max-height: 50px;
+  font-size: 18px;
+  font-style: italic;
 }

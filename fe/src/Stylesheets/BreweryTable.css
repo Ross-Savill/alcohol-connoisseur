@@ -23,6 +23,11 @@ Table tbody td {
   overflow: hidden;
   overflow-y: scroll;
   border: 1px solid green;
+  max-width: 50vw;
+}
+
+.breweryTableRow :hover {
+  background-color: greenyellow;
 }
 
 .expandedRowDiv {

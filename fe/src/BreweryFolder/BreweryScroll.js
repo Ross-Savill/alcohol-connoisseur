@@ -3,7 +3,7 @@ import { Container } from "reactstrap";
 import Navbar from '../Navbar';
 import '../Stylesheets/BreweryScroll.css';
 import BreweryTable from "./BreweryTable";
-import BreweryDrinksTable from "./BreweryDrinksTable";
+import BreweryDrinkersTable from "./BreweryDrinkersTable";
 import { SearchColumnFilter } from './filters';
 import LoadingSpin from '../LoadingSpin';
 
@@ -14,7 +14,6 @@ function BreweryScroll(props) {
   const [breweryObjectsArray, setBreweryObjectsArray] = useState()
   const [chosenDrinkerNum, setChosenDrinkerNum] = useState(1)
   const [chosenDrinkNum, setChosenDrinkNum] = useState(1)
-  const [expandedBreweryName, setExpandedBreweryName] = useState("")
   const [additionalColumns, setAdditionalColumns] = useState(false)
 
   useEffect(() => {
@@ -62,12 +61,20 @@ function BreweryScroll(props) {
 
       let localBreweryObjectsArray = [];
       allUniqueBreweries.map((brewery) => {
+        let allBreweryDrinks = [];
         let breweryDrinkers = [];
         let ownDrinkCount = 0;
         let collabDrinkCount = 0;
         let soloDrinkScores = [];
         let allDrinkScores = [];
         allBeersAndCiders.map((beerOrCider) => {
+
+        // GRAB DRINK
+          if(beerOrCider.company === brewery ||
+             beerOrCider.firstCollabCompany === brewery ||
+             beerOrCider.secondCollabCompany === brewery) {
+               allBreweryDrinks.push(beerOrCider)
+          }
 
         // GRAB DRINKERS OF THIS BREWERY
           if(beerOrCider.company === brewery ||
@@ -115,13 +122,12 @@ function BreweryScroll(props) {
         const allSoloDrinksAverage = soloDrinkScores.length > 0 ? parseFloat((soloDrinkScores.reduce((a,b) => a+b,0)/soloDrinkScores.length).toFixed(2)) : "-";
         // SET ALL DRINKS AVERAGE
         const allDrinksAverage = parseFloat((allDrinkScores.reduce((a,b) => a+b,0)/allDrinkScores.length).toFixed(2))
-
         // SET THE DATA OBJECT!
         const breweryObject = {
           breweryName: brewery,
           breweryDrinkerCount: uniqueDrinkerNumber,
           breweryOwnDrinkCount: ownDrinkCount,
-          breweryUneditedDrinkersArray: breweryDrinkers,
+          breweryAllDrinksArray: allBreweryDrinks,
           breweryDrinkersArray: uniqueDrinkers,
           breweryCollabDrinkCount: collabDrinkCount,
           breweryTotalDrinksCount: totalDrinkCount,
@@ -135,38 +141,14 @@ function BreweryScroll(props) {
     }
   }
 
-  const renderRowSubComponent = row => {
-    setExpandedBreweryName(row.values.breweryName)
-    const {
-      breweryName
-    } = row.original
-
-    let breweryDrinks = [];
-    allBeersAndCiders.map((beerOrCider) => {
-      if(beerOrCider.company === breweryName ||
-         beerOrCider.firstCollabCompany === breweryName ||
-         beerOrCider.secondCollabCompany === breweryName) {
-           breweryDrinks.push(beerOrCider)
-      }
-    })
-    return breweryDrinks.map((drink, index) => {
-       return (
-        <div>
-          <div>{index + 1}) {drink.name} had a {drink.drinkMain}: </div>
-          <div>"{drink.ratingWordOne}" and "{drink.ratingWordTwo}" - {drink.score}</div>
-        </div>
-       )
-      });
-  }
-
   const selectQuestionNumber = (drinkOrDrinker) => {
     let numbers = [];
     let noun = drinkOrDrinker;
       for (let i = 0; i < 10; i++) {
         if(i === 0) {
-        numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}`}</option>);
+          numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}`}</option>);
         } else {
-        numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}s`}</option>);
+          numbers.push(<option key={i+1} value={i+1}>{`${i+1} ${noun}s`}</option>);
         }
       }
     return numbers;
@@ -284,14 +266,11 @@ function BreweryScroll(props) {
                   <BreweryTable
                     columns={columns}
                     data={breweryObjectsArray}
-                    renderRowSubComponent={renderRowSubComponent}
-                    setExpandedBreweryName={setExpandedBreweryName}
                   />
                 </div>
                 <div className="breweryDrinksTable">
-                  <BreweryDrinksTable
+                  <BreweryDrinkersTable
                     breweryObjectsArray={breweryObjectsArray}
-                    expandedBreweryName={expandedBreweryName}
                   />
                 </div>
               </div>

@@ -27,11 +27,7 @@ Table tbody td {
 }
 
 .breweryTableRow :hover {
-  background-color: greenyellow;
-}
-
-.expandedRowDiv {
-  text-align: left;
+  cursor: pointer;
 }
 
 .noCollabDrinksDiv {

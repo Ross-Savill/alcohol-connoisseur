@@ -5,7 +5,7 @@ import { Filter, DefaultColumnFilter } from './filters';
 import "../Stylesheets/BreweryTable.css"
 import { useMemo } from "react";
 
-const BreweryTable = ({ columns, data, renderRowSubComponent, handleRowExpansion }) => {
+const BreweryTable = ({ columns, data, handleSetBrewery }) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -60,7 +60,7 @@ const BreweryTable = ({ columns, data, renderRowSubComponent, handleRowExpansion
 
   return (
     <div className="mainTable">
-      <Table bordered size="sm" {...getTableProps()}>
+      <Table bordered size="sm" hover {...getTableProps()}>
         <thead className="mainTableHeader">
           {headerGroups.map(headerGroup => (
             <tr className="topHeader" {...headerGroup.getHeaderGroupProps()}>
@@ -84,7 +84,7 @@ const BreweryTable = ({ columns, data, renderRowSubComponent, handleRowExpansion
             prepareRow(row)
             return (
               <Fragment key={row.getRowProps().key}>
-                <tr>
+                <tr className="breweryTableRow" onClick={() => handleSetBrewery(row)}>
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")} </td>
                   })}

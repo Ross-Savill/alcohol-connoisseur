@@ -4,6 +4,7 @@ import Navbar from '../Navbar';
 import '../Stylesheets/BreweryScroll.css';
 import BreweryTable from "./BreweryTable";
 import BreweryDrinkersTable from "./BreweryDrinkersTable";
+import SelectedBreweryTable from "./SelectedBreweryTable";
 import { SearchColumnFilter } from './filters';
 import LoadingSpin from '../LoadingSpin';
 
@@ -15,6 +16,7 @@ function BreweryScroll(props) {
   const [chosenDrinkerNum, setChosenDrinkerNum] = useState(1)
   const [chosenDrinkNum, setChosenDrinkNum] = useState(1)
   const [additionalColumns, setAdditionalColumns] = useState(false)
+  const [selectedBrewery, setSelectedBrewery] = useState(null)
 
   useEffect(() => {
     setDrinks(props.drinks)
@@ -158,6 +160,14 @@ function BreweryScroll(props) {
     setAdditionalColumns(!additionalColumns)
   }
 
+  const handleSetBrewery = (row) => {
+    setSelectedBrewery(row.original.breweryName)
+  }
+
+  const handleBreweryReset = () => {
+    setSelectedBrewery(null)
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -232,6 +242,7 @@ function BreweryScroll(props) {
         </div>
       )
     } else {
+      console.log(breweryObjectsArray)
       return(
         <div className="breweryPage">
           <div className="titleDiv">
@@ -251,7 +262,7 @@ function BreweryScroll(props) {
                       </select>
                     </label>
                     <label className="filterLabelTwo">
-                      Min Number of Drinks By Brewery
+                      Min Number of Brewery Drinks Drunk:
                       <select value={chosenDrinkNum} onChange={e => setChosenDrinkNum(e.currentTarget.value)}>
                         {selectQuestionNumber("Drink")}
                       </select>
@@ -261,12 +272,21 @@ function BreweryScroll(props) {
                       See Data On Collab/Solo Made Drinks
                       <input type="checkbox" onClick={() => handleAdditionalColumns()}></input>
                     </label>
-
                   </div>
+                  {selectedBrewery === null &&
                   <BreweryTable
                     columns={columns}
                     data={breweryObjectsArray}
+                    handleSetBrewery={handleSetBrewery}
                   />
+                  }
+                  {selectedBrewery !== null &&
+                  <SelectedBreweryTable
+                    breweryObjectsArray={breweryObjectsArray}
+                    selectedBrewery={selectedBrewery}
+                    handleBreweryReset={handleBreweryReset}
+                  />
+                  }
                 </div>
                 <div className="breweryDrinksTable">
                   <BreweryDrinkersTable

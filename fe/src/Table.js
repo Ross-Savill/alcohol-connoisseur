@@ -43,45 +43,46 @@ export default function Table({ columns, data }) {
     if(pageCount === 0) {
       return <h1>No Data!</h1>
     } else {
-    return (<table {...getTableProps()} className="MainPagetable">
-          <thead>
-          {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="th">
-                {headerGroup.headers.map(column => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className={
-                      column.isSorted
-                        ? column.isSortedDesc
-                          ? "sort-desc"
-                          : "sort-asc"
-                        : "initial-column"
-                    }
-                  >
-                    {column.render("Header")}
-                    <span>
-                      {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
-                    </span>
-                  </th>
+    return (
+            <table {...getTableProps()} className="MainPagetable">
+              <thead>
+              {headerGroups.map(headerGroup => (
+                  <tr {...headerGroup.getHeaderGroupProps()} className="th">
+                    {headerGroup.headers.map(column => (
+                      <th
+                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                        className={
+                          column.isSorted
+                            ? column.isSortedDesc
+                              ? "sort-desc"
+                              : "sort-asc"
+                            : "initial-column"
+                        }
+                      >
+                        {column.render("Header")}
+                        <span>
+                          {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
+                        </span>
+                      </th>
+                    ))}
+                  </tr>
                 ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="tr">
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()} className="td">
-                      {cell.render("Cell")}</td>;
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-    )
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {page.map((row, i) => {
+                  prepareRow(row);
+                  return (
+                    <tr {...row.getRowProps()} className="tr">
+                      {row.cells.map(cell => {
+                        return <td {...cell.getCellProps()} className="td">
+                          {cell.render("Cell")}</td>;
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+        )
       }
     }
 

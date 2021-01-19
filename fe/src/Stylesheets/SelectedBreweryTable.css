@@ -1,0 +1,44 @@
+.selectedBreweryTableDiv {
+  border: 1px solid green;
+}
+
+.selectedBreweryTableDiv {
+  height: 400px;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.selectedBreweryTableMainHeaderRow {
+  background-color: greenyellow;
+}
+
+.selectedBreweryTableMainHeaderDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.selectedBreweryTitle {
+  font-size: 20px;
+}
+
+.selectedBreweryReturnLink {
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.selectedBreweryReturnLink:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.selectedBreweryTableSubHeadersRow {
+  text-align: center;
+  background-color: greenyellow;
+}
+
+.selectedBrewaryTableData {
+  font-size: 14px;
+  text-align: left;
+}

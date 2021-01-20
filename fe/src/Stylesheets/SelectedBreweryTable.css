@@ -38,6 +38,12 @@
   background-color: greenyellow;
 }
 
+.drinkMain.ascending::after {
+  content: '👇';
+  display: inline-block;
+  margin-left: 1em;
+}
+
 .selectedBrewaryTableData {
   font-size: 14px;
   text-align: left;

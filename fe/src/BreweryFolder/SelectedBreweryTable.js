@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import useSortableData from '../useSortableData';
 import '../Stylesheets/SelectedBreweryTable.css';
 
 const SelectedBreweryTable = ({ breweryObjectsArray,
                                 selectedBrewery,
                                 handleBreweryReset
                               }) => {
+
   const [selectedBreweryDrinks, setSelectedBreweryDrinks] = useState([])
 
   useEffect(() => {
@@ -20,7 +22,13 @@ const SelectedBreweryTable = ({ breweryObjectsArray,
     })
     setSelectedBreweryDrinks(chosenBreweryDrinks)
   }, [selectedBrewery])
-
+  const { items, requestSort, sortConfig } = useSortableData(selectedBreweryDrinks);
+  const getClassNamesFor = (name) => {
+    if (!sortConfig) {
+      return;
+    }
+    return sortConfig.key === name ? sortConfig.direction : undefined;
+  };
   return(
     <div className="selectedBreweryTableDiv">
       <table className="selectedBreweryTable">
@@ -34,15 +42,19 @@ const SelectedBreweryTable = ({ breweryObjectsArray,
             </th>
           </tr>
           <tr className="selectedBreweryTableSubHeadersRow">
-            <th>Beer/Cider Name</th>
-            <th>Drank on</th>
-            <th>Drinker</th>
+            <th onClick={() => requestSort('drinkMain')}
+                className={getClassNamesFor('drinkMain')}>Beer/Cider Name</th>
+            <th onClick={() => requestSort('date')}
+                className={getClassNamesFor('date')}>Drank on</th>
+            <th onClick={() => requestSort('name')}
+                className={getClassNamesFor('name')}>Drinker</th>
             <th>Rating Words</th>
-            <th>Score</th>
+            <th onClick={() => requestSort('score')}
+                className={getClassNamesFor('score')}>Score</th>
           </tr>
         </thead>
         <tbody>
-          {selectedBreweryDrinks.map((drink, index) => (
+          {items.map((drink, index) => (
             <tr className="selectedBrewaryTableBodyRows" key={index}>
               <td className="selectedBrewaryTableData">{drink.drinkMain}</td>
               <td className="selectedBrewaryTableData">{moment(drink.date).format('D/M/YY')}</td>

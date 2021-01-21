@@ -4,6 +4,9 @@ const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
 
   const sortedItems = React.useMemo(() => {
+    if(!items) {
+      return;
+    } else {
     let sortableItems = [...items];
     if (sortConfig !== null) {
       sortableItems.sort((a, b) => {
@@ -17,6 +20,7 @@ const useSortableData = (items, config = null) => {
       });
     }
     return sortableItems;
+  }
   },[items, sortConfig])
 
   const requestSort = key => {

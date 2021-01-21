@@ -37,11 +37,20 @@
   text-align: center;
 }
 
-.brewerySelectedDrinkersHeaders {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-  background-color: lightgreen;
+.selectedBreweryTableHeaderRow {
+  cursor: pointer;
+}
+
+.selectedBreweryTableHeaderRow .ascending::after {
+  content: '👇';
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.selectedBreweryTableHeaderRow .descending::after {
+  content: '☝️';
+  display: inline-block;
+  margin-left: 1em;
 }
 
 .breweryNameSpan {

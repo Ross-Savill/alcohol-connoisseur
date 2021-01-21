@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../Stylesheets/BreweryDrinkersTable.css';
+import useSortableData from '../useSortableData';
+
 
 const BreweryDrinkersTable = ({ breweryObjectsArray }) => {
 
@@ -47,15 +49,33 @@ const [sortedDrinkerList, setSortedDrinkerList] = useState()
         }
       })
     })
+
+    let readableObjects = [];
+    localSortedDrinkerList.map((array) => {
+      const breweryObjectToUse = {
+        drinker: array[0],
+        brewery: array[1],
+        drinkNum: array[2],
+        ratio: array[3]
+      };
+      readableObjects.push(breweryObjectToUse)
+    })
     if(!sortedDrinkerList) {
-      setSortedDrinkerList(localSortedDrinkerList)
+      setSortedDrinkerList(readableObjects)
     }
   }, [breweryObjectsArray])
+
+  const { items, requestSort, sortConfig } = useSortableData(sortedDrinkerList);
 
   if(!sortedDrinkerList) {
     return <h3>Please Wait </h3>
   } else {
-    // if(!expandedBreweryName) {
+    const getClassNamesFor = (name) => {
+      if (!sortConfig) {
+        return;
+      }
+      return sortConfig.key === name ? sortConfig.direction : undefined;
+    };
       return(
         <div className="noBrewerySelected">
           <table className="noBrewerySelectedDrinkersTable">
@@ -63,62 +83,30 @@ const [sortedDrinkerList, setSortedDrinkerList] = useState()
               <tr>
               <th colSpan="4"> EVERY BEER/CIDER DRINKER ON DnR </th>
               </tr>
-              <tr>
-                <th>Drinker</th>
-                <th>Breweries</th>
-                <th>Drinks</th>
-                <th>Ratio</th>
+              <tr className="selectedBreweryTableHeaderRow">
+                <th onClick={() => requestSort('drinker')}
+                    className={getClassNamesFor('drinker')}>Drinker</th>
+                <th onClick={() => requestSort('brewery')}
+                    className={getClassNamesFor('brewery')}>Breweries</th>
+                <th onClick={() => requestSort('drinkNum')}
+                    className={getClassNamesFor('drinkNum')}>Drinks</th>
+                <th onClick={() => requestSort('ratio')}
+                    className={getClassNamesFor('ratio')}>Ratio</th>
               </tr>
             </thead>
             <tbody className="noBrewerySelectedTableBody">
-              {sortedDrinkerList.map((drinker, index) => (
+              {items.map((drinker, index) => (
                 <tr key={index}>
-                  <td>{drinker[0]}</td>
-                  <td>{drinker[1]}</td>
-                  <td>{drinker[2]}</td>
-                  <td>{drinker[3]}</td>
+                  <td>{drinker.drinker}</td>
+                  <td>{drinker.brewery}</td>
+                  <td>{drinker.drinkNum}</td>
+                  <td>{drinker.ratio}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       )
-    // } else {
-      // if(!selectedBreweryDrinks) {
-      //   return("Loading Brewery Drinks")
-      // } else {
-      //   return(
-      //     <div className="brewerySelectedDiv">
-      //       <table className="brewerySelectedDrinkersTable">
-      //         <thead className="brewerySelectedDrinkersHeaders">
-      //           <tr>
-      //             <th colSpan="6"><span onClick={() => handleReturnToDrinkers()} className="backToDrinkersLink">{"<<"} Back To Drinkers</span>{`${expandedBreweryName}`} </th>
-      //           </tr>
-      //           <tr className="brewerySelectedDrinkerTableHeaderTR">
-      //             <th> Drink Name </th>
-      //             <th> Drinker </th>
-      //             <th> Date </th>
-      //             <th colSpan="2"> Rating Words </th>
-      //             <th> Score </th>
-      //           </tr>
-      //         </thead>
-      //         <tbody className="brewerySelectedTableBody">
-      //             {selectedBreweryDrinks.map((drink, index) => (
-      //               <tr key={index}>
-      //                 <td>{drink.drinkMain}</td>
-      //                 <td>{drink.name}</td>
-      //                 <td>{moment(drink.date).format('D/M/YY')}</td>
-      //                 <td>{drink.ratingWordOne}</td>
-      //                 <td>{drink.ratingWordTwo}</td>
-      //                 <td>{drink.score}</td>
-      //               </tr>
-      //             ))}
-      //           </tbody>
-      //       </table>
-      //     </div>
-      //   )
-      // }
-    // }
   }
 }
 

@@ -22,6 +22,7 @@ const SelectedBreweryTable = ({ breweryObjectsArray,
     })
     setSelectedBreweryDrinks(chosenBreweryDrinks)
   }, [selectedBrewery])
+
   const { items, requestSort, sortConfig } = useSortableData(selectedBreweryDrinks);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {

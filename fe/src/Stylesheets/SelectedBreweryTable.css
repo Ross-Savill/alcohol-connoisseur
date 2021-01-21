@@ -36,10 +36,17 @@
 .selectedBreweryTableSubHeadersRow {
   text-align: center;
   background-color: greenyellow;
+  cursor: pointer;
 }
 
-.drinkMain.ascending::after {
+.selectedBreweryTableSubHeadersRow .ascending::after {
   content: '👇';
+  display: inline-block;
+  margin-left: 1em;
+}
+
+.selectedBreweryTableSubHeadersRow .descending::after {
+  content: '☝️';
   display: inline-block;
   margin-left: 1em;
 }

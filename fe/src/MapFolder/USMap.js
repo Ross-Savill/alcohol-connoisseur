@@ -11,7 +11,6 @@ class USMap extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null,
         usMapData: null,
         selectedRegion: null,
         fullRegionName: null
@@ -33,8 +32,8 @@ class USMap extends Component {
   }
 
   haveDrinks = () => {
-    const { drinks, drinkers } = this.props
-    this.setState({ drinks, drinkers })
+    const { drinks } = this.props
+    this.setState({ drinks })
 
     let usStateData = []
 
@@ -66,10 +65,8 @@ class USMap extends Component {
     }, {});
 
     if(drinks !== this.state.drinks) {
-      this.setState({ drinks, drinkers,
-                      usMapData: countedUniqueUSStates
-                    })
-      }
+      this.setState({ drinks, usMapData: countedUniqueUSStates })
+    }
   }
 
   handleRegionClick = (e, stateCode) => {

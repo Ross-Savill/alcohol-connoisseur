@@ -8,7 +8,6 @@ class RadarChart extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null,
         drinkTypes: null,
         selectedDrinker: 'All Drinkers',
         drinkerRadarData: null,
@@ -29,12 +28,10 @@ class RadarChart extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const currentPropDrinks = this.props.drinks
-    const currentPropDrinkers = this.props.drinkers
     const currentPropDrinkTypes = this.props.drinkTypes
     const currentSelectedDrinker = this.props.selectedDrinker
     if(currentPropDrinks !== this.state.drinks) {
       this.setState({ drinks: currentPropDrinks,
-                      drinkers: currentPropDrinkers,
                       drinkTypes: currentPropDrinkTypes,
                       selectedDrinker: currentSelectedDrinker
                     })
@@ -48,8 +45,8 @@ class RadarChart extends Component {
 
   haveDrinks = () => {
     // SET STATE WITH DRINKS AND DRINKERS
-    const { drinks, drinkers, drinkTypes, selectedDrinker } = this.props
-    this.setState({ drinks, drinkers, drinkTypes, selectedDrinker })
+    const { drinks, drinkTypes, selectedDrinker } = this.props
+    this.setState({ drinks, drinkTypes, selectedDrinker })
     const { radarColor, barColor } = this.state
 
     // PREP DRINK TYPE LABELS AND DRINK TYPE DRINK ARRAY

@@ -11,7 +11,6 @@ class WorldMap extends Component {
     super(props)
       this.state = {
         drinks: null,
-        drinkers: null,
         worldMapData: null,
         selectedRegion: null,
         fullRegionName: null
@@ -39,8 +38,8 @@ class WorldMap extends Component {
   };
 
   haveDrinks = () => {
-    const { drinks, drinkers } = this.props
-    this.setState({ drinks, drinkers })
+    const { drinks } = this.props
+    this.setState({ drinks })
 
     let countryData = []
 
@@ -61,8 +60,7 @@ class WorldMap extends Component {
       return occ;
     }, {});
 
-    this.setState({ drinks, drinkers,
-                      worldMapData: countedUniqueCountries,
+    this.setState({ drinks, worldMapData: countedUniqueCountries,
     })
   }
 

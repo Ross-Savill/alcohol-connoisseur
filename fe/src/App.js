@@ -104,7 +104,6 @@ const App = () => {
               exact path="/world-map" render={(props) => (
                 <WorldMap {...props}
                   drinks={state.drinks}
-                  drinkers={state.drinkers}
                 />
               )}
             />
@@ -112,7 +111,6 @@ const App = () => {
               exact path="/us-map" render={(props) => (
                 <USMap {...props}
                   drinks={state.drinks}
-                  drinkers={state.drinkers}
                 />
               )}
             />

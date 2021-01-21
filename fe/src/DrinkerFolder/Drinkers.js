@@ -102,7 +102,6 @@ class Drinkers extends Component {
         <div className="chartsAndTable">
           <div className="radarAndBarChart">
             <RadarChart drinks={this.state.drinks}
-                        drinkers={this.state.drinkers}
                         drinkTypes={this.state.drinkTypes}
                         selectedDrinker={this.state.selectedDrinker} />
           </div>

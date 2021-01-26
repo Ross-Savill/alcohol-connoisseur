@@ -1,30 +1,35 @@
 .totalContainer {
-  display: grid;
-  grid-template-columns: repeat(4, [col-start] 1fr);
+  height: 100vh;
+  width: 100vh;
 }
 
 .titleAndInput {
-  grid-column: col-start / span 5;
   margin-top: 0;
 }
 
-.mapAndRegionTable {
-  grid-column: col-start 1 / span 3;
-  grid-row: 2 / 3;
-  display: flex;
-  flex-flow: column wrap;
+.usMapAndBothTables {
+  display: block;
 }
 
-.map {
-  flex: 1;
+.usMapAndDrinkersTable {
+  display: flex;
+  flex-direction: row;
+}
+
+.usMap {
+  height: 420px;
   border: solid 3px rgb(77, 71, 71);
+  width: 50vw;
 }
 
 .drinkerDataTable {
   border: solid 3px green;
+  height: 420px;
+  overflow: hidden;
+  overflow-y: scroll;
+  width: 50vw;
 }
 
 .regionDataTable {
-  flex: 1;
   border: solid 3px blue;
 }

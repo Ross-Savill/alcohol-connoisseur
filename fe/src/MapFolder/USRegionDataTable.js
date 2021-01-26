@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import '../Stylesheets/RegionDataTable.css'
 
-class RegionDataTable extends Component {
+class USRegionDataTable extends Component {
   constructor(props) {
     super(props)
       this.state = {
         regionCode: null,
         regionName: null,
-        chosenMap: null,
         drinks: null
       }
   }
+
+  componentDidMount() {
+    const { drinks, regionCode, regionName} = this.props
+    this.setState({ drinks, regionCode, regionName })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const { drinks, chosenMap, regionCode, regionName } = this.props
-    if(regionCode !== this.state.regionCode) {
+    if(drinks !== this.state.drinks || regionCode !== this.state.regionCode) {
       this.setState({ regionCode, regionName, drinks, chosenMap })
     }
   }
@@ -21,25 +26,28 @@ class RegionDataTable extends Component {
   renderClickedCountryHeader() {
     return(
       <tr className="drinkRegionHeader">
-          <th>Drinker</th>
-          <th>Drink</th>
-          <th>Drink Type</th>
-          <th>Rating Words</th>
-          <th>Score</th>
-          <th>Brand</th>
-          <th>Company</th>
+        <th>Drinker</th>
+        <th>Drink</th>
+        <th>Drink Type</th>
+        <th>Rating Words</th>
+        <th>Score</th>
+        <th>Brand</th>
+        <th>Company</th>
       </tr>
     )
   }
 
   renderClickedCountryData() {
     const selectedDrinks = []
-    const { chosenMap, regionCode, drinks } = this.state
-    if(chosenMap === "world") {
+    const { regionCode, drinks } = this.state
+
+    if(!regionCode) {
       drinks
-      .filter(drink => drink.country === regionCode)
+      .filter(drink => drink.country === "US" ||
+                       drink.firstCollabCountry === "US" ||
+                       drink.secondCollabCountry === "US")
       .map(drink => selectedDrinks.push(drink))
-    } else if(chosenMap === "usa") {
+    } else {
       drinks
       .filter(drink => drink.ukUsa === regionCode ||
                        drink.firstUkUsa === regionCode ||
@@ -48,7 +56,6 @@ class RegionDataTable extends Component {
     }
 
     const orderedSelectedDrinks = selectedDrinks.sort((a, b) => (a.name > b.name) ? 1 : -1)
-
     return orderedSelectedDrinks.map((drink, index) => {
       if(drink.mixerTwo) {
         return(
@@ -91,10 +98,10 @@ class RegionDataTable extends Component {
   }
 
   render() {
-    const { regionName } = this.state
-    // if(!this.state.regionCode) {
-    //   return <h2 className="selectRegionText">Select a Region for Data</h2>
-    // } else {
+    const { drinks, regionName } = this.state
+    if(!drinks) {
+      return <p>One Moment Please</p>
+    } else {
       return (
         <div className="selectedCountry">
           <table className='selectedCountryTable'>
@@ -111,8 +118,7 @@ class RegionDataTable extends Component {
         </div>
       )
     }
-  // }
+  }
 }
 
-export default RegionDataTable;
-
+export default USRegionDataTable;

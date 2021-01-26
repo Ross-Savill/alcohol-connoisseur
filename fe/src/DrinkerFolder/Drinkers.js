@@ -107,11 +107,11 @@ class Drinkers extends Component {
           </div>
           <div className="drinkersTable">
             <DrinkersTable drinks={this.state.drinks}
-                        drinkers={this.state.drinkers}
-                        drinkTypes={this.state.drinkTypes}
-                        selectedDrinker={this.state.selectedDrinker}
-                        regularDrinkers={this.state.regularDrinkers}
-                        irregularDrinkers={this.state.irregularDrinkers}/>
+                           drinkers={this.state.drinkers}
+                           drinkTypes={this.state.drinkTypes}
+                           selectedDrinker={this.state.selectedDrinker}
+                           regularDrinkers={this.state.regularDrinkers}
+                           irregularDrinkers={this.state.irregularDrinkers}/>
           </div>
         </div>
       </div>

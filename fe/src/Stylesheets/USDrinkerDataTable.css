@@ -1,0 +1,54 @@
+
+
+.selectRegionText {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.drinkerRegionName {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: underline;
+  text-align: left;
+}
+
+.resetButtonHeader {
+  text-align: right;
+}
+
+.resetButtonParagraph {
+  cursor: pointer;
+  margin-bottom: 0px;
+}
+
+.resetButtonParagraph:hover {
+  text-decoration: underline;
+}
+
+.drinkerTableRowHeader {
+  border: solid 3px black;
+  text-align: center;
+}
+
+.drinkDataNameText{
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.drinkDataNumberText {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.drinkDataAvgScoreText {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.drinkerStateNamesTableData {
+  font-weight: bold;
+  font-size: 0.9em;
+}

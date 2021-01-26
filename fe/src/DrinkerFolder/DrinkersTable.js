@@ -184,7 +184,6 @@ class DrinkersTable extends Component {
     }
 
     onSort(column) {
-      console.log("triggered")
       const direction = this.state.sort.column ? (this.state.sort.direction === 'asc' ? 'desc' : 'asc') : 'desc';
 
       // SORT DATA BY PERSON NAME

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { USStateList } from './USStateList';
-import '../Stylesheets/USDrinkerDataTable.css';
+import '../../Stylesheets/USPageSS/USDrinkerDataTable.css';
 
 class USDrinkerDataTable extends Component {
   constructor(props) {
@@ -30,9 +30,9 @@ class USDrinkerDataTable extends Component {
     if(drinks !== this.state.drinks) {
       this.setState({ drinks })
     }
-    if(this.state.drinks && regionName !== this.state.regionName) {
-      this.setState({ regionName, regionCode })
-      this.renderClickedDrinkerData(regionCode)
+    if((this.state.drinks && regionName !== this.state.regionName) || drinks !== this.state.drinks) {
+      this.setState({ regionName, regionCode, drinks })
+      this.renderClickedDrinkerData(drinks, regionCode)
     }
   }
 
@@ -41,27 +41,25 @@ class USDrinkerDataTable extends Component {
     if(!regionCode) {
       return(
         <tr className="drinkerTableRowHeader">
-          <th onClick={e => this.onSort(e, 'name')}>Drinker</th>
-          <th onClick={e => this.onSort(e, 'uniqueStatesList')}>State Count</th>
-          <th onClick={e => this.onSort(e, 'drinksNumber')}>Drink Count</th>
-          <th onClick={e => this.onSort(e, 'averageScore')}>Avg Score</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'name')}>Drinker</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'drinksNumber')}>Drink Count</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'averageScore')}>Avg Score</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'uniqueStatesList')}>State Count</th>
           <th>State Names</th>
         </tr>
       )
     } else {
       return(
         <tr className="drinkerTableRowHeader">
-          <th onClick={e => this.onSort(e, 'name')}>Drinker</th>
-          <th onClick={e => this.onSort(e, 'drinksNumber')}>Drink Count</th>
-          <th onClick={e => this.onSort(e, 'averageScore')}>Avg Score</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'name')}>Drinker</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'drinksNumber')}>Drink Count</th>
+          <th className="drinkerUSTableTh" onClick={e => this.onSort(e, 'averageScore')}>Avg Score</th>
         </tr>
       )
     }
   }
 
-  renderClickedDrinkerData(regionCode) {
-
-    const { drinks } = this.state
+  renderClickedDrinkerData(drinks, regionCode) {
     if(drinks) {
     const selectedDrinks = []
 
@@ -183,32 +181,43 @@ class USDrinkerDataTable extends Component {
         )
       }
     }
+    const handleUSTableHeaderColspan = () => {
+      if(!regionCode) {
+        return "5"
+      } else {
+        return "1"
+      }
+    }
 
     const resetRegion = () => {
       this.props.handleRegionReset()
     }
     const drinkerTableData = () => {
-      return sortedDrinkerData.map((drinkObj, index) => {
-        if(!regionCode) {
+      if(sortedDrinkerData.length === 0) {
+        return (<tr><td colSpan="3">Nothing from {regionName} yet!</td></tr>)
+      } else {
+        return sortedDrinkerData.map((drinkObj, index) => {
+          if(!regionCode) {
+            return(
+              <tr key={index}>
+                <td className="drinkerUSTableDataText">{drinkObj.name}</td>
+                <td className="ddrinkerUSTableDataNum">{drinkObj.drinksNumber}</td>
+                <td className="ddrinkerUSTableDataNum">{drinkObj.averageScore}</td>
+                <td className="drinkerUSTableDataNum">{drinkObj.uniqueStatesList}</td>
+                <td className="drinkerUSTableDataText">{drinkObj.uniqueStateNames}</td>
+              </tr>
+            )
+          } else {
           return(
             <tr key={index}>
-              <td className="drinkDataNameText">{drinkObj.name}</td>
-              <td className="drinkDataNumberText">{drinkObj.uniqueStatesList}</td>
-              <td className="drinkDataNumberText">{drinkObj.drinksNumber}</td>
-              <td className="drinkDataAvgScoreText">{drinkObj.averageScore}</td>
-              <td className="drinkerStateNamesTableData">{drinkObj.uniqueStateNames}</td>
+              <td className="drinkerUSTableDataText">{drinkObj.name}</td>
+              <td className="drinkerUSTableDataNum">{drinkObj.drinksNumber}</td>
+              <td className="drinkerUSTableDataNum">{drinkObj.averageScore}</td>
             </tr>
           )
-        } else {
-        return(
-          <tr key={index}>
-            <td className="drinkDataNameText">{drinkObj.name}</td>
-            <td className="drinkDataNumberText">{drinkObj.drinksNumber}</td>
-            <td className="drinkDataAvgScoreText">{drinkObj.averageScore}</td>
-          </tr>
-        )
-        }
-      })
+          }
+        })
+      }
     }
     if(!this.state.sortedDrinkerData) {
       return <h2 className="selectRegionText">One Moment Please</h2>
@@ -216,9 +225,9 @@ class USDrinkerDataTable extends Component {
       return (
         <div className="selectedCountry">
           <table className='selectedCountryTable'>
-            <thead>
+            <thead className="usMapDrinkerTHead">
               <tr className="usMapDrinkerTableHeaderRow">
-                <th colspan="2" className="drinkerRegionName">{regionName}</th>
+                <th colSpan={handleUSTableHeaderColspan()} className="drinkerRegionName">{regionName}</th>
                 {resetRegionButton()}
               </tr>
                 {this.renderClickedDrinkerHeader()}

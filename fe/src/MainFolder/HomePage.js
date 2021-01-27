@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import Navbar from './Navbar';
-import './Stylesheets/HomePage.css';
+import Navbar from '../MyUtilitiesFolder/Navbar';
+import '../Stylesheets/MainPageSS/HomePage.css';
 import Table from './Table';
 import moment from 'moment';
 import AddDrinkForm from './AddDrinkForm';
-import LoadingSpin from './LoadingSpin';
+import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 
 const Dates = ( values ) => {
   for (const [key, date] of Object.entries(values)) {

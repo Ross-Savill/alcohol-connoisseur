@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../Stylesheets/DrinkerDataTable.css';
+import '../../Stylesheets/WorldPageSS/WorldDrinkerDataTable.css';
 
-class DrinkerDataTable extends Component {
+class WorldDrinkerDataTable extends Component {
   constructor(props) {
     super(props)
       this.state = {
@@ -120,4 +120,4 @@ class DrinkerDataTable extends Component {
   }
 }
 
-export default DrinkerDataTable;
+export default WorldDrinkerDataTable;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Pie } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
-import '../Stylesheets/RatingPieChart.css';
+import '../Stylesheets/RatingPageSS/RatingPieChart.css';
 
 class RatingPieChart extends Component {
   constructor(props) {

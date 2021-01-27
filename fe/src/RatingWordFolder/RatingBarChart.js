@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
-import '../Stylesheets/RatingBarChart.css';
+import '../Stylesheets/RatingPageSS/RatingBarChart.css';
 
 
 class RatingBarChart extends Component {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Container } from "reactstrap";
-import Navbar from '../Navbar';
-import '../Stylesheets/BreweryScroll.css';
+import Navbar from '../MyUtilitiesFolder/Navbar';
+import '../Stylesheets/BreweryPageSS/BreweryPage.css';
 import BreweryTable from "./BreweryTable";
 import BreweryDrinkersTable from "./BreweryDrinkersTable";
 import SelectedBreweryTable from "./SelectedBreweryTable";
 import { SearchColumnFilter } from './filters';
-import LoadingSpin from '../LoadingSpin';
+import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 
-function BreweryScroll(props) {
+function BreweryPage(props) {
 
   const [drinks, setDrinks] = useState(props.drinks)
   const [allBeersAndCiders, setAllBeersAndCiders] = useState([])
@@ -301,4 +301,4 @@ function BreweryScroll(props) {
     }
 }
 
-export default BreweryScroll;
+export default BreweryPage;

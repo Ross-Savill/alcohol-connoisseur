@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from '../Navbar'
+import Navbar from '../../MyUtilitiesFolder/Navbar'
 import { VectorMap } from "react-jvectormap";
 import USRegionDataTable from './USRegionDataTable';
 import USDrinkerDataTable from './USDrinkerDataTable';
-import '../Stylesheets/USMap.css';
+import '../../Stylesheets/USPageSS/USMap.css';
 import { USStateList } from './USStateList';
+import LoadingSpin from '../../MyUtilitiesFolder/LoadingSpin';
 
 class USMap extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class USMap extends Component {
         usMapData: null,
         selectedRegion: null,
         fullRegionName: "All States",
+        justBeersCiders: false
       }
   }
 
@@ -26,33 +28,42 @@ class USMap extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { drinks } = this.state
-    if(this.props.drinks !== drinks) {
-      this.haveDrinks()
+    const { drinks, justBeersCiders } = this.state
+    if(this.props.drinks !== drinks || prevState.justBeersCiders !== justBeersCiders) {
+      this.haveDrinks(prevState.justBeersCiders)
     }
   }
 
-  haveDrinks = () => {
+  haveDrinks = (prevStateJustBeersAndCiders) => {
     const { drinks } = this.props
     this.setState({ drinks })
 
     let usStateData = []
 
-    drinks
+    let mapDataWithOrWithoutBeers = null
+    if(!this.state.justBeersCiders) {
+      mapDataWithOrWithoutBeers = drinks;
+    } else {
+      mapDataWithOrWithoutBeers = drinks.filter(drink => (drink.drinkType === "Beer" ||
+                                                  drink.drinkType === "Cider") &&
+                                                  !drink.mixerOne)
+    }
+    if(mapDataWithOrWithoutBeers) {
+    mapDataWithOrWithoutBeers
     .filter(drink => drink.country === "US")
     .map((drink) => {
       if(drink.country === "US") {
         usStateData.push(drink.ukUsa)
       }},
     )
-    drinks
+    mapDataWithOrWithoutBeers
     .filter(drink => drink.country === "US")
     .map((drink) => {
       if(drink.firstCollabCountry === "US") {
         usStateData.push(drink.firstUkUsa)
       }}
     )
-    drinks
+    mapDataWithOrWithoutBeers
     .filter(drink => drink.country === "US")
     .map((drink) => {
       if(drink.secondCollabCountry === "US") {
@@ -64,10 +75,10 @@ class USMap extends Component {
       occ[name] = (occ[name] || 0) + 1;
       return occ;
     }, {});
-
-    if(drinks !== this.state.drinks) {
+    if(drinks !== this.state.drinks || this.state.justBeersCiders !== prevStateJustBeersAndCiders) {
       this.setState({ drinks, usMapData: countedUniqueUSStates })
     }
+  }
   }
 
   handleRegionClick = (e, stateCode) => {
@@ -83,15 +94,43 @@ class USMap extends Component {
     this.setState({ selectedRegion: null, fullRegionName: "All States" })
   }
 
+  handleJustBeersCiders() {
+    const { justBeersCiders } = this.state
+    this.setState({ justBeersCiders: !justBeersCiders })
+  }
+
   render() {
     if(!this.props.drinks) {
-      return("Please Wait")
+      return (
+        <div className="usMapPageLoadingDiv">
+          <LoadingSpin />
+        </div>
+      )
     } else {
+      let toBeerOrNotToBeer = null
+      if(!this.state.justBeersCiders) {
+        toBeerOrNotToBeer = this.state.drinks;
+      } else {
+        toBeerOrNotToBeer = this.state.drinks.filter(drink =>
+          (drink.drinkType === "Beer" ||
+           drink.drinkType === "Cider") &&
+           !drink.mixerOne
+          )
+      }
       return(
-        <div className="totalContainer">
-          <div className="titleAndInput">
-            <h1 className="mainTitle">US Map</h1>
+        <div className="usTotalContainer">
+          <div className="usTitleNavDescription">
+            <h1 className="usMainTitle">US Map</h1>
             <Navbar />
+            <div className="usDescriptionAndChkbox">
+              <p className="usDescription">Here you can view every drink with ties to the United States &nbsp;</p>
+              <div className="usMapBeerCiderChkboxAndLabel">
+                <label className="usMapBeerCiderLabel">(Just Beers/Ciders with no mixers?)&nbsp;</label>
+                <input className="usMapBeerCiderChkbox"
+                       type="checkbox"
+                       onChange={() => this.handleJustBeersCiders()}/>
+              </div>
+            </div>
           </div>
           <div className="usMapAndBothTables">
             <div className="usMapAndDrinkersTable">
@@ -99,7 +138,7 @@ class USMap extends Component {
                 <VectorMap
                   map="us_aea"
                   ref={"map"}
-                  backgroundColor="#0077be" //change it to ocean blue: #0077be
+                  backgroundColor="#0077be"
                   zoomOnScroll={false}
                   containerStyle={{
                     width: "100%",
@@ -119,6 +158,9 @@ class USMap extends Component {
                       "fill-opacity": 0.6,
                       cursor: 'pointer'
                     },
+                    onRegionOver: function(e, code) {
+                      document.body.style.cursor = 'pointer';
+                    },
                     selected: {
                       fill: "#2938bc", //color for the clicked country
                     },
@@ -136,19 +178,18 @@ class USMap extends Component {
                   }}
                 />
               </div>
-              <div className="drinkerDataTable">
+              <div className="usDrinkerDataTable">
                 <USDrinkerDataTable
-                  drinks={this.state.drinks}
+                  drinks={toBeerOrNotToBeer}
                   regionCode={this.state.selectedRegion}
                   regionName={this.state.fullRegionName}
                   handleRegionReset={this.handleRegionReset}
                 />
               </div>
             </div>
-            <div className="regionDataTable">
+            <div className="usRegionDataTable">
               <USRegionDataTable
-                chosenMap="usa"
-                drinks={this.state.drinks}
+                drinks={toBeerOrNotToBeer}
                 regionCode={this.state.selectedRegion}
                 regionName={this.state.fullRegionName}
               />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import '../Stylesheets/RegionDataTable.css'
+import '../../Stylesheets/WorldPageSS/WorldRegionDataTable.css'
 
-class RegionDataTable extends Component {
+class WorldRegionDataTable extends Component {
   constructor(props) {
     super(props)
       this.state = {
@@ -114,5 +114,5 @@ class RegionDataTable extends Component {
   // }
 }
 
-export default RegionDataTable;
+export default WorldRegionDataTable;
 

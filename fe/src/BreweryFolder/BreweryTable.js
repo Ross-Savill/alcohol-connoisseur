@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react"
 import { useTable, useSortBy, useFilters } from "react-table";
 import { Table } from 'reactstrap';
 import { Filter, DefaultColumnFilter } from './filters';
-import "../Stylesheets/BreweryTable.css"
+import "../Stylesheets/BreweryPageSS/BreweryTable.css"
 import { useMemo } from "react";
 
 const BreweryTable = ({ columns, data, handleSetBrewery }) => {

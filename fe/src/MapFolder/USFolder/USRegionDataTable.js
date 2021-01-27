@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../Stylesheets/RegionDataTable.css'
+import '../../Stylesheets/USPageSS/USRegionDataTable.css'
 
 class USRegionDataTable extends Component {
   constructor(props) {
@@ -25,10 +25,10 @@ class USRegionDataTable extends Component {
 
   renderClickedCountryHeader() {
     return(
-      <tr className="drinkRegionHeader">
+      <tr className="usDrinkRegionHeader">
         <th>Drinker</th>
         <th>Drink</th>
-        <th>Drink Type</th>
+        <th>Type</th>
         <th>Rating Words</th>
         <th>Score</th>
         <th>Brand</th>
@@ -60,25 +60,25 @@ class USRegionDataTable extends Component {
       if(drink.mixerTwo) {
         return(
           <tr key={index}>
-            <td className="drinkRegionData">{drink.name}</td>
-            <td className="drinkRegionData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
-            <td className="drinkRegionData">{drink.drinkType}</td>
-            <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="drinkRegionData">{drink.score}</td>
-            <td className="drinkRegionData">{drink.brand}</td>
-            <td className="drinkRegionData">{drink.company}</td>
+            <td className="usDrinkRegionData">{drink.name}</td>
+            <td className="usDrinkRegionData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
+            <td className="usDrinkRegionData">{drink.drinkType}</td>
+            <td className="usDrinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+            <td className="usDrinkRegionData">{drink.score}</td>
+            <td className="usDrinkRegionData">{drink.brand}</td>
+            <td className="usDrinkRegionData">{drink.company}</td>
           </tr>
         )
       } else if(drink.mixerOne) {
           return(
           <tr key={index}>
-            <td className="drinkRegionData">{drink.name}</td>
-            <td className="drinkRegionData">{drink.drinkMain} with {drink.mixerOne}</td>
-            <td className="drinkRegionData">{drink.drinkType}</td>
-            <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="drinkRegionData">{drink.score}</td>
-            <td className="drinkRegionData">{drink.brand}</td>
-            <td className="drinkRegionData">{drink.company}</td>
+            <td className="usDrinkRegionData">{drink.name}</td>
+            <td className="usDrinkRegionData">{drink.drinkMain} with {drink.mixerOne}</td>
+            <td className="usDrinkRegionData">{drink.drinkType}</td>
+            <td className="usDrinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+            <td className="usDrinkRegionData">{drink.score}</td>
+            <td className="usDrinkRegionData">{drink.brand}</td>
+            <td className="usDrinkRegionData">{drink.company}</td>
           </tr>
           )
       } else {
@@ -103,11 +103,11 @@ class USRegionDataTable extends Component {
       return <p>One Moment Please</p>
     } else {
       return (
-        <div className="selectedCountry">
-          <table className='selectedCountryTable'>
+        <div className="usSelectedState">
+          <table className='usSelectedStateTable'>
             <thead>
               <tr>
-                <th colSpan="7" className="regionRegionHeader">{regionName}</th>
+                <th colSpan="7" className="usRegionHeader">{regionName}</th>
               </tr>
                 {this.renderClickedCountryHeader()}
             </thead>

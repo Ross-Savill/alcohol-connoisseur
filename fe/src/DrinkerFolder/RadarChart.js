@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Radar, Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
-import '../Stylesheets/RadarChart.css'
+import '../Stylesheets/DrinkersPageSS/RadarChart.css'
 
 class RadarChart extends Component {
   constructor(props) {

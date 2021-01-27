@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import RadarChart from './RadarChart';
 import DrinkersTable from './DrinkersTable';
-import Navbar from '../Navbar.js'
-import '../Stylesheets/Drinkers.css'
+import Navbar from '../MyUtilitiesFolder/Navbar.js'
+import '../Stylesheets/DrinkersPageSS/Drinkers.css'
 
 class Drinkers extends Component {
   constructor(props) {

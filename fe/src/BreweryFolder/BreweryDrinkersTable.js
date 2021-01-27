@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import '../Stylesheets/BreweryDrinkersTable.css';
-import useSortableData from '../useSortableData';
-
+import '../Stylesheets/BreweryPageSS/BreweryDrinkersTable.css';
+import useSortableData from '../useSortableData.js';
 
 const BreweryDrinkersTable = ({ breweryObjectsArray }) => {
 

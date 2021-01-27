@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Select from 'react-select';
 import { Line } from 'react-chartjs-2';
 import moment from 'moment';
-import '../Stylesheets/LineChart.css'
+import '../Stylesheets/SessionsPageSS/LineChart.css'
 
 class LineChart extends PureComponent {
   constructor(props) {

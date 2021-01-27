@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../Stylesheets/ClickedRatingTable.css';
+import '../Stylesheets/RatingPageSS/ClickedRatingTable.css';
 
 class ClickedRatingTable extends Component {
   constructor(props) {

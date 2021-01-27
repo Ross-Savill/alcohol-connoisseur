@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import PropTypes from 'prop-types';
-import './Stylesheets/AddDrinkForm.css';
+import '../Stylesheets/MainPageSS/AddDrinkForm.css';
 
 const initialState = {
   showForm: false,

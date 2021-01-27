@@ -1,0 +1,46 @@
+.worldMapPageLoadingDiv {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.worldTotalContainer {
+  display: grid;
+  grid-template-columns: repeat(4, [col-start] 1fr);
+}
+
+.worldTitleAndNav {
+  grid-column: col-start / span 5;
+  margin-top: 0;
+}
+
+.worldMainTitle {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  background-color: green;
+}
+
+.worldMapAndRegionTable {
+  grid-column: col-start 1 / span 3;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.worldMap {
+  flex: 1;
+  border: solid 3px rgb(77, 71, 71);
+}
+
+.worldDrinkerDataTable {
+  border: solid 3px green;
+}
+
+.worldRegionDataTable {
+  flex: 1;
+  border: solid 3px blue;
+}

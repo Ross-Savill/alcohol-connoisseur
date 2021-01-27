@@ -1,0 +1,84 @@
+.usMapPageLoadingDiv {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.usTotalContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.usMainTitle {
+  position: relative;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  background-color: green;
+}
+
+.usTitleNavDescription {
+  margin-top: 0;
+}
+
+.usDescriptionAndChkbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 5px;
+}
+
+.usDescription {
+  margin: 0px;
+}
+
+.usMapBeerCiderChkboxAndLabel {
+  display: flex;
+  align-items: center;
+  border: 3px green solid;
+  padding-right: 5px;
+}
+
+.usMapBeerCiderLabel {
+  margin: 0px;
+}
+
+.usMapBeerCiderChkbox {
+  transform: scale(1.3);
+}
+
+.usMapBeerCiderChkbox:hover {
+  cursor: pointer;
+}
+
+.usMapAndBothTables {
+  display: block;
+}
+
+.usMapAndDrinkersTable {
+  display: flex;
+  flex-direction: row;
+}
+
+.usMap {
+  height: 420px;
+  border: solid 3px rgb(77, 71, 71);
+  width: 50vw;
+}
+
+.usDrinkerDataTable {
+  border: solid 3px green;
+  height: 420px;
+  overflow: hidden;
+  overflow-y: scroll;
+  width: 50vw;
+}
+
+.usRegionDataTable {
+  border: solid 3px blue;
+}

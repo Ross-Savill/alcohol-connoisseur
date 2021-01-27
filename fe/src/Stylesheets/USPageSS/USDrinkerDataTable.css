@@ -27,28 +27,37 @@
   text-decoration: underline;
 }
 
+.usMapDrinkerTHead {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: lawngreen;
+}
+
+.usMapDrinkerTableHeaderRow {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
 .drinkerTableRowHeader {
   border: solid 3px black;
   text-align: center;
 }
 
-.drinkDataNameText{
-  font-weight: bold;
-  font-size: 0.9em;
+.drinkerUSTableTh:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.drinkDataNumberText {
+.drinkDataNumberNum {
   text-align: center;
   font-weight: bold;
   font-size: 0.9em;
 }
 
-.drinkDataAvgScoreText {
+.drinkerUSTableDataText {
   font-weight: bold;
   font-size: 0.9em;
-}
-
-.drinkerStateNamesTableData {
-  font-weight: bold;
-  font-size: 0.9em;
+  text-align: left;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import useSortableData from '../useSortableData';
-import '../Stylesheets/SelectedBreweryTable.css';
+import '../Stylesheets/BreweryPageSS/SelectedBreweryTable.css';
 
 const SelectedBreweryTable = ({ breweryObjectsArray,
                                 selectedBrewery,

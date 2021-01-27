@@ -1,0 +1,18 @@
+.usRegionHeader {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-decoration: underline;
+  background-color: lawngreen;
+}
+
+.usDrinkRegionHeader {
+  border: solid 3px black;
+  text-align: center;
+}
+
+.usDrinkRegionData {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1em;
+}

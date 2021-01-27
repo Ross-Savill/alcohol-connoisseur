@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import Navbar from '../Navbar';
+import Navbar from '../../MyUtilitiesFolder/Navbar';
 import { VectorMap } from "react-jvectormap";
-import RegionDataTable from './RegionDataTable';
-import DrinkerDataTable from './DrinkerDataTable';
-import '../Stylesheets/WorldMap.css';
-const { getCode, getName, getData } = require("country-list");
+import WorldRegionDataTable from './WorldRegionDataTable';
+import WorldDrinkerDataTable from './WorldDrinkerDataTable';
+import '../../Stylesheets/WorldPageSS/WorldMap.css';
+import LoadingSpin from '../../MyUtilitiesFolder/LoadingSpin';
+const { getName } = require("country-list");
 
 class WorldMap extends Component {
   constructor(props) {
@@ -66,16 +67,20 @@ class WorldMap extends Component {
 
   render() {
     if(!this.props.drinks) {
-      return("Please Wait")
+      return (
+        <div className="worldMapPageLoadingDiv">
+          <LoadingSpin />
+        </div>
+      )
     } else {
       return(
-        <div className="totalContainer">
-          <div className="titleAndInput">
-            <h1 className="mainTitle">World Map</h1>
+        <div className="worldTotalContainer">
+          <div className="worldTitleAndNav">
+            <h1 className="worldMainTitle">World Map</h1>
             <Navbar />
           </div>
-          <div className="mapAndRegionTable">
-            <div className="map">
+          <div className="worldMapAndRegionTable">
+            <div className="worldMap">
               <VectorMap
                 map="world_mill"
                 ref={"map"}
@@ -100,7 +105,7 @@ class WorldMap extends Component {
                     cursor: 'pointer'
                   },
                   selected: {
-                    fill: "#2938bc", //color for the clicked country
+                    fill: "#2938bc",
                   },
                   selectedHover: {}
                 }}
@@ -108,16 +113,16 @@ class WorldMap extends Component {
                 series={{
                   regions: [
                     {
-                      values: this.state.worldMapData, //this is your data
-                      scale: ["#146804"], //your color game's here
+                      values: this.state.worldMapData,
+                      scale: ["#146804"],
                       normalizeFunction: "polynomial"
                     }
                   ]
                 }}
               />
             </div>
-            <div className="regionDataTable">
-              <RegionDataTable
+            <div className="worldRegionDataTable">
+              <WorldRegionDataTable
                 chosenMap="world"
                 drinks={this.state.drinks}
                 regionCode={this.state.selectedRegion}
@@ -125,8 +130,8 @@ class WorldMap extends Component {
               />
             </div>
           </div>
-          <div className="drinkerDataTable">
-            <DrinkerDataTable
+          <div className="worldDrinkerDataTable">
+            <WorldDrinkerDataTable
               chosenMap="world"
               drinks={this.state.drinks}
               regionCode={this.state.selectedRegion}

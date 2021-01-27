@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from '../Navbar'
-import '../Stylesheets/RatingWord.css';
+import Navbar from '../MyUtilitiesFolder/Navbar'
+import '../Stylesheets/RatingPageSS/RatingWord.css';
 import ClickedRatingTable from './ClickedRatingTable';
 import RatingPieChart from './RatingPieChart';
 import RatingBarChart from './RatingBarChart';

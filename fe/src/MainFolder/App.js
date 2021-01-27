@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route } from 'react-router-dom';
 import HomePage from './HomePage';
-import RatingWord from './RatingWordFolder/RatingWord';
-import Drinkers from './DrinkerFolder/Drinkers';
-import Sessions from './SessionsFolder/Sessions';
-import BreweryScroll from './BreweryFolder/BreweryScroll';
-import WorldMap from './MapFolder/WorldMap';
-import USMap from './MapFolder/USMap';
-import './Stylesheets/App.css';
-import LoginButton from './AuthFolder/LoginButton';
-import LogoutButton from './AuthFolder/LogoutButton';
+import RatingWord from '../RatingWordFolder/RatingWord';
+import Drinkers from '../DrinkerFolder/Drinkers';
+import Sessions from '../SessionsFolder/Sessions';
+import BreweryPage from '../BreweryFolder/BreweryPage';
+import WorldMap from '../MapFolder/WorldFolder/WorldMap';
+import USMap from '../MapFolder/USFolder/USMap';
+import '../Stylesheets/MainPageSS/App.css';
+import LoginButton from '../AuthFolder/LoginButton';
+import LogoutButton from '../AuthFolder/LogoutButton';
 import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
 const App = () => {
@@ -95,7 +95,7 @@ const App = () => {
             <Route
               exact path="/breweries"
               render={(props) => (
-                <BreweryScroll {...props}
+                <BreweryPage {...props}
                   drinks={state.drinks}
                 />
               )}

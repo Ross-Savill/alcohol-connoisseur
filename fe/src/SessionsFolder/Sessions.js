@@ -14,7 +14,7 @@ class Sessions extends Component {
   }
 
   componentDidMount() {
-    const { drinks, drinkers, drinkTypes } = this.props
+    const { drinks } = this.props
     if(drinks) {
       this.haveDrinks()
     }

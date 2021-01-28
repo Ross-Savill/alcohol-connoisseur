@@ -1,8 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project
 
-## Available Scripts
+Drink And Rate, a MERN app where you can record scores to your beverages to share and display with others. Various pages outlay data relating to drinks, drinkers, ratings, companies and their countries of origin.
 
-In the project directory, you can run:
+## Project Status
+
+Currently in development. The various pages are at varying stages of completion with regards to information displayed and design. The add drink function is currently in development and drinks can be uploaded via the MongoImport command via terminal.
+
+## Project Screenshots
+
+As of 28/01/2021
+
+![Main Table (ReadmeImagesFolder/MainTable.png)]
+- Here all drinks and be viewed and searched for
+
+![Drinkers Page (ReadmeImagesFolder/DrinkersPage.png)]
+- Here data on each drinker can be viewed
+
+![All Rating Words (ReadmeImagesFolder/RatingWordsAll.png)]
+- Here data on every rating word used can be seen
+
+![Selected Rating Word (ReadmeImagesFolder/RatingWordSelected.png)]
+- By selected a word you can view how many times it has been said and who by. By selecting a chart segment you can see just that person's drinks described by that word.
+
+![Sessions Page (ReadmeImagesFolder/Sessions.png)]
+- Here you can see drink numbers for each gathering.
+
+![Breweries Page (ReadmeImagesFolder/BreweriesPage.png)]
+- Here you can search for and see ratings pertaining to each individual brewery, cidery or distillary.
+
+![US Map Page (ReadmeImagesFolder/USPage.png)]
+- Here you can see data relating to drinks drunk from the United States, choosing to limit them to just beers and ciders if preferred. Clicking each state reveals drinks drunk from that state along with data on individuals who have had drinks from that state.
+
+## Installation and Setup
+
+To gain a copy of the app you can use
+
+### `npm install`
+
+For security the app comes with Auth0 securing all routes via index.js in the front-end folder. The 'Auth0Provider' can either be removed or you can set up your own Auth0 account and a .env file where you can store your Auth0 Domain, Client_ID and Audience keys.
+
+In the api folder, api.js secures access to the data via json web tokens. You can establish your own .env file here where you can also include the Auth0 Domain and Audience keys alongside your MongoDB URI to secure your information (or remove these lines if you wish to store data locally or with no security).
+
+Each browser route is separated into its own folder branch in the fe folder, plus folders for auth0, stylesheets and my own utilities. Only the index.js and my custom hooks are in the main folder.
 
 ### `npm start`
 
@@ -11,11 +50,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -27,42 +61,10 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Ongoing Reflection
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+I began design on this app during the early stages of the government's Covid lockdown as a way to maintain and develop my skills using Javascript alongside React, Express, Node and MongoDB.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I've managed to gain a good grasp on React Hooks having previously mainly stuck to React Classes and lifecycle methods to construct applications. This is also the first application I've built where I've used Auth0 to manage site entry.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+I'm in the process of learning more and more about data manipulation and visualization, having created multiple tables and charts to display the information relating to over 2500 beverages. Each drink can have up to six different mixers with varying degrees of information. I'm still in the process of establishing different ways of storing and displaying this data.

@@ -176,7 +176,7 @@ class LineChart extends PureComponent {
             {this.renderLineChart()}
           </div>
           <div className="justSelectFields">
-            <h3>Number of drink per week for:</h3>
+            <h3>Number of drinks per week for:</h3>
               <Select
                 isMulti
                 value={drinkerSelection}

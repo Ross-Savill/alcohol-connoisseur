@@ -53,7 +53,6 @@ const App = () => {
   } else {
     return (
       <div>
-        <LogoutButton />
         <BrowserRouter>
           <div>
             <Route

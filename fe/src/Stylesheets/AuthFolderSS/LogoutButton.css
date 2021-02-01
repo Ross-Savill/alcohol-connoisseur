@@ -1,0 +1,10 @@
+.logoutLink {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.logoutLink:hover {
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+}

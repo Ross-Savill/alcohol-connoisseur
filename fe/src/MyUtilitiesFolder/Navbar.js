@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import '../Stylesheets/MyUtilitiesSS/Navbar.css';
 import { NavLink } from "react-router-dom";
+import LogoutButton from '../AuthFolder/LogoutButton'
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
@@ -10,10 +11,12 @@ const Navbar = () => {
       className="navbar is-primary"
       role="navigation"
       aria-label="main navigation"
+      style={{ padding: 0 }}
     >
       <div className="nav-container">
         <div className={`navbar-menu ${isOpen && "is-active"}`}>
           <div className="navbar-start">
+            <LogoutButton />
             <NavLink
               className="navbar-item"
               activeClassName="is-active"

@@ -10,7 +10,8 @@ import WorldMap from '../MapFolder/WorldFolder/WorldMap';
 import USMap from '../MapFolder/USFolder/USMap';
 import '../Stylesheets/MainPageSS/App.css';
 import LoginButton from '../AuthFolder/LoginButton';
-import LogoutButton from '../AuthFolder/LogoutButton';
+import { ProtectedRoute } from '../MyUtilitiesFolder/ProtectedRoute';
+import Admin from '../AdminFolder/Admin';
 import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
 const App = () => {
@@ -112,6 +113,10 @@ const App = () => {
                   drinks={state.drinks}
                 />
               )}
+            />
+            <ProtectedRoute
+              exact path="/admin"
+              component={Admin}
             />
           </div>
         </BrowserRouter>

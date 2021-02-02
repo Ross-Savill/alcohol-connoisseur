@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import '../Stylesheets/MyUtilitiesSS/Navbar.css';
 import { NavLink } from "react-router-dom";
 import LogoutButton from '../AuthFolder/LogoutButton'
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
+
+  const { user } = useAuth0();
 
   return (
   	<nav
@@ -72,6 +76,17 @@ const Navbar = () => {
             >
               USA Map
             </NavLink>
+
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+              <NavLink
+                className="navbar-item"
+                activeClassName="is-active"
+                to="/admin"
+              >
+              Admin
+            </NavLink>
+          : null
+          }
           </div>
         </div>
       </div>

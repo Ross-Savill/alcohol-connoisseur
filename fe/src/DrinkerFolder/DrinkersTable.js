@@ -59,7 +59,7 @@ class DrinkersTable extends Component {
         drinkers.map((drinker) => {
           let oneDrinkerArray = []
           drinks.map((drink) => {
-            if(drink.name === drinker.drinker) {
+            if(drink.name === drinker.personName) {
               oneDrinkerArray.push(drink)
             }
           })

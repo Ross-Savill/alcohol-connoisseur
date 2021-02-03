@@ -99,14 +99,14 @@ class LineChart extends PureComponent {
     drinkers.map((drinker) => {
       let drinkerCount = 0
       drinks.map((drink) => {
-        if(drinker.drinker === drink.name) {
+        if(drinker.personName === drink.name) {
           drinkerCount = drinkerCount + 1
         }
       })
       if(drinkerCount >= 20) {
-        options[0].options.push({"value": drinker._id, "label": drinker.drinker })
+        options[0].options.push({"value": drinker._id, "label": drinker.personName })
       } else {
-        options[1].options.push({"value": drinker._id, "label": drinker.drinker })
+        options[1].options.push({"value": drinker._id, "label": drinker.personName })
       }
     })
 
@@ -153,8 +153,8 @@ class LineChart extends PureComponent {
   }
 
   render() {
+    console.log(this.props.drinkers)
     const { selectOptions, drinkerSelection } = this.state
-    console.log(drinkerSelection)
     if(drinkerSelection === null || drinkerSelection.length === 0) {
       return (
         <div className="noLineChartScreen">

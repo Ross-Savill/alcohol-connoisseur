@@ -51,11 +51,11 @@ app.get('/drinks', authorizeAccessToken, (req, res) => {
   });
 });
 
-app.get('/peoplenames', authorizeAccessToken, (req, res) => {
+app.get('/users', authorizeAccessToken, (req, res) => {
   MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
     if (err) throw err;
     const dbName = db.db("drinkandrate");
-    dbName.collection("peoplenames").find({}).toArray(function(err, result) {
+    dbName.collection("users").find({}).toArray(function(err, result) {
       if (err) throw err;
       res.json(result);
       db.close();

@@ -30,7 +30,7 @@ const App = () => {
         const config = {
           headers: { 'Authorization': `Bearer ${token}` }
         }
-        const requestDrinkers = axios.get("https://drinkandrate.herokuapp.com/peoplenames", config)
+        const requestDrinkers = axios.get("https://drinkandrate.herokuapp.com/users", config)
         const requestDrinks = axios.get("https://drinkandrate.herokuapp.com/drinks", config)
         const requestDrinkTypes = axios.get("https://drinkandrate.herokuapp.com/drinktypes", config)
 

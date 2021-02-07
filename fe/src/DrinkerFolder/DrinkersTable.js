@@ -259,13 +259,18 @@ class DrinkersTable extends Component {
         this.onSort("drinksNum")
       }
       return(
-        <div>
-          <h4 className="drinkerTableTitle">Click a Header for Sorted Data</h4>
-          <span className="includeDrinkersSpan">Include Drinkers with less than 15% attendance? </span>
-          <input type="checkbox"
-                 className="irregularDrinkersCheckbox"
-                 defaultChecked={this.state.irregDrinkersCheck}
-                 onChange={() => this.handleIrregDrinkersCheck()} />
+        <div className="drinkersTableDiv">
+          <div className="drinkerTableTitleSpanChckbx">
+            <h4 className="drinkerTableTitle">All Drinkers Drink Information</h4>
+            <div className="includeDrinkersSpanAndChckbx">
+              <span className="includeDrinkersSpan">Include Drinkers with less than 15% attendance?</span>
+              <input type="checkbox"
+                    className="irregularDrinkersCheckbox"
+                    defaultChecked={this.state.irregDrinkersCheck}
+                    onChange={() => this.handleIrregDrinkersCheck()}
+              />
+            </div>
+          </div>
           <table className="drinkersTable">
             <thead>
               {this.renderDrinkerHeader()}

@@ -10,7 +10,7 @@ class Admin extends React.Component {
       url: ''
     }
     this.handleChange = this.handleChange.bind(this)
-    this.handleUpload = this.handleUpload.bind(this )
+    this.handleUpload = this.handleUpload.bind(this)
   }
 
   handleChange = e => {
@@ -32,7 +32,7 @@ class Admin extends React.Component {
     },
     () => {
       storage.ref('images').child(image.name).getDownloadURL().then(url => {
-        console.log(url)
+        this.setState({ url })
       })
     });
   }

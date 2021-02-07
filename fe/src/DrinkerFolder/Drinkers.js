@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RadarChart from './RadarChart';
+import DrinkersBarChart from './DrinkersBarChart';
 import DrinkersTable from './DrinkersTable';
 import Navbar from '../MyUtilitiesFolder/Navbar.js'
 import '../Stylesheets/DrinkersPageSS/Drinkers.css'
@@ -86,32 +86,40 @@ class Drinkers extends Component {
       <div className="drinkersContainer">
         <h1 className="drinkersPageTitle">Drinkers Page</h1>
         <Navbar />
-        <select
-          className="drinkerSelect"
-          onChange={this.onSelectDrinker.bind(this)}
-          value={this.state.selectedDrinker}
-        >
-          <option value="All Drinkers">ALL DRINKERS</option>
-          <optgroup label="Regular Attendees">
-            {this.regularDrinkers()}
-          </optgroup>
-          <optgroup label="Irregular Attendees">
-            {this.irregularDrinkers()}
-          </optgroup>
-        </select>
-        <div className="chartsAndTable">
-          <div className="radarAndBarChart">
-            <RadarChart drinks={this.state.drinks}
-                        drinkTypes={this.state.drinkTypes}
-                        selectedDrinker={this.state.selectedDrinker} />
+          <div className="selectBarTable">
+          <div className="drinkerTitleAndSelectDiv">
+            <h3 className="drinkerSelectTitle">Select Your Drinker</h3>
+            <div className="drinkerSelectDiv">
+              <select
+                className="drinkerSelect"
+                onChange={this.onSelectDrinker.bind(this)}
+                value={this.state.selectedDrinker}
+              >
+                <option value="All Drinkers">ALL DRINKERS</option>
+                <optgroup label="Regular Attendees">
+                  {this.regularDrinkers()}
+                </optgroup>
+                <optgroup label="Irregular Attendees">
+                  {this.irregularDrinkers()}
+                </optgroup>
+              </select>
+            </div>
           </div>
-          <div className="drinkersTable">
-            <DrinkersTable drinks={this.state.drinks}
-                           drinkers={this.state.drinkers}
-                           drinkTypes={this.state.drinkTypes}
-                           selectedDrinker={this.state.selectedDrinker}
-                           regularDrinkers={this.state.regularDrinkers}
-                           irregularDrinkers={this.state.irregularDrinkers}/>
+          <div className="chartsAndTable">
+            <div className="drinkersBarChart">
+            <h4>{this.state.selectedDrinker}'s Drinks Breakdown</h4>
+              <DrinkersBarChart drinks={this.state.drinks}
+                          drinkTypes={this.state.drinkTypes}
+                          selectedDrinker={this.state.selectedDrinker} />
+            </div>
+            <div className="drinkersTable">
+              <DrinkersTable drinks={this.state.drinks}
+                            drinkers={this.state.drinkers}
+                            drinkTypes={this.state.drinkTypes}
+                            selectedDrinker={this.state.selectedDrinker}
+                            regularDrinkers={this.state.regularDrinkers}
+                            irregularDrinkers={this.state.irregularDrinkers}/>
+            </div>
           </div>
         </div>
       </div>

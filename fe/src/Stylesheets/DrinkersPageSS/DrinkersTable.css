@@ -1,9 +1,28 @@
+.drinkersTableDiv {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: green solid 2px;
+}
+
+.drinkerTableTitleSpanChckbx {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: greenyellow;
+}
+
 .drinkerTableTitle {
   text-align: center;
 }
 
 .tRDrinkerHeader {
   border: 1px black solid;
+  background-color: lightgreen;
+  position: sticky;
+  z-index: 1;
+  top: 0;
 }
 
 .tRDrinkerHeader :hover {
@@ -14,20 +33,29 @@
 .tHDrinkerHeader{
   font-size: 14px;
   text-align: center;
+  position: sticky;
+  z-index: 1;
+  top: 1;
 }
 
 .tableRowDrinkersTable {
   font-weight: bold;
-  border: 1px black solid;
 }
 
 .tableDataDrinkersTable {
   text-align: center;
 }
 
+.includeDrinkersSpanAndChckbx {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .includeDrinkersSpan {
   font-weight: bold;
   font-style: italic;
+  margin-right: 5px;
 }
 
 .irregularDrinkersCheckbox{

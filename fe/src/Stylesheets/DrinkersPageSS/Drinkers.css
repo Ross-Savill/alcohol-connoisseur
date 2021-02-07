@@ -7,6 +7,12 @@
   margin-bottom: 0px;
 }
 
+.selectBarTable {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .selectedDrinkerHeader {
   display: flex;
   justify-content: center;
@@ -17,6 +23,34 @@
   flex-flow: row nowrap;
 }
 
+.drinkersBarChart {
+  text-align: center;
+  width: 30em;
+  height: 40em;
+}
+
+.drinkerTitleAndSelectDiv {
+  border: solid green 4px;
+  max-width: 30em;
+  margin-bottom: 5px;
+}
+
+.drinkerSelectTitle {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.drinkerSelectDiv {
+  display: flex;
+  justify-content: center;
+  padding: 0px 10px 10px 10px;
+}
+
 .drinkerSelect {
   display: block;
+}
+
+.drinkersTable {
+  padding: 0px 10px 0px 10px;
 }

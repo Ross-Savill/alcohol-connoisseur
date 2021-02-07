@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Radar, Bar } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import 'chartjs-plugin-labels'
-import '../Stylesheets/DrinkersPageSS/RadarChart.css'
+import '../Stylesheets/DrinkersPageSS/DrinkersBarChart.css'
 
-class RadarChart extends Component {
+class DrinkersBarChart extends Component {
   constructor(props) {
     super(props)
       this.state = {
@@ -11,9 +11,6 @@ class RadarChart extends Component {
         drinkTypes: null,
         selectedDrinker: 'All Drinkers',
         drinkerRadarData: null,
-        showRadar: false,
-        showBar: true,
-        radarColor: ["rgb(250, 222, 229)"],
         barColor: ['#e6194b', '#3cb44b', '#ffe119', '#4363d8', '#f58231', '#911eb4',
         '#46f0f0', '#f032e6', '#bcf60c', '#fabebe', '#008080', '#e6beff']
       }
@@ -47,7 +44,7 @@ class RadarChart extends Component {
     // SET STATE WITH DRINKS AND DRINKERS
     const { drinks, drinkTypes, selectedDrinker } = this.props
     this.setState({ drinks, drinkTypes, selectedDrinker })
-    const { radarColor, barColor } = this.state
+    const { barColor } = this.state
 
     // PREP DRINK TYPE LABELS AND DRINK TYPE DRINK ARRAY
     let allDrinkTypes = []
@@ -98,19 +95,12 @@ class RadarChart extends Component {
         datasets: [{
           label: this.state.selectedDrinker,
           data: sortedDrinkNumbers,
-          backgroundColor: this.state.showRadar ? radarColor: barColor,
+          backgroundColor: barColor,
           borderColor: 'rgb(238, 97, 131)'
         }],
     }
     this.setState({ drinkerRadarData })
 
-  }
-
-  handleChartChange = () => {
-    const currentStateRadar = this.state.showRadar;
-    const currentStateBar = this.state.showBar;
-    this.setState({ showRadar: !currentStateRadar,
-                    showBar: !currentStateBar });
   }
 
   renderDrinkerChart() {
@@ -119,69 +109,29 @@ class RadarChart extends Component {
     } else {
       return(
         <div>
-          <select
-            className="chartTypeSelect"
-            value={this.showRadar}
-            onChange={this.handleChartChange}
-            >
-            <option>Bar Chart</option>
-            <option>Radar Chart</option>
-          </select>
-
-          <div className={this.state.showRadar ?
-            'shownRadarChart': 'hiddenRadarChart'}>
-            <Radar
+          <div className="drinkersPageBarChart">
+            <Bar
               data={this.state.drinkerRadarData}
-              width={75}
-              height={75}
+              width={120}
+              height={85}
               options={{
-                title: {
-                  display: true,
-                  text: `${this.state.selectedDrinker}`,
-                  fontSize: 25
+                plugins: {
+                  labels: {
+                    render: function (args) {
+                      return `${args.value}`
+                    }
+                  }
                 },
-                scale: {
-                  ticks: {
-                    z: 1,
-                    callback: function (value) { if (Number.isInteger(value)) { return value; } else { return ""} }
-                  },
-                  pointLabels: {
-                    fontSize: 15
+                layout: {
+                  padding: {
+                    top: 15
                   }
                 },
                 legend: {
-                  position: "bottom",
-                  labels: {
-                    fontSize: 15
-                  }
+                  position: "bottom"
                 }
               }}
             />
-            </div>
-            <div className={this.state.showBar ?
-              'shownBarChart': 'hiddenBarChart'}>
-              <Bar
-                data={this.state.drinkerRadarData}
-                width={120}
-                height={85}
-                options={{
-                  plugins: {
-                    labels: {
-                      render: function (args) {
-                        return `${args.value}`
-                      }
-                    }
-                  },
-                  layout: {
-                    padding: {
-                      top: 15
-                    }
-                  },
-                  legend: {
-                    position: "bottom"
-                  }
-                }}
-              />
           </div>
         </div>
       )
@@ -197,4 +147,4 @@ class RadarChart extends Component {
   }
 }
 
-export default RadarChart;
+export default DrinkersBarChart;

@@ -97,10 +97,10 @@ class RatingWord extends React.Component {
 
   renderWordHeader() {
     return (
-    <tr>
-      <th>Rating Word</th>
-      <th>Times Used</th>
-    </tr>
+    <div className="ratingWordsTableHeaderDiv">
+      <p className="ratingWordsTableHeaderLeftPtag">Rating Word</p>
+      <p className="ratingWordsTableHeaderRightPtag">Times</p>
+    </div>
     )
   }
 
@@ -135,7 +135,7 @@ class RatingWord extends React.Component {
               width={200}
             >
               {finalWords.map((word, index) => (
-                <div className="scrollRowBoth" onClick={() => this.setChartData(word[0])} >
+                <div key={index} className="scrollRowBoth" onClick={() => this.setChartData(word[0])} >
                   <div className="scrollWordOnly" style={styleWord}>
                     {word[0]}
                   </div>

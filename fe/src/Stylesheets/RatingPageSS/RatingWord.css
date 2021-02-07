@@ -49,6 +49,27 @@
   position: relative;
 }
 
+.ratingWordsTableHeaderDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: yellowgreen;
+}
+
+.ratingWordsTableHeaderLeftPtag {
+  margin-bottom: 0px;
+  margin-left: 45px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.ratingWordsTableHeaderRightPtag {
+  margin-bottom: 0px;
+  margin-right: 8px;
+  font-weight: bold;
+  font-style: italic;
+}
+
 .drinksTable {
   position: relative;
   width: 20%;

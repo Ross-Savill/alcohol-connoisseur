@@ -242,7 +242,6 @@ function BreweryPage(props) {
         </div>
       )
     } else {
-      console.log(breweryObjectsArray)
       return(
         <div className="breweryPage">
           <div className="titleDiv">

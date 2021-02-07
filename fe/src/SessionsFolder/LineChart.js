@@ -97,6 +97,7 @@ class LineChart extends PureComponent {
     ]
 
     drinkers.map((drinker) => {
+      console.log(drinker)
       let drinkerCount = 0
       drinks.map((drink) => {
         if(drinker.personName === drink.name) {
@@ -153,7 +154,6 @@ class LineChart extends PureComponent {
   }
 
   render() {
-    console.log(this.props.drinkers)
     const { selectOptions, drinkerSelection } = this.state
     if(drinkerSelection === null || drinkerSelection.length === 0) {
       return (

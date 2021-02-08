@@ -40,6 +40,11 @@
 
 .tableRowDrinkersTable {
   font-weight: bold;
+  cursor: pointer;
+}
+
+.tableRowDrinkersTable:hover {
+  background-color: lightsalmon;
 }
 
 .tableDataDrinkersTable {

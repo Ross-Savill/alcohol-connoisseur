@@ -166,7 +166,7 @@ class DrinkersTable extends Component {
             return;
           } else {
             return(
-              <tr key={index} className="tableRowDrinkersTable">
+              <tr key={index} onClick={() => this.props.onSelectDrinker(dataObject.drinkerName)} className="tableRowDrinkersTable">
                 <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
                 <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
                 <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>

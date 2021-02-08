@@ -7,14 +7,13 @@ import '../Stylesheets/DrinkersPageSS/Drinkers.css'
 class Drinkers extends Component {
   constructor(props) {
     super(props)
+      this.onSelectDrinker = this.onSelectDrinker.bind(this)
       this.state = {
         drinks: null,
         drinkers: null,
         drinkTypes: null,
         selectedDrinker: "All Drinkers",
         drinksPerPerson: null,
-        regularDrinkers: [],
-        irregularDrinkers: [],
       }
   }
 
@@ -40,42 +39,10 @@ class Drinkers extends Component {
     // SET STATE - DRINKS PER PERSON
     const drinksPerPerson = drinks.reduce( (acc, o) => (acc[o.name] = (acc[o.name] || 0)+1, acc), {} );
     this.setState({ drinksPerPerson })
-
-    //SET STATE - REGULAR / IRREGULAR DRINKERS
-    let regularDrinkers = []
-    let irregularDrinkers = []
-    for (const [person, drinkNum] of Object.entries(drinksPerPerson)) {
-      if (drinkNum >= 20) {
-        regularDrinkers.push(person)
-      } else {
-        irregularDrinkers.push(person)
-      }
-    }
-    regularDrinkers.sort(function (a, b) {
-      return a.localeCompare(b);
-    });
-    irregularDrinkers.sort(function (a, b) {
-      return a.localeCompare(b);
-    });
-    this.setState({ regularDrinkers, irregularDrinkers })
-}
-
-  regularDrinkers() {
-    const { regularDrinkers } = this.state
-      return regularDrinkers.map((drinker, index) => {
-        return <option key={index} value={drinker}>{drinker}</option>
-      })
   }
 
-  irregularDrinkers() {
-    const { irregularDrinkers } = this.state
-      return irregularDrinkers.map((drinker, index) => {
-        return <option key={index} value={drinker}>{drinker}</option>
-      })
-  }
-
-  onSelectDrinker (event) {
-    this.setState({ selectedDrinker: event.target.value });
+  onSelectDrinker (clickedRowName) {
+    this.setState({ selectedDrinker: clickedRowName });
   }
 
   render() {
@@ -86,44 +53,26 @@ class Drinkers extends Component {
       <div className="drinkersContainer">
         <h1 className="drinkersPageTitle">Drinkers Page</h1>
         <Navbar />
-          <div className="selectBarTable">
-          <div className="drinkerTitleAndSelectDiv">
-            <h3 className="drinkerSelectTitle">Select Your Drinker</h3>
-            <div className="drinkerSelectDiv">
-              <select
-                className="drinkerSelect"
-                onChange={this.onSelectDrinker.bind(this)}
-                value={this.state.selectedDrinker}
-              >
-                <option value="All Drinkers">ALL DRINKERS</option>
-                <optgroup label="Regular Attendees">
-                  {this.regularDrinkers()}
-                </optgroup>
-                <optgroup label="Irregular Attendees">
-                  {this.irregularDrinkers()}
-                </optgroup>
-              </select>
-            </div>
-          </div>
+        <div className="selectBarTable">
           <div className="chartsAndTable">
             <div className="drinkersBarChart">
             <h4>{this.state.selectedDrinker}'s Drinks Breakdown</h4>
               <DrinkersBarChart drinks={this.state.drinks}
-                          drinkTypes={this.state.drinkTypes}
-                          selectedDrinker={this.state.selectedDrinker} />
+                                drinkTypes={this.state.drinkTypes}
+                                selectedDrinker={this.state.selectedDrinker} />
             </div>
             <div className="drinkersTable">
               <DrinkersTable drinks={this.state.drinks}
-                            drinkers={this.state.drinkers}
-                            drinkTypes={this.state.drinkTypes}
-                            selectedDrinker={this.state.selectedDrinker}
-                            regularDrinkers={this.state.regularDrinkers}
-                            irregularDrinkers={this.state.irregularDrinkers}/>
+                             drinkers={this.state.drinkers}
+                             drinkTypes={this.state.drinkTypes}
+                             selectedDrinker={this.state.selectedDrinker}
+                             regularDrinkers={this.state.regularDrinkers}
+                             irregularDrinkers={this.state.irregularDrinkers}
+                             onSelectDrinker={this.onSelectDrinker}/>
             </div>
           </div>
         </div>
       </div>
-
       )
     }
   }

@@ -1,3 +1,8 @@
+.drinkersContainer {
+  height: 100%;
+  width: 100%;
+}
+
 .drinkersPageTitle {
   position: relative;
   text-align: center;
@@ -7,23 +12,51 @@
   margin-bottom: 0px;
 }
 
-.chartsAndTable {
+.allDrinkersPlayArea {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.drinkersBarChart {
+.allDrinkersBarChart {
   text-align: center;
   width: 30em;
   height: 40em;
 }
 
-.drinkerSelectTitle {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-
 .drinkersTable {
   padding: 0px 10px 0px 10px;
+}
+
+.selectedDrinkerPlayArea {
+  height: 80vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 4fr 4fr 4fr 4fr 4fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+  "backButton highestScore lowestScore AvgScore ."
+  "FaveMixersTable FaveCompanyTable profilePic barChart barChart"
+  "RatingWordTable DoubleRatingWordsTable . . .";
+}
+
+.backToAllDrinkersButton {
+  grid-area: backButton;
+  height: 50px;
+  width: 150px;
+}
+
+.drinkerProfilePic {
+  grid-area: profilePic;
+  justify-self: center;
+  align-self: center;
+  height: 100px;
+  width: 100px;
+  border: solid 1px green;
+}
+
+.selectDrinkerBarChart {
+  grid-area: barChart;
+  text-align: center;
+  width: 30em;
+  height: 100%;
 }

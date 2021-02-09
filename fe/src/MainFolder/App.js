@@ -117,6 +117,7 @@ const App = () => {
             <ProtectedRoute
               exact path="/admin"
               component={Admin}
+              drinkers={state.drinkers}
             />
           </div>
         </BrowserRouter>

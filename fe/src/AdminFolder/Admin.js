@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { storage } from '../firebase'
 import '../Stylesheets/AdminFolderSS/Admin.css'
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
-class Admin extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      image: null,
-      url: ''
+const Admin = () => {
+
+    const [drinkers, setDrinkers] = useState("")
+    const [image, setImage] = useState("")
+    const [url, setUrl] = useState("")
+
+  useEffect(() => {
+    if(drinkers){
+      const { drinkers } = this.props.drinkers
+      if(drinkers !== this.state.drinkers) {
+        setDrinkers(drinkers)
+      }
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleUpload = this.handleUpload.bind(this)
-  }
+  },[drinkers])
 
-  handleChange = e => {
+  // handleDrinkerSelection() {
+
+  // }
+
+  const handleChange = e => {
+    console.log(e)
     if(e.target.files[0]) {
       const image  = e.target.files[0]
-      this.setState({ image })
+      setImage(image)
     }
   }
 
-  handleUpload = () => {
+  const handleUpload = () => {
+    // const { getAccessTokenSilently, user } = useAuth0();
     const { image } = this.state
+    // const token = await getAccessTokenSilently();
+    // const config = {
+    //   headers: { 'Authorization': `Bearer ${token}` }
+    // }
     const uploadTask = storage.ref(`images/${image.name}`).put(image)
+
     uploadTask.on('state_changed',
     (snapshot) => {
 
@@ -32,20 +49,19 @@ class Admin extends React.Component {
     },
     () => {
       storage.ref('images').child(image.name).getDownloadURL().then(url => {
-        this.setState({ url })
+        setUrl(url)
       })
+      // axios.patch("https://drinkandrate.herokuapp.com/users", {profilePic: url})
     });
   }
 
-  render() {
-    return (
-      <div className="adminPageContainer">
-        <input type="file" onChange={this.handleChange}/>
-        <button onClick={this.handleUpload}>Upload</button>
-
-      </div>
-    )
-  }
+  return (
+    <div className="adminPageContainer">
+      <select></select>
+      <input type="file" onChange={(e) => handleChange(e)}/>
+      <button onClick={() => handleUpload()}>Upload</button>
+    </div>
+  )
 }
 
 export default Admin;

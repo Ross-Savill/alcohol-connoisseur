@@ -112,8 +112,8 @@ class DrinkersBarChart extends Component {
           <div className="drinkersPageBarChart">
             <Bar
               data={this.state.drinkerRadarData}
-              width={120}
-              height={85}
+              width={80}
+              height={50}
               options={{
                 plugins: {
                   labels: {

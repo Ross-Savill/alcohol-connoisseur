@@ -75,10 +75,10 @@ app.get('/drinktypes', authorizeAccessToken, (req, res) => {
   });
 });
 
-app.patch('/profilephotoupdate/:id', authorizeAccessToken, async (req, res) => {
+app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {
   const id = req.params.id;
-  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+  MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
     if (err) throw err;
     const dbName = db.db("drinkandrate");
     const updateProfilePhoto = await dbName.collection("users").updateOne(

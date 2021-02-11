@@ -10,7 +10,7 @@ const useStorage = (file, selectedUserID) => {
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
-    const storageRef = storage.ref(file.name);
+    const storageRef = storage.ref(selectedUserID);
     storageRef.put(file).on('state_changed', (snapshot) => {
       let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       setProgress(percentage);

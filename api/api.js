@@ -84,7 +84,7 @@ app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
     const dbName = db.db("drinkandrate");
     const updateProfilePhoto = await dbName.collection("users").updateOne(
       { _id: ObjectId(id) },
-      { $set: { profilePic: req.body.profilePic}}
+      { $set: { profilePic: req.body.profilePic }}
     );
     res.json(updateProfilePhoto);
     db.close();

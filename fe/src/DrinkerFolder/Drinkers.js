@@ -4,6 +4,9 @@ import DrinkersTable from './DrinkersTable';
 import Navbar from '../MyUtilitiesFolder/Navbar.js'
 import backgroundImage from '../MyUtilitiesFolder/BackgroundImages/backgroundBarImage.webp';
 import '../Stylesheets/DrinkersPageSS/Drinkers.css'
+import maleDefaultPhoto from '../MyUtilitiesFolder/DefaultProfilePhotos/defaultMaleProfile.jpg';
+import femaleDefaultPhoto from '../MyUtilitiesFolder/DefaultProfilePhotos/defaultFemaleProfile.jpg';
+
 
 class Drinkers extends Component {
   constructor(props) {
@@ -14,6 +17,8 @@ class Drinkers extends Component {
         drinkers: null,
         drinkTypes: null,
         selectedDrinker: "All Drinkers",
+        selectedDrinkerProfilePic: null,
+        selectedDrinkerTitle: null,
         drinksPerPerson: null,
       }
   }
@@ -42,12 +47,19 @@ class Drinkers extends Component {
     this.setState({ drinksPerPerson })
   }
 
-  onSelectDrinker (clickedRowName) {
+  onSelectDrinker(clickedRowName) {
     this.setState({ selectedDrinker: clickedRowName });
+    this.state.drinkers.map((drinker) => {
+      if(drinker.personName === clickedRowName) {
+        this.setState({ selectedDrinkerProfilePic: drinker.profilePic,
+                        selectedDrinkerTitle: drinker.title });
+      }
+    })
   }
 
   backToAllDrinkers() {
-    this.setState({ selectedDrinker: "All Drinkers" });
+    this.setState({ selectedDrinker: "All Drinkers",
+                    selectedDrinkerProfilePic: null });
 
   }
 
@@ -79,8 +91,9 @@ class Drinkers extends Component {
           </div> :
           <div className="selectedDrinkerPlayArea">
             <button className="backToAllDrinkersButton" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</button>
-            <div className="drinkerProfilePic">
-              Photo Here
+            <div className="drinkerProfilePicDiv">
+              <img className="drinkerProfileImage" src={this.state.selectedDrinkerProfilePic ? this.state.selectedDrinkerProfilePic :
+                        this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
             </div>
             <div className="selectDrinkerBarChart">
               <DrinkersBarChart drinks={this.state.drinks}

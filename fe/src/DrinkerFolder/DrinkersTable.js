@@ -151,36 +151,36 @@ class DrinkersTable extends Component {
     renderDrinkerData() {
       const { drinks, drinkerObjectsArray } = this.state
 
-        // ESTABLISH TOTAL WEEKS SO FAR FOR LATER DATE COMPARISON
-        let totalWeeks = []
-        drinks.map((drink) => {
-          const thisDrinkDate = new Date(drink.date)
-          const oneDrinkDate =  +thisDrinkDate.getDate() + "/" + thisDrinkDate.getMonth() + "/" + thisDrinkDate.getFullYear()
-          totalWeeks.push(oneDrinkDate)
-        })
-        const totalWeeksNumber =  new Set(totalWeeks).size
+      // ESTABLISH TOTAL WEEKS SO FAR FOR LATER DATE COMPARISON
+      let totalWeeks = []
+      drinks.map((drink) => {
+        const thisDrinkDate = new Date(drink.date)
+        const oneDrinkDate =  +thisDrinkDate.getDate() + "/" + thisDrinkDate.getMonth() + "/" + thisDrinkDate.getFullYear()
+        totalWeeks.push(oneDrinkDate)
+      })
+      const totalWeeksNumber =  new Set(totalWeeks).size
 
-        // RETURN DATA TABLE INFO!
-        return drinkerObjectsArray.map((dataObject, index) => {
-          if(this.state.irregDrinkersCheck === false && dataObject.drinkerWeeks/totalWeeksNumber*100 < 15) {
-            return;
-          } else {
-            return(
-              <tr key={index} onClick={() => this.props.onSelectDrinker(dataObject.drinkerName)} className="tableRowDrinkersTable">
-                <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgConsume}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgStrength}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerFaveType}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerHighScore}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerLowScore}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerAvgScore}</td>
-                <td className="tableDataDrinkersTable">{dataObject.drinkerDrinkPercentage}</td>
-              </tr>
-            )
-          }
-        })
+      // RETURN DATA TABLE INFO!
+      return drinkerObjectsArray.map((dataObject, index) => {
+        if(this.state.irregDrinkersCheck === false && dataObject.drinkerWeeks/totalWeeksNumber*100 < 15) {
+          return;
+        } else {
+          return(
+            <tr key={index} onClick={() => this.props.onSelectDrinker(dataObject.drinkerName)} className="tableRowDrinkersTable">
+              <td className="tableDataDrinkersTable">{dataObject.drinkerName}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinksNum}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerWeeks} / {totalWeeksNumber} ({parseFloat(dataObject.drinkerWeeks/totalWeeksNumber*100).toFixed(0)}%)</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgConsume}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgStrength}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerFaveType}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerHighScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerLowScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerAvgScore}</td>
+              <td className="tableDataDrinkersTable">{dataObject.drinkerDrinkPercentage}</td>
+            </tr>
+          )
+        }
+      })
     }
 
     onSort(column) {

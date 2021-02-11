@@ -45,13 +45,16 @@
   width: 150px;
 }
 
-.drinkerProfilePic {
+.drinkerProfilePicDiv {
   grid-area: profilePic;
   justify-self: center;
   align-self: center;
-  height: 100px;
-  width: 100px;
   border: solid 1px green;
+}
+
+.drinkerProfileImage {
+  height: 200px;
+  width: 200px;
 }
 
 .selectDrinkerBarChart {

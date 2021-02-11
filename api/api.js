@@ -75,6 +75,24 @@ app.get('/drinktypes', authorizeAccessToken, (req, res) => {
   });
 });
 
+app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
+  try {
+  const id = req.params.id;
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+    if (err) throw err;
+    const dbName = db.db("drinkandrate");
+    const updateProfilePhoto = await dbName.collection("users").updateOne(
+      { _id: ObjectId(id) },
+      { $set: { profilePic: req.body.profilePic}}
+    );
+    res.json(updateProfilePhoto);
+    db.close();
+  });
+  } catch (err) {
+    res.json({ message: err })
+  }
+});
+
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('../fe/build'))
 }

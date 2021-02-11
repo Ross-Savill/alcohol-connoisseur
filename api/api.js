@@ -75,7 +75,7 @@ app.get('/drinktypes', authorizeAccessToken, (req, res) => {
   });
 });
 
-app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
+app.patch('/profilephotoupdate/:id', authorizeAccessToken, async (req, res) => {
   try {
   const id = req.params.id;
   MongoClient.connect(process.env.MONGODB_URI, function(err, db) {

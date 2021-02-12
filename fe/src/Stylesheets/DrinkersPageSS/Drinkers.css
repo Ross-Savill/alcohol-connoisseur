@@ -34,9 +34,9 @@
   grid-template-columns: 4fr 4fr 4fr 4fr 4fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
-  "backButton highestScore lowestScore AvgScore ."
-  "FaveMixersTable FaveCompanyTable profilePic barChart barChart"
-  "RatingWordTable DoubleRatingWordsTable . . .";
+  "backButton . selectedDrinkerName FaveMixersTable FaveCompanyTable"
+  ". wordFrequencyPieChart profilePic barChart barChart"
+  "topRatingWords DoubleRatingWordsTable highestScore AvgScore lowestScore";
 }
 
 .backToAllDrinkersButton {
@@ -52,7 +52,18 @@
   border: solid 1px green;
 }
 
+.selectedDrinkerName {
+  grid-area: selectedDrinkerName;
+}
+
+.selectedDrinkerName h1 {
+  grid-area: selectedDrinkerName;
+  text-align: center;
+  font-weight: bold;
+}
+
 .drinkerProfileImage {
+  justify-content: center;
   height: 200px;
   width: 200px;
 }
@@ -61,5 +72,14 @@
   grid-area: barChart;
   text-align: center;
   width: 30em;
+  height: 10em;
+}
+
+.topRatingWords {
+  margin: 5px;
+  grid-area: topRatingWords;
   height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: black 1px solid;
 }

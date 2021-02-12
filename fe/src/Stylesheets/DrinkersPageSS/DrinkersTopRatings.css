@@ -1,0 +1,17 @@
+.topRatingHeaderRow {
+  text-align: center;
+  font-weight: bold;
+  position: sticky;
+  z-index: 1;
+  top: 0;
+}
+
+.topRatingHeaderRow th {
+  background-color: lightgreen;
+}
+
+.topRatingHeaderTitle {
+  text-align: center;
+  font-weight: bold;
+  background-color: lime;
+}

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import DrinkersBarChart from './DrinkersBarChart';
 import DrinkersTable from './DrinkersTable';
+import DrinkersTopRatings from './DrinkersTopRatings';
 import Navbar from '../MyUtilitiesFolder/Navbar.js'
 import backgroundImage from '../MyUtilitiesFolder/BackgroundImages/backgroundBarImage.webp';
 import '../Stylesheets/DrinkersPageSS/Drinkers.css'
 import maleDefaultPhoto from '../MyUtilitiesFolder/DefaultProfilePhotos/defaultMaleProfile.jpg';
 import femaleDefaultPhoto from '../MyUtilitiesFolder/DefaultProfilePhotos/defaultFemaleProfile.jpg';
-
 
 class Drinkers extends Component {
   constructor(props) {
@@ -91,6 +91,9 @@ class Drinkers extends Component {
           </div> :
           <div className="selectedDrinkerPlayArea">
             <button className="backToAllDrinkersButton" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</button>
+            <div className="selectedDrinkerName">
+                <h1>{this.state.selectedDrinker}</h1>
+            </div>
             <div className="drinkerProfilePicDiv">
               <img className="drinkerProfileImage" src={this.state.selectedDrinkerProfilePic ? this.state.selectedDrinkerProfilePic :
                         this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
@@ -99,6 +102,10 @@ class Drinkers extends Component {
               <DrinkersBarChart drinks={this.state.drinks}
                                 drinkTypes={this.state.drinkTypes}
                                 selectedDrinker={this.state.selectedDrinker} />
+            </div>
+            <div className="topRatingWords">
+              <DrinkersTopRatings drinks={this.state.drinks}
+                                  selectedDrinker={this.state.selectedDrinker} />
             </div>
           </div>
           }

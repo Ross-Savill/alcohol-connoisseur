@@ -59,18 +59,12 @@ class DrinkersTopRatings extends Component {
       numbersUsed.push(countedUniqueWords[word])
     }
 
-    // FIND THE FIFTH LARGEST NUMBER TO SET 1ST - 5TH HIGHEST WORDS BY FREQUENCY
-    const sortedUniqueNumbersUsed = [...new Set(numbersUsed)].sort((a, b) => {return b - a});
-    const fifthLargestNum = sortedUniqueNumbersUsed[4]
-
-    // PULL OUT JUST THE WORDS WHICH HAVE BEEN USED 5TH MOST AND NUMBERS FOR RANKING
+    // PULL OUT JUST THE WORDS AND NUMBERS FOR RANKING
     let topWords = [];
     let topNumsOnly = [];
     sortedUniqueWords.map((wordArray, i) => {
-      // if(wordArray[1] >= fifthLargestNum) {
-        topWords.push(wordArray)
-        topNumsOnly.push(wordArray[1])
-      // }
+      topWords.push(wordArray)
+      topNumsOnly.push(wordArray[1])
     })
 
     // SORT THEM FOR DISPLAY!
@@ -90,7 +84,7 @@ class DrinkersTopRatings extends Component {
     // SEND WORDS TO TABLE
     return topWords.map((wordArray, i) => {
       return (
-        <tr>
+        <tr key={i}>
           <td>{wordArray[2]})</td>
           <td>{wordArray[0]}</td>
           <td>{wordArray[1]}</td>
@@ -108,7 +102,7 @@ class DrinkersTopRatings extends Component {
         <table>
           <thead>
             <tr>
-              <th className="topRatingHeaderTitle" colSpan="3">Rating Word Frequency</th>
+              <th className="topRatingHeaderTitle" colSpan="3">Rating Word Usage</th>
             </tr>
             {this.renderTopRatingHeaders()}
           </thead>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import DrinkersBarChart from './DrinkersBarChart';
 import DrinkersTable from './DrinkersTable';
 import DrinkersTopRatings from './DrinkersTopRatings';
+import DrinkersRatingPieChart from './DrinkersRatingPieChart';
+import DrinkersMilestonesTable from './DrinkersMilestonesTable';
 import Navbar from '../MyUtilitiesFolder/Navbar.js'
 import backgroundImage from '../MyUtilitiesFolder/BackgroundImages/backgroundBarImage.webp';
 import '../Stylesheets/DrinkersPageSS/Drinkers.css'
@@ -69,7 +71,7 @@ class Drinkers extends Component {
     } else {
       return(
       <div className="drinkersContainer">
-        <h1 className="drinkersPageTitle">Drinkers Page</h1>
+        <h1 className="drinkersPageTitle">{this.state.selectedDrinker}</h1>
         <Navbar />
         {this.state.selectedDrinker === "All Drinkers" ?
           <div className="allDrinkersPlayArea">
@@ -90,13 +92,14 @@ class Drinkers extends Component {
               </div>
           </div> :
           <div className="selectedDrinkerPlayArea">
-            <button className="backToAllDrinkersButton" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</button>
-            <div className="selectedDrinkerName">
-                <h1>{this.state.selectedDrinker}</h1>
-            </div>
-            <div className="drinkerProfilePicDiv">
+            <div className="selectedDrinkerImg">
               <img className="drinkerProfileImage" src={this.state.selectedDrinkerProfilePic ? this.state.selectedDrinkerProfilePic :
-                        this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
+                      this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
+              <p className="returnToDrinkersLink" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</p>
+            </div>
+            <div className="selectDrinkerRatingPieChart">
+              <DrinkersRatingPieChart drinks={this.state.drinks}
+                                      selectedDrinker={this.state.selectedDrinker} />
             </div>
             <div className="selectDrinkerBarChart">
               <DrinkersBarChart drinks={this.state.drinks}
@@ -106,6 +109,10 @@ class Drinkers extends Component {
             <div className="topRatingWords">
               <DrinkersTopRatings drinks={this.state.drinks}
                                   selectedDrinker={this.state.selectedDrinker} />
+            </div>
+            <div className="milestoneDatesComponent">
+              <DrinkersMilestonesTable drinks={this.state.drinks}
+                                       selectedDrinker={this.state.selectedDrinker} />
             </div>
           </div>
           }

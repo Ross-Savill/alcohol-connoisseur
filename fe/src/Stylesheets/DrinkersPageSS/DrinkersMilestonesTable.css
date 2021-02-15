@@ -1,0 +1,43 @@
+th {
+  position: sticky;
+  top: 0;
+}
+
+.milestoneDatesHeaderTitle {
+  text-align: center;
+  font-size: 20px;
+  background-color: lime;
+  position: relative;
+}
+
+.bestDrinksTitleTH {
+  text-align: center;
+  background-color: lightgreen;
+  z-index: 1;
+}
+
+.highestAvgHeaderRow {
+  text-align: center;
+  position: sticky;
+  top: 0;
+}
+
+.highestAvgTH {
+  background-color: rgb(208, 252, 207);
+}
+
+.lowestAvgHeaderRow {
+  text-align: center;
+}
+
+.worstDrinksTitleTH {
+  text-align: center;
+  background-color: lightsalmon;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.lowestAvgTH {
+  background-color: rgb(252, 217, 207);
+}

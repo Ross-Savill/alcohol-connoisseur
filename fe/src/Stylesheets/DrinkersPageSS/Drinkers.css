@@ -31,41 +31,40 @@
   height: 80vh;
   width: 100%;
   display: grid;
-  grid-template-columns: 4fr 4fr 4fr 4fr 4fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 4fr 4fr 4fr 4fr 4fr 4fr 4fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-  "backButton . selectedDrinkerName FaveMixersTable FaveCompanyTable"
-  ". wordFrequencyPieChart profilePic barChart barChart"
-  "topRatingWords DoubleRatingWordsTable highestScore AvgScore lowestScore";
+  "wordFrequencyPieChart wordFrequencyPieChart . FaveMixersTable FaveCompanyTable milestoneDates milestoneDates"
+  "topRatingWords topRatingWords . selectedDrinkerImg . . ."
+  "topRatingWords topRatingWords DoubleRatingWordsTable highestlowestavgScoreTable . . ."
+  "topRatingWords topRatingWords . . . . ."
+  "topRatingWords topRatingWords . . . barChart barChart";
 }
 
-.backToAllDrinkersButton {
-  grid-area: backButton;
-  height: 50px;
-  width: 150px;
-}
-
-.drinkerProfilePicDiv {
-  grid-area: profilePic;
-  justify-self: center;
-  align-self: center;
-  border: solid 1px green;
-}
-
-.selectedDrinkerName {
-  grid-area: selectedDrinkerName;
-}
-
-.selectedDrinkerName h1 {
-  grid-area: selectedDrinkerName;
-  text-align: center;
-  font-weight: bold;
+.selectedDrinkerImg {
+  grid-area: selectedDrinkerImg;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .drinkerProfileImage {
-  justify-content: center;
   height: 200px;
   width: 200px;
+}
+
+.returnToDrinkersLink {
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.returnToDrinkersLink:hover {
+  cursor: pointer;
+  transition: 0.5s;
+  font-size: 20px;
+  background-color: yellow;
 }
 
 .selectDrinkerBarChart {
@@ -73,11 +72,25 @@
   text-align: center;
   width: 30em;
   height: 10em;
+  margin: 10px;
 }
 
 .topRatingWords {
   margin: 5px;
   grid-area: topRatingWords;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: black 1px solid;
+}
+
+.selectDrinkerRatingPieChart {
+  grid-area: wordFrequencyPieChart;
+}
+
+.milestoneDatesComponent {
+  grid-area: milestoneDates;
+  margin: 5px;
   height: 100%;
   overflow: hidden;
   overflow-y: scroll;

@@ -4,6 +4,7 @@ import DrinkersTable from './DrinkersTable';
 import DrinkersTopRatings from './DrinkersTopRatings';
 import DrinkersRatingPieChart from './DrinkersRatingPieChart';
 import DrinkersMilestonesTable from './DrinkersMilestonesTable';
+import TableModal from '../MyUtilitiesFolder/TableModal';
 import Navbar from '../MyUtilitiesFolder/Navbar.js'
 import backgroundImage from '../MyUtilitiesFolder/BackgroundImages/backgroundBarImage.webp';
 import '../Stylesheets/DrinkersPageSS/Drinkers.css'
@@ -14,6 +15,8 @@ class Drinkers extends Component {
   constructor(props) {
     super(props)
       this.onSelectDrinker = this.onSelectDrinker.bind(this)
+      this.handleSelectedDate = this.handleSelectedDate.bind(this)
+      this.resetSelectedDate = this.resetSelectedDate.bind(this)
       this.state = {
         drinks: null,
         drinkers: null,
@@ -21,6 +24,7 @@ class Drinkers extends Component {
         selectedDrinker: "All Drinkers",
         selectedDrinkerProfilePic: null,
         selectedDrinkerTitle: null,
+        selectedDate: null,
         drinksPerPerson: null,
       }
   }
@@ -63,6 +67,15 @@ class Drinkers extends Component {
     this.setState({ selectedDrinker: "All Drinkers",
                     selectedDrinkerProfilePic: null });
 
+  }
+
+  handleSelectedDate(selectedDate) {
+    this.setState({ selectedDate })
+  }
+
+  resetSelectedDate() {
+    console.log(this.state.selectedDate)
+    this.setState({ selectedDate: null })
   }
 
   render() {
@@ -112,8 +125,13 @@ class Drinkers extends Component {
             </div>
             <div className="milestoneDatesComponent">
               <DrinkersMilestonesTable drinks={this.state.drinks}
-                                       selectedDrinker={this.state.selectedDrinker} />
+                                       selectedDrinker={this.state.selectedDrinker}
+                                       handleSelectedDate={this.handleSelectedDate} />
             </div>
+              {this.state.selectedDate && <TableModal selectedDate={this.state.selectedDate}
+                                                      resetSelectedDate={this.resetSelectedDate}
+                                                      selectedDrinker={this.state.selectedDrinker}
+                                                      drinks={this.state.drinks} />}
           </div>
           }
         </div>

@@ -41,3 +41,8 @@ th {
 .lowestAvgTH {
   background-color: rgb(252, 217, 207);
 }
+
+.milestoneTD:hover {
+  background-color: lightskyblue;
+  cursor: pointer;
+}

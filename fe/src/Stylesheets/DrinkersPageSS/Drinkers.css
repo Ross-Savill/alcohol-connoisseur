@@ -35,7 +35,7 @@
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
   "wordFrequencyPieChart wordFrequencyPieChart . FaveMixersTable FaveCompanyTable milestoneDates milestoneDates"
-  "topRatingWords topRatingWords . selectedDrinkerImg . . ."
+  "topRatingWords topRatingWords . selectedDrinkerImg . milestoneDates milestoneDates"
   "topRatingWords topRatingWords DoubleRatingWordsTable highestlowestavgScoreTable . . ."
   "topRatingWords topRatingWords . . . . ."
   "topRatingWords topRatingWords . . . barChart barChart";

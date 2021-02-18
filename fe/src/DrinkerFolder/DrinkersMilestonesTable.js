@@ -50,7 +50,7 @@ class DrinkersMilestonesTable extends Component {
     return(
       <tr className="highestAvgHeaderRow">
         <th className="highestAvgTH">Date</th>
-        <th className="highestAvgTH">Score</th>
+        <th className="highestAvgTH">Avg Score</th>
       </tr>
     )
   }
@@ -59,7 +59,7 @@ class DrinkersMilestonesTable extends Component {
     return(
       <tr className="lowestAvgHeaderRow">
         <th className="lowestAvgTH">Date</th>
-        <th className="lowestAvgTH">Score</th>
+        <th className="lowestAvgTH">Avg Score</th>
       </tr>
     )
   }
@@ -122,10 +122,9 @@ class DrinkersMilestonesTable extends Component {
   renderTopRatingData() {
     const { highestRatedSessions } = this.state
     if(highestRatedSessions) {
-      console.log("triggered")
       return highestRatedSessions.map((dataScoreObj) => {
         return (
-          <tr>
+          <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
             <td>{moment(dataScoreObj.date).format('MMMM Do YYYY')}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
@@ -139,7 +138,7 @@ class DrinkersMilestonesTable extends Component {
     if(lowestRatedSessions) {
       return lowestRatedSessions.map((dataScoreObj) => {
         return (
-          <tr>
+          <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
             <td>{moment(dataScoreObj.date).format('MMMM Do YYYY')}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
@@ -148,7 +147,6 @@ class DrinkersMilestonesTable extends Component {
     }
   }
 
-
   render() {
     const { drinks, sufficientDrinks } = this.state
     if(!drinks) {
@@ -156,7 +154,6 @@ class DrinkersMilestonesTable extends Component {
     } else if (sufficientDrinks === false) {
       return <p>Need to attend at least 10 meetups for favourite/ least favourite sessons!</p>
     } else {
-      console.log(this.state.highestRatedSessions)
       return (
         <table>
           <thead>

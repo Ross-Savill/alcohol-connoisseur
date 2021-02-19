@@ -3,21 +3,30 @@ import '../Stylesheets/MyUtilitiesSS/TableModal.css';
 import LoadingSpin from './LoadingSpin';
 import moment from 'moment';
 
-const TableModal = ({drinks, selectedDrinker, resetSelectedDate, selectedDate}) => {
+const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedDate, selectedRatingWord }) => {
 
   const [selectedDrinks, setSelectedDrinks] = useState(null)
 
   useEffect(() => {
     let chosenDrinks = [];
-    drinks.map((drink) => {
-      if(drink.date === selectedDate && drink.name === selectedDrinker) {
-        chosenDrinks.push(drink)
-      }
-    })
+    if(selectedDate) {
+      drinks.map((drink) => {
+        if(drink.date === selectedDate && drink.name === selectedDrinker) {
+          chosenDrinks.push(drink)
+        }
+      })
+    } else if(selectedRatingWord) {
+      console.log(selectedRatingWord)
+      drinks.map((drink) => {
+        if((drink.ratingWordOne === selectedRatingWord || drink.ratingWordTwo === selectedRatingWord) && drink.name === selectedDrinker) {
+          chosenDrinks.push(drink)
+        }
+      })
+    }
     setSelectedDrinks(chosenDrinks)
   },[drinks])
 
-  if(!selectedDrinks || !selectedDate) {
+  if(!selectedDrinks) {
     return(
       <div className="backdrop">
         <LoadingSpin />
@@ -70,11 +79,14 @@ const TableModal = ({drinks, selectedDrinker, resetSelectedDate, selectedDate}) 
       }
 
       return(
-        <div className="backdrop" onClick={() => resetSelectedDate()}>
+        <div className="backdrop" onClick={() => resetSelectedChoices()}>
           <table>
             <thead>
               <tr>
-                <th className="tableModalMainHead" colSpan="8">{selectedDrinker}'s drinks on {moment(selectedDate).format('MMMM Do YYYY')}</th>
+                <th className="tableModalMainHead" colSpan="8">
+                  {selectedDate ? `${selectedDrinker}'s drinks on ${selectedDate}` :
+                  `${selectedDrinker}'s "${selectedRatingWord}" drinks`}
+                </th>
               </tr>
               {setTableHeaders()}
             </thead>

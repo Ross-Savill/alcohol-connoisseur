@@ -115,6 +115,11 @@ class DrinkersBarChart extends Component {
               width={60}
               height={40}
               options={{
+                title: {
+                  display: true,
+                  text: `${this.state.selectedDrinker} Drink Types`,
+                  fontSize: 20
+                },
                 plugins: {
                   labels: {
                     render: function (args) {
@@ -128,7 +133,7 @@ class DrinkersBarChart extends Component {
                   }
                 },
                 legend: {
-                  position: "bottom"
+                  display: false
                 }
               }}
             />

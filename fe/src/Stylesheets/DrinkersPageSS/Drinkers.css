@@ -34,11 +34,11 @@
   grid-template-columns: 4fr 4fr 4fr 4fr 4fr 4fr 4fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
-  "wordFrequencyPieChart wordFrequencyPieChart . FaveMixersTable FaveCompanyTable milestoneDates milestoneDates"
-  "topRatingWords topRatingWords . selectedDrinkerImg . milestoneDates milestoneDates"
-  "topRatingWords topRatingWords DoubleRatingWordsTable highestlowestavgScoreTable . . ."
+  "wordFrequencyPieChart wordFrequencyPieChart . selectedDrinkerImg . milestoneDates milestoneDates"
+  "topRatingWords topRatingWords FaveMixersTable FaveCompanyTable . milestoneDates milestoneDates"
+  "topRatingWords topRatingWords barChart barChart . . ."
   "topRatingWords topRatingWords . . . . ."
-  "topRatingWords topRatingWords . . . barChart barChart";
+  "topRatingWords topRatingWords DoubleRatingWordsTable . . . .";
 }
 
 .selectedDrinkerImg {
@@ -63,7 +63,7 @@
 .returnToDrinkersLink:hover {
   cursor: pointer;
   transition: 0.5s;
-  font-size: 20px;
+  font-size: 18px;
   background-color: yellow;
 }
 

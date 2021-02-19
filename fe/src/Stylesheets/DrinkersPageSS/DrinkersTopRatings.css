@@ -15,3 +15,8 @@
   font-weight: bold;
   background-color: lime;
 }
+
+.drinkerRatingTR:hover {
+  cursor: pointer;
+  background-color: lightskyblue;
+}

@@ -49,7 +49,7 @@ class DrinkersMilestonesTable extends Component {
   renderHighestAvgHeaders() {
     return(
       <tr className="highestAvgHeaderRow">
-        <th className="highestAvgTH">Date</th>
+        <th className="highestAvgTH">Date (Click For Info)</th>
         <th className="highestAvgTH">Avg Score</th>
       </tr>
     )
@@ -58,7 +58,7 @@ class DrinkersMilestonesTable extends Component {
   renderWorstAvgHeaders() {
     return(
       <tr className="lowestAvgHeaderRow">
-        <th className="lowestAvgTH">Date</th>
+        <th className="lowestAvgTH">Date (Click For Info)</th>
         <th className="lowestAvgTH">Avg Score</th>
       </tr>
     )
@@ -82,7 +82,6 @@ class DrinkersMilestonesTable extends Component {
       })
 
       const orderedSessionsByScore = sessionScoreArrays.sort((a, b) => b.avgScore > a.avgScore ? 1 : -1)
-      console.log(orderedSessionsByScore)
       let highestSessionCount = 0;
       let topFiveScoreSessions = [];
       let lowestSessionCount = 0;
@@ -111,7 +110,6 @@ class DrinkersMilestonesTable extends Component {
           lowestSessionCount = lowestSessionCount + 1
         }
       })
-      console.log(topFiveScoreSessions)
       if(this.state.highestRatedSessions === null) {
         this.setState({ highestRatedSessions: topFiveScoreSessions,
                         lowestRatedSessions: bottomFiveScoreSessions })
@@ -125,7 +123,7 @@ class DrinkersMilestonesTable extends Component {
       return highestRatedSessions.map((dataScoreObj) => {
         return (
           <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
-            <td>{moment(dataScoreObj.date).format('MMMM Do YYYY')}</td>
+            <td>{moment(dataScoreObj.date).format('Do MMMM YYYY')}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
         )
@@ -139,7 +137,7 @@ class DrinkersMilestonesTable extends Component {
       return lowestRatedSessions.map((dataScoreObj) => {
         return (
           <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
-            <td>{moment(dataScoreObj.date).format('MMMM Do YYYY')}</td>
+            <td>{moment(dataScoreObj.date).format('Do MMMM YYYY')}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
         )

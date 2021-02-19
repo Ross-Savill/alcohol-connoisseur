@@ -261,7 +261,7 @@ class DrinkersTable extends Component {
       return(
         <div className="drinkersTableDiv">
           <div className="drinkerTableTitleSpanChckbx">
-            <h4 className="drinkerTableTitle">All Drinkers Drink Information</h4>
+            <h4 className="drinkerTableTitle">All Drinkers Drink Information (Click a Drinker for Info)</h4>
             <div className="includeDrinkersSpanAndChckbx">
               <span className="includeDrinkersSpan">Include Drinkers with less than 15% attendance?</span>
               <input type="checkbox"

@@ -16,7 +16,8 @@ class Drinkers extends Component {
     super(props)
       this.onSelectDrinker = this.onSelectDrinker.bind(this)
       this.handleSelectedDate = this.handleSelectedDate.bind(this)
-      this.resetSelectedDate = this.resetSelectedDate.bind(this)
+      this.resetSelectedChoices = this.resetSelectedChoices.bind(this)
+      this.handleSelectedRatingWord = this.handleSelectedRatingWord.bind(this)
       this.state = {
         drinks: null,
         drinkers: null,
@@ -25,6 +26,7 @@ class Drinkers extends Component {
         selectedDrinkerProfilePic: null,
         selectedDrinkerTitle: null,
         selectedDate: null,
+        selectedRatingWord: null,
         drinksPerPerson: null,
       }
   }
@@ -73,9 +75,12 @@ class Drinkers extends Component {
     this.setState({ selectedDate })
   }
 
-  resetSelectedDate() {
-    console.log(this.state.selectedDate)
-    this.setState({ selectedDate: null })
+  handleSelectedRatingWord(selectedRatingWord) {
+    this.setState({ selectedRatingWord })
+  }
+
+  resetSelectedChoices() {
+    this.setState({ selectedDate: null, selectedRatingWord: null })
   }
 
   render() {
@@ -107,8 +112,8 @@ class Drinkers extends Component {
           <div className="selectedDrinkerPlayArea">
             <div className="selectedDrinkerImg">
               <img className="drinkerProfileImage" src={this.state.selectedDrinkerProfilePic ? this.state.selectedDrinkerProfilePic :
-                      this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
-              <p className="returnToDrinkersLink" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</p>
+                this.state.selectedDrinkerTitle === "Queen" ? femaleDefaultPhoto : maleDefaultPhoto}/>
+              <button className="returnToDrinkersLink" onClick={() => this.backToAllDrinkers()}>Return to All Drinkers</button>
             </div>
             <div className="selectDrinkerRatingPieChart">
               <DrinkersRatingPieChart drinks={this.state.drinks}
@@ -121,17 +126,24 @@ class Drinkers extends Component {
             </div>
             <div className="topRatingWords">
               <DrinkersTopRatings drinks={this.state.drinks}
-                                  selectedDrinker={this.state.selectedDrinker} />
+                                  selectedDrinker={this.state.selectedDrinker}
+                                  handleSelectedRatingWord={this.handleSelectedRatingWord} />
             </div>
             <div className="milestoneDatesComponent">
               <DrinkersMilestonesTable drinks={this.state.drinks}
                                        selectedDrinker={this.state.selectedDrinker}
                                        handleSelectedDate={this.handleSelectedDate} />
             </div>
-              {this.state.selectedDate && <TableModal selectedDate={this.state.selectedDate}
-                                                      resetSelectedDate={this.resetSelectedDate}
-                                                      selectedDrinker={this.state.selectedDrinker}
-                                                      drinks={this.state.drinks} />}
+            {this.state.selectedDate && <TableModal selectedDate={this.state.selectedDate}
+                                                    resetSelectedChoices={this.resetSelectedChoices}
+                                                    selectedDrinker={this.state.selectedDrinker}
+                                                    drinks={this.state.drinks} />
+            }
+            {this.state.selectedRatingWord && <TableModal selectedRatingWord={this.state.selectedRatingWord}
+                                                    resetSelectedChoices={this.resetSelectedChoices}
+                                                    selectedDrinker={this.state.selectedDrinker}
+                                                    drinks={this.state.drinks} />
+              }
           </div>
           }
         </div>

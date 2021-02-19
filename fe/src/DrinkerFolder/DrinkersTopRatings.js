@@ -84,7 +84,7 @@ class DrinkersTopRatings extends Component {
     // SEND WORDS TO TABLE
     return topWords.map((wordArray, i) => {
       return (
-        <tr key={i}>
+        <tr className="drinkerRatingTR" onClick={() => this.props.handleSelectedRatingWord(wordArray[0])} key={i}>
           <td>{wordArray[2]})</td>
           <td>{wordArray[0]}</td>
           <td>{wordArray[1]}</td>

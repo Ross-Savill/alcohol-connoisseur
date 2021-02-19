@@ -84,7 +84,7 @@ const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedDat
             <thead>
               <tr>
                 <th className="tableModalMainHead" colSpan="8">
-                  {selectedDate ? `${selectedDrinker}'s drinks on ${selectedDate}` :
+                  {selectedDate ? `${selectedDrinker}'s drinks on ${moment(selectedDate).format('dddd Do MMMM YYYY')}` :
                   `${selectedDrinker}'s "${selectedRatingWord}" drinks`}
                 </th>
               </tr>

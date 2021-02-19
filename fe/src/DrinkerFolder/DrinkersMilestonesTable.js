@@ -49,7 +49,7 @@ class DrinkersMilestonesTable extends Component {
   renderHighestAvgHeaders() {
     return(
       <tr className="highestAvgHeaderRow">
-        <th className="highestAvgTH">Date (Click For Info)</th>
+        <th className="highestAvgTH">Date</th>
         <th className="highestAvgTH">Avg Score</th>
       </tr>
     )
@@ -58,7 +58,7 @@ class DrinkersMilestonesTable extends Component {
   renderWorstAvgHeaders() {
     return(
       <tr className="lowestAvgHeaderRow">
-        <th className="lowestAvgTH">Date (Click For Info)</th>
+        <th className="lowestAvgTH">Date</th>
         <th className="lowestAvgTH">Avg Score</th>
       </tr>
     )
@@ -161,12 +161,12 @@ class DrinkersMilestonesTable extends Component {
           </thead>
           <tbody>
             <tr>
-              <th className="bestDrinksTitleTH" colSpan="2">Top 5 Rated Sessions</th>
+              <th className="bestDrinksTitleTH" colSpan="2">Top 5 Rated Sessions (Click for Info)</th>
             </tr>
             {this.renderHighestAvgHeaders()}
             {this.renderTopRatingData()}
             <tr>
-              <th className="worstDrinksTitleTH" colSpan="2">Bottom 5 Rated Sessions</th>
+              <th className="worstDrinksTitleTH" colSpan="2">Bottom 5 Rated Sessions (Click for Info)</th>
             </tr>
             {this.renderWorstAvgHeaders()}
             {this.renderBottomRatingData()}

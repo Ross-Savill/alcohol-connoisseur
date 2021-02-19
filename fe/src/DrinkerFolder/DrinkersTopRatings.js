@@ -102,7 +102,7 @@ class DrinkersTopRatings extends Component {
         <table>
           <thead>
             <tr>
-              <th className="topRatingHeaderTitle" colSpan="3">Rating Word Usage</th>
+              <th className="topRatingHeaderTitle" colSpan="3">Rating Word Usage (Click for Info)</th>
             </tr>
             {this.renderTopRatingHeaders()}
           </thead>

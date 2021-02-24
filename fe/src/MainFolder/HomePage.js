@@ -48,9 +48,24 @@ function HomePage(props) {
             Cell: ({ cell: { value } }) => <Dates values={value} />
           },
           {
-            Header: "Main Component",
-            accessor: "drinkMain",
-            width: "250"
+            Header: "Drink",
+            id: "mainDrinkColumn",
+            accessor: d =>
+              (
+                d.mixerSix ?
+                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive} and ${d.mixerSix}`:
+                d.mixerFive ?
+                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour} and ${d.mixerFive}`:
+                d.mixerFour ?
+                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree} and ${d.mixerFour}`:
+                d.mixerThree ?
+                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo} and ${d.mixerThree}`:
+                d.mixerTwo ?
+                  `${d.drinkMain} with ${d.mixerOne} and ${d.mixerTwo}`:
+                d.mixerOne ?
+                  `${d.drinkMain} with ${d.mixerOne}` : `${d.drinkMain}`
+              ),
+            width: "300"
           },
           {
             Header: "Drink Type",
@@ -64,26 +79,6 @@ function HomePage(props) {
             Cell: ({ cell: { value } }) => parseFloat((value * 100).toFixed(1)) + '%'
           },
           {
-            Header: "Brand or Brewery",
-            accessor: "brand",
-            width: "120"
-          },
-          {
-            Header: "Other Component(s) and/or Mixer(s)",
-            accessor: d => (d.mixerSix ?
-                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive}, ${d.mixerSix}`:
-                            d.mixerFive ?
-                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive}`:
-                            d.mixerFour ?
-                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}`:
-                            d.mixerThree ?
-                           `${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}`:
-                            d.mixerTwo ?
-                           `${d.mixerOne}, ${d.mixerTwo}`:
-                            d.mixerOne ?
-                           `${d.mixerOne}` : "")
-          },
-          {
             Header: "Rating Words",
             accessor: d => `${d.ratingWordOne}, ${d.ratingWordTwo}`,
             width: "150"
@@ -94,21 +89,19 @@ function HomePage(props) {
             width: "60",
           },
           {
-            Header: "Collaborator(s)",
-            width: "120",
-            accessor: d => (d.secondCollabCompany ?
-              `${d.firstCollabCompany}, ${d.secondCollabCompany}`:
-               d.firstCollabCompany ?
-              `${d.firstCollabCompany}`: "")
-          },
-          {
-            Header: "Company",
-            accessor: "company",
+            Header: "Company(s)",
+            accessor: d =>
+              (d.secondCollabCompany ?
+                `${d.company} X ${d.firstCollabCompany} X ${d.secondCollabCompany}`:
+              d.firstCollabCompany ?
+                `${d.company} X ${d.firstCollabCompany}` : `${d.company}`
+              ),
             width: "130"
           },
           {
             Header: "Notes",
-            accessor: "notes"
+            accessor: "notes",
+            width: "250"
           },
         ]
       }

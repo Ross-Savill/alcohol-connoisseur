@@ -35,7 +35,7 @@ export default function Table({ columns, data }) {
 
   const handleFilterChange = e => {
     const value = e.target.value || undefined;
-    setFilter("drinkMain", value);
+    setFilter("mainDrinkColumn", value);
     setFilterInput(value);
   };
 

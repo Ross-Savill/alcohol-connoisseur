@@ -165,6 +165,7 @@ export default function Table({ columns, data, drinkers }) {
             options={drinkerSelection}
             onChange={handleChosenDrinkers}
           />
+          &nbsp;
           {paginationSection()}
         </div>
         <div className="mainTableDiv">

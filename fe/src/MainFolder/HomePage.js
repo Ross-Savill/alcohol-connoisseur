@@ -10,7 +10,7 @@ const Dates = ( values ) => {
   for (const [key, date] of Object.entries(values)) {
     const newDate = new Date(date)
     const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    return +newDate.getDate() + " " + (month[newDate.getMonth()]) + " " + newDate.getFullYear().toString().substr(-2)
+    return +newDate.getDate() + " " + (month[newDate.getMonth()]) + " " + newDate.getFullYear().toString().substr()
   }
 }
 
@@ -44,7 +44,7 @@ function HomePage(props) {
           {
             Header: "Date",
             accessor: "date",
-            // width: "70",
+            width: "100",
             Cell: ({ cell: { value } }) => <Dates values={value} />
           },
           {
@@ -53,24 +53,24 @@ function HomePage(props) {
             accessor: d =>
               (
                 d.mixerSix ?
-                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive} and ${d.mixerSix}`:
+                  `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive} and ${d.mixerSix}`:
                 d.mixerFive ?
-                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour} and ${d.mixerFive}`:
+                  `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour} and ${d.mixerFive}`:
                 d.mixerFour ?
-                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree} and ${d.mixerFour}`:
+                  `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree} and ${d.mixerFour}`:
                 d.mixerThree ?
-                  `${d.drinkMain} with ${d.mixerOne}, ${d.mixerTwo} and ${d.mixerThree}`:
+                  `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo} and ${d.mixerThree}`:
                 d.mixerTwo ?
-                  `${d.drinkMain} with ${d.mixerOne} and ${d.mixerTwo}`:
+                  `${d.drinkMain} WITH ${d.mixerOne} and ${d.mixerTwo}`:
                 d.mixerOne ?
-                  `${d.drinkMain} with ${d.mixerOne}` : `${d.drinkMain}`
+                  `${d.drinkMain} WITH ${d.mixerOne}` : `${d.drinkMain}`
               ),
-            minWidth: "320"
+            minWidth: "385"
           },
           {
-            Header: "Drink Type",
+            Header: "Type",
             accessor: "drinkType",
-            // width: "70"
+            width: "70"
           },
           {
             Header: "ABV%",
@@ -97,12 +97,12 @@ function HomePage(props) {
               d.firstCollabCompany ?
                 `${d.company} X ${d.firstCollabCompany}` : `${d.company}`
               ),
-            // width: "130"
+            width: "165"
           },
           {
             Header: "Notes",
             accessor: "notes",
-            minWidth: "260"
+            minWidth: "310"
           },
         ]
       }

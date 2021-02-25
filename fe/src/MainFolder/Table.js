@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useFilters, useSortBy, usePagination, useBlockLayout } from "react-table";
+import Select from 'react-select';
 import '../Stylesheets/MainPageSS/Table.css'
 
-export default function Table({ columns, data }) {
+export default function Table({ columns, data, drinkers }) {
 
   const [filterInput, setFilterInput] = useState("");
+  const [drinkerSelection, setDrinkerSeletion] = useState([])
+  const [selectedDrinker, setSelectedDrinker] = useState("")
 
   const {
     getTableProps,
@@ -25,6 +28,11 @@ export default function Table({ columns, data }) {
   } = useTable({
     columns,
     data,
+    sortTypes: { sortAvg: useMemo(() => (a, b, id, desc) => {
+      const rowA = a.original[id];
+      const rowB = b.original[id];
+      return rowA === rowB ? 0 : rowA > rowB || rowB === "-" ? 1 : -1;
+    })},
     initialState: { pageSize: 50 }
   },
     useFilters,
@@ -33,10 +41,24 @@ export default function Table({ columns, data }) {
     useBlockLayout
   );
 
+  useEffect(() => {
+    let drinkerSelectionArray = [{"value": "", "label": "All Drinkers"}];
+    drinkers.map((drinker) => {
+      drinkerSelectionArray.push({"value": drinker.personName, "label": drinker.personName })
+    })
+    setDrinkerSeletion(drinkerSelectionArray)
+  },[drinkers])
+
   const handleFilterChange = e => {
     const value = e.target.value || undefined;
     setFilter("mainDrinkColumn", value);
     setFilterInput(value);
+  };
+
+  const handleChosenDrinkers = e => {
+    const value = e.value || undefined;
+    setFilter("name", value);
+    setSelectedDrinker(value);
   };
 
   const paginationSection = () => {
@@ -126,19 +148,28 @@ export default function Table({ columns, data }) {
   if(!data.length) {
     return <h1>HOLD YOUR HORSES ONE SEC...</h1>
   } else {
+    console.log(selectedDrinker)
     return (
       <div className="fullTableAndSearch">
         <div className="drinkSearchDiv">
-          <p className="drinkSearchPtag">Search for a Drink:{' '}
-            <input
+          Search for a Drink:&nbsp;
+          <input
             value={filterInput}
             onChange={handleFilterChange}
             placeholder={"Search Drink Name"}
-            />
-          </p>
+          />
+           &nbsp; by &nbsp;
+          <Select
+            className="mainTableDrinkerSelect"
+            defaultValue={{"value": "", "label": "All Drinkers"}}
+            options={drinkerSelection}
+            onChange={handleChosenDrinkers}
+          />
+          {paginationSection()}
         </div>
-        {paginationSection()}
-        {tableIfPages()}
+        <div className="mainTableDiv">
+          {tableIfPages()}
+        </div>
         {paginationSection()}
       </div>
     );

@@ -97,7 +97,6 @@ class LineChart extends PureComponent {
     ]
 
     drinkers.map((drinker) => {
-      console.log(drinker)
       let drinkerCount = 0
       drinks.map((drink) => {
         if(drinker.personName === drink.name) {
@@ -161,10 +160,10 @@ class LineChart extends PureComponent {
           <h2>Select a Drinker or All Drinkers for Data</h2>
           <div className="justSelectFields">
             <Select
-            isMulti
-            value={drinkerSelection}
-            options={selectOptions}
-            onChange={this.handleSelection.bind(this)}
+              isMulti
+              value={drinkerSelection}
+              options={selectOptions}
+              onChange={this.handleSelection.bind(this)}
             />
           </div>
         </div>

@@ -39,12 +39,12 @@ function HomePage(props) {
           {
             Header: "Name",
             accessor: "name",
-            width: "120",
+            // width: "120",
           },
           {
             Header: "Date",
             accessor: "date",
-            width: "70",
+            // width: "70",
             Cell: ({ cell: { value } }) => <Dates values={value} />
           },
           {
@@ -65,17 +65,18 @@ function HomePage(props) {
                 d.mixerOne ?
                   `${d.drinkMain} with ${d.mixerOne}` : `${d.drinkMain}`
               ),
-            width: "300"
+            minWidth: "320"
           },
           {
             Header: "Drink Type",
             accessor: "drinkType",
-            width: "70"
+            // width: "70"
           },
           {
             Header: "ABV%",
             accessor: "abv",
             width: "50",
+            sortType: "sortAvg",
             Cell: ({ cell: { value } }) => parseFloat((value * 100).toFixed(1)) + '%'
           },
           {
@@ -96,12 +97,12 @@ function HomePage(props) {
               d.firstCollabCompany ?
                 `${d.company} X ${d.firstCollabCompany}` : `${d.company}`
               ),
-            width: "130"
+            // width: "130"
           },
           {
             Header: "Notes",
             accessor: "notes",
-            width: "250"
+            minWidth: "260"
           },
         ]
       }
@@ -119,7 +120,7 @@ function HomePage(props) {
         {/* <AddDrinkForm options={data}/> */}
       </div>
       <div className="App">
-        <Table columns={columns} data={data} />
+        <Table columns={columns} data={data} drinkers={props.drinkers} />
       </div>
     </div>
     )

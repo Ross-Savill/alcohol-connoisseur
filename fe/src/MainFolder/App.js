@@ -61,6 +61,7 @@ const App = () => {
               render={(props) => (
                 <HomePage {...props}
                 drinks={state.drinks}
+                drinkers={state.drinkers}
                 />
               )}
             />

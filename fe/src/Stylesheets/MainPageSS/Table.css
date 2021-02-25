@@ -18,6 +18,10 @@
   margin: auto;
 }
 
+.initial-column {
+  background-color: greenyellow;
+}
+
 .sort-desc {
   text-align: center;
   font-size: 0.9em;

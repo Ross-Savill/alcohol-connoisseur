@@ -122,11 +122,11 @@ const App = () => {
               component={Admin}
               drinkers={state.drinkers}
             />
-            {/* <ProtectedBoardRoute
+            <ProtectedBoardRoute
               exact path="/theboard"
               component={TheBoard}
               drinkers={state.drinkers}
-            /> */}
+            />
           </div>
         </BrowserRouter>
       </div>

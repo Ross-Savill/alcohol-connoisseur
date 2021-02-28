@@ -80,7 +80,7 @@ app.get('/theboard', authorizeAccessToken, (req, res) => {
   MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
     if (err) throw err;
     const dbName = db.db("drinkandrate");
-    dbName.collection("boardentry").findOne()(function(err, result) {
+    dbName.collection("boardentry").findOne({}, function(err, result) {
       if (err) throw err;
       res.json(result);
       db.close();

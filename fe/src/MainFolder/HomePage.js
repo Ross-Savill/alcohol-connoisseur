@@ -39,7 +39,6 @@ function HomePage(props) {
           {
             Header: "Name",
             accessor: "name",
-            // width: "120",
           },
           {
             Header: "Date",
@@ -113,9 +112,12 @@ function HomePage(props) {
     return <div className="mainPageLoadingDiv"><LoadingSpin /></div>
   } else {
   return (
-    <div>
+    <div className="homepageContainer">
       <div>
-        <h1 className="mainTitle">Welcome to Drink And Rate!!!</h1>
+        <h1 className="mainTitle">
+          <div className="dnrTitle">Welcome to Drink And Rate!!!</div>
+          <div className="theBoardLink">Test</div>
+        </h1>
         <Navbar />
         {/* <AddDrinkForm options={data}/> */}
       </div>

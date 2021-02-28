@@ -1,9 +1,27 @@
-.mainTitle {
-  position: relative;
-  text-align: center;
-  font-weight: bold;
-  padding: 20px;
-  background-color: green;
-  margin-bottom: 0px;
+.homepageContainer {
+  max-width: 100%;
 }
 
+.mainTitle {
+  display: flex;
+  flex-direction: row;
+  padding: 20px 0px 20px 0px;
+  background-color: green;
+  margin-bottom: 0px;
+  width: 100%;
+}
+
+.dnrTitle {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.theBoardLink {
+  position: absolute;
+  float: right;
+  width: 100%;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 0.7em;
+}

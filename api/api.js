@@ -76,6 +76,18 @@ app.get('/drinktypes', authorizeAccessToken, (req, res) => {
   });
 });
 
+app.get('/theboard', authorizeAccessToken, (req, res) => {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+    if (err) throw err;
+    const dbName = db.db("drinkandrate");
+    dbName.collection("boardentry").findOne()(function(err, result) {
+      if (err) throw err;
+      res.json(result);
+      db.close();
+    });
+  });
+});
+
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {
   const id = req.params.id;

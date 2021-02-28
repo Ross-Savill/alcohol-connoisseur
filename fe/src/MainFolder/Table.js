@@ -148,7 +148,6 @@ export default function Table({ columns, data, drinkers }) {
   if(!data.length) {
     return <h1>HOLD YOUR HORSES ONE SEC...</h1>
   } else {
-    console.log(selectedDrinker)
     return (
       <div className="fullTableAndSearch">
         <div className="drinkSearchDiv">

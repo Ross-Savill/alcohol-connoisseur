@@ -58,7 +58,6 @@ function BreweryPage(props) {
       })
 
       const allUniqueBreweries = [...new Set(allBreweries)]
-
       // BEGIN LOOPING THROUGH ALL BREWERIES FOR DATA
 
       let localBreweryObjectsArray = [];
@@ -137,7 +136,6 @@ function BreweryPage(props) {
           breweryTotalDrinkAvgScore: allDrinksAverage
         }
         localBreweryObjectsArray.push(breweryObject)
-
       }) // THIS ENDS THE BREWERY LOOP
         setBreweryObjectsArray(localBreweryObjectsArray)
     }

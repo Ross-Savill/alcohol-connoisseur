@@ -1,0 +1,31 @@
+.theBoardContainer {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../BoardFolder/theboardbackground.jpg");
+  background-size: 100% 100%;
+}
+
+.theBoardTableDiv {
+  position: relative;
+  width: 80vw;
+  height: 73vh;
+  top: 13vh;
+  left: 10vw;
+  border: green 1px solid;
+}
+
+.theBoardMainHeader {
+  font-size: 20px;
+}
+
+.theBoardTable tr {
+  text-align: center;
+}
+
+.addDrinkButton {
+  position: absolute;
+}
+
+.mainTableButton {
+  float: right;
+}

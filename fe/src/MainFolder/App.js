@@ -11,7 +11,6 @@ import USMap from '../MapFolder/USFolder/USMap';
 import '../Stylesheets/MainPageSS/App.css';
 import LoginButton from '../AuthFolder/LoginButton';
 import { ProtectedRoute } from '../MyUtilitiesFolder/ProtectedRoute';
-import { ProtectedBoardRoute } from '../MyUtilitiesFolder/ProtectedBoardRoute';
 import Admin from '../AdminFolder/Admin';
 import TheBoard from '../BoardFolder/TheBoard';
 import { useAuth0, withAuth0 } from '@auth0/auth0-react';
@@ -42,6 +41,7 @@ const App = () => {
                                  drinkTypes: resp[2].data
         }))
         .catch(error => console.log(error))
+
       }
     }
     getInfo();
@@ -117,14 +117,19 @@ const App = () => {
                 />
               )}
             />
+            <Route
+              exact path="/theboard"
+              render={(props) => (
+                <TheBoard {...props}
+                  drinks={state.drinks}
+                  drinkers={state.drinkers}
+                  drinkTypes={state.drinkTypes}
+                />
+              )}
+            />
             <ProtectedRoute
               exact path="/admin"
               component={Admin}
-              drinkers={state.drinkers}
-            />
-            <ProtectedBoardRoute
-              exact path="/theboard"
-              component={TheBoard}
               drinkers={state.drinkers}
             />
           </div>

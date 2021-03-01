@@ -3,8 +3,8 @@ import Navbar from '../MyUtilitiesFolder/Navbar';
 import '../Stylesheets/MainPageSS/HomePage.css';
 import Table from './Table';
 import moment from 'moment';
-import AddDrinkForm from './AddDrinkForm';
 import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
+import { Link } from 'react-router-dom';
 
 const Dates = ( values ) => {
   for (const [key, date] of Object.entries(values)) {
@@ -116,10 +116,9 @@ function HomePage(props) {
       <div>
         <h1 className="mainTitle">
           <div className="dnrTitle">Welcome to Drink And Rate!!!</div>
-          <div className="theBoardLink">Test</div>
+          <Link className="theBoardLink" to="/theboard">The Board</Link>
         </h1>
         <Navbar />
-        {/* <AddDrinkForm options={data}/> */}
       </div>
       <div className="App">
         <Table columns={columns} data={data} drinkers={props.drinkers} />

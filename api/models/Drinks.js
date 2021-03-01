@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const drinksSchema = new mongoose.Schema({
+  sessionId: Number,
   name: String,
   date: Date,
   drinkMain: String,
@@ -30,7 +31,8 @@ const drinksSchema = new mongoose.Schema({
   secondCollabCompany: String,
   secondCollabCountry: String,
   secondUkUsa: String,
-  notes: String
+  notes: String,
+  confirmed: Boolean
 })
 
 module.exports = mongoose.model('Drink', drinksSchema)

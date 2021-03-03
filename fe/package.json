@@ -13,6 +13,7 @@
     "chartjs-plugin-labels": "^1.1.0",
     "country-list": "^2.2.0",
     "firebase": "^8.2.6",
+    "i18n-iso-countries": "^6.5.0",
     "moment": "^2.29.1",
     "react": "^16.14.0",
     "react-chartjs-2": "^2.11.1",

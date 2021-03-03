@@ -41,21 +41,16 @@
   height: 30px;
 }
 
-.questionLabel {
-  display: flex;
-  font-size: 13px;
-  margin: 20px 0px 0px 20px;
-  align-items: center;
-  justify-content: center;
-}
-
 .questionInputTopRow {
   margin: 20px 20px 0px 0px;
-  padding: 20px 10px;
-  line-height: 20em;
 }
 
-.questionInputSecondRow {
+.incorrectBlank input[type="text"] {
+  border-color: rgb(250, 128, 114);
+  border-width: 5px;
+}
+
+.middleInputField {
   margin: 20px 0px 0px 0px;
 }
 
@@ -69,15 +64,7 @@
 }
 
 .collabCheck {
-margin: 20px;
-}
-
-.questionInputThirdRow {
-  margin: 20px 0px 0px 0px;
-}
-
-.questionInputBottomRow {
-  margin: 20px 0px 0px 0px;
+  margin: 20px;
 }
 
 .formGroupQuestion {
@@ -103,12 +90,14 @@ margin: 20px;
   background-color: greenyellow;
 }
 
+/* CSS FOR AUTOCOMPLETE ABILITY */
+
 .suggestions {
   border: 1px solid #999;
   border-top-width: 0;
   list-style: none;
   margin-top: 0;
-  max-height: 143px;
+  max-height: 30vh;
   overflow-y: auto;
   padding-left: 0;
   width: calc(300px + 1rem);
@@ -123,16 +112,17 @@ margin: 20px;
   padding: 0.5rem;
 }
 
+.suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+  background-color: rgb(233, 158, 19);
+}
+
 .suggestion-active,
 .suggestions li:hover {
-  background-color: #008f68;
+  background-color: #0783ca;
   color: #fae042;
   cursor: pointer;
   font-weight: 700;
-}
-
-.suggestions li:not(:last-of-type) {
-  border-bottom: 1px solid #999;
 }
 
 

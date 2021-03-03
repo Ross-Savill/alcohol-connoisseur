@@ -11,7 +11,7 @@ const assert = require('assert');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa')
 const PORT = process.env.PORT || 5000;
-import Drink from './models/Drinks';
+const Drink = require('./models/Drinks');
 
 const app = new express();
 app.use(helmet());

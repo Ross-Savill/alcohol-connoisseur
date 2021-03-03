@@ -17,9 +17,9 @@ import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
 const App = () => {
   const [state, setState] = useState ({
-        drinks: null,
-        drinkers: null,
-        drinkTypes: null
+    drinks: null,
+    drinkers: null,
+    drinkTypes: null
   })
 
   const { getAccessTokenSilently, user } = useAuth0();

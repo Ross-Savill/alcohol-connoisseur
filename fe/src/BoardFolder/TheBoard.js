@@ -3,11 +3,22 @@ import '../Stylesheets/BoardFolder/TheBoard.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import AddDrinkForm from './AddDrinkForm';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const TheBoard =({ drinks, drinkers, drinkTypes }) => {
 
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
+
+  const addDrinkToBoard = async (drink) => {
+  const token = await getAccessTokenSilently();
+  const config = {
+    headers: { 'Authorization': `Bearer ${token}` }
+  }
+  axios.post(`https://drinkandrate.herokuapp.com/postdrinktoboard`, drink, config)
+    .then(resp => console.log(resp))
+    .catch(error => console.log(error))
+  }
 
   return(
     <div className="theBoardContainer">
@@ -25,6 +36,7 @@ const TheBoard =({ drinks, drinkers, drinkTypes }) => {
             </tr>
             <tr>
               <th>Drinker</th>
+              <th>Time</th>
               <th>Drink</th>
               <th>ABV(%)</th>
               <th>Company(s)</th>
@@ -42,6 +54,7 @@ const TheBoard =({ drinks, drinkers, drinkTypes }) => {
                                        drinkers={drinkers}
                                        setDisplayAddForm={setDisplayAddForm}
                                        drinkTypes={drinkTypes}
+                                       addDrinkToBoard={addDrinkToBoard}
                          />}
     </div>
   )

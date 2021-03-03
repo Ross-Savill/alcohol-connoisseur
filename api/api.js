@@ -11,6 +11,7 @@ const assert = require('assert');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa')
 const PORT = process.env.PORT || 5000;
+import Drink from './models/Drinks';
 
 const app = new express();
 app.use(helmet());
@@ -76,17 +77,16 @@ app.get('/drinktypes', authorizeAccessToken, (req, res) => {
   });
 });
 
-app.get('/theboard', authorizeAccessToken, (req, res) => {
-  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
-    if (err) throw err;
-    const dbName = db.db("drinkandrate");
-    dbName.collection("boardentry").findOne({}, function(err, result) {
-      if (err) throw err;
-      res.json(result);
-      db.close();
-    });
+app.post('/postdrinktoboard', authorizeAccessToken, (req, res) => {
+  const drinkToSave = new Drink(req.body);
+  drinkToSave.save()
+  .then(item => {
+    res.send("Drink Saved To Database")
+  })
+  .catch(err => {
+    res.status(400).send("Unable to save drink to database");
   });
-});
+})
 
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {

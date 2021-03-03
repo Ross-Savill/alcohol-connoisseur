@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import ProgressBar from '../MyUtilitiesFolder/ProgressBar';
-import axios from 'axios';
 import LoadingSpin from'../MyUtilitiesFolder/LoadingSpin';
 
 const UploadImage = (props) => {

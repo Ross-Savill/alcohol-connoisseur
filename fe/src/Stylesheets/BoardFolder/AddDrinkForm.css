@@ -40,8 +40,16 @@
 }
 
 .addDrinkTitle {
-  justify-content: center;
-  height: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sessionNumberPtag {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 0px;
 }
 
 .incorrectBlank input {

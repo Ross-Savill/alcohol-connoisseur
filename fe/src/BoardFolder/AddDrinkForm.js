@@ -52,11 +52,62 @@ class AddDrinkForm extends Component {
     }
   };
 
-
   componentDidMount() {
-    const { drinkers, drinkTypes } = this.props
+    const { drinkers, drinkTypes, drinkToEdit } = this.props
     if(drinkers && drinkTypes ) {
       this.setState({ peopleNameObjs: this.props.drinkers, drinkTypeObjs: this.props.drinkTypes })
+    }
+    if(drinkToEdit) {
+
+      if(drinkToEdit.drink.mixerSix) {
+        this.setState({ hasMixer: "6"})
+      } else if(drinkToEdit.drink.mixerFive) {
+        this.setState({ hasMixer: "5"})
+      } else if(drinkToEdit.drink.mixerFour) {
+        this.setState({ hasMixer: "4"})
+      } else if(drinkToEdit.drink.mixerThree) {
+        this.setState({ hasMixer: "3"})
+      } else if(drinkToEdit.drink.mixerTwo) {
+        this.setState({ hasMixer: "2"})
+      } else if(drinkToEdit.drink.mixerOne) {
+        this.setState({ hasMixer: "1"})
+      }
+
+      if(drinkToEdit.drink.firstCollabCompany) {
+        this.setState({ hasCollab: true })
+      }
+
+      this.setState({
+        personName: drinkToEdit.drink.name,
+        company: drinkToEdit.drink.company,
+        country: drinkToEdit.drink.country,
+        ukUsa: drinkToEdit.drink.ukUsa,
+        firstCollabCompany: drinkToEdit.drink.firstCollabCompany,
+        firstCollabCountry: drinkToEdit.drink.firstCollabCountry,
+        firstUkUsa: drinkToEdit.drink.firstUkUsa,
+        secondCollabCompany: drinkToEdit.drink.secondCollabCompany,
+        secondCollabCountry: drinkToEdit.drink.secondCollabCountry,
+        secondUkUsa: drinkToEdit.drink.secondUkUsa,
+        drinkMain: drinkToEdit.drink.drinkMain,
+        drinkType: drinkToEdit.drink.drinkType,
+        abv: drinkToEdit.drink.abv * 100,
+        mixerOneBrand: drinkToEdit.drink.mixerOneBrand,
+        mixerOne: drinkToEdit.drink.mixerOne,
+        mixerTwoBrand: drinkToEdit.drink.mixerTwoBrand,
+        mixerTwo: drinkToEdit.drink.mixerTwo,
+        mixerThreeBrand: drinkToEdit.drink.mixerThreeBrand,
+        mixerThree: drinkToEdit.drink.mixerThree,
+        mixerFourBrand: drinkToEdit.drink.mixerFourBrand,
+        mixerFour: drinkToEdit.drink.mixerFour,
+        mixerFiveBrand: drinkToEdit.drink.mixerFiveBrand,
+        mixerFive: drinkToEdit.drink.mixerFive,
+        mixerSixBrand: drinkToEdit.drink.mixerSixBrand,
+        mixerSix: drinkToEdit.drink.mixerSix,
+        ratingWordOne: drinkToEdit.drink.ratingWordOne,
+        ratingWordTwo: drinkToEdit.drink.ratingWordTwo,
+        score: drinkToEdit.drink.score,
+        notes: drinkToEdit.drink.notes
+      })
     }
   }
 
@@ -188,7 +239,6 @@ class AddDrinkForm extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-    // drink.date = newDate IF rating words and score aren't blank
     // const isValid = this.validate();
     // if (isValid) {
     // }
@@ -200,8 +250,9 @@ class AddDrinkForm extends Component {
       drinkDate = "";
     }
 
-    const newDrink = {
-      name: this.state.personName ,
+    const neworEditedDrink = {
+      sessionId: this.state.sessionId,
+      name: this.state.personName,
       date: drinkDate,
       company: this.state.company,
       country: this.state.country,
@@ -234,10 +285,15 @@ class AddDrinkForm extends Component {
       confirmed: false
     }
 
-    // POST NEW DRINK
-    this.props.addDrinkToBoard(newDrink)
+    if(this.props.drinkToEdit) {
+      // POST NEW DRINK
+      this.props.addDrinkToBoard(neworEditedDrink)
+      this.props.setDisplayAddForm(false)
 
-    // UPDATE EXISTING DRINK
+      // UPDATE EXISTING DRINK
+      this.props.editDrinkOnBoard(neworEditedDrink)
+      this.props.setDisplayAddForm(false)
+    }
   }
 
   render() {
@@ -321,11 +377,11 @@ class AddDrinkForm extends Component {
       )
     }
     const britishCountrySelect = [
-      <option value="">Select GB Country:</option>,
-      <option value="ENG">England</option>,
-      <option value="SCT">Scotland</option>,
-      <option value="WLS">Wales</option>,
-      <option value="NIR">Northern Ireland</option>
+      <option key="NIL" value="">Select GB Country:</option>,
+      <option key="ENG" value="ENG">England</option>,
+      <option key="SCT" value="SCT">Scotland</option>,
+      <option key="WLS" value="WLS">Wales</option>,
+      <option key="NIR" value="NIR">Northern Ireland</option>
     ]
 
     if(this.state.sessionId === "" && this.props.drinks) {
@@ -335,16 +391,18 @@ class AddDrinkForm extends Component {
           uniqueSessionIds.add(drink.sessionId)
         }
       })
+      this.setState({ sessionId: uniqueSessionIds.size + 1 })
     }
+
+    console.log(this.props.drinkToEdit)
 
     return (
       <div className="addFormDiv" onClick={(e) => this.handleCancel(e) }>
         <Container className="addFormContainer">
           <Form className="addDrinkForm" onSubmit={this.handleSubmit}>
             <Row className="addDrinkTitle">
-              <div>
-                <h3 className="mainFormHeader">🍺🍺🍺 🍺🍺🍺 Drink Details: 🍺🍺🍺 🍺🍺🍺</h3>
-              </div>
+              <h3 className="mainFormHeader">🍺🍺🍺 🍺🍺🍺 Drink Details: 🍺🍺🍺 🍺🍺🍺</h3>
+              <p className="sessionNumberPtag">Session Number {this.state.sessionId}</p>
             </Row>
           <div className="mainDrinkInfoArea">
             <h4 className="mainDrinkInfoAreaHeader">Standard Required Data</h4>
@@ -355,7 +413,7 @@ class AddDrinkForm extends Component {
                     type="select"
                     name="personName"
                     id="personNameInput"
-                    value={this.personName}
+                    value={this.state.personName}
                     onChange={this.handleFormChange}
                     className={this.state.personName === "" ? "dataNeeded" : "inputField"}
                   >
@@ -413,6 +471,7 @@ class AddDrinkForm extends Component {
                   <FormGroup className="mixerSelect">
                     <Input type="select"
                           name="hasMixer"
+                          value={this.state.hasMixer}
                           onChange={this.toggleHasMixer}
                           className="inputField"
                     >

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
 .theBoardContainer {
   width: 100vw;
   height: 100vh;
@@ -15,11 +17,13 @@
 }
 
 .theBoardMainHeader {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .theBoardTable tr {
   text-align: center;
+  font-family: "Patrick Hand";
+  font-size: 20px;
 }
 
 .addDrinkButton {
@@ -28,4 +32,8 @@
 
 .mainTableButton {
   float: right;
+}
+
+.noDrinksOnBoardTd {
+  font-size: 30px;
 }

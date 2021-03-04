@@ -36,12 +36,11 @@ const App = () => {
         const requestDrinkTypes = axios.get("https://drinkandrate.herokuapp.com/drinktypes", config)
 
         axios.all([requestDrinkers, requestDrinks, requestDrinkTypes])
-        .then(resp => setState({ drinkers: resp[0].data,
-                                 drinks: resp[1].data,
-                                 drinkTypes: resp[2].data
-        }))
-        .catch(error => console.log(error))
-
+          .then(resp => setState({ drinkers: resp[0].data,
+                                  drinks: resp[1].data,
+                                  drinkTypes: resp[2].data
+          }))
+          .catch(error => console.log(error))
       }
     }
     getInfo();

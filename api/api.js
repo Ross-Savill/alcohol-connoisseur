@@ -88,6 +88,17 @@ app.post('/postdrinktoboard', authorizeAccessToken, (req, res) => {
   });
 })
 
+app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
+  Drink.findByIdAndUpdate(
+    req.params.id, req.body, {new: true},
+    (err, drink) => {
+      if (err) return res.status(500).send(err);
+      return res.send(drink);
+    }
+  )
+})
+
+
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {
   const id = req.params.id;

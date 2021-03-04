@@ -370,7 +370,7 @@ class AddDrinkForm extends Component {
     }
 
     const usStateOptionsSelect = [];
-    usStateOptionsSelect.push(<option value="">Select State:</option>)
+    usStateOptionsSelect.push(<option key="emptyState" value="">Select State:</option>)
     for (const [regionCode, fullRegionName] of Object.entries(USStateList)) {
       usStateOptionsSelect.push(
         <option key={regionCode} value={regionCode}>{fullRegionName}</option>
@@ -393,8 +393,6 @@ class AddDrinkForm extends Component {
       })
       this.setState({ sessionId: uniqueSessionIds.size + 1 })
     }
-
-    console.log(this.props.drinkToEdit)
 
     return (
       <div className="addFormDiv" onClick={(e) => this.handleCancel(e) }>

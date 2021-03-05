@@ -89,15 +89,49 @@ app.post('/postdrinktoboard', authorizeAccessToken, (req, res) => {
 })
 
 app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
-  Drink.findByIdAndUpdate(
-    req.params._id, req.body, {new: true},
-    (err, drink) => {
-      if (err) return res.status(500).send(err);
-      return res.send(drink);
-    }
-  )
-})
-
+  try {
+    const id = req.params.id;
+    MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      const updateDrink = await dbName.collection("drinks").updateOne(
+        { _id: ObjectId(id) },
+        { $set: { date: req.body.date,
+                  company: req.body.company,
+                  country: req.body.country,
+                  ukUsa: req.body.ukUsa,
+                  firstCollabCompany: req.body.firstCollabCompany,
+                  firstCollabCountry: req.body.firstCollabCountry,
+                  firstUkUsa: req.body.firstUkUsa,
+                  secondCollabCompany: req.body.secondCollabCompany,
+                  secondCollabCountry: req.body.secondCollabCountry,
+                  secondUkUsa: req.body.secondUkUsa,
+                  abv: this.state.abv,
+                  mixerOneBrand: req.body.mixerOneBrand,
+                  mixerOne: req.body.mixerOne,
+                  mixerTwoBrand: req.body.mixerTwoBrand,
+                  mixerTwo: req.body.mixerTwo,
+                  mixerThreeBrand: req.body.mixerThreeBrand,
+                  mixerThree: req.body.mixerThree,
+                  mixerFourBrand: req.body.mixerFourBrand,
+                  mixerFour: req.body.mixerFour,
+                  mixerFiveBrand: req.body.mixerFiveBrand,
+                  mixerFive: req.body.mixerFive,
+                  mixerSixBrand: req.body.mixerSixBrand,
+                  mixerSix: req.body.mixerSix,
+                  ratingWordOne: req.body.ratingWordOne,
+                  ratingWordTwo: req.body.ratingWordTwo,
+                  score: req.body.score,
+                  notes: req.body.notes,
+                }}
+      );
+      res.json(updateDrink);
+      db.close();
+    });
+  } catch (err) {
+    res.json({ message: err })
+  }
+});
 
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {

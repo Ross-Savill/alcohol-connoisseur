@@ -11,10 +11,12 @@ class AddDrinkForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: null,
       peopleNameObjs: [],
       drinkTypeObjs:[],
       sessionId: "",
       personName: '',
+      date: '',
       drinkMain: '',
       drinkType: '',
       abv: '',
@@ -78,7 +80,9 @@ class AddDrinkForm extends Component {
       }
 
       this.setState({
+        id: drinkToEdit.drink._id,
         personName: drinkToEdit.drink.name,
+        date: drinkToEdit.drink.date,
         company: drinkToEdit.drink.company,
         country: drinkToEdit.drink.country,
         ukUsa: drinkToEdit.drink.ukUsa,
@@ -142,7 +146,7 @@ class AddDrinkForm extends Component {
       showSuggestions: false,
       drinkMain: chosenDrink.drinkMain,
       drinkType: chosenDrink.drinkType,
-      abv: (chosenDrink.abv).toFixed(1),
+      abv: (chosenDrink.abv * 100),
       company: chosenDrink.company,
       country: chosenDrink.country,
       ukUsa: chosenDrink.ukUsa,
@@ -244,7 +248,9 @@ class AddDrinkForm extends Component {
     // }
 
     let drinkDate;
-    if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
+    if(this.props.drinkToEdit) {
+      drinkDate = this.state.date
+    } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
       drinkDate = new Date()
     } else {
       drinkDate = "";
@@ -285,12 +291,13 @@ class AddDrinkForm extends Component {
       confirmed: false
     }
 
-    if(this.props.drinkToEdit) {
+    if(!this.props.drinkToEdit) {
       // POST NEW DRINK
       this.props.addDrinkToBoard(neworEditedDrink)
       this.props.setDisplayAddForm(false)
-
+    } else {
       // UPDATE EXISTING DRINK
+      neworEditedDrink["id"] = this.props.drinkToEdit.drink._id;
       this.props.editDrinkOnBoard(neworEditedDrink)
       this.props.setDisplayAddForm(false)
     }

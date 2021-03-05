@@ -28,13 +28,13 @@ const TheBoard =({ drinks, drinkers, drinkTypes }) => {
   },[drinks])
 
   const callAddForm = () => {
-    setDisplayAddForm(true)
     setDrinkToEdit(null)
+    setDisplayAddForm(true)
   }
 
   const callEditForm = (drink) => {
-    setDisplayAddForm(true)
     setDrinkToEdit(drink)
+    setDisplayAddForm(true)
   }
 
   const addDrinkToBoard = async (drink) => {
@@ -48,12 +48,12 @@ const TheBoard =({ drinks, drinkers, drinkTypes }) => {
   }
 
   const editDrinkOnBoard = async (drink) => {
-    const drinkId = drink._id
+    const drinkId = drink.id
     const token = await getAccessTokenSilently();
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
     }
-    axios.put(`https://drinkandrate.herokuapp.com/editdrinkonboard${drinkId}`, drink, config)
+    axios.put(`https://drinkandrate.herokuapp.com/editdrinkonboard/${drinkId}`, drink, config)
       .then(resp => console.log(resp))
       .catch(error => console.log(error))
   }

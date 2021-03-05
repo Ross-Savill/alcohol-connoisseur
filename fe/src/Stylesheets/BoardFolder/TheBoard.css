@@ -19,6 +19,9 @@
 
 .theBoardMainHeader {
   font-size: 30px;
+  top: 0;
+  z-index: 1;
+  background-color: lightgreen;
 }
 
 .theBoardTh {

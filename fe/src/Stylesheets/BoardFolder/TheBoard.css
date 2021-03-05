@@ -20,6 +20,12 @@
   font-size: 30px;
 }
 
+.theBoardMainHeaderContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .theBoardTable tr {
   text-align: center;
   font-family: "Patrick Hand";

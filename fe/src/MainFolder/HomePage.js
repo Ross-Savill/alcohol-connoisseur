@@ -116,7 +116,7 @@ function HomePage(props) {
       <div>
         <h1 className="mainTitle">
           <div className="dnrTitle">Welcome to Drink And Rate!!!</div>
-          {/* <Link className="theBoardLink" to="/theboard">The Board</Link> */}
+          <Link className="theBoardLink" to="/theboard">The Board</Link>
         </h1>
         <Navbar />
       </div>

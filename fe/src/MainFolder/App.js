@@ -120,7 +120,6 @@ const App = () => {
               exact path="/theboard"
               render={(props) => (
                 <TheBoard {...props}
-                  drinks={state.drinks}
                   drinkers={state.drinkers}
                   drinkTypes={state.drinkTypes}
                 />

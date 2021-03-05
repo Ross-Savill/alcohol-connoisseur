@@ -94,7 +94,7 @@ class AddDrinkForm extends Component {
         secondUkUsa: drinkToEdit.drink.secondUkUsa,
         drinkMain: drinkToEdit.drink.drinkMain,
         drinkType: drinkToEdit.drink.drinkType,
-        abv: drinkToEdit.drink.abv * 100,
+        abv: (drinkToEdit.drink.abv * 100).toFixed(1),
         mixerOneBrand: drinkToEdit.drink.mixerOneBrand,
         mixerOne: drinkToEdit.drink.mixerOne,
         mixerTwoBrand: drinkToEdit.drink.mixerTwoBrand,
@@ -248,7 +248,7 @@ class AddDrinkForm extends Component {
     // }
 
     let drinkDate;
-    if(this.props.drinkToEdit) {
+    if(this.props.drinkToEdit && this.state.date !== null) {
       drinkDate = this.state.date
     } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
       drinkDate = new Date()
@@ -302,6 +302,7 @@ class AddDrinkForm extends Component {
       this.props.setDisplayAddForm(false)
     }
   }
+
 
   render() {
     if(!this.state.peopleNameObjs || !this.props.drinkers) {
@@ -392,13 +393,7 @@ class AddDrinkForm extends Component {
     ]
 
     if(this.state.sessionId === "" && this.props.drinks) {
-      const uniqueSessionIds = new Set()
-      this.props.drinks.forEach((drink) => {
-        if(drink.confirmed === true) {
-          uniqueSessionIds.add(drink.sessionId)
-        }
-      })
-      this.setState({ sessionId: uniqueSessionIds.size + 1 })
+      this.setState({ sessionId: this.props.sessionId })
     }
 
     return (

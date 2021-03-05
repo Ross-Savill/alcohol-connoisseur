@@ -17,7 +17,6 @@ const TheBoard =({ drinkers, drinkTypes }) => {
 
   const { user, getAccessTokenSilently } = useAuth0();
 
-
   useEffect(() => {
     async function fetchData() {
       if(drinks === null) {
@@ -92,47 +91,47 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       .catch(error => console.log(error))
   }
 
-    const sessionDrinkData = () => {
-      if(boardDrinks.length === 0) {
-        return(
-          <tr>
-            <td className="noDrinksOnBoardTd"colSpan="8">Nothing On The Board!</td>
+  const sessionDrinkData = () => {
+    if(boardDrinks.length === 0) {
+      return(
+        <tr>
+          <td className="noDrinksOnBoardTd"colSpan="8">Nothing On The Board!</td>
+        </tr>
+      )
+    } else {
+      return boardDrinks.map((drink, index) => {
+        let missingPieces = [];
+        if(!drink.abv) missingPieces.push("ABV ")
+        if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
+        return (
+          <tr key={index}>
+            <td>{drink.name}</td>
+            <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
+            <td>{drink.drinkMain} {drink.abv ? `(${drink.abv*100}%)` : `(???)`}</td>
+            <td> {drink.ukUsa ? `${drink.company} (${drink.ukUsa})`
+                                    : drink.country ? `${drink.company} (${drink.country})`
+                                    : `${drink.company} (???)`}
+            {drink.firstUkUsa ? ` X ${drink.firstCollabCompany} (${drink.firstUkUsa})`
+                                    : drink.firstCollabCountry ? ` X ${drink.firstCollabCompany} (${drink.firstCollabCountry})`
+                                    : drink.firstCollabCompany ? `X ${drink.firstCollabCompany} (???)`
+                                    : ""}
+          {drink.secondUkUsa ? ` X ${drink.secondCollabCompany} (${drink.secondUkUsa})`
+                                    : drink.secondCollabCountry ? ` X ${drink.secondCollabCompany} (${drink.secondCollabCountry})`
+                                    : drink.secondCollabCompany ? `X ${drink.secondCollabCompany} (???)`
+                                    : ""}
+            </td>
+            <td> {!drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
+            <td>{drink.score}</td>
+            <td>{drink.notes}</td>
+            <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) : <img src={greentick} alt="DONE" height="20px" width="20px"></img>}</td>
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+              <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
+            : null }
           </tr>
         )
-      } else {
-        return boardDrinks.map((drink, index) => {
-          let missingPieces = [];
-          if(!drink.abv) missingPieces.push("ABV ")
-          if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
-          return (
-              <tr key={index}>
-                <td>{drink.name}</td>
-                <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
-                <td>{drink.drinkMain} {drink.abv ? `(${drink.abv*100}%)` : `(???)`}</td>
-                <td> {drink.ukUsa ? `${drink.company} (${drink.ukUsa})`
-                                        : drink.country ? `${drink.company} (${drink.country})`
-                                        : `${drink.company} (???)`}
-                {drink.firstUkUsa ? ` X ${drink.firstCollabCompany} (${drink.firstUkUsa})`
-                                        : drink.firstCollabCountry ? ` X ${drink.firstCollabCompany} (${drink.firstCollabCountry})`
-                                        : drink.firstCollabCompany ? `X ${drink.firstCollabCompany} (???)`
-                                        : ""}
-              {drink.secondUkUsa ? ` X ${drink.secondCollabCompany} (${drink.secondUkUsa})`
-                                        : drink.secondCollabCountry ? ` X ${drink.secondCollabCompany} (${drink.secondCollabCountry})`
-                                        : drink.secondCollabCompany ? `X ${drink.secondCollabCompany} (???)`
-                                        : ""}
-                </td>
-                <td> {!drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
-                <td>{drink.score}</td>
-                <td>{drink.notes}</td>
-                <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) : <img src={greentick} alt="DONE" height="20px" width="20px"></img>}</td>
-                {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-                  <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
-                : null }
-              </tr>
-          )
-        })
-      }
+      })
     }
+  }
 
   return(
     <div className="theBoardContainer">
@@ -178,7 +177,8 @@ const TheBoard =({ drinkers, drinkTypes }) => {
                                        drinkToEdit={drinkToEdit}
                                        editDrinkOnBoard={editDrinkOnBoard}
                                        sessionId={sessionId}
-                         />}
+                         />
+      }
     </div>
   )
 }

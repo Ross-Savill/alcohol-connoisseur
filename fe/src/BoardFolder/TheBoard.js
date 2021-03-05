@@ -49,11 +49,12 @@ const TheBoard =({ drinks, drinkers, drinkTypes }) => {
 
   const editDrinkOnBoard = async (drink) => {
     const drinkId = drink.id
+    console.log(drinkId)
     const token = await getAccessTokenSilently();
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
     }
-    axios.put(`https://drinkandrate.herokuapp.com/editdrinkonboard/${drinkId}`, drink, config)
+    axios.patch(`https://drinkandrate.herokuapp.com/editdrinkonboard/${drinkId}`, drink, config)
       .then(resp => console.log(resp))
       .catch(error => console.log(error))
   }

@@ -106,7 +106,7 @@ app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
                   secondCollabCompany: req.body.secondCollabCompany,
                   secondCollabCountry: req.body.secondCollabCountry,
                   secondUkUsa: req.body.secondUkUsa,
-                  abv: this.state.abv,
+                  abv: this.body.abv,
                   mixerOneBrand: req.body.mixerOneBrand,
                   mixerOne: req.body.mixerOne,
                   mixerTwoBrand: req.body.mixerTwoBrand,

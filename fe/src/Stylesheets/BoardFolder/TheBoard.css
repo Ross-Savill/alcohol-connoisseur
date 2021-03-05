@@ -20,6 +20,10 @@
   font-size: 30px;
 }
 
+.theBoardTh {
+  text-align: center;
+}
+
 .theBoardMainHeaderContainer {
   display: flex;
   flex-direction: row;

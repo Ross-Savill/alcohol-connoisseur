@@ -146,7 +146,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
         <table className="theBoardTable">
           <thead className="theBoardTHead">
             <tr>
-              <th className="theBoardMainHeader" colSpan="7">
+              <th className="theBoardMainHeader" colSpan="8">
                 <div className="theBoardMainHeaderContainer">
                 <div>{moment(new Date()).format('dddd Do MMMM YYYY')}</div>
                 <div>🥂🍷🍸🍺🍹🍻 THE BOARD 🍻🍹🍺🍸🍷🥂</div>
@@ -155,14 +155,14 @@ const TheBoard =({ drinkers, drinkTypes }) => {
               </th>
             </tr>
             <tr>
-              <th>Drinker</th>
-              <th>Time</th>
-              <th>Drink</th>
-              <th>Company(s)</th>
-              <th>Rating Words</th>
-              <th>Score</th>
-              <th>Notes</th>
-              <th>Done?</th>
+              <th className="theBoardTh">Drinker</th>
+              <th className="theBoardTh">Time</th>
+              <th className="theBoardTh">Drink</th>
+              <th className="theBoardTh">Company(s)</th>
+              <th className="theBoardTh">Rating Words</th>
+              <th className="theBoardTh">Score</th>
+              <th className="theBoardTh">Notes</th>
+              <th className="theBoardTh">Done?</th>
             </tr>
           </thead>
           <tbody>

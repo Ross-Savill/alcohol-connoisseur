@@ -108,6 +108,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
             <td>{drink.name}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
             <td>{drink.drinkMain} {drink.abv ? `(${drink.abv*100}%)` : `(???)`}</td>
+
             <td> {drink.ukUsa ? `${drink.company} (${drink.ukUsa})`
                                     : drink.country ? `${drink.company} (${drink.country})`
                                     : `${drink.company} (???)`}

@@ -38,10 +38,19 @@ class LineChart extends PureComponent {
     const { drinks, drinkers, drinkTypes } = this.props
     this.setState({ drinks, drinkers, drinkTypes })
 
-    const allDates = [...new Set(drinks.map(drink => drink.date))].sort()
-    const presentableDates = allDates.map((date) => {
-      return moment(date).format("MMM-DD")
+    const allSessions = [...new Set(drinks.map(drink => drink.sessionId))].sort(function(a, b){return a-b});
+    const allDates = [];
+
+    allSessions.map((seshId) => {
+      for (let i = 0; i < drinks.length; i++) {
+        if (drinks[i].sessionId === seshId) {
+          allDates.push(moment(drinks[i].date).format("MMM Do"))
+          break;
+        }
+      }
     })
+
+    console.log(allDates)
 
     const { drinkerSelection } = this.state
 
@@ -57,20 +66,21 @@ class LineChart extends PureComponent {
 
       let colourPick = 0
       drinkerSelection.map((selection) => {
-        let selectionAllDrinksOnDates = []
-        allDates.map((date) => {
-          let drinksOnThisDate = 0
+        let allDrinksInSession = []
+        allSessions.map((sessionNumber) => {
+          let drinksInThisSession = 0
           drinks.map((drink) => {
             if(selection.label === "All Drinkers") {
-              if(drink.date === date) {
-                drinksOnThisDate = drinksOnThisDate + 1
+              if(drink.sessionId === sessionNumber) {
+                drinksInThisSession = drinksInThisSession + 1
               }
-            } else if (drink.date === date && drink.name === selection.label) {
-              drinksOnThisDate = drinksOnThisDate + 1
+            } else if (drink.sessionId === sessionNumber && drink.name === selection.label) {
+              drinksInThisSession = drinksInThisSession + 1
             }
           })
-          selectionAllDrinksOnDates.push(drinksOnThisDate)
+          allDrinksInSession.push(drinksInThisSession)
         })
+
         const label = selection.label
         const backgroundColourOptions = backgroundColours[colourPick];
         const borderColourOptions =  borderColours[colourPick]
@@ -78,7 +88,7 @@ class LineChart extends PureComponent {
         colourPick = colourPick + 1
 
         datasets.push({"label":label,
-                       "data": selectionAllDrinksOnDates,
+                       "data": allDrinksInSession,
                        borderColor: borderColourOptions,
                        backgroundColor: backgroundColourOptions,
         })
@@ -114,7 +124,7 @@ class LineChart extends PureComponent {
     this.setState({ selectOptions: options })
 
     const drinkerLineChartData = {
-      labels: presentableDates,
+      labels: allDates,
       datasets: datasets,
     }
     this.setState({ drinkerLineChartData })

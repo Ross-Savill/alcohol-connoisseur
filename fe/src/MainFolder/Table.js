@@ -51,7 +51,7 @@ export default function Table({ columns, data, drinkers }) {
 
   const handleFilterChange = e => {
     const value = e.target.value || undefined;
-    setFilter("mainDrinkColumn", value);
+    setFilter("mainDrinkColumn" || "mixerOne" || "mixerTwo" || "mixerThree" || "mixerFour" || "mixerFive" || "mixerSix", value);
     setFilterInput(value);
   };
 

@@ -118,7 +118,7 @@ app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
                   ratingWordTwo: req.body.ratingWordTwo,
                   score: req.body.score,
                   notes: req.body.notes,
-                }}
+          }}
       );
       res.json(updateDrink);
       db.close();

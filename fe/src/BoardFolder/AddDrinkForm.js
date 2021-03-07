@@ -16,7 +16,7 @@ class AddDrinkForm extends Component {
       drinkTypeObjs:[],
       sessionId: "",
       personName: '',
-      date: '',
+      date: null,
       drinkMain: '',
       drinkType: '',
       abv: '',
@@ -25,17 +25,11 @@ class AddDrinkForm extends Component {
       ukUsa: '',
       hasMixer: "",
       mixerOne: '',
-      mixerOneBrand: '',
       mixerTwo: '',
-      mixerTwoBrand: '',
       mixerThree: '',
-      mixerThreeBrand: '',
       mixerFour: '',
-      mixerFourBrand: '',
       mixerFive: '',
-      mixerFiveBrand: '',
       mixerSix: '',
-      mixerSixBrand: '',
       ratingWordOne: '',
       ratingWordTwo: '',
       score: '',
@@ -95,17 +89,11 @@ class AddDrinkForm extends Component {
         drinkMain: drinkToEdit.drink.drinkMain,
         drinkType: drinkToEdit.drink.drinkType,
         abv: (drinkToEdit.drink.abv * 100).toFixed(1),
-        mixerOneBrand: drinkToEdit.drink.mixerOneBrand,
         mixerOne: drinkToEdit.drink.mixerOne,
-        mixerTwoBrand: drinkToEdit.drink.mixerTwoBrand,
         mixerTwo: drinkToEdit.drink.mixerTwo,
-        mixerThreeBrand: drinkToEdit.drink.mixerThreeBrand,
         mixerThree: drinkToEdit.drink.mixerThree,
-        mixerFourBrand: drinkToEdit.drink.mixerFourBrand,
         mixerFour: drinkToEdit.drink.mixerFour,
-        mixerFiveBrand: drinkToEdit.drink.mixerFiveBrand,
         mixerFive: drinkToEdit.drink.mixerFive,
-        mixerSixBrand: drinkToEdit.drink.mixerSixBrand,
         mixerSix: drinkToEdit.drink.mixerSix,
         ratingWordOne: drinkToEdit.drink.ratingWordOne,
         ratingWordTwo: drinkToEdit.drink.ratingWordTwo,
@@ -212,13 +200,8 @@ class AddDrinkForm extends Component {
   }
 
   toggleHasMixer = (e) => {
-    this.setState({ hasMixer: e.target.value,
-                    mixerOne: '', mixerOneBrand: '',
-                    mixerTwo: '', mixerTwoBrand: '',
-                    mixerThree: '', mixerThreeBrand: '',
-                    mixerFour: '', mixerFourBrand: '',
-                    mixerFive: '', mixerFiveBrand: '',
-                    mixerSix: '', mixerSixBrand: ''
+    this.setState({ hasMixer: e.target.value, mixerOne: '', mixerTwo: '',
+                    mixerThree: '', mixerFour: '', mixerFive: '', mixerSix: ''
                  });
   };
 
@@ -253,7 +236,7 @@ class AddDrinkForm extends Component {
     } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
       drinkDate = new Date()
     } else {
-      drinkDate = "";
+      drinkDate = null;
     }
 
     const neworEditedDrink = {
@@ -272,17 +255,11 @@ class AddDrinkForm extends Component {
       drinkMain: this.state.drinkMain,
       drinkType: this.state.drinkType,
       abv: this.state.abv / 100,
-      mixerOneBrand: this.state.mixerOneBrand,
       mixerOne: this.state.mixerOne,
-      mixerTwoBrand: this.state.mixerTwoBrand,
       mixerTwo: this.state.mixerTwo,
-      mixerThreeBrand: this.state.mixerThreeBrand,
       mixerThree: this.state.mixerThree,
-      mixerFourBrand: this.state.mixerFourBrand,
       mixerFour: this.state.mixerFour,
-      mixerFiveBrand: this.state.mixerFiveBrand,
       mixerFive: this.state.mixerFive,
-      mixerSixBrand: this.state.mixerSixBrand,
       mixerSix: this.state.mixerSix,
       ratingWordOne: this.state.ratingWordOne,
       ratingWordTwo: this.state.ratingWordTwo,
@@ -553,24 +530,9 @@ class AddDrinkForm extends Component {
               <>
               <div className="mixerInputArea">
               <h4 className="mixerInputAreaHeader">Mixer Input Area</h4>
-                  <Row xs="4">
+                  <Row xs="3">
                       <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerOneBrand"
-                                id="mixerOneBrandInput"
-                                placeholder="Mixer One Brand"
-                                value={this.state.mixerOneBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerOneBrand === "" ? "dataNeeded" : "inputField"}
-                              />
-                              </div>
-                          </FormGroup>
-                        </Col>
-                        <Col xs="3">
+                        <Col xs="4">
                           <FormGroup>
                             <div className="mixerQuestion">
                               <Input
@@ -588,22 +550,7 @@ class AddDrinkForm extends Component {
                       </>
                     { this.state.hasMixer > 1 &&
                       <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerTwoBrand"
-                                id="mixerTwoBrandInput"
-                                placeholder="Mixer Two Brand"
-                                value={this.state.mixerTwoBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerTwoBrand === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                        <Col xs="3">
+                        <Col xs="4">
                           <FormGroup>
                             <div className="mixerQuestion">
                               <Input
@@ -618,28 +565,11 @@ class AddDrinkForm extends Component {
                             </div>
                           </FormGroup>
                         </Col>
-                        </>
-                      }
-                  </Row>
-                  <Row xs="4">
+                      </>
+                    }
                     { this.state.hasMixer > 2 &&
-                      <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerThreeBrand"
-                                id="mixerThreeBrandInput"
-                                placeholder="Mixer Three Brand"
-                                value={this.state.mixerThreeBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerThreeBrand === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                        <Col xs="3">
+                        <>
+                        <Col xs="4">
                           <FormGroup>
                             <div className="mixerQuestion">
                               <Input
@@ -656,60 +586,29 @@ class AddDrinkForm extends Component {
                         </Col>
                       </>
                     }
-                    { this.state.hasMixer > 3 &&
-                    <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerFourBrand"
-                                id="mixerFourBrandInput"
-                                placeholder="Mixer Four Brand"
-                                value={this.state.mixerFourBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerFourBrand === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerFour"
-                                id="mixerFourInput"
-                                placeholder="Mixer Four"
-                                value={this.state.mixerFour}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerFour === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                        </>
-                      }
                   </Row>
-                  <Row xs="4">
-                    {this.state.hasMixer > 4 &&
+                { this.state.hasMixer > 3 &&
+                  <Row xs="3">
+                    <>
+                      <Col xs="4">
+                        <FormGroup>
+                          <div className="mixerQuestion">
+                            <Input
+                              type="text"
+                              name="mixerFour"
+                              id="mixerFourInput"
+                              placeholder="Mixer Four"
+                              value={this.state.mixerFour}
+                              onChange={this.handleFormChange}
+                              className={this.state.mixerFour === "" ? "dataNeeded" : "inputField"}
+                            />
+                          </div>
+                        </FormGroup>
+                      </Col>
+                    </>
+                  { this.state.hasMixer > 4 &&
                       <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerFiveBrand"
-                                id="mixerFiveBrandInput"
-                                placeholder="Mixer Five Brand"
-                                value={this.state.mixerFiveBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerFiveBrand === "" ? "dataNeeded" : "inputField"}
-                              />
-                              </div>
-                          </FormGroup>
-                        </Col>
-                        <Col xs="3">
+                        <Col xs="4">
                           <FormGroup>
                             <div className="mixerQuestion">
                               <Input
@@ -721,29 +620,14 @@ class AddDrinkForm extends Component {
                                 onChange={this.handleFormChange}
                                 className={this.state.mixerFive === "" ? "dataNeeded" : "inputField"}
                               />
-                              </div>
-                          </FormGroup>
-                        </Col>
-                      </>
-                    }
-                    { this.state.hasMixer > 5 &&
-                      <>
-                        <Col xs="3">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerSixBrand"
-                                id="mixerSixBrandInput"
-                                placeholder="Mixer Six Brand"
-                                value={this.state.mixerSixBrand}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerSixBrand === "" ? "dataNeeded" : "inputField"}
-                              />
                             </div>
                           </FormGroup>
-                        </Col>
-                        <Col xs="3">
+                      </Col>
+                    </>
+                  }
+                    { this.state.hasMixer > 5 &&
+                      <>
+                        <Col xs="4">
                           <FormGroup>
                             <div className="mixerQuestion">
                               <Input
@@ -761,9 +645,10 @@ class AddDrinkForm extends Component {
                       </>
                     }
                   </Row>
+                }
               </div>
               </>
-              }
+            }
                 <Row xs="1">
                   <Col>
                     <FormGroup check className="collabCheck">

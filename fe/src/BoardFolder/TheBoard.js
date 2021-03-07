@@ -103,12 +103,20 @@ const TheBoard =({ drinkers, drinkTypes }) => {
         let missingPieces = [];
         if(!drink.abv) missingPieces.push("ABV ")
         if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
+        let displayedAbv;
+        if(drink.abv) { displayedAbv = `(${(drink.abv*100).toFixed(1)}%)` } else { displayedAbv = `(???)` }
         return (
           <tr key={index}>
             <td>{drink.name}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
-            <td>{drink.drinkMain} {drink.abv ? `(${drink.abv*100}%)` : `(???)`}</td>
-            <td>{drink.drinkMain} {drink.abv ? `(${(drink.abv*100).toPrecision(2)}%)` : `(???)`}</td>
+            <td>{drink.mixerSix ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}`
+              : drink.mixerFive ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}`
+              : drink.mixerFour ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}`
+              : drink.mixerThree ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo} and ${drink.mixerThree}`
+              : drink.mixerTwo ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne} and ${drink.mixerTwo}`
+              : drink.mixerOne ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}`
+              : `${drink.drinkMain} ${displayedAbv}`
+            }</td>
             <td> {drink.ukUsa ? `${drink.company} (${drink.ukUsa})`
                                     : drink.country ? `${drink.company} (${drink.country})`
                                     : `${drink.company} (???)`}

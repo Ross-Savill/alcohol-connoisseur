@@ -50,8 +50,6 @@ class LineChart extends PureComponent {
       }
     })
 
-    console.log(allDates)
-
     const { drinkerSelection } = this.state
 
     let datasets = []

@@ -156,10 +156,10 @@
   border-top-width: 0;
   list-style: none;
   margin-top: 0;
-  max-height: 30vh;
-  overflow-y: auto;
+  max-height: 40vh;
+  overflow-y: scroll;
   padding-left: 0;
-  width: calc(300px + 1rem);
+  /* width: calc(300px + 1rem); */
 }
 
 .no-suggestions {
@@ -169,9 +169,6 @@
 
 .suggestions li {
   padding: 0.5rem;
-}
-
-.suggestions li:not(:last-of-type) {
   border-bottom: 1px solid #999;
   background-color: rgb(233, 158, 19);
 }

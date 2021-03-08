@@ -42,7 +42,9 @@ class AddDrinkForm extends Component {
       secondUkUsa: '',
       notes: '',
       activeSuggestion: 0,
-      filteredSuggestions: [],
+      filteredMainDrinkSuggestions: [],
+      filteredRtOneSuggestions: [],
+      filteredRtTwoSuggestions: [],
       showSuggestions: false,
       confirmed: false
     }
@@ -110,27 +112,47 @@ class AddDrinkForm extends Component {
       }
   }
 
-  // HANDLE THE MAIN COMPONENT SUGGESTIONS DROPDOWN
-  handleFormChangeandMainComponentAutocomplete = (e) => {
+  mainComponentAutocomplete = (e) => {
     const { target: { name, value } } = e
     const userInput = e.currentTarget.value;
-    const filteredSuggestions = this.props.drinks.filter(
-      suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-      );
-
-    this.setState({
-      activeSuggestion: 0,
-      filteredSuggestions,
-      showSuggestions: true,
-      [name]: value
-    });
+    const filteredMainDrinkSuggestions = this.props.drinks.filter(
+        suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    );
+    this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, showSuggestions: true, [name]: value });
   }
 
-  // RESET SUGGESTIONS STATE WHEN CLICKED A SUGGESTION AND ADD DRINK DETAILS TO STATE
-  onSuggestionClick = chosenDrink => {
+  rtOneAutocomplete = (e) => {
+    const { target: { name, value } } = e
+    const userInput = e.currentTarget.value;
+    const allRatingWords = [...new Set(
+    this.props.drinks.map((drink) => {
+        return drink.ratingWordOne, drink.ratingWordTwo
+      })
+    )]
+    const filteredRtOneSuggestions = allRatingWords.filter(
+      suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    );
+    this.setState({ activeSuggestion: 0, filteredRtOneSuggestions, showSuggestions: true, [name]: value })
+  }
+
+  rtTwoAutocomplete = (e) => {
+    const { target: { name, value } } = e
+    const userInput = e.currentTarget.value;
+    const allRatingWords = [...new Set(
+      this.props.drinks.map((drink) => {
+          return drink.ratingWordOne, drink.ratingWordTwo
+      })
+    )]
+    const filteredRtTwoSuggestions = allRatingWords.filter(
+      suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    );
+    this.setState({ activeSuggestion: 0, filteredRtTwoSuggestions, showSuggestions: true, [name]: value })
+  }
+
+  mainComponentSuggestionClick = chosenDrink => {
     this.setState({
       activeSuggestion: 0,
-      filteredSuggestions: [],
+      filteredMainDrinkSuggestions: [],
       showSuggestions: false,
       drinkMain: chosenDrink.drinkMain,
       drinkType: chosenDrink.drinkType,
@@ -152,27 +174,45 @@ class AddDrinkForm extends Component {
     }
   };
 
+  rtWordOneSuggestionClick = chosenWord => {
+    this.setState({
+      activeSuggestion: 0,
+      filteredMainDrinkSuggestions: [],
+      showSuggestions: false,
+      ratingWordOne: chosenWord
+    })
+  }
+
+  rtWordTwoSuggestionClick = chosenWord => {
+    this.setState({
+      activeSuggestion: 0,
+      filteredMainDrinkSuggestions: [],
+      showSuggestions: false,
+      ratingWordTwo: chosenWord
+    })
+  }
+
   // HANDLE CYCLING THROUGH SUGGESTIONS
   onKeyDown = e => {
-    const { activeSuggestion, filteredSuggestions } = this.state;
+    const { activeSuggestion, filteredMainDrinkSuggestions } = this.state;
 
     // if clicked enter to select suggestion
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
+        userInput: filteredMainDrinkSuggestions[activeSuggestion]
       });
-      // if clicking up, do nothing if at top of list
+      // upclick
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
       }
       this.setState({ activeSuggestion: activeSuggestion - 1 });
     }
-    // User pressed the down arrow, increment the index unless at end of list
+    // downclick
     else if (e.keyCode === 40) {
-      if (activeSuggestion - 1 === filteredSuggestions.length) {
+      if (activeSuggestion - 1 === filteredMainDrinkSuggestions.length) {
         return;
       }
       this.setState({ activeSuggestion: activeSuggestion + 1 });
@@ -286,35 +326,43 @@ class AddDrinkForm extends Component {
       return <LoadingSpin />
     }
 
-    // START OF AUTOCOMPLETE CODE
-
     const {
-      handleFormChangeandMainComponentAutocomplete,
-      onSuggestionClick,
+      mainComponentAutocomplete,
+      rtWordOneSuggestionClick,
+      rtWordTwoSuggestionClick,
+      rtOneAutocomplete,
+      rtTwoAutocomplete,
+      mainComponentSuggestionClick,
       onKeyDown,
       state: {
         activeSuggestion,
-        filteredSuggestions,
+        filteredMainDrinkSuggestions,
+        filteredRtOneSuggestions,
+        filteredRtTwoSuggestions,
         showSuggestions,
-        drinkMain
+        drinkMain,
+        ratingWordOne,
+        ratingWordTwo
       }
     } = this;
 
-    let suggestionsListComponent;
+    // START OF AUTOCOMPLETE CODE
+
+    let mainDrinkSuggestionsComponent;
+    let rtWordOneSuggestionsComponent;
+    let rtWordTwoSuggestionsComponent;
 
     if (showSuggestions && drinkMain) {
-      if (filteredSuggestions.length) {
-        suggestionsListComponent = (
+      if (filteredMainDrinkSuggestions.length) {
+        mainDrinkSuggestionsComponent = (
           <ul className="suggestions">
-            {filteredSuggestions.map((suggestion, index) => {
+            {filteredMainDrinkSuggestions.map((suggestion, index) => {
               let className;
-
-              // Flag the active suggestion with a class
               if (index === activeSuggestion) {
                 className = "suggestion-active";
               }
               return (
-                <li className={className} key={index} onClick={() => onSuggestionClick(suggestion)}>
+                <li className={className} key={index} onClick={() => mainComponentSuggestionClick(suggestion)}>
                   {suggestion.drinkMain} ({(suggestion.abv*100).toFixed(1)}%)
                 </li>
               );
@@ -322,7 +370,59 @@ class AddDrinkForm extends Component {
           </ul>
         );
       } else {
-        suggestionsListComponent = (
+        mainDrinkSuggestionsComponent = (
+          <div className="no-suggestions">
+            <em>No suggestions available.</em>
+          </div>
+        );
+      }
+    }
+
+    if (showSuggestions && ratingWordOne) {
+      if (filteredRtOneSuggestions.length) {
+        rtWordOneSuggestionsComponent = (
+          <ul className="suggestions">
+            {filteredRtOneSuggestions.map((suggestedWord, index) => {
+              let className;
+              if (index === activeSuggestion) {
+                className = "suggestion-active";
+              }
+              return (
+                <li className={className} key={index} onClick={() => rtWordOneSuggestionClick(suggestedWord)}>
+                  {suggestedWord}
+                </li>
+              );
+            })}
+          </ul>
+        );
+      } else {
+        rtWordOneSuggestionsComponent = (
+          <div className="no-suggestions">
+            <em>No suggestions available.</em>
+          </div>
+        );
+      }
+    }
+
+    if (showSuggestions && ratingWordTwo) {
+      if (filteredRtOneSuggestions.length) {
+        rtWordTwoSuggestionsComponent = (
+          <ul className="suggestions">
+            {filteredRtTwoSuggestions.map((suggestedWord, index) => {
+              let className;
+              if (index === activeSuggestion) {
+                className = "suggestion-active";
+              }
+              return (
+                <li className={className} key={index} onClick={() => rtWordTwoSuggestionClick(suggestedWord)}>
+                  {suggestedWord}
+                </li>
+              );
+            })}
+          </ul>
+        );
+      } else {
+        rtWordOneSuggestionsComponent = (
           <div className="no-suggestions">
             <em>No suggestions available.</em>
           </div>
@@ -438,11 +538,11 @@ class AddDrinkForm extends Component {
                       placeholder="Main Drink Component"
                       value={drinkMain}
                       onKeyDown={onKeyDown}
-                      onChange={handleFormChangeandMainComponentAutocomplete}
+                      onChange={mainComponentAutocomplete}
                       className={this.state.drinkMain === "" ? "dataNeeded" : "inputField"}
                     />
                   </FormGroup>
-                  {suggestionsListComponent}
+                  {mainDrinkSuggestionsComponent}
                 </Col>
                 <Col xs="2" className="mixerSelectQuestion">
                   <FormGroup className="mixerSelect">
@@ -816,10 +916,11 @@ class AddDrinkForm extends Component {
                           id="ratingWordOneInput"
                           placeholder="Rating Word One"
                           value={this.state.ratingWordOne}
-                          onChange={this.handleFormChange}
+                          onChange={rtOneAutocomplete}
                           className={this.state.ratingWordOne === "" ? "dataNeeded" : "inputField"}
                         />
                       </FormGroup>
+                      {rtWordOneSuggestionsComponent}
                     </Col>
                     <Col>
                       <FormGroup className="formGroupQuestion">
@@ -829,10 +930,11 @@ class AddDrinkForm extends Component {
                           id="ratingWordTwoInput"
                           placeholder="Rating Word Two"
                           value={this.state.ratingWordTwo}
-                          onChange={this.handleFormChange}
+                          onChange={rtTwoAutocomplete}
                           className={this.state.ratingWordTwo === "" ? "dataNeeded" : "inputField"}
                         />
                       </FormGroup>
+                      {rtWordTwoSuggestionsComponent}
                     </Col>
                     <Col xs="2">
                       <FormGroup className="formGroupQuestion">

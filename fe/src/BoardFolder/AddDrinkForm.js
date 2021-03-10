@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../Stylesheets/BoardFolder/AddDrinkForm.css';
 import DrinkerQuestion from './FormQuestions/DrinkerQuestion';
+import DrinkTypeQuestion from './FormQuestions/DrinkTypeQuestion';
 import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 import { USStateList } from '../MapFolder/USFolder/USStateList';
 const  countries = require("i18n-iso-countries");
@@ -493,10 +494,6 @@ class AddDrinkForm extends Component {
 
     // END OF AUTO COMPLETE CODE
 
-    const drinkTypes = this.state.drinkTypeObjs
-    const drinkTypeSelect = drinkTypes.map((drinkType) =>
-      <option key={drinkType.drinkType} value={drinkType.drinkType}>{drinkType.drinkType}</option>
-    )
     const countryList = countries.getNames("en", {select: "official"})
     const countryOptionsSelect = [];
     for (let [code, countryName] of Object.entries(countryList)) {
@@ -530,7 +527,6 @@ class AddDrinkForm extends Component {
       this.setState({ sessionId: this.props.sessionId })
     }
 
-    console.log(this.state.personName)
     return (
       <div className="addFormDiv" onClick={(e) => this.handleCancel(e) }>
         <Container className="addFormContainer">
@@ -545,22 +541,13 @@ class AddDrinkForm extends Component {
               <Col xs="4">
                 <DrinkerQuestion drinkerNames={this.state.peopleNameObjs}
                                  personName={this.state.personName}
-                                 handleFormChange={this.handleFormChange}/>
+                                 handleFormChange={this.handleFormChange}
+                />
               </Col>
               <Col xs="4">
-                <FormGroup className="formGroupQuestion">
-                  <Input
-                    type="select"
-                    name="drinkType"
-                    id="drinkTypeInput"
-                    value={this.state.drinkType}
-                    onChange={this.handleFormChange}
-                    className={this.state.drinkType === "" ? "dataNeeded" : "inputField"}
-                  >
-                    <option className="placeholder" value="">Select Drink Type:</option>
-                    {drinkTypeSelect}
-                  </Input>
-                </FormGroup>
+                <DrinkTypeQuestion drinkType = {this.state.drinkType}
+                                   drinkTypes = {this.state.drinkTypeObjs}
+                                   handleFormChange={this.handleFormChange}/>
               </Col>
               <Col xs="4">
                 <FormGroup className="formGroupQuestion">

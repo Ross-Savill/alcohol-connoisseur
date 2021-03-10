@@ -3,6 +3,7 @@ import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reac
 import '../Stylesheets/BoardFolder/AddDrinkForm.css';
 import DrinkerQuestion from './FormQuestions/DrinkerQuestion';
 import DrinkTypeQuestion from './FormQuestions/DrinkTypeQuestion';
+import ABVQuestion from './FormQuestions/ABVQuestion';
 import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 import { USStateList } from '../MapFolder/USFolder/USStateList';
 const  countries = require("i18n-iso-countries");
@@ -545,23 +546,15 @@ class AddDrinkForm extends Component {
                 />
               </Col>
               <Col xs="4">
-                <DrinkTypeQuestion drinkType = {this.state.drinkType}
-                                   drinkTypes = {this.state.drinkTypeObjs}
+                <DrinkTypeQuestion drinkType={this.state.drinkType}
+                                   drinkTypes={this.state.drinkTypeObjs}
                                    handleFormChange={this.handleFormChange}/>
               </Col>
               <Col xs="4">
-                <FormGroup className="formGroupQuestion">
-                  <Input
-                    type="number"
-                    name="abv"
-                    id="abvInput"
-                    placeholder="Drink ABV(%)"
-                    value={this.state.abv}
-                    onChange={this.handleFormChange}
-                    className={this.state.abv === "" ? "dataNeeded" : "inputField"}
-                  />
-                </FormGroup>
-                </Col>
+                <ABVQuestion abv={this.state.abv}
+                             handleFormChange={this.handleFormChange}
+                />
+              </Col>
               </Row>
               <Row xs="2">
                 <Col xs="9">

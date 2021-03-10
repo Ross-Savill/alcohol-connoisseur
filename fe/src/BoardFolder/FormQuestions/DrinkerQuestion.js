@@ -9,19 +9,21 @@ class DrinkerQuestion extends React.Component {render() {
   );
 
   return (
-    <FormGroup className="formGroupQuestion">
-      <Input
-        type="select"
-        name="personName"
-        id="personNameInput"
-        value={this.props.personName}
-        onChange={this.props.handleFormChange}
-        className={this.props.personName === "" ? "dataNeeded" : "inputField"}
-      >
-      <option className="placeholder" value="">Select Drinker:</option>
-      {drinkerNameSelect}
-      </Input>
-    </FormGroup>
+    <Col xs="4">
+      <FormGroup className="formGroupQuestion">
+        <Input
+          type="select"
+          name="personName"
+          id="personNameInput"
+          value={this.props.personName}
+          onChange={this.props.handleFormChange}
+          className={this.props.personName === "" ? "dataNeeded" : "inputField"}
+        >
+        <option className="placeholder" value="">Select Drinker:</option>
+        {drinkerNameSelect}
+        </Input>
+      </FormGroup>
+    </Col>
   )
 }}
 

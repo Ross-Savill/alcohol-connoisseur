@@ -3,7 +3,9 @@ import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reac
 import '../Stylesheets/BoardFolder/AddDrinkForm.css';
 import DrinkerQuestion from './FormQuestions/DrinkerQuestion';
 import DrinkTypeQuestion from './FormQuestions/DrinkTypeQuestion';
+import MainCompQuestion from './FormQuestions/MainCompQuestion';
 import ABVQuestion from './FormQuestions/ABVQuestion';
+import MixerSelect from './FormQuestions/MixerSelect';
 import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 import { USStateList } from '../MapFolder/USFolder/USStateList';
 const  countries = require("i18n-iso-countries");
@@ -53,11 +55,16 @@ class AddDrinkForm extends Component {
       showSuggestions: false,
       confirmed: false
     }
-    this.handleFormChange = this.handleFormChange.bind(this)
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.mainComponentSuggestionClick = this.mainComponentSuggestionClick.bind(this);
+    this.mixerSuggestionClick = this.mixerSuggestionClick.bind(this)
+    this.onKeyDown = this.onKeyDown.bind(this)
+    this.drinkAutocomplete = this.drinkAutocomplete.bind(this)
+    this.toggleHasMixer = this.toggleHasMixer.bind(this)
   };
 
   componentDidMount() {
-    const { drinks, drinkers, drinkTypes, drinkToEdit } = this.props
+    const { drinkers, drinkTypes, drinkToEdit } = this.props
     if(drinkers && drinkTypes) {
       this.setState({ peopleNameObjs: this.props.drinkers, drinkTypeObjs: this.props.drinkTypes })
     }
@@ -118,7 +125,7 @@ class AddDrinkForm extends Component {
       }
   }
 
-  mainComponentAutocomplete = (e) => {
+  drinkAutocomplete = (e) => {
     // set states of inputs and prepare data
     const { drinks } = this.props
     const { target: { name, value } } = e
@@ -144,7 +151,7 @@ class AddDrinkForm extends Component {
     // filter mixer suggestions
     const filteredMixerSuggestions = uniqueMixers.filter(
       suggestion => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
-  );
+    );
 
     this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMixerSuggestions, showSuggestions: true, [name]: value });
   }
@@ -181,10 +188,11 @@ class AddDrinkForm extends Component {
     this.setState({
       activeSuggestion: 0,
       filteredMainDrinkSuggestions: [],
+      filteredMixerSuggestions: [],
       showSuggestions: false,
       drinkMain: chosenDrink.drinkMain,
       drinkType: chosenDrink.drinkType,
-      abv: (chosenDrink.abv * 100),
+      abv: (chosenDrink.abv * 100).toFixed(1),
       company: chosenDrink.company,
       country: chosenDrink.country,
       ukUsa: chosenDrink.ukUsa,
@@ -202,10 +210,17 @@ class AddDrinkForm extends Component {
     }
   };
 
-  mixerSuggestionClick = (event) => {
-    // const { target: { name, value } } = event
-    // this.setState({ [name]: value })
-    console.log(event)
+  mainComponentAsMixerClick = (drinkName) => {
+
+  }
+
+  mixerSuggestionClick = (mixerName, inputField) => {
+    this.setState({ [inputField]: mixerName,
+                    activeSuggestion: 0,
+                    filteredMainDrinkSuggestions: [],
+                    filteredMixerSuggestions: [],
+                    showSuggestions: false
+    })
   }
 
   rtWordOneSuggestionClick = chosenWord => {
@@ -361,7 +376,7 @@ class AddDrinkForm extends Component {
     }
 
     const {
-      mainComponentAutocomplete,
+      drinkAutocomplete,
       rtWordOneSuggestionClick,
       rtWordTwoSuggestionClick,
       rtOneAutocomplete,
@@ -384,62 +399,8 @@ class AddDrinkForm extends Component {
 
     // START OF AUTOCOMPLETE CODE
 
-    let mainDrinkSuggestionsComponent;
-    let mixerSuggestionsComponent;
     let rtWordOneSuggestionsComponent;
     let rtWordTwoSuggestionsComponent;
-
-    if (showSuggestions && drinkMain) {
-      if (filteredMainDrinkSuggestions.length) {
-        mainDrinkSuggestionsComponent = (
-          <ul className="suggestions main-suggestions">
-            {filteredMainDrinkSuggestions.map((suggestion, index) => {
-              let className;
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-              return (
-                <li className={className} key={index} onClick={() => mainComponentSuggestionClick(suggestion)}>
-                  {suggestion.drinkMain} ({(suggestion.abv*100).toFixed(1)}%)
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        mainDrinkSuggestionsComponent = (
-          <div className="no-suggestions">
-            <em>No main drinks available.</em>
-          </div>
-        );
-      }
-    }
-
-    if (showSuggestions && drinkMain) {
-      if (filteredMixerSuggestions.length) {
-        mixerSuggestionsComponent = (
-          <ul className="suggestions mixer-suggestions">
-            {filteredMixerSuggestions.map((suggestion, index) => {
-              let className;
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-              return (
-                <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion)}>
-                  {suggestion} (PREVIOUS MIXER)
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        mixerSuggestionsComponent = (
-          <div className="no-suggestions">
-            <em>No mixers available.</em>
-          </div>
-        );
-      }
-    }
 
     if (showSuggestions && ratingWordOne) {
       if (filteredRtOneSuggestions.length) {
@@ -539,62 +500,35 @@ class AddDrinkForm extends Component {
           <div className="mainDrinkInfoArea">
             <h4 className="mainDrinkInfoAreaHeader">Standard Required Data</h4>
             <Row xs="3">
-              <Col xs="4">
                 <DrinkerQuestion drinkerNames={this.state.peopleNameObjs}
                                  personName={this.state.personName}
+                                 showSuggestions={this.state.showSuggestions}
                                  handleFormChange={this.handleFormChange}
                 />
-              </Col>
-              <Col xs="4">
                 <DrinkTypeQuestion drinkType={this.state.drinkType}
                                    drinkTypes={this.state.drinkTypeObjs}
-                                   handleFormChange={this.handleFormChange}/>
-              </Col>
-              <Col xs="4">
+                                   handleFormChange={this.handleFormChange}
+                />
                 <ABVQuestion abv={this.state.abv}
                              handleFormChange={this.handleFormChange}
                 />
-              </Col>
-              </Row>
-              <Row xs="2">
-                <Col xs="9">
-                  <FormGroup className="formGroupQuestion">
-                    <Input
-                      type="text"
-                      name="drinkMain"
-                      id="mainDrinkComponentInput"
-                      placeholder="Main Drink Component"
-                      value={drinkMain}
-                      onKeyDown={onKeyDown}
-                      onChange={mainComponentAutocomplete}
-                      className={this.state.drinkMain === "" ? "dataNeeded" : "inputField"}
-                    />
-                  </FormGroup>
-                  <div className="mainAndMixerSuggestions">
-                    {mainDrinkSuggestionsComponent}
-                    {mixerSuggestionsComponent}
-                  </div>
-                </Col>
-                <Col xs="2" className="mixerSelectQuestion">
-                  <FormGroup className="mixerSelect">
-                    <Input type="select"
-                          name="hasMixer"
-                          value={this.state.hasMixer}
-                          onChange={this.toggleHasMixer}
-                          className="inputField"
-                    >
-                      <option key={0} value={0}>Mixer(s)?</option>
-                      <option key={1} value={1}>One Mixer</option>
-                      <option key={2} value={2}>Two Mixers</option>
-                      <option key={3} value={3}>Three Mixers</option>
-                      <option key={4} value={4}>Four Mixers</option>
-                      <option key={5} value={5}>Five Mixers</option>
-                      <option key={6} value={6}>Six Mixers</option>
-                    </Input>
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
+            </Row>
+            <Row xs="2">
+              <MainCompQuestion filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
+                                activeSuggestion={this.state.activeSuggestion}
+                                showSuggestions={this.state.showSuggestions}
+                                filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                                drinkMain={this.state.drinkMain}
+                                mainComponentSuggestionClick={this.mainComponentSuggestionClick}
+                                mixerSuggestionClick={this.mixerSuggestionClick}
+                                onKeyDown={this.onKeyDown}
+                                drinkAutocomplete={this.drinkAutocomplete}
+              />
+              <MixerSelect hasMixer={this.state.hasMixer}
+                           toggleHasMixer={this.toggleHasMixer}
+              />
+            </Row>
+            <Row>
                   <Col xs="4">
                     <FormGroup className="formGroupQuestion">
                       <Input

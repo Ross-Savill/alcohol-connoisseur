@@ -3,7 +3,7 @@
 .theBoardContainer {
   width: 100vw;
   height: 100vh;
-  background-image: url("../../BoardFolder/theboardbackground.jpg");
+  background-image: url("../../MyUtilitiesFolder/BackgroundImages/theboardbackground.jpg");
   background-size: 100% 100%;
 }
 

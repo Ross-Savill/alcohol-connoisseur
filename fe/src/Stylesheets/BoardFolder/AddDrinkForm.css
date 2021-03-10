@@ -159,7 +159,14 @@
   max-height: 40vh;
   overflow-y: scroll;
   padding-left: 0;
-  /* width: calc(300px + 1rem); */
+}
+
+.main-suggestions {
+  width: 50%;
+}
+
+.mixer-suggestions {
+  width: 50%;
 }
 
 .no-suggestions {
@@ -179,6 +186,11 @@
   color: #fae042;
   cursor: pointer;
   font-weight: 700;
+}
+
+.mainAndMixerSuggestions {
+  display: flex;
+  flex-direction: row;
 }
 
 

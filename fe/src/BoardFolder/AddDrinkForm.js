@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../Stylesheets/BoardFolder/AddDrinkForm.css';
-import DrinkerQuestion from './FormQuestions/DrinkerQuestion';
-import DrinkTypeQuestion from './FormQuestions/DrinkTypeQuestion';
-import MainCompQuestion from './FormQuestions/MainCompQuestion';
+import DrinkerQ from './FormQuestions/DrinkerQ';
+import DrinkTypeQ from './FormQuestions/DrinkTypeQ';
+import MainComponentQ from './FormQuestions/MainComponentQ';
 import ABVQuestion from './FormQuestions/ABVQuestion';
 import MixerSelect from './FormQuestions/MixerSelect';
+import MainCompanyQ from './FormQuestions/MainCompanyQ';
+import MainCountryQ from './FormQuestions/MainCountryQ';
+import MainGBCountryQ from './FormQuestions/MainGBCountryQ';
+import MainUSStateQ from './FormQuestions/MainUSStateQ';
+import MixerOneQ from './FormQuestions/MixerOneQ';
+import MixerTwoQ from './FormQuestions/MixerTwoQ';
+import MixerThreeQ from './FormQuestions/MixerThreeQ';
+import MixerFourQ from './FormQuestions/MixerFourQ';
+import MixerFiveQ from './FormQuestions/MixerFiveQ';
+import MixerSixQ from './FormQuestions/MixerSixQ';
+import CollabCheckbox from './FormQuestions/CollabCheckbox';
+import CollabCompanyOneQ from './FormQuestions/CollabCompanyOneQ';
+import CollabCountryOneQ from './FormQuestions/CollabCountryOneQ';
+import CollabGBCountryOneQ from './FormQuestions/CollabGBCountryOneQ';
+import CollabUSStateOneQ from './FormQuestions/CollabUSStateOneQ';
+import CollabCompanyTwoQ from './FormQuestions/CollabCompanyTwoQ';
+import CollabCountryTwoQ from './FormQuestions/CollabCountryTwoQ';
+import CollabGBCountryTwoQ from './FormQuestions/CollabGBCountryTwoQ';
+import CollabUSStateTwoQ from'./FormQuestions/CollabUSStateTwoQ';
+import RatingOneQ from './FormQuestions/RatingOneQ';
+import RatingTwoQ from './FormQuestions/RatingTwoQ';
+import ScoreQ from './FormQuestions/ScoreQ';
+import NotesQ from './FormQuestions/NotesQ';
 import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 import { USStateList } from '../MapFolder/USFolder/USStateList';
 const  countries = require("i18n-iso-countries");
@@ -57,10 +80,16 @@ class AddDrinkForm extends Component {
     }
     this.handleFormChange = this.handleFormChange.bind(this);
     this.mainComponentSuggestionClick = this.mainComponentSuggestionClick.bind(this);
-    this.mixerSuggestionClick = this.mixerSuggestionClick.bind(this)
-    this.onKeyDown = this.onKeyDown.bind(this)
-    this.drinkAutocomplete = this.drinkAutocomplete.bind(this)
-    this.toggleHasMixer = this.toggleHasMixer.bind(this)
+    this.mixerSuggestionClick = this.mixerSuggestionClick.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.drinkAutocomplete = this.drinkAutocomplete.bind(this);
+    this.toggleHasMixer = this.toggleHasMixer.bind(this);
+    this.handleFormChangeCountryUpdate = this.handleFormChangeCountryUpdate.bind(this);
+    this.toggleHasCollab = this.toggleHasCollab.bind(this);
+    this.rtOneAutocomplete = this.rtOneAutocomplete.bind(this);
+    this.rtWordOneSuggestionClick = this.rtWordOneSuggestionClick.bind(this);
+    this.rtTwoAutocomplete = this.rtTwoAutocomplete.bind(this);
+    this.rtWordTwoSuggestionClick = this.rtWordTwoSuggestionClick.bind(this);
   };
 
   componentDidMount() {
@@ -120,39 +149,29 @@ class AddDrinkForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.drinkers !== this.state.peopleNameObjs ||
-       this.props.drinkTypes !== this.state.drinkTypeObjs) {
+      this.props.drinkTypes !== this.state.drinkTypeObjs) {
         this.setState({ peopleNameObjs: this.props.drinkers, drinkTypeObjs: this.props.drinkTypes })
       }
   }
 
   drinkAutocomplete = (e) => {
-    // set states of inputs and prepare data
     const { drinks } = this.props
     const { target: { name, value } } = e
     const userInput = e.currentTarget.value;
-
-    // get all unique main drinks (whole object)
     const uniqueDrinks = drinks.filter((drink, index, self) =>
       index === self.findIndex((d) => (
         d.drinkMain === drink.drinkMain && d.abv === drink.abv && d.company === drink.company
       ))
     );
-
-    // get all unique mixers (name only)
     const allMixersInclSpaces = [];
     drinks.map((drink) => allMixersInclSpaces.push(drink.mixerOne, drink.mixerTwo, drink.mixerThree, drink.mixerFour, drink.mixerFive, drink.mixerSix))
     const uniqueMixers = Array.from(new Set(allMixersInclSpaces.filter(function (mixer) { return mixer != false })));
-
-    // filter main drink suggestions
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
-        suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+      suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-
-    // filter mixer suggestions
     const filteredMixerSuggestions = uniqueMixers.filter(
       suggestion => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-
     this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMixerSuggestions, showSuggestions: true, [name]: value });
   }
 
@@ -226,7 +245,7 @@ class AddDrinkForm extends Component {
   rtWordOneSuggestionClick = chosenWord => {
     this.setState({
       activeSuggestion: 0,
-      filteredMainDrinkSuggestions: [],
+      filteredRtOneSuggestions: [],
       showSuggestions: false,
       ratingWordOne: chosenWord
     })
@@ -235,7 +254,7 @@ class AddDrinkForm extends Component {
   rtWordTwoSuggestionClick = chosenWord => {
     this.setState({
       activeSuggestion: 0,
-      filteredMainDrinkSuggestions: [],
+      filteredRtTwoSuggestions: [],
       showSuggestions: false,
       ratingWordTwo: chosenWord
     })
@@ -369,7 +388,6 @@ class AddDrinkForm extends Component {
     }
   }
 
-
   render() {
     if(!this.state.peopleNameObjs || !this.props.drinkers) {
       return <LoadingSpin />
@@ -397,65 +415,6 @@ class AddDrinkForm extends Component {
       }
     } = this;
 
-    // START OF AUTOCOMPLETE CODE
-
-    let rtWordOneSuggestionsComponent;
-    let rtWordTwoSuggestionsComponent;
-
-    if (showSuggestions && ratingWordOne) {
-      if (filteredRtOneSuggestions.length) {
-        rtWordOneSuggestionsComponent = (
-          <ul className="suggestions">
-            {filteredRtOneSuggestions.map((suggestedWord, index) => {
-              let className;
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-              return (
-                <li className={className} key={index} onClick={() => rtWordOneSuggestionClick(suggestedWord)}>
-                  {suggestedWord}
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        rtWordOneSuggestionsComponent = (
-          <div className="no-suggestions">
-            <em>No suggestions available.</em>
-          </div>
-        );
-      }
-    }
-
-    if (showSuggestions && ratingWordTwo) {
-      if (filteredRtOneSuggestions.length) {
-        rtWordTwoSuggestionsComponent = (
-          <ul className="suggestions">
-            {filteredRtTwoSuggestions.map((suggestedWord, index) => {
-              let className;
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
-              return (
-                <li className={className} key={index} onClick={() => rtWordTwoSuggestionClick(suggestedWord)}>
-                  {suggestedWord}
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        rtWordOneSuggestionsComponent = (
-          <div className="no-suggestions">
-            <em>No suggestions available.</em>
-          </div>
-        );
-      }
-    }
-
-    // END OF AUTO COMPLETE CODE
-
     const countryList = countries.getNames("en", {select: "official"})
     const countryOptionsSelect = [];
     for (let [code, countryName] of Object.entries(countryList)) {
@@ -477,6 +436,10 @@ class AddDrinkForm extends Component {
         <option key={regionCode} value={regionCode}>{fullRegionName}</option>
       )
     }
+    usStateOptionsSelect.sort(function(a,b) {
+      return a.props.value > b.props.value
+    })
+
     const britishCountrySelect = [
       <option key="NIL" value="">Select GB Country:</option>,
       <option key="ENG" value="ENG">England</option>,
@@ -500,443 +463,178 @@ class AddDrinkForm extends Component {
           <div className="mainDrinkInfoArea">
             <h4 className="mainDrinkInfoAreaHeader">Standard Required Data</h4>
             <Row xs="3">
-                <DrinkerQuestion drinkerNames={this.state.peopleNameObjs}
-                                 personName={this.state.personName}
-                                 showSuggestions={this.state.showSuggestions}
-                                 handleFormChange={this.handleFormChange}
+                <DrinkerQ drinkerNames={this.state.peopleNameObjs}
+                          personName={this.state.personName}
+                          showSuggestions={this.state.showSuggestions}
+                          handleFormChange={this.handleFormChange}
                 />
-                <DrinkTypeQuestion drinkType={this.state.drinkType}
-                                   drinkTypes={this.state.drinkTypeObjs}
-                                   handleFormChange={this.handleFormChange}
+                <DrinkTypeQ drinkType={this.state.drinkType}
+                            drinkTypes={this.state.drinkTypeObjs}
+                            handleFormChange={this.handleFormChange}
                 />
                 <ABVQuestion abv={this.state.abv}
                              handleFormChange={this.handleFormChange}
                 />
             </Row>
             <Row xs="2">
-              <MainCompQuestion filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
-                                activeSuggestion={this.state.activeSuggestion}
-                                showSuggestions={this.state.showSuggestions}
-                                filteredMixerSuggestions={this.state.filteredMixerSuggestions}
-                                drinkMain={this.state.drinkMain}
-                                mainComponentSuggestionClick={this.mainComponentSuggestionClick}
-                                mixerSuggestionClick={this.mixerSuggestionClick}
-                                onKeyDown={this.onKeyDown}
-                                drinkAutocomplete={this.drinkAutocomplete}
+              <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
+                              activeSuggestion={this.state.activeSuggestion}
+                              showSuggestions={this.state.showSuggestions}
+                              filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                              drinkMain={this.state.drinkMain}
+                              mainComponentSuggestionClick={this.mainComponentSuggestionClick}
+                              mixerSuggestionClick={this.mixerSuggestionClick}
+                              onKeyDown={this.onKeyDown}
+                              drinkAutocomplete={this.drinkAutocomplete}
               />
               <MixerSelect hasMixer={this.state.hasMixer}
                            toggleHasMixer={this.toggleHasMixer}
               />
             </Row>
-            <Row>
-                  <Col xs="4">
-                    <FormGroup className="formGroupQuestion">
-                      <Input
-                        type="text"
-                        name="company"
-                        id="companyInput"
-                        placeholder="Main Component Company"
-                        value={this.state.company}
-                        onChange={this.handleFormChange}
-                        className={this.state.company === "" ? "dataNeeded" : "inputField"}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col xs="4">
-                    <FormGroup className="formGroupQuestion">
-                      <Input
-                        type="select"
-                        name="country"
-                        id="countryInput"
-                        value={this.state.country}
-                        onChange={this.handleFormChangeCountryUpdate}
-                        className={this.state.country === "" ? "dataNeeded" : "inputField"}
-                      >
-                      <option value="">Select Country:</option>
-                      {countryOptionsSelect}
-                      </Input>
-                    </FormGroup>
-                  </Col>
-                  { this.state.country === "GB" &&
-                    <Col xs="4">
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="select"
-                          name="ukUsa"
-                          id="ukUsaInput"
-                          value={this.state.ukUsa}
-                          onChange={this.handleFormChange}
-                          className={this.state.ukUsa === "" ? "dataNeeded" : "inputField"}
-                        >
-                          {britishCountrySelect}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  }
-                  { this.state.country === "US" &&
-                    <Col xs="4">
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="select"
-                          name="ukUsa"
-                          id="ukUsaInput"
-                          value={this.state.ukUsa}
-                          onChange={this.handleFormChange}
-                          className={this.state.ukUsa === "" ? "dataNeeded" : "inputField"}
-                        >
-                          {usStateOptionsSelect}
-                        </Input>
-                      </FormGroup>
-                    </Col>
-                  }
-                </Row>
-              </div>
+            <Row xs={this.state.country === "GB" || this.state.country === "US" ? "3" : "2"}>
+              <MainCompanyQ company={this.state.company}
+                            handleFormChange={this.handleFormChange}
+              />
+              <MainCountryQ country={this.state.country}
+                            handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
+                            countryOptionsSelect={countryOptionsSelect}
+              />
+              { this.state.country === "GB" &&
+                <MainGBCountryQ ukUsa={this.state.ukUsa}
+                                handleFormChange={this.handleFormChange}
+                                britishCountrySelect={britishCountrySelect}
+                />
+              }
+              { this.state.country === "US" &&
+                <MainUSStateQ ukUsa={this.state.ukUsa}
+                              handleFormChange={this.handleFormChange}
+                              usStateOptionsSelect={usStateOptionsSelect}
+                />
+              }
+            </Row>
+          </div>
             { this.state.hasMixer > 0 &&
-              <>
               <div className="mixerInputArea">
               <h4 className="mixerInputAreaHeader">Mixer Input Area</h4>
-                  <Row xs="3">
-                      <>
-                        <Col xs="4">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerOne"
-                                id="mixerOneInput"
-                                placeholder="Mixer One"
-                                value={this.state.mixerOne}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerOne === "" ? "dataNeeded" : "inputField"}
-                              />
-                              </div>
-                          </FormGroup>
-                        </Col>
-                      </>
-                    { this.state.hasMixer > 1 &&
-                      <>
-                        <Col xs="4">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerTwo"
-                                id="mixerTwoInput"
-                                placeholder="Mixer Two"
-                                value={this.state.mixerTwo}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerTwo === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                      </>
-                    }
-                    { this.state.hasMixer > 2 &&
-                        <>
-                        <Col xs="4">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerThree"
-                                id="mixerThreeInput"
-                                placeholder="Mixer Three"
-                                value={this.state.mixerThree}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerThree === "" ? "dataNeeded" : "inputField"}
-                              />
-                              </div>
-                          </FormGroup>
-                        </Col>
-                      </>
-                    }
-                  </Row>
-                { this.state.hasMixer > 3 &&
-                  <Row xs="3">
-                    <>
-                      <Col xs="4">
-                        <FormGroup>
-                          <div className="mixerQuestion">
-                            <Input
-                              type="text"
-                              name="mixerFour"
-                              id="mixerFourInput"
-                              placeholder="Mixer Four"
-                              value={this.state.mixerFour}
-                              onChange={this.handleFormChange}
-                              className={this.state.mixerFour === "" ? "dataNeeded" : "inputField"}
-                            />
-                          </div>
-                        </FormGroup>
-                      </Col>
-                    </>
-                  { this.state.hasMixer > 4 &&
-                      <>
-                        <Col xs="4">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerFive"
-                                id="mixerFiveInput"
-                                placeholder="Mixer Five"
-                                value={this.state.mixerFive}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerFive === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                      </Col>
-                    </>
+                <Row xs="3">
+                  <MixerOneQ mixerOne={this.state.mixerOne}
+                             handleFormChange={this.handleFormChange}
+                  />
+                  { this.state.hasMixer > 1 &&
+                    <MixerTwoQ mixerTwo={this.state.mixerTwo}
+                               handleFormChange={this.handleFormChange}
+                    />
                   }
-                    { this.state.hasMixer > 5 &&
-                      <>
-                        <Col xs="4">
-                          <FormGroup>
-                            <div className="mixerQuestion">
-                              <Input
-                                type="text"
-                                name="mixerSix"
-                                id="mixerSixInput"
-                                placeholder="Mixer Six"
-                                value={this.state.mixerSix}
-                                onChange={this.handleFormChange}
-                                className={this.state.mixerSix === "" ? "dataNeeded" : "inputField"}
-                              />
-                            </div>
-                          </FormGroup>
-                        </Col>
-                      </>
-                    }
-                  </Row>
-                }
-              </div>
-              </>
-            }
-                <Row xs="1">
-                  <Col>
-                    <FormGroup check className="collabCheck">
-                      <Label check>
-                      <Input type="checkbox"
-                             name="hasCollab"
-                             onChange={this.toggleHasCollab}
-                             className="inputField"
-                             checked={this.state.hasCollab}
-                      />
-                      Collabaratory Brewery(s)?
-                      </Label>
-                    </FormGroup>
-                  </Col>
+                  { this.state.hasMixer > 2 &&
+                    <MixerThreeQ mixerThree={this.state.mixerThree}
+                                 handleFormChange={this.handleFormChange}
+                    />
+                  }
                 </Row>
-                {this.state.hasCollab &&
-                <div className="collabInputs">
-                  <h4 className="collabInputAreaHeader">Collab Input Area</h4>
-                  <Row xs={this.state.firstCollabCountry === "GB" || this.state.firstCollabCountry === "US" ? "3" : "2"}>
-                      <Col>
-                        <FormGroup>
-                          <div>
-                            <Input
-                              type="text"
-                              name="firstCollabCompany"
-                              id="collabOneInput"
-                              placeholder="First Collab Company"
-                              value={this.state.firstCollabCompany}
-                              onChange={this.handleFormChange}
-                              className={this.state.firstCollabCompany === "" ? "dataNeeded" : "inputField"}
-                            />
-                          </div>
-                        </FormGroup>
-                      </Col>
-                      <Col>
-                        <FormGroup>
-                          <div>
-                            <Input
-                              type="select"
-                              name="firstCollabCountry"
-                              id="collabOneCountryInput"
-                              value={this.state.firstCollabCountry}
-                              onChange={this.handleFormChangeCountryUpdate}
-                              className={this.state.firstCollabCountry === "" ? "dataNeeded" : "inputField"}
-                            >
-                              <option value="">Select Country:</option>
-                              {countryOptionsSelect}
-                            </Input>
-                          </div>
-                        </FormGroup>
-                      </Col>
-                      { this.state.firstCollabCountry === "GB" &&
-                        <Col>
-                          <FormGroup>
-                            <div>
-                              <Input
-                                type="select"
-                                name="firstUkUsa"
-                                id="collabOneGBCountryInput"
-                                value={this.state.firstUkUsa}
-                                onChange={this.handleFormChange}
-                                className={this.state.firstUkUsa === "" ? "dataNeeded" : "inputField"}
-                              >
-                                {britishCountrySelect}
-                              </Input>
-                            </div>
-                          </FormGroup>
-                        </Col>
-                      }
-                      { this.state.firstCollabCountry === "US" &&
-                        <Col xs="4">
-                          <FormGroup className="formGroupQuestion">
-                            <Input
-                              type="select"
-                              name="firstUkUsa"
-                              id="collabOneUSStateInput"
-                              value={this.state.firstUkUsa}
-                              onChange={this.handleFormChange}
-                              className={this.state.firstUkUsa === "" ? "dataNeeded" : "inputField"}
-                            >
-                              {usStateOptionsSelect}
-                            </Input>
-                          </FormGroup>
-                        </Col>
-                      }
-                    </Row>
-                    <Row xs={this.state.secondCollabCountry === "GB" || this.state.secondCollabCountry === "US" ? "3" : "2"}>
-                      <Col>
-                        <FormGroup>
-                          <div>
-                            <Input
-                              type="text"
-                              name="secondCollabCompany"
-                              id="collabTwoInput"
-                              placeholder="Second Collab Company (Optional)"
-                              value={this.state.secondCollabCompany}
-                              onChange={this.handleFormChange}
-                              className="inputField"
-                            />
-                          </div>
-                        </FormGroup>
-                      </Col>
-                      <Col>
-                        <FormGroup>
-                          <div>
-                            <Input
-                              type="select"
-                              name="secondCollabCountry"
-                              id="collabTwoCountryInput"
-                              value={this.state.secondCollabCountry}
-                              onChange={this.handleFormChangeCountryUpdate}
-                              className="inputField"
-                            >
-                              <option value="">Select Country:</option>
-                              {countryOptionsSelect}
-                            </Input>
-                          </div>
-                        </FormGroup>
-                      </Col>
-                      { this.state.secondCollabCountry === "GB" &&
-                        <Col>
-                          <FormGroup>
-                            <div>
-                              <Input
-                                type="select"
-                                name="secondUkUsa"
-                                id="collabTwoGBCountryInput"
-                                value={this.state.secondUkUsa}
-                                onChange={this.handleFormChange}
-                                className="inputField"
-                              >
-                              {britishCountrySelect}
-                              </Input>
-                            </div>
-                          </FormGroup>
-                        </Col>
-                      }
-                      { this.state.secondCollabCountry === "US" &&
-                        <Col xs="4">
-                          <FormGroup className="formGroupQuestion">
-                            <Input
-                              type="select"
-                              name="secondUkUsa"
-                              id="collabTwoUSStateInput"
-                              value={this.state.secondUkUsa}
-                              onChange={this.handleFormChange}
-                              className="inputField"
-                            >
-                              {usStateOptionsSelect}
-                            </Input>
-                          </FormGroup>
-                        </Col>
-                      }
-                  </Row>
-                </div>
+              { this.state.hasMixer > 3 &&
+                <Row xs="3">
+                  <MixerFourQ mixerFour={this.state.mixerFour}
+                              handleFormChange={this.handleFormChange}
+                  />
+                { this.state.hasMixer > 4 &&
+                  <MixerFiveQ mixerFive={this.state.mixerFive}
+                              handleFormChange={this.handleFormChange}/>
                 }
-                <div className="verdictArea">
-                  <h4 className="verdictAreaHeader">Verdict</h4>
-                  <Row xs="3">
-                    <Col>
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="text"
-                          name="ratingWordOne"
-                          id="ratingWordOneInput"
-                          placeholder="Rating Word One"
-                          value={this.state.ratingWordOne}
-                          onChange={rtOneAutocomplete}
-                          className={this.state.ratingWordOne === "" ? "dataNeeded" : "inputField"}
-                        />
-                      </FormGroup>
-                      {rtWordOneSuggestionsComponent}
-                    </Col>
-                    <Col>
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="text"
-                          name="ratingWordTwo"
-                          id="ratingWordTwoInput"
-                          placeholder="Rating Word Two"
-                          value={this.state.ratingWordTwo}
-                          onChange={rtTwoAutocomplete}
-                          className={this.state.ratingWordTwo === "" ? "dataNeeded" : "inputField"}
-                        />
-                      </FormGroup>
-                      {rtWordTwoSuggestionsComponent}
-                    </Col>
-                    <Col xs="2">
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="number"
-                          name="score"
-                          id="scoreInput"
-                          placeholder="Score"
-                          value={this.state.score}
-                          onChange={this.handleFormChange}
-                          className={this.state.score === "" ? "dataNeeded" : "inputField"}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </div>
-                <div className="notesArea">
-                  <h4 className="notesAreaHeader">Additional Notes</h4>
+                { this.state.hasMixer > 5 &&
+                  <MixerSixQ mixerSix={this.state.mixerSix}
+                              handleFormChange={this.handleFormChange}
+                  />
+                }
+                </Row>
+              }
+              </div>
+            }
+          <Row xs="1">
+            <CollabCheckbox toggleHasCollab={this.toggleHasCollab}
+                            hasCollab={this.state.hasCollab}
+            />
+          </Row>
+        { this.state.hasCollab &&
+            <div className="collabInputs">
+              <h4 className="collabInputAreaHeader">Collab Input Area</h4>
+              <Row xs={this.state.firstCollabCountry === "GB" || this.state.firstCollabCountry === "US" ? "3" : "2"}>
+                <CollabCompanyOneQ firstCollabCompany={this.state.firstCollabCompany}
+                                    handleFormChange={this.handleFormChange}
+                />
+                <CollabCountryOneQ firstCollabCountry={this.state.firstCollabCountry}
+                                    handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
+                                    countryOptionsSelect={countryOptionsSelect}
+                />
+              { this.state.firstCollabCountry === "GB" &&
+                <CollabGBCountryOneQ firstUkUsa={this.state.firstUkUsa}
+                                     handleFormChange={this.handleFormChange}
+                                     britishCountrySelect={britishCountrySelect}
+                />
+              }
+              { this.state.firstCollabCountry === "US" &&
+                <CollabUSStateOneQ firstUkUsa={this.state.firstUkUsa}
+                                   handleFormChange={this.handleFormChange}
+                                   usStateOptionsSelect={usStateOptionsSelect}
+                />
+              }
+              </Row>
+              <Row xs={this.state.secondCollabCountry === "GB" || this.state.secondCollabCountry === "US" ? "3" : "2"}>
+                <CollabCompanyTwoQ secondCollabCompany={this.state.secondCollabCompany}
+                                   handleFormChange={this.handleFormChange}
+                />
+
+                <CollabCountryTwoQ secondCollabCountry={this.state.secondCollabCountry}
+                                   handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
+                                   countryOptionsSelect={countryOptionsSelect}
+                />
+              { this.state.secondCollabCountry === "GB" &&
+                <CollabGBCountryTwoQ secondUkUsa={this.state.secondUkUsa}
+                                     handleFormChange={this.handleFormChange}
+                                     britishCountrySelect={britishCountrySelect}
+                />
+              }
+              { this.state.secondCollabCountry === "US" &&
+                <CollabUSStateTwoQ secondUkUsa={this.state.secondUkUsa}
+                                   handleFormChange={this.handleFormChange}
+                                   usStateOptionsSelect={usStateOptionsSelect}
+                />
+              }
+              </Row>
+            </div>
+        }
+            <div className="verdictArea">
+              <h4 className="verdictAreaHeader">Verdict</h4>
+              <Row xs="3">
+                <RatingOneQ ratingWordOne={this.state.ratingWordOne}
+                            showSuggestions={this.state.showSuggestions}
+                            filteredRtOneSuggestions={this.state.filteredRtOneSuggestions}
+                            activeSuggestion={this.state.activeSuggestion}
+                            rtOneAutocomplete={this.rtOneAutocomplete}
+                            rtWordOneSuggestionClick={this.rtWordOneSuggestionClick}
+                />
+                <RatingTwoQ ratingWordTwo={this.state.ratingWordTwo}
+                            showSuggestions={this.state.showSuggestions}
+                            filteredRtTwoSuggestions={this.state.filteredRtTwoSuggestions}
+                            activeSuggestion={this.state.activeSuggestion}
+                            rtTwoAutocomplete={this.rtTwoAutocomplete}
+                            rtWordTwoSuggestionClick={this.rtWordTwoSuggestionClick}/>
+
+                <ScoreQ score={this.state.score}
+                        handleFormChange={this.handleFormChange}
+                />
+              </Row>
+            </div>
+              <div className="notesArea">
+                <h4 className="notesAreaHeader">Additional Notes</h4>
                   <Row xs="1">
-                    <Col>
-                      <FormGroup className="formGroupQuestion">
-                        <Input
-                          type="textarea"
-                          name="notes"
-                          id="notesInput"
-                          placeholder="Drink notes here"
-                          value={this.state.notes}
-                          onChange={this.handleFormChange}
-                          className="inputField"
-                        />
-                      </FormGroup>
-                    </Col>
+                    <NotesQ notes={this.state.notes}
+                            handleFormChange={this.handleFormChange}
+                    />
                   </Row>
-                </div>
-                <div className="text-center">
-                  <Button className="submitButton">Submit Drink</Button>
-                </div>
+              </div>
+              <div className="text-center">
+                <Button className="submitButton">Submit Drink</Button>
+              </div>
           </Form>
         </Container>
       </div>

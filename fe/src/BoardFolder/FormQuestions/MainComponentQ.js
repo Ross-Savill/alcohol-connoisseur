@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
-class MainCompQuestion extends React.Component {render() {
+class MainComponentQ extends React.Component {render() {
 
   const {
     props: {
@@ -16,7 +16,6 @@ class MainCompQuestion extends React.Component {render() {
       mixerSuggestionClick,
       onKeyDown
     }
-
   } = this;
 
   let mainDrinkSuggestionsComponent;
@@ -97,4 +96,4 @@ class MainCompQuestion extends React.Component {render() {
 
 }}
 
-export default MainCompQuestion;
+export default MainComponentQ;

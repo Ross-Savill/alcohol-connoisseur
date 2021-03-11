@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
-class DrinkTypeQuestion extends React.Component {render() {
+class DrinkTypeQ extends React.Component {render() {
 
   const drinkTypeSelect = this.props.drinkTypes.map((drinkType) =>
     <option key={drinkType.drinkType} value={drinkType.drinkType}>{drinkType.drinkType}</option>
@@ -28,4 +28,4 @@ class DrinkTypeQuestion extends React.Component {render() {
 
 }}
 
-export default DrinkTypeQuestion;
+export default DrinkTypeQ;

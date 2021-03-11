@@ -42,11 +42,13 @@ export default function Table({ columns, data, drinkers }) {
   );
 
   useEffect(() => {
-    let drinkerSelectionArray = [{"value": "", "label": "All Drinkers"}];
-    drinkers.map((drinker) => {
-      drinkerSelectionArray.push({"value": drinker.personName, "label": drinker.personName })
-    })
-    setDrinkerSeletion(drinkerSelectionArray)
+    if(drinkers) {
+      let drinkerSelectionArray = [{"value": "", "label": "All Drinkers"}];
+      drinkers.map((drinker) => {
+        drinkerSelectionArray.push({"value": drinker.personName, "label": drinker.personName })
+      })
+      setDrinkerSeletion(drinkerSelectionArray)
+    }
   },[drinkers])
 
   const handleFilterChange = e => {

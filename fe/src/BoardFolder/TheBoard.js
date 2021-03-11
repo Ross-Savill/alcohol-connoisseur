@@ -100,6 +100,8 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       )
     } else {
       return boardDrinks.map((drink, index) => {
+        const namesArray = drink.name.split(" ");
+        const firstName = namesArray[0]
         let missingPieces = [];
         if(!drink.abv) missingPieces.push("ABV ")
         if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
@@ -107,7 +109,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
         if(drink.abv) { displayedAbv = `(${(drink.abv*100).toFixed(1)}%)` } else { displayedAbv = `(???)` }
         return (
           <tr key={index}>
-            <td>{drink.name}</td>
+            <td>{firstName}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
             <td>{drink.mixerSix ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}`
               : drink.mixerFive ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}`
@@ -117,18 +119,6 @@ const TheBoard =({ drinkers, drinkTypes }) => {
               : drink.mixerOne ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}`
               : `${drink.drinkMain} ${displayedAbv}`
             }</td>
-            <td> {drink.ukUsa ? `${drink.company} (${drink.ukUsa})`
-                                    : drink.country ? `${drink.company} (${drink.country})`
-                                    : `${drink.company} (???)`}
-            {drink.firstUkUsa ? ` X ${drink.firstCollabCompany} (${drink.firstUkUsa})`
-                                    : drink.firstCollabCountry ? ` X ${drink.firstCollabCompany} (${drink.firstCollabCountry})`
-                                    : drink.firstCollabCompany ? `X ${drink.firstCollabCompany} (???)`
-                                    : ""}
-          {drink.secondUkUsa ? ` X ${drink.secondCollabCompany} (${drink.secondUkUsa})`
-                                    : drink.secondCollabCountry ? ` X ${drink.secondCollabCompany} (${drink.secondCollabCountry})`
-                                    : drink.secondCollabCompany ? `X ${drink.secondCollabCompany} (???)`
-                                    : ""}
-            </td>
             <td> {!drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
             <td>{drink.score}</td>
             <td>{drink.notes}</td>
@@ -156,9 +146,9 @@ const TheBoard =({ drinkers, drinkTypes }) => {
             <tr>
               <th className="theBoardMainHeader" colSpan="8">
                 <div className="theBoardMainHeaderContainer">
-                <div>{moment(new Date()).format('dddd Do MMMM YYYY')}</div>
-                <div>🥂🍷🍸🍺🍹🍻 THE BOARD 🍻🍹🍺🍸🍷🥂</div>
-                <div>Session Number: {sessionId}</div>
+                  <div>{moment(new Date()).format('ddd Do MMMM')}</div>
+                  <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
+                  <div>Session #: {sessionId}</div>
                 </div>
               </th>
             </tr>
@@ -166,7 +156,6 @@ const TheBoard =({ drinkers, drinkTypes }) => {
               <th className="theBoardTh">Drinker</th>
               <th className="theBoardTh">Time</th>
               <th className="theBoardTh">Drink</th>
-              <th className="theBoardTh">Company(s)</th>
               <th className="theBoardTh">Rating Words</th>
               <th className="theBoardTh">Score</th>
               <th className="theBoardTh">Notes</th>

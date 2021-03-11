@@ -17,10 +17,16 @@
   overflow-y: scroll;
 }
 
+.theBoardTableDiv table tr:nth-child(even) {
+  background-color: rgba(176, 247, 255, 0.3);
+}
+
+.theBoardTableDiv table tr:nth-child(odd) {
+  background-color: rgba(253, 255, 132, 0.3);
+}
+
 .theBoardMainHeader {
-  font-size: 30px;
-  top: 0;
-  z-index: 1;
+  font-size: 25px;
   background-color: lightgreen;
 }
 
@@ -36,8 +42,12 @@
 
 .theBoardTable tr {
   text-align: center;
-  font-family: "Patrick Hand";
+  font-family: sans-serif;
   font-size: 20px;
+}
+
+.theBoardTable td {
+  font-size: 14px;
 }
 
 .addDrinkButton {
@@ -46,8 +56,4 @@
 
 .mainTableButton {
   float: right;
-}
-
-.noDrinksOnBoardTd {
-  font-size: 30px;
 }

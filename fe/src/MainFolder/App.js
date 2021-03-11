@@ -14,12 +14,14 @@ import { ProtectedRoute } from '../MyUtilitiesFolder/ProtectedRoute';
 import Admin from '../AdminFolder/Admin';
 import TheBoard from '../BoardFolder/TheBoard';
 import { useAuth0, withAuth0 } from '@auth0/auth0-react';
+import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 
 const App = () => {
   const [state, setState] = useState ({
     drinks: null,
     drinkers: null,
-    drinkTypes: null
+    drinkTypes: null,
+    confirmedDrinks: null
   })
 
   const { getAccessTokenSilently, user } = useAuth0();
@@ -37,8 +39,8 @@ const App = () => {
 
         axios.all([requestDrinkers, requestDrinks, requestDrinkTypes])
           .then(resp => setState({ drinkers: resp[0].data,
-                                  drinks: resp[1].data,
-                                  drinkTypes: resp[2].data
+                                   drinks: resp[1].data,
+                                   drinkTypes: resp[2].data
           }))
           .catch(error => console.log(error))
       }
@@ -46,14 +48,15 @@ const App = () => {
     getInfo();
   }, [user])
 
-  if(!user) {
-    return (
-      <div>
-        <LoginButton />
-      </div>
-    )
-  } else {
-    return (
+  if(!user) { return ( <div><LoginButton /></div>) }
+    else if(!state.drinks) { return <LoadingSpin /> }
+    else {
+      const confirmedDrinks = [];
+      state.drinks.map((drink) => {
+      if(drink.confirmed === true ) {
+        confirmedDrinks.push(drink)
+      }})
+      return (
       <div>
         <BrowserRouter>
           <div>
@@ -61,7 +64,7 @@ const App = () => {
               exact path="/"
               render={(props) => (
                 <HomePage {...props}
-                drinks={state.drinks}
+                drinks={confirmedDrinks}
                 drinkers={state.drinkers}
                 />
               )}
@@ -70,7 +73,7 @@ const App = () => {
               exact path="/drinkers"
               render={(props) => (
                 <Drinkers {...props}
-                drinks={state.drinks}
+                drinks={confirmedDrinks}
                 drinkers={state.drinkers}
                 drinkTypes={state.drinkTypes}
                 />
@@ -80,7 +83,7 @@ const App = () => {
               exact path="/ratingwords"
               render={(props) => (
                 <RatingWord {...props}
-                  drinks={state.drinks}
+                  drinks={confirmedDrinks}
                 />
               )}
             />
@@ -88,7 +91,7 @@ const App = () => {
               exact path="/sessions"
               render={(props) => (
                 <Sessions {...props}
-                  drinks={state.drinks}
+                  drinks={confirmedDrinks}
                   drinkers={state.drinkers}
                   drinkTypes={state.drinkTypes}
                 />
@@ -98,21 +101,21 @@ const App = () => {
               exact path="/breweries"
               render={(props) => (
                 <BreweryPage {...props}
-                  drinks={state.drinks}
+                  drinks={confirmedDrinks}
                 />
               )}
             />
             <Route
               exact path="/world-map" render={(props) => (
                 <WorldMap {...props}
-                  drinks={state.drinks}
+                  drinks={confirmedDrinks}
                 />
               )}
             />
             <Route
               exact path="/us-map" render={(props) => (
                 <USMap {...props}
-                  drinks={state.drinks}
+                  drinks={confirmedDrinks}
                 />
               )}
             />

@@ -72,10 +72,17 @@ class AddDrinkForm extends Component {
       notes: '',
       activeSuggestion: 0,
       filteredMainDrinkSuggestions: [],
+      filteredMainDrinkMixerSuggestions: [],
       filteredMixerSuggestions: [],
       filteredRtOneSuggestions: [],
       filteredRtTwoSuggestions: [],
       showSuggestions: false,
+      mixerOneSuggestions: false,
+      mixerTwoSuggestions: false,
+      mixerThreeSuggestions: false,
+      mixerFourSuggestions: false,
+      mixerFiveSuggestions: false,
+      mixerSixSuggestions: false,
       confirmed: false
     }
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -84,6 +91,8 @@ class AddDrinkForm extends Component {
     this.onKeyDown = this.onKeyDown.bind(this);
     this.drinkAutocomplete = this.drinkAutocomplete.bind(this);
     this.toggleHasMixer = this.toggleHasMixer.bind(this);
+    this.mixerAutocomplete = this.mixerAutocomplete.bind(this);
+    this.mixerSuggestionClick = this.mixerSuggestionClick.bind(this);
     this.handleFormChangeCountryUpdate = this.handleFormChangeCountryUpdate.bind(this);
     this.toggleHasCollab = this.toggleHasCollab.bind(this);
     this.rtOneAutocomplete = this.rtOneAutocomplete.bind(this);
@@ -169,18 +178,40 @@ class AddDrinkForm extends Component {
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
       suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    const filteredMixerSuggestions = uniqueMixers.filter(
+    const filteredMainDrinkMixerSuggestions = uniqueMixers.filter(
       suggestion => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMixerSuggestions, showSuggestions: true, [name]: value });
+    this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMainDrinkMixerSuggestions, showSuggestions: true, [name]: value });
+  }
+
+  mixerAutocomplete = e => {
+    const { drinks } = this.props
+    const { target: { name, value } } = e
+    const userInput = e.currentTarget.value;
+    let allLiquids = [];
+    drinks.map((drink) => {
+      allLiquids.push(drink.drinkMain)
+      if(!drink.mixerOne) { return } else { allLiquids.push(drink.mixerOne)}
+      if(!drink.mixerTwo) { return } else { allLiquids.push(drink.mixerTwo)}
+      if(!drink.mixerThree) { return } else { allLiquids.push(drink.mixerThree)}
+      if(!drink.mixerFour) { return } else { allLiquids.push(drink.mixerFour)}
+      if(!drink.mixerFive) { return } else { allLiquids.push(drink.mixerFive)}
+      if(!drink.mixerSix) { return } else { allLiquids.push(drink.mixerSix)}
+    })
+    const uniqueMixers = Array.from(new Set(allLiquids));
+    const filteredMixerSuggestions = uniqueMixers.filter(
+      suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
+    );
+    console.log(filteredMixerSuggestions)
+    this.setState({ activeSuggestion: 0, filteredMixerSuggestions, [`${name}Suggestions`]: true, [name]: value })
   }
 
   rtOneAutocomplete = (e) => {
     const { target: { name, value } } = e
     const userInput = e.currentTarget.value;
     const allRatingWords = [...new Set(
-    this.props.drinks.map((drink) => {
-        return drink.ratingWordOne, drink.ratingWordTwo
+      this.props.drinks.map((drink) => {
+          return drink.ratingWordOne, drink.ratingWordTwo
       })
     )]
     const filteredRtOneSuggestions = allRatingWords.filter(
@@ -207,7 +238,7 @@ class AddDrinkForm extends Component {
     this.setState({
       activeSuggestion: 0,
       filteredMainDrinkSuggestions: [],
-      filteredMixerSuggestions: [],
+      filteredMainDrinkMixerSuggestions: [],
       showSuggestions: false,
       drinkMain: chosenDrink.drinkMain,
       drinkType: chosenDrink.drinkType,
@@ -229,16 +260,11 @@ class AddDrinkForm extends Component {
     }
   };
 
-  mainComponentAsMixerClick = (drinkName) => {
-
-  }
-
-  mixerSuggestionClick = (mixerName, inputField) => {
-    this.setState({ [inputField]: mixerName,
+  mixerSuggestionClick = (mixerName, name) => {
+    this.setState({ [name]: mixerName,
                     activeSuggestion: 0,
-                    filteredMainDrinkSuggestions: [],
                     filteredMixerSuggestions: [],
-                    showSuggestions: false
+                    [`${name}Suggestions`]: false
     })
   }
 
@@ -264,21 +290,18 @@ class AddDrinkForm extends Component {
   onKeyDown = e => {
     const { activeSuggestion, filteredMainDrinkSuggestions } = this.state;
 
-    // if clicked enter to select suggestion
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
         userInput: filteredMainDrinkSuggestions[activeSuggestion]
       });
-      // upclick
     } else if (e.keyCode === 38) {
       if (activeSuggestion === 0) {
         return;
       }
       this.setState({ activeSuggestion: activeSuggestion - 1 });
     }
-    // downclick
     else if (e.keyCode === 40) {
       if (activeSuggestion - 1 === filteredMainDrinkSuggestions.length) {
         return;
@@ -393,28 +416,6 @@ class AddDrinkForm extends Component {
       return <LoadingSpin />
     }
 
-    const {
-      drinkAutocomplete,
-      rtWordOneSuggestionClick,
-      rtWordTwoSuggestionClick,
-      rtOneAutocomplete,
-      rtTwoAutocomplete,
-      mainComponentSuggestionClick,
-      mixerSuggestionClick,
-      onKeyDown,
-      state: {
-        activeSuggestion,
-        filteredMainDrinkSuggestions,
-        filteredMixerSuggestions,
-        filteredRtOneSuggestions,
-        filteredRtTwoSuggestions,
-        showSuggestions,
-        drinkMain,
-        ratingWordOne,
-        ratingWordTwo
-      }
-    } = this;
-
     const countryList = countries.getNames("en", {select: "official"})
     const countryOptionsSelect = [];
     for (let [code, countryName] of Object.entries(countryList)) {
@@ -480,7 +481,7 @@ class AddDrinkForm extends Component {
               <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
                               activeSuggestion={this.state.activeSuggestion}
                               showSuggestions={this.state.showSuggestions}
-                              filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                              filteredMainDrinkMixerSuggestions={this.state.filteredMainDrinkMixerSuggestions}
                               drinkMain={this.state.drinkMain}
                               mainComponentSuggestionClick={this.mainComponentSuggestionClick}
                               mixerSuggestionClick={this.mixerSuggestionClick}
@@ -500,16 +501,16 @@ class AddDrinkForm extends Component {
                             countryOptionsSelect={countryOptionsSelect}
               />
               { this.state.country === "GB" &&
-                <MainGBCountryQ ukUsa={this.state.ukUsa}
-                                handleFormChange={this.handleFormChange}
-                                britishCountrySelect={britishCountrySelect}
-                />
+              <MainGBCountryQ ukUsa={this.state.ukUsa}
+                              handleFormChange={this.handleFormChange}
+                              britishCountrySelect={britishCountrySelect}
+              />
               }
               { this.state.country === "US" &&
-                <MainUSStateQ ukUsa={this.state.ukUsa}
-                              handleFormChange={this.handleFormChange}
-                              usStateOptionsSelect={usStateOptionsSelect}
-                />
+              <MainUSStateQ ukUsa={this.state.ukUsa}
+                            handleFormChange={this.handleFormChange}
+                            usStateOptionsSelect={usStateOptionsSelect}
+              />
               }
             </Row>
           </div>
@@ -518,31 +519,62 @@ class AddDrinkForm extends Component {
               <h4 className="mixerInputAreaHeader">Mixer Input Area</h4>
                 <Row xs="3">
                   <MixerOneQ mixerOne={this.state.mixerOne}
-                             handleFormChange={this.handleFormChange}
+                             mixerOneSuggestions={this.state.mixerOneSuggestions}
+                             filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                             activeSuggestion={this.state.activeSuggestion}
+                             onKeyDown={this.onKeyDown}
+                             mixerAutocomplete={this.mixerAutocomplete}
+                             mixerSuggestionClick={this.mixerSuggestionClick}
                   />
                   { this.state.hasMixer > 1 &&
-                    <MixerTwoQ mixerTwo={this.state.mixerTwo}
-                               handleFormChange={this.handleFormChange}
-                    />
+                  <MixerTwoQ mixerTwo={this.state.mixerTwo}
+                             mixerTwoSuggestions={this.state.mixerTwoSuggestions}
+                             filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                             activeSuggestion={this.state.activeSuggestion}
+                             onKeyDown={this.onKeyDown}
+                             mixerAutocomplete={this.mixerAutocomplete}
+                             mixerSuggestionClick={this.mixerSuggestionClick}
+                  />
                   }
                   { this.state.hasMixer > 2 &&
-                    <MixerThreeQ mixerThree={this.state.mixerThree}
-                                 handleFormChange={this.handleFormChange}
-                    />
+                  <MixerThreeQ mixerThree={this.state.mixerThree}
+                               mixerThreeSuggestions={this.state.mixerThreeSuggestions}
+                               filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                               activeSuggestion={this.state.activeSuggestion}
+                               onKeyDown={this.onKeyDown}
+                               mixerAutocomplete={this.mixerAutocomplete}
+                               mixerSuggestionClick={this.mixerSuggestionClick}
+                  />
                   }
                 </Row>
               { this.state.hasMixer > 3 &&
                 <Row xs="3">
                   <MixerFourQ mixerFour={this.state.mixerFour}
-                              handleFormChange={this.handleFormChange}
+                              mixerFourSuggestions={this.state.mixerFourSuggestions}
+                              filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                              activeSuggestion={this.state.activeSuggestion}
+                              onKeyDown={this.onKeyDown}
+                              mixerAutocomplete={this.mixerAutocomplete}
+                              mixerSuggestionClick={this.mixerSuggestionClick}
                   />
                 { this.state.hasMixer > 4 &&
                   <MixerFiveQ mixerFive={this.state.mixerFive}
-                              handleFormChange={this.handleFormChange}/>
+                              mixerFiveSuggestions={this.state.mixerFiveSuggestions}
+                              filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                              activeSuggestion={this.state.activeSuggestion}
+                              onKeyDown={this.onKeyDown}
+                              mixerAutocomplete={this.mixerAutocomplete}
+                              mixerSuggestionClick={this.mixerSuggestionClick}
+                  />
                 }
                 { this.state.hasMixer > 5 &&
                   <MixerSixQ mixerSix={this.state.mixerSix}
-                              handleFormChange={this.handleFormChange}
+                             mixerSixSuggestions={this.state.mixerSixSuggestions}
+                             filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                             activeSuggestion={this.state.activeSuggestion}
+                             onKeyDown={this.onKeyDown}
+                             mixerAutocomplete={this.mixerAutocomplete}
+                             mixerSuggestionClick={this.mixerSuggestionClick}
                   />
                 }
                 </Row>

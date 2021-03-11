@@ -8,7 +8,7 @@ class MainComponentQ extends React.Component {render() {
     props: {
       activeSuggestion,
       filteredMainDrinkSuggestions,
-      filteredMixerSuggestions,
+      filteredMainDrinkMixerSuggestions,
       showSuggestions,
       drinkAutocomplete,
       drinkMain,
@@ -48,10 +48,10 @@ class MainComponentQ extends React.Component {render() {
   }
 
   if (showSuggestions && drinkMain) {
-    if (filteredMixerSuggestions.length) {
+    if (filteredMainDrinkMixerSuggestions.length) {
       mixerSuggestionsComponent = (
         <ul className="suggestions mixer-suggestions">
-          {filteredMixerSuggestions.map((suggestion, index) => {
+          {filteredMainDrinkMixerSuggestions.map((suggestion, index) => {
             let className;
             if (index === activeSuggestion) {
               className = "suggestion-active";

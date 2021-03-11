@@ -4,6 +4,46 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MixerOneQ extends React.Component {render() {
 
+  let mixerOneSuggestionsComponent;
+
+  const {
+    props: {
+      filteredMixerSuggestions,
+      mixerOneSuggestions,
+      mixerAutocomplete,
+      mixerSuggestionClick,
+      mixerOne,
+      onKeyDown,
+      activeSuggestion
+    }
+  } = this;
+
+  if (mixerOneSuggestions && mixerOne) {
+    if (filteredMixerSuggestions.length) {
+      mixerOneSuggestionsComponent = (
+        <ul className="suggestions">
+          {filteredMixerSuggestions.map((suggestion, index) => {
+            let className;
+            if (index === activeSuggestion) {
+              className = "suggestion-active";
+            }
+            return (
+              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerOne")}>
+                {suggestion}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    } else {
+      mixerOneSuggestionsComponent = (
+        <div className="no-suggestions">
+          <em>No main drinks available.</em>
+        </div>
+      );
+    }
+  }
+
   return (
     <Col xs="4">
       <FormGroup>
@@ -13,10 +53,12 @@ class MixerOneQ extends React.Component {render() {
             name="mixerOne"
             id="mixerOneInput"
             placeholder="Mixer One"
-            value={this.props.mixerOne}
-            onChange={this.props.handleFormChange}
-            className={this.props.mixerOne === "" ? "dataNeeded" : "inputField"}
+            value={mixerOne}
+            onKeyDown={onKeyDown}
+            onChange={mixerAutocomplete}
+            className={mixerOne === "" ? "dataNeeded" : "inputField"}
           />
+          {mixerOneSuggestionsComponent}
         </div>
       </FormGroup>
     </Col>

@@ -6,6 +6,46 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MixerFiveQ extends React.Component {render() {
 
+  let mixerFiveSuggestionsComponent;
+
+  const {
+    props: {
+      filteredMixerSuggestions,
+      mixerFiveSuggestions,
+      mixerAutocomplete,
+      mixerSuggestionClick,
+      mixerFive,
+      onKeyDown,
+      activeSuggestion
+    }
+  } = this;
+
+  if (mixerFiveSuggestions && mixerFive) {
+    if (filteredMixerSuggestions.length) {
+      mixerFiveSuggestionsComponent = (
+        <ul className="suggestions">
+          {filteredMixerSuggestions.map((suggestion, index) => {
+            let className;
+            if (index === activeSuggestion) {
+              className = "suggestion-active";
+            }
+            return (
+              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerFive")}>
+                {suggestion}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    } else {
+      mixerFiveSuggestionsComponent = (
+        <div className="no-suggestions">
+          <em>No main drinks available.</em>
+        </div>
+      );
+    }
+  }
+
   return (
   <Col xs="4">
     <FormGroup>
@@ -15,10 +55,12 @@ class MixerFiveQ extends React.Component {render() {
           name="mixerFive"
           id="mixerFiveInput"
           placeholder="Mixer Five"
-          value={this.props.mixerFive}
-          onChange={this.props.handleFormChange}
+          value={mixerFive}
+          onKeyDown={onKeyDown}
+          onChange={mixerAutocomplete}
           className={this.props.mixerFive === "" ? "dataNeeded" : "inputField"}
         />
+        {mixerFiveSuggestionsComponent}
       </div>
     </FormGroup>
   </Col>

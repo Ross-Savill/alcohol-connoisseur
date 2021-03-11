@@ -4,6 +4,46 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MixerThreeQ extends React.Component {render() {
 
+  let mixerThreeSuggestionsComponent;
+
+  const {
+    props: {
+      filteredMixerSuggestions,
+      mixerThreeSuggestions,
+      mixerAutocomplete,
+      mixerSuggestionClick,
+      mixerThree,
+      onKeyDown,
+      activeSuggestion
+    }
+  } = this;
+
+  if (mixerThreeSuggestions && mixerThree) {
+    if (filteredMixerSuggestions.length) {
+      mixerThreeSuggestionsComponent = (
+        <ul className="suggestions">
+          {filteredMixerSuggestions.map((suggestion, index) => {
+            let className;
+            if (index === activeSuggestion) {
+              className = "suggestion-active";
+            }
+            return (
+              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerThree")}>
+                {suggestion}
+              </li>
+            );
+          })}
+        </ul>
+      );
+    } else {
+      mixerThreeSuggestionsComponent = (
+        <div className="no-suggestions">
+          <em>No main drinks available.</em>
+        </div>
+      );
+    }
+  }
+
   return (
     <Col xs="4">
       <FormGroup>
@@ -13,10 +53,12 @@ class MixerThreeQ extends React.Component {render() {
             name="mixerThree"
             id="mixerThreeInput"
             placeholder="Mixer Three"
-            value={this.props.mixerThree}
-            onChange={this.props.handleFormChange}
-            className={this.props.mixerThree === "" ? "dataNeeded" : "inputField"}
+            value={mixerThree}
+            onKeyDown={onKeyDown}
+            onChange={mixerAutocomplete}
+            className={mixerThree === "" ? "dataNeeded" : "inputField"}
           />
+          {mixerThreeSuggestionsComponent}
         </div>
       </FormGroup>
     </Col>

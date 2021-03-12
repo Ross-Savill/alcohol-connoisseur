@@ -106,7 +106,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
         if(!drink.abv) missingPieces.push("ABV ")
         if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
         let displayedAbv;
-        if(drink.abv) { displayedAbv = `(${(drink.abv*100).toFixed(1)}%)` } else { displayedAbv = `(???)` }
+        if(drink.abv) { displayedAbv = (((drink.abv * 10000)/100).toFixed(2)) % 1 === 0 ? `(${(drink.abv*100).toFixed(0)}%)` : `(${(drink.abv*100).toFixed(1)}%)`} else { displayedAbv = `(???)` }
         return (
           <tr key={index}>
             <td>{firstName}</td>
@@ -143,7 +143,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       <div className="theBoardTableDiv">
         <table className="theBoardTable">
           <thead className="theBoardTHead">
-            <tr>
+            <tr className="theBoardMainHeaderRow">
               <th className="theBoardMainHeader" colSpan="8">
                 <div className="theBoardMainHeaderContainer">
                   <div>{moment(new Date()).format('ddd Do MMMM')}</div>
@@ -152,11 +152,11 @@ const TheBoard =({ drinkers, drinkTypes }) => {
                 </div>
               </th>
             </tr>
-            <tr>
+            <tr className="theBoardHeadersRow">
               <th className="theBoardTh">Drinker</th>
               <th className="theBoardTh">Time</th>
               <th className="theBoardTh">Drink</th>
-              <th className="theBoardTh">Rating Words</th>
+              <th className="theBoardTh">Description</th>
               <th className="theBoardTh">Score</th>
               <th className="theBoardTh">Notes</th>
               <th className="theBoardTh">Done?</th>

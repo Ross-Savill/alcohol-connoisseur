@@ -30,6 +30,10 @@
   background-color: lightgreen;
 }
 
+.theBoardHeadersRow {
+  background-color: rgba(15, 194, 30, 0.3) !important;
+}
+
 .theBoardTh {
   text-align: center;
 }
@@ -37,13 +41,14 @@
 .theBoardMainHeaderContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-content: center;
 }
 
 .theBoardTable tr {
   text-align: center;
   font-family: sans-serif;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .theBoardTable td {

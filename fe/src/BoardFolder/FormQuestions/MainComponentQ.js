@@ -87,7 +87,7 @@ class MainComponentQ extends React.Component {render() {
             className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
           />
         </FormGroup>
-      <div className="mainAndMixerSuggestions">
+      <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}>
         {mainDrinkSuggestionsComponent}
         {mixerSuggestionsComponent}
       </div>

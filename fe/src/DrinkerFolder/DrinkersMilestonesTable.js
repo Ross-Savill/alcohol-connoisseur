@@ -153,7 +153,7 @@ class DrinkersMilestonesTable extends Component {
       return <p>Need to attend at least 10 meetups for favourite/ least favourite sessons!</p>
     } else {
       return (
-        <table>
+        <table className="drinkersMilestonesTable">
           <thead>
             <tr>
               <th className="milestoneDatesHeaderTitle" colSpan="2">Milestone Sessions</th>

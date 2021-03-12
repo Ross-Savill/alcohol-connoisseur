@@ -142,7 +142,6 @@
   border: 3px solid black;
   background-color: rgb(200, 255, 198);
   margin: 10px 0px 10px 0px;
-
 }
 
 .notesAreaHeader {
@@ -191,6 +190,20 @@
 .mainAndMixerSuggestions {
   display: flex;
   flex-direction: row;
+}
+
+.companyInputAndSugs {
+  display: flex;
+  flex-direction: column;
+}
+
+.companySugs {
+  height: 40vh;
+  z-index: 1;
+}
+
+.componentQuestion {
+  width: 100%;
 }
 
 

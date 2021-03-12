@@ -4,8 +4,8 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class DrinkerQ extends React.Component {render() {
 
-  const drinkerNameSelect = this.props.drinkerNames.map((name) =>
-    <option key={name.personName} value={name.personName}>{name.personName}</option>
+  const drinkerNameSelect = this.props.drinkerNames.map((name, index) =>
+    <option key={index} value={name.personName}>{name.personName}</option>
   );
 
   return (

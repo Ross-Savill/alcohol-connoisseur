@@ -4,9 +4,9 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class DrinkTypeQ extends React.Component {render() {
 
-  const drinkTypeSelect = this.props.drinkTypes.map((drinkType) =>
+  const drinkTypeSelect = (this.props.drinkTypes.map((drinkType) =>
     <option key={drinkType.drinkType} value={drinkType.drinkType}>{drinkType.drinkType}</option>
-  )
+  )).sort(function(a,b) { return a.key > b.key })
 
   return (
     <Col xs="4">

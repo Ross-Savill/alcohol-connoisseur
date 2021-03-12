@@ -176,7 +176,14 @@ class AddDrinkForm extends Component {
   handleClickOutside(event) {
     console.log(this.wrapperRef)
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      this.setState({ showSuggestions: false })
+      this.setState({ showSuggestions: false,
+                      mixerOneSuggestions: false,
+                      mixerTwoSuggestions: false,
+                      mixerThreeSuggestions: false,
+                      mixerFourSuggestions: false,
+                      mixerFiveSuggestions: false,
+                      mixerSixSuggestions: false,
+                      companySuggestions: false })
     }
 }
 
@@ -567,6 +574,8 @@ class AddDrinkForm extends Component {
                             companyAutocomplete={this.companyAutocomplete}
                             onKeyDown={this.onKeyDown}
                             companySuggestionClick={this.companySuggestionClick}
+                            setWrapperRef={this.setWrapperRef}
+                            handleClickOutside={this.handleClickOutside}
               />
               <MainCountryQ country={this.state.country}
                             handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
@@ -664,7 +673,13 @@ class AddDrinkForm extends Component {
               <Row xs={this.state.firstCollabCountry === "GB" || this.state.firstCollabCountry === "US" ? "3" : "2"}>
                 <CollabCompanyOneQ firstCollabCompany={this.state.firstCollabCompany}
                                    companyAutocomplete={this.companyAutocomplete}
-                                   handleFormChange={this.handleFormChange}
+                                   filteredCompanySuggestions={this.state.filteredCompanySuggestions}
+                                   firstCollabCompanySuggestions={this.state.firstCollabCompanySuggestions}
+                                   activeSuggestion={this.state.activeSuggestion}
+                                   onKeyDown={this.onKeyDown}
+                                   companySuggestionClick={this.companySuggestionClick}
+                                   setWrapperRef={this.setWrapperRef}
+                                   handleClickOutside={this.handleClickOutside}
                 />
                 <CollabCountryOneQ firstCollabCountry={this.state.firstCollabCountry}
                                     handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}

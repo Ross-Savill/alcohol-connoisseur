@@ -57,10 +57,10 @@ class MainCompanyQ extends React.Component {render() {
             onKeyDown={onKeyDown}
             onChange={companyAutocomplete}
             className={company === "" ? "dataNeeded" : "inputField"}
-            />
-            <div className="companySugs">
-              {companySuggestionsComponent}
-            </div>
+          />
+          <div className="companySugs">
+            {companySuggestionsComponent}
+          </div>
         </div>
       </FormGroup>
     </Col>

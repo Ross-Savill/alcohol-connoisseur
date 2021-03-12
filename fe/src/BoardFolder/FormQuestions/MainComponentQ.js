@@ -77,23 +77,22 @@ class MainComponentQ extends React.Component {render() {
     <Col xs="9">
       <FormGroup className="formGroupQuestion">
         <Input
-            type="text"
-            name="drinkMain"
-            id="mainDrinkComponentInput"
-            placeholder="Main Drink Component"
-            value={drinkMain}
-            onKeyDown={onKeyDown}
-            onChange={drinkAutocomplete}
-            className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
-          />
-        </FormGroup>
-      <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}>
+          type="text"
+          name="drinkMain"
+          id="mainDrinkComponentInput"
+          placeholder="Main Drink Component"
+          value={drinkMain}
+          onKeyDown={onKeyDown}
+          onChange={drinkAutocomplete}
+          className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
+        />
+      </FormGroup>
+      {/* <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}> */}
         {mainDrinkSuggestionsComponent}
         {mixerSuggestionsComponent}
-      </div>
+      {/* </div> */}
     </Col>
   )
-
 }}
 
 export default MainComponentQ;

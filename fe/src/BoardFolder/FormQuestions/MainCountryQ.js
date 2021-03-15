@@ -16,7 +16,7 @@ class MainCountryQ extends React.Component {render() {
           className={this.props.country === "" ? "dataNeeded" : "inputField"}
         >
         <option value="">Select Country:</option>
-        {this.props.countryOptionsSelect}
+          {this.props.countryOptionsSelect}
         </Input>
       </FormGroup>
     </Col>

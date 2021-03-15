@@ -87,6 +87,9 @@ class AddDrinkForm extends Component {
       companySuggestions: false,
       firstCollabCompanySuggestions: false,
       secondCollabCompanySuggestions: false,
+      drinkerError: "",
+      drinkTypeError: "",
+      mainComponentError: "",
       confirmed: false
     }
     this.handleFormChange = this.handleFormChange.bind(this);
@@ -174,8 +177,8 @@ class AddDrinkForm extends Component {
   }
 
   handleClickOutside(event) {
-    console.log(this.wrapperRef)
     if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      console.log("triggered")
       this.setState({ showSuggestions: false,
                       mixerOneSuggestions: false,
                       mixerTwoSuggestions: false,
@@ -233,7 +236,6 @@ class AddDrinkForm extends Component {
     const filteredMixerSuggestions = uniqueMixers.filter(
       suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    console.log(filteredMixerSuggestions)
     this.setState({ activeSuggestion: 0, filteredMixerSuggestions, [`${name}Suggestions`]: true, [name]: value })
   }
 
@@ -263,8 +265,6 @@ class AddDrinkForm extends Component {
     );
 
     this.setState({ activeSuggestion: 0, filteredCompanySuggestions, [`${name}Suggestions`]: true, [name]: value })
-    console.log(filteredCompanySuggestions)
-    console.log(userInput)
   }
 
   rtOneAutocomplete = (e) => {
@@ -382,6 +382,7 @@ class AddDrinkForm extends Component {
   };
 
   handleFormChange = (event) => {
+    console.log(event.target)
     const { target: { name, value } } = event
     this.setState({ [name]: value })
   }
@@ -422,63 +423,80 @@ class AddDrinkForm extends Component {
     }
   }
 
-  // validate = (event) => {
-  //   let nam = event.target.name;
-  // }
+  validate = (event) => {
+    let drinkerError = "";
+    let drinkTypeError = "";
+    let mainComponentError = "";
+
+    if(!this.state.personName) {
+      drinkerError = "Select Drinker"
+    }
+    if(!this.state.drinkType) {
+      drinkTypeError = "Select Drink Type"
+    }
+    if(!this.state.drinkMain) {
+      mainComponentError = "Input Drink"
+    }
+    if(drinkerError || drinkTypeError || mainComponentError) {
+      this.setState({ drinkerError, drinkTypeError, mainComponentError })
+      return false;
+    }
+    return true;
+  }
 
   handleSubmit = async event => {
     event.preventDefault();
-    // const isValid = this.validate();
-    // if (isValid) {
-    // }
+    const isValid = this.validate();
+    if (isValid) {
 
-    let drinkDate;
-    if(this.props.drinkToEdit && this.state.date !== null) {
-      drinkDate = this.state.date
-    } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
-      drinkDate = new Date()
-    } else {
-      drinkDate = null;
-    }
+      let drinkDate;
+      if(this.props.drinkToEdit && this.state.date !== null) {
+        drinkDate = this.state.date
+      } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
+        drinkDate = new Date()
+      } else {
+        drinkDate = null;
+      }
 
-    const neworEditedDrink = {
-      sessionId: this.state.sessionId,
-      name: this.state.personName,
-      date: drinkDate,
-      company: this.state.company,
-      country: this.state.country,
-      ukUsa: this.state.ukUsa,
-      firstCollabCompany: this.state.firstCollabCompany,
-      firstCollabCountry: this.state.firstCollabCountry,
-      firstUkUsa: this.state.firstUkUsa,
-      secondCollabCompany: this.state.secondCollabCompany,
-      secondCollabCountry: this.state.secondCollabCountry,
-      secondUkUsa: this.state.secondUkUsa,
-      drinkMain: this.state.drinkMain,
-      drinkType: this.state.drinkType,
-      abv: this.state.abv / 100,
-      mixerOne: this.state.mixerOne,
-      mixerTwo: this.state.mixerTwo,
-      mixerThree: this.state.mixerThree,
-      mixerFour: this.state.mixerFour,
-      mixerFive: this.state.mixerFive,
-      mixerSix: this.state.mixerSix,
-      ratingWordOne: this.state.ratingWordOne,
-      ratingWordTwo: this.state.ratingWordTwo,
-      score: this.state.score,
-      notes: this.state.notes,
-      confirmed: false
-    }
+      const neworEditedDrink = {
+        sessionId: this.state.sessionId,
+        name: this.state.personName,
+        date: drinkDate,
+        company: this.state.company,
+        country: this.state.country,
+        ukUsa: this.state.ukUsa,
+        firstCollabCompany: this.state.firstCollabCompany,
+        firstCollabCountry: this.state.firstCollabCountry,
+        firstUkUsa: this.state.firstUkUsa,
+        secondCollabCompany: this.state.secondCollabCompany,
+        secondCollabCountry: this.state.secondCollabCountry,
+        secondUkUsa: this.state.secondUkUsa,
+        drinkMain: this.state.drinkMain,
+        drinkType: this.state.drinkType,
+        abv: this.state.abv / 100,
+        mixerOne: this.state.mixerOne,
+        mixerTwo: this.state.mixerTwo,
+        mixerThree: this.state.mixerThree,
+        mixerFour: this.state.mixerFour,
+        mixerFive: this.state.mixerFive,
+        mixerSix: this.state.mixerSix,
+        ratingWordOne: this.state.ratingWordOne,
+        ratingWordTwo: this.state.ratingWordTwo,
+        score: this.state.score,
+        notes: this.state.notes,
+        confirmed: false
+      }
 
-    if(!this.props.drinkToEdit) {
-      // POST NEW DRINK
-      this.props.addDrinkToBoard(neworEditedDrink)
-      this.props.setDisplayAddForm(false)
-    } else {
-      // UPDATE EXISTING DRINK
-      neworEditedDrink["id"] = this.props.drinkToEdit.drink._id;
-      this.props.editDrinkOnBoard(neworEditedDrink)
-      this.props.setDisplayAddForm(false)
+      if(!this.props.drinkToEdit) {
+        // POST NEW DRINK
+        this.props.addDrinkToBoard(neworEditedDrink)
+        this.props.setDisplayAddForm(false)
+      } else {
+        // UPDATE EXISTING DRINK
+        neworEditedDrink["id"] = this.props.drinkToEdit.drink._id;
+        this.props.editDrinkOnBoard(neworEditedDrink)
+        this.props.setDisplayAddForm(false)
+      }
     }
   }
 
@@ -535,33 +553,42 @@ class AddDrinkForm extends Component {
           <div className="mainDrinkInfoArea">
             <h4 className="mainDrinkInfoAreaHeader">Standard Required Data</h4>
             <Row xs="3">
-              <DrinkerQ drinkerNames={this.state.peopleNameObjs}
-                        personName={this.state.personName}
-                        showSuggestions={this.state.showSuggestions}
-                        handleFormChange={this.handleFormChange}
-              />
-              <DrinkTypeQ drinkType={this.state.drinkType}
-                          drinkTypes={this.state.drinkTypeObjs}
-                          handleFormChange={this.handleFormChange}
-              />
+              <div>
+                  <DrinkerQ drinkerNames={this.state.peopleNameObjs}
+                            personName={this.state.personName}
+                            handleFormChange={this.handleFormChange}
+                  />
+                  <div className="drinkerErrorMessage">{this.state.drinkerError}</div>
+              </div>
+              <div>
+                <DrinkTypeQ drinkType={this.state.drinkType}
+                            drinkTypes={this.state.drinkTypeObjs}
+                            handleFormChange={this.handleFormChange}
+                />
+                <div className="drinkTypeErrorMessage">{this.state.drinkTypeError}</div>
+              </div>
               <ABVQuestion abv={this.state.abv}
                             handleFormChange={this.handleFormChange}
               />
             </Row>
             <Row xs="2">
-              <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
-                              activeSuggestion={this.state.activeSuggestion}
-                              showSuggestions={this.state.showSuggestions}
-                              filteredMainDrinkMixerSuggestions={this.state.filteredMainDrinkMixerSuggestions}
-                              drinkMain={this.state.drinkMain}
-                              mainComponentSuggestionClick={this.mainComponentSuggestionClick}
-                              mixerSuggestionClick={this.mixerSuggestionClick}
-                              onKeyDown={this.onKeyDown}
-                              drinkAutocomplete={this.drinkAutocomplete}
-                              setWrapperRef={this.setWrapperRef}
-                              handleClickOutside={this.handleClickOutside}
-
-              />
+              <Col xs="10">
+                <div>
+                  <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
+                                  activeSuggestion={this.state.activeSuggestion}
+                                  showSuggestions={this.state.showSuggestions}
+                                  filteredMainDrinkMixerSuggestions={this.state.filteredMainDrinkMixerSuggestions}
+                                  drinkMain={this.state.drinkMain}
+                                  mainComponentSuggestionClick={this.mainComponentSuggestionClick}
+                                  mixerSuggestionClick={this.mixerSuggestionClick}
+                                  onKeyDown={this.onKeyDown}
+                                  drinkAutocomplete={this.drinkAutocomplete}
+                                  setWrapperRef={this.setWrapperRef}
+                                  handleClickOutside={this.handleClickOutside}
+                  />
+                  <div className="mainComponentErrorMessage">{this.state.mainComponentError}</div>
+                </div>
+              </Col>
               <MixerSelect hasMixer={this.state.hasMixer}
                            toggleHasMixer={this.toggleHasMixer}
               />

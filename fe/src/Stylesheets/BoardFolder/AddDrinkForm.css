@@ -148,6 +148,27 @@
   text-align: center;
 }
 
+.drinkerErrorMessage {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-weight: bold;
+}
+
+.drinkTypeErrorMessage {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-weight: bold;
+}
+
+.mainComponentErrorMessage {
+  display: flex;
+  justify-content: center;
+  color: red;
+  font-weight: bold;
+}
+
 /* CSS FOR AUTOCOMPLETE ABILITY */
 
 .suggestions {

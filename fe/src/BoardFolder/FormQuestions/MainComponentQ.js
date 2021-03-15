@@ -74,7 +74,7 @@ class MainComponentQ extends React.Component {render() {
   }
 
   return(
-    <Col xs="9">
+    <div>
       <FormGroup className="formGroupQuestion">
         <Input
           type="text"
@@ -87,11 +87,11 @@ class MainComponentQ extends React.Component {render() {
           className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
         />
       </FormGroup>
-      {/* <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}> */}
+      <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}>
         {mainDrinkSuggestionsComponent}
         {mixerSuggestionsComponent}
-      {/* </div> */}
-    </Col>
+      </div>
+    </div>
   )
 }}
 

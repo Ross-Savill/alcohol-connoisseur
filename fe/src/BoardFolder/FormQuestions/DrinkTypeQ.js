@@ -9,7 +9,7 @@ class DrinkTypeQ extends React.Component {render() {
   )).sort(function(a,b) { return a.key > b.key })
 
   return (
-    <Col xs="4">
+    <Col xs="12">
       <FormGroup className="formGroupQuestion">
         <Input
           type="select"

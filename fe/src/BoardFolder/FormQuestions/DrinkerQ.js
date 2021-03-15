@@ -9,7 +9,7 @@ class DrinkerQ extends React.Component {render() {
   );
 
   return (
-    <Col xs="4">
+    <Col xs="12">
       <FormGroup className="formGroupQuestion">
         <Input
           type="select"

@@ -10,6 +10,7 @@ class RatingTwoQ extends React.Component {render() {
       showSuggestions,
       filteredRtTwoSuggestions,
       activeSuggestion,
+      removeDropdown,
       rtTwoAutocomplete,
       rtWordTwoSuggestionClick
     }
@@ -53,6 +54,7 @@ class RatingTwoQ extends React.Component {render() {
           placeholder="Rating Word Two"
           value={ratingWordTwo}
           onChange={rtTwoAutocomplete}
+          onClick={removeDropdown}
           className={ratingWordTwo === "" ? "dataNeeded" : "inputField"}
         />
       </FormGroup>

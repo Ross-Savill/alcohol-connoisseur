@@ -12,6 +12,7 @@ class MixerFourQ extends React.Component {render() {
       mixerFourSuggestions,
       mixerAutocomplete,
       mixerSuggestionClick,
+      removeDropdown,
       mixerFour,
       onKeyDown,
       activeSuggestion
@@ -55,6 +56,7 @@ class MixerFourQ extends React.Component {render() {
             placeholder="Mixer Four"
             value={mixerFour}
             onKeyDown={onKeyDown}
+            onClick={removeDropdown}
             onChange={mixerAutocomplete}
             className={mixerFour === "" ? "dataNeeded" : "inputField"}
           />

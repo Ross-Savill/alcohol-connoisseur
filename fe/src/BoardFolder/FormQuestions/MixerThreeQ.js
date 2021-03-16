@@ -12,6 +12,7 @@ class MixerThreeQ extends React.Component {render() {
       mixerThreeSuggestions,
       mixerAutocomplete,
       mixerSuggestionClick,
+      removeDropdown,
       mixerThree,
       onKeyDown,
       activeSuggestion
@@ -55,6 +56,7 @@ class MixerThreeQ extends React.Component {render() {
             placeholder="Mixer Three"
             value={mixerThree}
             onKeyDown={onKeyDown}
+            onClick={removeDropdown}
             onChange={mixerAutocomplete}
             className={mixerThree === "" ? "dataNeeded" : "inputField"}
           />

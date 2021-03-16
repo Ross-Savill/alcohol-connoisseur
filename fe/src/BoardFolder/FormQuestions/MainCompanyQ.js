@@ -12,6 +12,7 @@ class MainCompanyQ extends React.Component {render() {
       companySuggestions,
       companyAutocomplete,
       companySuggestionClick,
+      removeDropdown,
       company,
       onKeyDown,
       activeSuggestion
@@ -55,6 +56,7 @@ class MainCompanyQ extends React.Component {render() {
             placeholder="Main Component Company"
             value={company}
             onKeyDown={onKeyDown}
+            onClick={removeDropdown}
             onChange={companyAutocomplete}
             className={company === "" ? "dataNeeded" : "inputField"}
           />

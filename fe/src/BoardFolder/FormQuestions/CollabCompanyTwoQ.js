@@ -12,6 +12,7 @@ class CollabCompanyTwoQ extends React.Component {render() {
       secondCollabCompanySuggestions,
       companyAutocomplete,
       companySuggestionClick,
+      removeDropdown,
       secondCollabCompany,
       onKeyDown,
       activeSuggestion
@@ -55,6 +56,7 @@ class CollabCompanyTwoQ extends React.Component {render() {
             placeholder="Second Collab Company (Optional)"
             value={secondCollabCompany}
             onKeyDown={onKeyDown}
+            onClick={removeDropdown}
             onChange={companyAutocomplete}
             className="inputField"
           />

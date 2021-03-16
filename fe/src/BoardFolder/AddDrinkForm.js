@@ -583,6 +583,7 @@ class AddDrinkForm extends Component {
                             companyAutocomplete={this.companyAutocomplete}
                             onKeyDown={this.onKeyDown}
                             companySuggestionClick={this.companySuggestionClick}
+                            removeDropdown={this.removeDropdown}
               />
               <MainCountryQ country={this.state.country}
                             handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
@@ -613,6 +614,7 @@ class AddDrinkForm extends Component {
                            onKeyDown={this.onKeyDown}
                            mixerAutocomplete={this.mixerAutocomplete}
                            mixerSuggestionClick={this.mixerSuggestionClick}
+                           removeDropdown={this.removeDropdown}
                 />
                 { this.state.hasMixer > 1 &&
                 <MixerTwoQ mixerTwo={this.state.mixerTwo}
@@ -622,6 +624,7 @@ class AddDrinkForm extends Component {
                            onKeyDown={this.onKeyDown}
                            mixerAutocomplete={this.mixerAutocomplete}
                            mixerSuggestionClick={this.mixerSuggestionClick}
+                           removeDropdown={this.removeDropdown}
                 />
                 }
                 { this.state.hasMixer > 2 &&
@@ -632,6 +635,7 @@ class AddDrinkForm extends Component {
                              onKeyDown={this.onKeyDown}
                              mixerAutocomplete={this.mixerAutocomplete}
                              mixerSuggestionClick={this.mixerSuggestionClick}
+                             removeDropdown={this.removeDropdown}
                 />
                 }
               </Row>
@@ -644,6 +648,7 @@ class AddDrinkForm extends Component {
                             onKeyDown={this.onKeyDown}
                             mixerAutocomplete={this.mixerAutocomplete}
                             mixerSuggestionClick={this.mixerSuggestionClick}
+                            removeDropdown={this.removeDropdown}
                 />
               { this.state.hasMixer > 4 &&
                 <MixerFiveQ mixerFive={this.state.mixerFive}
@@ -653,6 +658,7 @@ class AddDrinkForm extends Component {
                             onKeyDown={this.onKeyDown}
                             mixerAutocomplete={this.mixerAutocomplete}
                             mixerSuggestionClick={this.mixerSuggestionClick}
+                            removeDropdown={this.removeDropdown}
                 />
               }
               { this.state.hasMixer > 5 &&
@@ -663,11 +669,12 @@ class AddDrinkForm extends Component {
                             onKeyDown={this.onKeyDown}
                             mixerAutocomplete={this.mixerAutocomplete}
                             mixerSuggestionClick={this.mixerSuggestionClick}
+                            removeDropdown={this.removeDropdown}
                 />
               }
               </Row>
-              }
-              </div>
+            }
+            </div>
             }
           <Row xs="1">
             <CollabCheckbox toggleHasCollab={this.toggleHasCollab}
@@ -685,6 +692,7 @@ class AddDrinkForm extends Component {
                                    activeSuggestion={this.state.activeSuggestion}
                                    onKeyDown={this.onKeyDown}
                                    companySuggestionClick={this.companySuggestionClick}
+                                   removeDropdown={this.removeDropdown}
                 />
                 <CollabCountryOneQ firstCollabCountry={this.state.firstCollabCountry}
                                     handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
@@ -711,6 +719,7 @@ class AddDrinkForm extends Component {
                                    activeSuggestion={this.state.activeSuggestion}
                                    onKeyDown={this.onKeyDown}
                                    companySuggestionClick={this.companySuggestionClick}
+                                   removeDropdown={this.removeDropdown}
                 />
 
                 <CollabCountryTwoQ secondCollabCountry={this.state.secondCollabCountry}
@@ -741,14 +750,16 @@ class AddDrinkForm extends Component {
                             activeSuggestion={this.state.activeSuggestion}
                             rtOneAutocomplete={this.rtOneAutocomplete}
                             rtWordOneSuggestionClick={this.rtWordOneSuggestionClick}
+                            removeDropdown={this.removeDropdown}
                 />
                 <RatingTwoQ ratingWordTwo={this.state.ratingWordTwo}
                             showSuggestions={this.state.showSuggestions}
                             filteredRtTwoSuggestions={this.state.filteredRtTwoSuggestions}
                             activeSuggestion={this.state.activeSuggestion}
                             rtTwoAutocomplete={this.rtTwoAutocomplete}
-                            rtWordTwoSuggestionClick={this.rtWordTwoSuggestionClick}/>
-
+                            rtWordTwoSuggestionClick={this.rtWordTwoSuggestionClick}
+                            removeDropdown={this.removeDropdown}
+                />
                 <ScoreQ score={this.state.score}
                         handleFormChange={this.handleFormChange}
                 />

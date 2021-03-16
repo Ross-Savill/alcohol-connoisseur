@@ -12,6 +12,7 @@ class CollabCompanyOneQ extends React.Component {render() {
       firstCollabCompanySuggestions,
       companyAutocomplete,
       companySuggestionClick,
+      removeDropdown,
       firstCollabCompany,
       onKeyDown,
       activeSuggestion
@@ -54,6 +55,7 @@ class CollabCompanyOneQ extends React.Component {render() {
           placeholder="First Collab Company"
           value={firstCollabCompany}
           onKeyDown={onKeyDown}
+          onClick={removeDropdown}
           onChange={companyAutocomplete}
           className={firstCollabCompany === "" ? "dataNeeded" : "inputField"}
         />

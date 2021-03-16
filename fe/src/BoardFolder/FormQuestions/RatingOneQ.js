@@ -10,6 +10,7 @@ class RatingOneQ extends React.Component {render() {
       showSuggestions,
       filteredRtOneSuggestions,
       activeSuggestion,
+      removeDropdown,
       rtOneAutocomplete,
       rtWordOneSuggestionClick
     }
@@ -52,6 +53,7 @@ class RatingOneQ extends React.Component {render() {
         id="ratingWordOneInput"
         placeholder="Rating Word One"
         value={ratingWordOne}
+        onClick={removeDropdown}
         onChange={rtOneAutocomplete}
         className={ratingWordOne === "" ? "dataNeeded" : "inputField"}
       />

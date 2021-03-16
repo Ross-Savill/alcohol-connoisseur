@@ -11,6 +11,7 @@ class MainComponentQ extends React.Component {render() {
       filteredMainDrinkMixerSuggestions,
       showSuggestions,
       drinkAutocomplete,
+      removeDropdown,
       drinkMain,
       mainComponentSuggestionClick,
       mixerSuggestionClick,
@@ -84,6 +85,7 @@ class MainComponentQ extends React.Component {render() {
           value={drinkMain}
           onKeyDown={onKeyDown}
           onChange={drinkAutocomplete}
+          onClick={removeDropdown}
           className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
         />
       </FormGroup>

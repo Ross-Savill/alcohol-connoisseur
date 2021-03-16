@@ -58,7 +58,7 @@ class MainCompanyQ extends React.Component {render() {
             onChange={companyAutocomplete}
             className={company === "" ? "dataNeeded" : "inputField"}
           />
-          <div className="companySugs" ref={this.props.setWrapperRef}>
+          <div className="companySugs">
             {companySuggestionsComponent}
           </div>
         </div>

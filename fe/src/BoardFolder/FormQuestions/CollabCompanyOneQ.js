@@ -52,14 +52,12 @@ class CollabCompanyOneQ extends React.Component {render() {
           name="firstCollabCompany"
           id="collabOneInput"
           placeholder="First Collab Company"
-          value={this.props.firstCollabCompany}
+          value={firstCollabCompany}
           onKeyDown={onKeyDown}
           onChange={companyAutocomplete}
-          className={this.props.firstCollabCompany === "" ? "dataNeeded" : "inputField"}
+          className={firstCollabCompany === "" ? "dataNeeded" : "inputField"}
         />
-        {/* <div ref={this.props.setWrapperRef}> */}
           {companySuggestionsComponent}
-        {/* </div> */}
       </FormGroup>
     </Col>
   )

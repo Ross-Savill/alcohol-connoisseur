@@ -108,13 +108,8 @@ class AddDrinkForm extends Component {
     this.rtWordOneSuggestionClick = this.rtWordOneSuggestionClick.bind(this);
     this.rtTwoAutocomplete = this.rtTwoAutocomplete.bind(this);
     this.rtWordTwoSuggestionClick = this.rtWordTwoSuggestionClick.bind(this);
-    this.setWrapperRef = this.setWrapperRef.bind(this);
-    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.removeDropdown = this.removeDropdown.bind(this);
   };
-
-  setWrapperRef(node) {
-    this.wrapperRef = node;
-  }
 
   componentDidMount() {
     const { drinkers, drinkTypes, drinkToEdit } = this.props
@@ -169,26 +164,7 @@ class AddDrinkForm extends Component {
         notes: drinkToEdit.drink.notes
       })
     }
-    document.addEventListener('mousedown', this.handleClickOutside);
   }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
-
-  handleClickOutside(event) {
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      console.log("triggered")
-      this.setState({ showSuggestions: false,
-                      mixerOneSuggestions: false,
-                      mixerTwoSuggestions: false,
-                      mixerThreeSuggestions: false,
-                      mixerFourSuggestions: false,
-                      mixerFiveSuggestions: false,
-                      mixerSixSuggestions: false,
-                      companySuggestions: false })
-    }
-}
 
   componentDidUpdate(prevProps, prevState) {
     if(this.props.drinkers !== this.state.peopleNameObjs ||
@@ -293,6 +269,13 @@ class AddDrinkForm extends Component {
       suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
     this.setState({ activeSuggestion: 0, filteredRtTwoSuggestions, showSuggestions: true, [name]: value })
+  }
+
+  removeDropdown() {
+    this.setState({ showSuggestions: false, mixerOneSuggestions: false,
+      mixerTwoSuggestions: false, mixerThreeSuggestions: false, mixerFourSuggestions: false,
+      mixerFiveSuggestions: false, mixerSixSuggestions: false, companySuggestions: false,
+      firstCollabCompanySuggestions: false, secondCollabCompanySuggestions: false })
   }
 
   mainComponentSuggestionClick = chosenDrink => {
@@ -583,8 +566,7 @@ class AddDrinkForm extends Component {
                                   mixerSuggestionClick={this.mixerSuggestionClick}
                                   onKeyDown={this.onKeyDown}
                                   drinkAutocomplete={this.drinkAutocomplete}
-                                  setWrapperRef={this.setWrapperRef}
-                                  handleClickOutside={this.handleClickOutside}
+                                  removeDropdown={this.removeDropdown}
                   />
                   <div className="mainComponentErrorMessage">{this.state.mainComponentError}</div>
                 </div>
@@ -601,8 +583,6 @@ class AddDrinkForm extends Component {
                             companyAutocomplete={this.companyAutocomplete}
                             onKeyDown={this.onKeyDown}
                             companySuggestionClick={this.companySuggestionClick}
-                            setWrapperRef={this.setWrapperRef}
-                            handleClickOutside={this.handleClickOutside}
               />
               <MainCountryQ country={this.state.country}
                             handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
@@ -705,8 +685,6 @@ class AddDrinkForm extends Component {
                                    activeSuggestion={this.state.activeSuggestion}
                                    onKeyDown={this.onKeyDown}
                                    companySuggestionClick={this.companySuggestionClick}
-                                   setWrapperRef={this.setWrapperRef}
-                                   handleClickOutside={this.handleClickOutside}
                 />
                 <CollabCountryOneQ firstCollabCountry={this.state.firstCollabCountry}
                                     handleFormChangeCountryUpdate={this.handleFormChangeCountryUpdate}
@@ -728,7 +706,11 @@ class AddDrinkForm extends Component {
               <Row xs={this.state.secondCollabCountry === "GB" || this.state.secondCollabCountry === "US" ? "3" : "2"}>
                 <CollabCompanyTwoQ secondCollabCompany={this.state.secondCollabCompany}
                                    companyAutocomplete={this.companyAutocomplete}
-                                   handleFormChange={this.handleFormChange}
+                                   filteredCompanySuggestions={this.state.filteredCompanySuggestions}
+                                   secondCollabCompanySuggestions={this.state.secondCollabCompanySuggestions}
+                                   activeSuggestion={this.state.activeSuggestion}
+                                   onKeyDown={this.onKeyDown}
+                                   companySuggestionClick={this.companySuggestionClick}
                 />
 
                 <CollabCountryTwoQ secondCollabCountry={this.state.secondCollabCountry}

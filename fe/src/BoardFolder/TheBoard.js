@@ -132,6 +132,11 @@ const TheBoard =({ drinkers, drinkTypes }) => {
     }
   }
 
+  const submitToDatabase = () => {
+    // CHECK ALL DATA THATS NEEDED IS THERE
+    // POST TO DATABASE
+  }
+
   return(
     <div className="theBoardContainer">
       {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
@@ -177,6 +182,9 @@ const TheBoard =({ drinkers, drinkTypes }) => {
                                        sessionId={sessionId}
                          />
       }
+        {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+          <button className="databaseSubmit" onClick={() => submitToDatabase()}>Submit All Drinks to Database</button>
+      : null }
     </div>
   )
 }

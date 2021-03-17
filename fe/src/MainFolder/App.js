@@ -40,8 +40,7 @@ const App = () => {
         axios.all([requestDrinkers, requestDrinks, requestDrinkTypes])
           .then(resp => setState({ drinkers: resp[0].data,
                                    drinks: resp[1].data,
-                                   drinkTypes: resp[2].data
-          }))
+                                   drinkTypes: resp[2].data }))
           .catch(error => console.log(error))
       }
     }
@@ -51,11 +50,36 @@ const App = () => {
   if(!user) { return ( <div><LoginButton /></div>) }
     else if(!state.drinks) { return <LoadingSpin /> }
     else {
-      const confirmedDrinks = [];
-      state.drinks.map((drink) => {
-      if(drink.confirmed === true ) {
-        confirmedDrinks.push(drink)
-      }})
+
+      let confirmedDrinks = [];
+      let confirmedDrinkers = [];
+      if(user['sub'] === "auth0|60510e48f083990017c29d7f") {
+        state.drinks.map((drink) => {
+          let anonymousDrink = drink;
+          state.drinkers.map((drinker) => {
+            if(anonymousDrink.name === drinker.personName && anonymousDrink.confirmed === true) {
+              anonymousDrink.name = drinker.fakeName
+              confirmedDrinks.push(anonymousDrink)
+            }
+
+          })
+        })
+        state.drinkers.map((drinker) => {
+          let anonymousDrinker = drinker;
+          anonymousDrinker.personName = anonymousDrinker.fakeName;
+          confirmedDrinkers.push(anonymousDrinker)
+        })
+      } else {
+        state.drinks.map((drink) => {
+          if(drink.confirmed === true) {
+            confirmedDrinks.push(drink)
+          }
+        })
+        state.drinkers.map((drinker) => {
+          confirmedDrinkers.push(drinker)
+        })
+      }
+
       return (
       <div>
         <BrowserRouter>
@@ -65,7 +89,7 @@ const App = () => {
               render={(props) => (
                 <HomePage {...props}
                 drinks={confirmedDrinks}
-                drinkers={state.drinkers}
+                drinkers={confirmedDrinkers}
                 />
               )}
             />
@@ -74,7 +98,7 @@ const App = () => {
               render={(props) => (
                 <Drinkers {...props}
                 drinks={confirmedDrinks}
-                drinkers={state.drinkers}
+                drinkers={confirmedDrinkers}
                 drinkTypes={state.drinkTypes}
                 />
               )}
@@ -92,7 +116,7 @@ const App = () => {
               render={(props) => (
                 <Sessions {...props}
                   drinks={confirmedDrinks}
-                  drinkers={state.drinkers}
+                  drinkers={confirmedDrinkers}
                   drinkTypes={state.drinkTypes}
                 />
               )}
@@ -123,7 +147,7 @@ const App = () => {
               exact path="/theboard"
               render={(props) => (
                 <TheBoard {...props}
-                  drinkers={state.drinkers}
+                  drinkers={confirmedDrinkers}
                   drinkTypes={state.drinkTypes}
                 />
               )}
@@ -131,7 +155,7 @@ const App = () => {
             <ProtectedRoute
               exact path="/admin"
               component={Admin}
-              drinkers={state.drinkers}
+              drinkers={confirmedDrinkers}
             />
           </div>
         </BrowserRouter>

@@ -46,7 +46,7 @@ class MixerSixQ extends React.Component {render() {
   }
 
   return (
-    <Col xs="4">
+    <Col xs="3">
       <FormGroup>
         <div className="mixerQuestion">
           <Input

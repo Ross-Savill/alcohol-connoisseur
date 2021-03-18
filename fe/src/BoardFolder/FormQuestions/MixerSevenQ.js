@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
-class MixerFourQ extends React.Component {render() {
+class MixerSevenQ extends React.Component {render() {
 
-  let mixerFourSuggestionsComponent;
+  let mixerSevenSuggestionsComponent;
 
   const {
     props: {
       filteredMixerSuggestions,
-      mixerFourSuggestions,
+      mixerSevenSuggestions,
       mixerAutocomplete,
       mixerSuggestionClick,
+      mixerSeven,
       removeDropdown,
-      mixerFour,
       onKeyDown,
       activeSuggestion
     }
   } = this;
 
-  if (mixerFourSuggestions && mixerFour) {
+  if (mixerSevenSuggestions && mixerSeven) {
     if (filteredMixerSuggestions.length) {
-      mixerFourSuggestionsComponent = (
+      mixerSevenSuggestionsComponent = (
         <ul className="suggestions">
           {filteredMixerSuggestions.map((suggestion, index) => {
             let className;
@@ -29,7 +29,7 @@ class MixerFourQ extends React.Component {render() {
               className = "suggestion-active";
             }
             return (
-              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerFour")}>
+              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerSeven")}>
                 {suggestion}
               </li>
             );
@@ -37,7 +37,7 @@ class MixerFourQ extends React.Component {render() {
         </ul>
       );
     } else {
-      mixerFourSuggestionsComponent = (
+      mixerSevenSuggestionsComponent = (
         <div className="no-suggestions">
           <em>No main drinks available.</em>
         </div>
@@ -51,20 +51,20 @@ class MixerFourQ extends React.Component {render() {
         <div className="mixerQuestion">
           <Input
             type="text"
-            name="mixerFour"
-            id="mixerFourInput"
-            placeholder="Mixer Four"
-            value={mixerFour}
+            name="mixerSeven"
+            id="mixerSevenInput"
+            placeholder="Mixer Seven"
+            value={mixerSeven}
             onKeyDown={onKeyDown}
             onClick={removeDropdown}
             onChange={mixerAutocomplete}
-            className={mixerFour === "" ? "dataNeeded" : "inputField"}
+            className={mixerSeven === "" ? "dataNeeded" : "inputField"}
           />
-          {mixerFourSuggestionsComponent}
+          {mixerSevenSuggestionsComponent}
         </div>
       </FormGroup>
     </Col>
   )
 }}
 
-export default MixerFourQ;
+export default MixerSevenQ;

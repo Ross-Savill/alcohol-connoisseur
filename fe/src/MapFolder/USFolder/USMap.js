@@ -44,9 +44,9 @@ class USMap extends Component {
     if(!this.state.justBeersCiders) {
       mapDataWithOrWithoutBeers = drinks;
     } else {
-      mapDataWithOrWithoutBeers = drinks.filter(drink => (drink.drinkType === "Beer" ||
-                                                  drink.drinkType === "Cider") &&
-                                                  !drink.mixerOne)
+      mapDataWithOrWithoutBeers = drinks.filter(drink => (drink.drinkType === "Beer"
+                                                      || drink.drinkType === "Cider")
+                                                      && !drink.mixerOne)
     }
     if(mapDataWithOrWithoutBeers) {
     mapDataWithOrWithoutBeers

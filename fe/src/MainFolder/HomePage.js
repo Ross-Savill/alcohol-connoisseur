@@ -50,6 +50,8 @@ function HomePage(props) {
             id: "mainDrinkColumn",
             accessor: d =>
               (
+                d.mixerSeven ?
+                  `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive}, ${d.mixerSix} and ${d.mixerSeven}`:
                 d.mixerSix ?
                   `${d.drinkMain} WITH ${d.mixerOne}, ${d.mixerTwo}, ${d.mixerThree}, ${d.mixerFour}, ${d.mixerFive} and ${d.mixerSix}`:
                 d.mixerFive ?

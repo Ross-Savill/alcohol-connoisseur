@@ -116,6 +116,7 @@ app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
                   mixerFour: req.body.mixerFour,
                   mixerFive: req.body.mixerFive,
                   mixerSix: req.body.mixerSix,
+                  mixerSeven: req.body.mixerSeven,
                   ratingWordOne: req.body.ratingWordOne,
                   ratingWordTwo: req.body.ratingWordTwo,
                   score: req.body.score,

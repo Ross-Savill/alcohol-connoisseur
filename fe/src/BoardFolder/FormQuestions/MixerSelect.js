@@ -20,6 +20,7 @@ class MixerSelect extends React.Component {render() {
           <option key={4} value={4}>Four Mixers</option>
           <option key={5} value={5}>Five Mixers</option>
           <option key={6} value={6}>Six Mixers</option>
+          <option key={7} value={7}>Seven Mixers</option>
         </Input>
       </FormGroup>
     </Col>

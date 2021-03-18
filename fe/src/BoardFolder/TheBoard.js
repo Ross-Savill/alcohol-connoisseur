@@ -139,15 +139,12 @@ const TheBoard =({ drinkers, drinkTypes }) => {
          drink.abv === "" || drink.company === "" || drink.country === "") {
            drinksToCheck.push(drink.drinkMain)
          }
+      })
       if(drinksToCheck.length > 0) {
-        const imperfectDrinks = drinksToCheck.map((impDrink) => {
-          return <li>{impDrink}</li>
-        })
-        return alert(`Check the following drinks: ${<ul>{imperfectDrinks}</ul>}`)
+        return alert(`Check the following drinks: ${drinksToCheck.join("\n")}`)
       } else {
         finalSubmit()
       }
-    })
   }
 
   const finalSubmit = async () => {
@@ -163,7 +160,8 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       axios.get("https://drinkandrate.herokuapp.com/drinks", config)
       .then(resp => setDrinks(resp.data))
       .catch(error => console.log(error))
-    } else {
+    }
+    else {
       return;
     }
   }

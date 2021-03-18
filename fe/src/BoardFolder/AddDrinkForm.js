@@ -365,7 +365,6 @@ class AddDrinkForm extends Component {
   };
 
   handleFormChange = (event) => {
-    console.log(event.target)
     const { target: { name, value } } = event
     this.setState({ [name]: value })
   }
@@ -465,7 +464,7 @@ class AddDrinkForm extends Component {
         mixerSix: this.state.mixerSix,
         ratingWordOne: this.state.ratingWordOne,
         ratingWordTwo: this.state.ratingWordTwo,
-        score: this.state.score,
+        score: parseFloat(this.state.score),
         notes: this.state.notes,
         confirmed: false
       }

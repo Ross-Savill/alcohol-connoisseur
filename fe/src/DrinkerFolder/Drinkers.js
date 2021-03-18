@@ -68,7 +68,6 @@ class Drinkers extends Component {
   backToAllDrinkers() {
     this.setState({ selectedDrinker: "All Drinkers",
                     selectedDrinkerProfilePic: null });
-
   }
 
   handleSelectedDate(selectedDate) {

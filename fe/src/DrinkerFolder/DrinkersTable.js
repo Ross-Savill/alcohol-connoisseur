@@ -76,13 +76,11 @@ class DrinkersTable extends Component {
             const numOfDrinks = aDrinkArray.length
 
             // GET WEEKS PARTICIPATED
-            let allDrinksDates = []
+            let allDrinkSessions = []
             aDrinkArray.map((drink) => {
-              const drinkDate = new Date(drink.date)
-              const date = +drinkDate.getDate() + "/" + drinkDate.getMonth() + "/" + drinkDate.getFullYear()
-              allDrinksDates.push(date)
+              allDrinkSessions.push(drink.sessionId)
             })
-            const weeksParticipated =  new Set(allDrinksDates).size
+            const weeksParticipated = new Set(allDrinkSessions).size
 
             // GET AVERAGE DRINK CONSUMED
             const drinksAvg = (numOfDrinks / weeksParticipated).toFixed(2)
@@ -113,12 +111,13 @@ class DrinkersTable extends Component {
               frequency[allDrinkerDrinkTypes[type]]=(frequency[allDrinkerDrinkTypes[type]] || 0)+1; // increment frequency.
               if(frequency[allDrinkerDrinkTypes[type]] > maxType) { // is this frequency > max so far ?
                 maxType = frequency[allDrinkerDrinkTypes[type]];  // update max.
-                favouriteDrinkType = allDrinkerDrinkTypes[type];          // update result.
+                favouriteDrinkType = allDrinkerDrinkTypes[type];  // update result.
               }
             }
             // GET HIGHEST/LOWEST/AVERAGE SCORE
             let allDrinkerScores = []
             aDrinkArray.map((drink) => allDrinkerScores.push(drink.score))
+            console.log(allDrinkerScores)
             const highestScore = Math.max(...allDrinkerScores)
             const lowestScore = Math.min(...allDrinkerScores)
             const averageScoreFunc = allDrinkerScores => allDrinkerScores.reduce(
@@ -152,13 +151,11 @@ class DrinkersTable extends Component {
       const { drinks, drinkerObjectsArray } = this.state
 
       // ESTABLISH TOTAL WEEKS SO FAR FOR LATER DATE COMPARISON
-      let totalWeeks = []
+      let totalWeeksNum = []
       drinks.map((drink) => {
-        const thisDrinkDate = new Date(drink.date)
-        const oneDrinkDate =  +thisDrinkDate.getDate() + "/" + thisDrinkDate.getMonth() + "/" + thisDrinkDate.getFullYear()
-        totalWeeks.push(oneDrinkDate)
+        totalWeeksNum.push(drink.sessionId)
       })
-      const totalWeeksNumber =  new Set(totalWeeks).size
+      const totalWeeksNumber =  new Set(totalWeeksNum).size
 
       // RETURN DATA TABLE INFO!
       return drinkerObjectsArray.map((dataObject, index) => {

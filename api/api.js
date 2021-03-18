@@ -145,11 +145,10 @@ app.patch('/confirmdrinks', authorizeAccessToken, (req, res) => {
       };
       const result = await drinks.updateMany(filter, updateDoc);
       console.log(result);
+      db.close();
     })
   } catch (err) {
     res.json({ message: err })
-  } finally {
-    await db.close();
   }
 })
 

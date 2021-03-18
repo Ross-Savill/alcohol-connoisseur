@@ -130,6 +130,29 @@ app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
   }
 });
 
+
+app.patch('/confirmdrinks', authorizeAccessToken, (req, res) => {
+  try {
+    MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      const drinks = dbName.collection("drinks");
+      const filter = { confirmed: false };
+      const updateDoc = {
+        $set: {
+          confirmed: true,
+        },
+      };
+      const result = await drinks.updateMany(filter, updateDoc);
+      console.log(result);
+    })
+  } catch (err) {
+    res.json({ message: err })
+  } finally {
+    await db.close();
+  }
+})
+
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {
   const id = req.params.id;

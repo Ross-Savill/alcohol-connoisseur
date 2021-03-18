@@ -86,9 +86,9 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       .then(resp => console.log(resp))
       .catch(error => console.log(error))
 
-      axios.get("https://drinkandrate.herokuapp.com/drinks", config)
-      .then(resp => setDrinks(resp.data))
-      .catch(error => console.log(error))
+    axios.get("https://drinkandrate.herokuapp.com/drinks", config)
+    .then(resp => setDrinks(resp.data))
+    .catch(error => console.log(error))
   }
 
   const sessionDrinkData = () => {
@@ -132,16 +132,47 @@ const TheBoard =({ drinkers, drinkTypes }) => {
     }
   }
 
-  const submitToDatabase = () => {
-    // CHECK ALL DATA THATS NEEDED IS THERE
-    // POST TO DATABASE
+  const submitCheck = () => {
+    let drinksToCheck = [];
+    boardDrinks.map((drink) => {
+      if(drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "" ||
+         drink.abv === "" || drink.company === "" || drink.country === "") {
+           drinksToCheck.push(drink.drinkMain)
+         }
+      if(drinksToCheck.length > 0) {
+        const imperfectDrinks = drinksToCheck.map((impDrink) => {
+          return <li>{impDrink}</li>
+        })
+        return alert(`Check the following drinks: ${<ul>{imperfectDrinks}</ul>}`)
+      } else {
+        finalSubmit()
+      }
+    })
+  }
+
+  const finalSubmit = async () => {
+    if(window.confirm('All drinks ready to go - Confirm All Drinks?')) {
+      const token = await getAccessTokenSilently();
+      const config = {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }
+      axios.patch(`https://drinkandrate.herokuapp.com/confirmdrinks`, null, config)
+      .then(resp => console.log(resp))
+      .catch(error => console.log(error))
+
+      axios.get("https://drinkandrate.herokuapp.com/drinks", config)
+      .then(resp => setDrinks(resp.data))
+      .catch(error => console.log(error))
+    } else {
+      return;
+    }
   }
 
   return(
     <div className="theBoardContainer">
       {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
         <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
-      : null }
+      : null}
       <Link className="mainTableButton" to="/">
         <button>Back to Main Table</button>
       </Link>
@@ -183,7 +214,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
                          />
       }
         {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-          <button className="databaseSubmit" onClick={() => submitToDatabase()}>Submit All Drinks to Database</button>
+          <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
       : null }
     </div>
   )

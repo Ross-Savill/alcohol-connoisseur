@@ -62,3 +62,9 @@
 .mainTableButton {
   float: right;
 }
+
+.databaseSubmit {
+  position: absolute;
+  left: auto;
+  bottom: 0;
+}

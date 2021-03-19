@@ -117,7 +117,6 @@ class DrinkersTable extends Component {
             // GET HIGHEST/LOWEST/AVERAGE SCORE
             let allDrinkerScores = []
             aDrinkArray.map((drink) => allDrinkerScores.push(drink.score))
-            console.log(allDrinkerScores)
             const highestScore = Math.max(...allDrinkerScores)
             const lowestScore = Math.min(...allDrinkerScores)
             const averageScoreFunc = allDrinkerScores => allDrinkerScores.reduce(

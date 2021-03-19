@@ -26,7 +26,7 @@
 }
 
 .theBoardMainHeader {
-  font-size: 25px;
+  font-size: 18px;
   background-color: lightgreen;
 }
 
@@ -41,7 +41,7 @@
 .theBoardMainHeaderContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-content: center;
 }
 

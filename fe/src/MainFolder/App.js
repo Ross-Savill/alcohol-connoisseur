@@ -56,6 +56,7 @@ const App = () => {
       if(user['sub'] === "auth0|60510e48f083990017c29d7f") {
         state.drinks.map((drink) => {
           let anonymousDrink = drink;
+          anonymousDrink.notes = "**Redacted**"
           state.drinkers.map((drinker) => {
             if(anonymousDrink.name === drinker.personName && anonymousDrink.confirmed === true) {
               anonymousDrink.name = drinker.fakeName

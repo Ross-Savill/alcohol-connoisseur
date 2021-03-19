@@ -7,11 +7,12 @@ import axios from 'axios';
 import moment from 'moment';
 import greentick from './green-checkmark.png';
 
-const TheBoard =({ drinkers, drinkTypes }) => {
+const TheBoard = ({ drinkers, drinkTypes }) => {
 
   const [ drinks, setDrinks ] = useState (null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
   const [ boardDrinks, setBoardDrinks ] = useState([])
+  const [ totalDrinksNum, setTotalDrinksNum ] = useState()
   const [ drinkToEdit, setDrinkToEdit ] = useState(null)
   const [ sessionId, setSessionId ] = useState(null)
 
@@ -31,6 +32,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
     }
 
     if(drinks){
+      setTotalDrinksNum(drinks.length)
       let drinksForTheBoard = [];
       drinks.map((drink) => {
         if(drink.confirmed === false) {
@@ -102,11 +104,35 @@ const TheBoard =({ drinkers, drinkTypes }) => {
       return boardDrinks.map((drink, index) => {
         const namesArray = drink.name.split(" ");
         const firstName = namesArray[0]
+
         let missingPieces = [];
         if(!drink.abv) missingPieces.push("ABV ")
         if(!drink.ratingWordOne || !drink.ratingWordTwo || !drink.score) missingPieces.push("Verdict")
+
         let displayedAbv;
-        if(drink.abv) { displayedAbv = (((drink.abv * 10000)/100).toFixed(2)) % 1 === 0 ? `(${(drink.abv*100).toFixed(0)}%)` : `(${(drink.abv*100).toFixed(1)}%)`} else { displayedAbv = `(???)` }
+        if(drink.abv) { displayedAbv = (((drink.abv * 10000)/100).toFixed(2)) % 1 === 0 ?
+          `(${(drink.abv*100).toFixed(0)}%)` :
+          `(${(drink.abv*100).toFixed(1)}%)`
+        } else { displayedAbv = `(???)` }
+
+        let sameDrinks = [];
+        let sameDrinkEntry;
+        drinks.map((totalDrink) => {
+          if(!drink.mixerOne &&
+              drink.drinkMain === totalDrink.drinkMain &&
+             (drink.company === totalDrink.company ||
+              drink.firstCollabCompany === totalDrink.company ||
+              drink.secondCollabCompany === totalDrink.company)) {
+                sameDrinks.push(totalDrink)
+              }
+        })
+        user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "") ?
+        sameDrinkEntry = "'Rate' and see!" :
+        sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
+
+        // console.log(user.sub.substr(6))
+        // console.log(drink.drinkerId)
+
         return (
           <tr key={index}>
             <td>{firstName}</td>
@@ -122,7 +148,7 @@ const TheBoard =({ drinkers, drinkTypes }) => {
             }</td>
             <td> {!drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
             <td>{drink.score}</td>
-            <td>{drink.notes}</td>
+            <td>{sameDrinkEntry}</td>
             <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) : <img src={greentick} alt="DONE" height="20px" width="20px"></img>}</td>
             {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
               <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
@@ -181,9 +207,9 @@ const TheBoard =({ drinkers, drinkTypes }) => {
             <tr className="theBoardMainHeaderRow">
               <th className="theBoardMainHeader" colSpan="8">
                 <div className="theBoardMainHeaderContainer">
-                  <div>{moment(new Date()).format('ddd Do MMMM')}</div>
+                  <div>{moment(new Date()).format('ddd Do MMMM')} / Drink#: {totalDrinksNum}</div>
                   <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
-                  <div>Session #: {sessionId}</div>
+                  <div>Session#: {sessionId}</div>
                 </div>
               </th>
             </tr>

@@ -442,12 +442,12 @@ class AddDrinkForm extends Component {
     if (isValid) {
 
       let drinkDate;
-      if(this.props.drinkToEdit && this.state.date !== null) {
+      if(this.props.drinkToEdit && this.state.date !== "") {
         drinkDate = this.state.date
       } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
         drinkDate = new Date()
       } else {
-        drinkDate = null;
+        drinkDate = "";
       }
 
       const neworEditedDrink = {

@@ -33,7 +33,7 @@ function HomePage(props) {
   const columns = useMemo(
     () => [
       {
-        Header: `We've had ${drinkTotal} drinks as of our last session on ${date}`,
+        Header: `We've had ${drinkTotal} drinks as of our last session ending on ${date}`,
         columns: [
           {
             Header: "Name",

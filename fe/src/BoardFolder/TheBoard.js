@@ -32,7 +32,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
     }
 
     if(drinks){
-      setTotalDrinksNum(drinks.length)
+      setTotalDrinksNum(drinks.length + 1)
       let drinksForTheBoard = [];
       drinks.map((drink) => {
         if(drink.confirmed === false) {
@@ -120,7 +120,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
         drinks.map((totalDrink) => {
           if(drink.mixerOne) {
             sameDrinkEntry = "❌ (Has Mixer)"
-          } else if(drink.drinkMain === totalDrink.drinkMain && (drink.company === totalDrink.company ||
+          } else if(drink.drinkMain === totalDrink.drinkMain && totalDrink.confirmed === true && (drink.company === totalDrink.company ||
              drink.firstCollabCompany === totalDrink.company || drink.secondCollabCompany === totalDrink.company)) {
                 sameDrinks.push(totalDrink)
              }
@@ -129,7 +129,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
         if(!drink.mixerOne) {
           sameDrinks.length === 0 ? sameDrinkEntry = "First Time Drink!" :
           user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "") ?
-          sameDrinkEntry = "'Rate' and see!" :
+          sameDrinkEntry = "'Rate' and See!" :
           sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
         }
 
@@ -221,7 +221,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
               <th className="theBoardTh">Drink</th>
               <th className="theBoardTh">Description</th>
               <th className="theBoardTh">Score</th>
-              <th className="theBoardTh"></th>
+              <th className="theBoardTh">Previous?</th>
               <th className="theBoardTh">Done?</th>
             </tr>
           </thead>

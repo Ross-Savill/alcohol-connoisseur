@@ -35,7 +35,7 @@ const SelectedBreweryTable = ({ breweryObjectsArray,
       <table className="selectedBreweryTable">
         <thead>
           <tr className="selectedBreweryTableMainHeaderRow">
-            <th colspan="5">
+            <th colSpan="5">
               <div className="selectedBreweryTableMainHeaderDiv">
                 <span className="selectedBreweryTitle">{selectedBrewery}</span>
                 <span className="selectedBreweryReturnLink" onClick={() => handleBreweryReset()}>Return to All Breweries</span>

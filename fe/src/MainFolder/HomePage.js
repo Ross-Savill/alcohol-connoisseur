@@ -25,7 +25,7 @@ function HomePage(props) {
       setData(props.drinks)
       if(data) {
         setDate(moment((data.map((drinks) => drinks.date).reduce(function (a, b) { return a > b ? a : b; }))).format('dddd Do MMMM YYYY'))
-        setDrinkTotal(data.length)
+        setDrinkTotal(data.length + 1)
       }
     })();
   }, [props, data]);

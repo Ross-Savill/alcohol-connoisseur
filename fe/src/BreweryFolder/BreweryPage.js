@@ -59,7 +59,6 @@ function BreweryPage(props) {
 
       const allUniqueBreweries = [...new Set(allBreweries)]
       // BEGIN LOOPING THROUGH ALL BREWERIES FOR DATA
-
       let localBreweryObjectsArray = [];
       allUniqueBreweries.map((brewery) => {
         let allBreweryDrinks = [];

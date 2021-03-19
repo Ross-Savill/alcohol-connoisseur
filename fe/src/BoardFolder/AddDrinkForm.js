@@ -46,6 +46,7 @@ class AddDrinkForm extends Component {
       uniqueMainDrinks: null,
       sessionId: "",
       personName: '',
+      drinkerId: '',
       date: null,
       drinkMain: '',
       drinkType: '',
@@ -96,6 +97,7 @@ class AddDrinkForm extends Component {
       confirmed: false
     }
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.mainComponentSuggestionClick = this.mainComponentSuggestionClick.bind(this);
     this.mixerSuggestionClick = this.mixerSuggestionClick.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
@@ -144,6 +146,7 @@ class AddDrinkForm extends Component {
       this.setState({
         id: drinkToEdit.drink._id,
         personName: drinkToEdit.drink.name,
+        drinkerId: drinkToEdit.drink.drinkerId,
         date: drinkToEdit.drink.date,
         company: drinkToEdit.drink.company,
         country: drinkToEdit.drink.country,
@@ -379,6 +382,13 @@ class AddDrinkForm extends Component {
     this.setState({ [name]: value })
   }
 
+  handleNameChange = (event) => {
+    const { target: { name, value } } = event
+    console.log(value)
+    var namePlusId = value.split(",");
+    this.setState({ [name]: namePlusId[0], drinkerId: namePlusId[1] })
+  }
+
   handleFormChangeCountryUpdate = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
@@ -442,16 +452,17 @@ class AddDrinkForm extends Component {
     if (isValid) {
 
       let drinkDate;
-      if(this.props.drinkToEdit && this.state.date !== "") {
+      if(this.props.drinkToEdit && this.state.date !== null) {
         drinkDate = this.state.date
       } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
         drinkDate = new Date()
       } else {
-        drinkDate = "";
+        drinkDate = null;
       }
 
       const neworEditedDrink = {
         sessionId: this.state.sessionId,
+        drinkerId: this.state.drinkerId,
         name: this.state.personName,
         date: drinkDate,
         company: (this.state.company).trim(),
@@ -549,7 +560,8 @@ class AddDrinkForm extends Component {
               <div>
                   <DrinkerQ drinkerNames={this.state.peopleNameObjs}
                             personName={this.state.personName}
-                            handleFormChange={this.handleFormChange}
+                            drinkerId={this.state.drinkerId}
+                            handleNameChange={this.handleNameChange}
                   />
                   <div className="drinkerErrorMessage">{this.state.drinkerError}</div>
               </div>

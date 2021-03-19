@@ -4,8 +4,8 @@ import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class DrinkerQ extends React.Component {render() {
 
-  const drinkerNameSelect = this.props.drinkerNames.map((name, index) =>
-    <option key={index} value={name.personName}>{name.personName}</option>
+  const drinkerNameSelect = this.props.drinkerNames.map((name) =>
+    <option key={name._id} value={[name.personName, name._id]}>{name.personName}</option>
   );
 
   return (
@@ -15,8 +15,8 @@ class DrinkerQ extends React.Component {render() {
           type="select"
           name="personName"
           id="personNameInput"
-          value={this.props.personName}
-          onChange={this.props.handleFormChange}
+          value={[this.props.personName, this.props.drinkerId]}
+          onChange={this.props.handleNameChange}
           className={this.props.personName === "" ? "dataNeeded" : "inputField"}
         >
         <option className="placeholder" value="">Select Drinker:</option>

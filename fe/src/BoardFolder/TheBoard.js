@@ -116,22 +116,24 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
         } else { displayedAbv = `(???)` }
 
         let sameDrinks = [];
-        let sameDrinkEntry;
+        let sameDrinkEntry = "";
         drinks.map((totalDrink) => {
-          if(!drink.mixerOne &&
-              drink.drinkMain === totalDrink.drinkMain &&
-             (drink.company === totalDrink.company ||
-              drink.firstCollabCompany === totalDrink.company ||
-              drink.secondCollabCompany === totalDrink.company)) {
+          if(drink.mixerOne) {
+            sameDrinkEntry = "❌ (Has Mixer)"
+          } else if(drink.drinkMain === totalDrink.drinkMain && (drink.company === totalDrink.company ||
+             drink.firstCollabCompany === totalDrink.company || drink.secondCollabCompany === totalDrink.company)) {
                 sameDrinks.push(totalDrink)
-              }
+             }
         })
-        user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "") ?
-        sameDrinkEntry = "'Rate' and see!" :
-        sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
 
-        // console.log(user.sub.substr(6))
-        // console.log(drink.drinkerId)
+        if(!drink.mixerOne) {
+          sameDrinks.length === 0 ? sameDrinkEntry = "First Time Drink!" :
+          user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "") ?
+          sameDrinkEntry = "'Rate' and see!" :
+          sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
+        }
+
+        console.log(drink.drinkerId)
 
         return (
           <tr key={index}>
@@ -219,7 +221,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
               <th className="theBoardTh">Drink</th>
               <th className="theBoardTh">Description</th>
               <th className="theBoardTh">Score</th>
-              <th className="theBoardTh">Notes</th>
+              <th className="theBoardTh"></th>
               <th className="theBoardTh">Done?</th>
             </tr>
           </thead>

@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const drinksSchema = new mongoose.Schema({
   sessionId: Number,
+  drinkerId: String,
   name: String,
   date: Date,
   drinkMain: String,

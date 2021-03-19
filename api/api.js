@@ -97,6 +97,7 @@ app.patch('/editdrinkonboard/:id', authorizeAccessToken, (req, res) => {
       const updateDrink = await dbName.collection("drinks").updateOne(
         { _id: ObjectId(id) },
         { $set: { date: new Date(req.body.date),
+                  drinkerId: req.body.drinkerId,
                   name: req.body.name,
                   drinkMain: req.body.drinkMain,
                   drinkType: req.body.drinkType,

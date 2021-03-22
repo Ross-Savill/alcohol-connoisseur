@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../Stylesheets/BoardFolder/TheBoard.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import AddDrinkForm from './AddDrinkForm';
+import Soundboard from './Soundboard';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -11,6 +12,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
 
   const [ drinks, setDrinks ] = useState (null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
+  const [ displaySoundboard, setDisplaySoundboard ] = useState(false)
   const [ boardDrinks, setBoardDrinks ] = useState([])
   const [ totalDrinksNum, setTotalDrinksNum ] = useState()
   const [ drinkToEdit, setDrinkToEdit ] = useState(null)
@@ -62,6 +64,10 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
   const callEditForm = (drink) => {
     setDrinkToEdit(drink)
     setDisplayAddForm(true)
+  }
+
+  const callSoundboard = () => {
+    setDisplaySoundboard(true)
   }
 
   const addDrinkToBoard = async (drink) => {
@@ -133,8 +139,6 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
           sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
         }
 
-        console.log(drink.drinkerId)
-
         return (
           <tr key={index}>
             <td>{firstName}</td>
@@ -203,13 +207,14 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
       <Link className="mainTableButton" to="/">
         <button>Back to Main Table</button>
       </Link>
+      <button className="soundboardButton" onClick={() => callSoundboard()}></button>
       <div className="theBoardTableDiv">
         <table className="theBoardTable">
           <thead className="theBoardTHead">
             <tr className="theBoardMainHeaderRow">
               <th className="theBoardMainHeader" colSpan="8">
                 <div className="theBoardMainHeaderContainer">
-                  <div>{moment(new Date()).format('ddd Do MMMM')} / Drink#: {totalDrinksNum}</div>
+                  <div>Drink#: {totalDrinksNum}</div>
                   <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
                   <div>Session#: {sessionId}</div>
                 </div>
@@ -240,6 +245,7 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
                                        sessionId={sessionId}
                          />
       }
+      {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
         {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
           <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
       : null }

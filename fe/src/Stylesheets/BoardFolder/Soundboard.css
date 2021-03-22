@@ -1,0 +1,159 @@
+.soundboardDiv {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.soundboardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0px, 50px, 50px, 50px;
+  z-index: 1;
+}
+
+.soundboardTable {
+  display: block;
+  width: 70vw;
+  height: 80vh;
+  margin: 60px auto;
+  padding: 20px;
+  box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
+  border: 3px solid white;
+  z-index: 2;
+  background-color: rgb(180, 238, 175);
+  overflow-y: scroll;
+}
+
+.soundboardGrid {
+  display: grid;
+  height: 100%;
+  justify-items: center;
+  align-items: center;
+  grid-template-areas:"title title title title title"
+                      "snore pay speed good rating"
+                      "ipa cider gin vodka bubbly"
+                      "whiskey cocktail prosecco wine .";
+}
+
+.soundboardTitle {
+  text-align: center;
+  grid-area: title;
+}
+
+.snoreButton {
+  background-image: url("../../MyUtilitiesFolder/Images/snore.png");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: snore;
+}
+
+.ciderButton {
+  background-image: url("../../MyUtilitiesFolder/Images/cider.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: cider;
+}
+
+.ipaButton {
+  background-image: url("../../MyUtilitiesFolder/Images/ipa.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: ipa;
+}
+
+.ratingButton {
+  background-image: url("../../MyUtilitiesFolder/Images/rating.png");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: rating;
+}
+
+.goodButton {
+  background-image: url("../../MyUtilitiesFolder/Images/good.png");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: good;
+}
+
+.proseccoButton {
+  background-image: url("../../MyUtilitiesFolder/Images/prosecco.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: prosecco;
+}
+
+.ginButton {
+  background-image: url("../../MyUtilitiesFolder/Images/gin.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: gin;
+}
+
+.payButton {
+  background-image: url("../../MyUtilitiesFolder/Images/money.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: pay;
+}
+
+.cocktailButton {
+  background-image: url("../../MyUtilitiesFolder/Images/cocktail.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: cocktail;
+}
+
+.vodkaButton {
+  background-image: url("../../MyUtilitiesFolder/Images/vodka.webp");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: vodka;
+}
+
+.whiskeyButton {
+  background-image: url("../../MyUtilitiesFolder/Images/whiskey.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: whiskey;
+}
+
+.wineButton {
+  background-image: url("../../MyUtilitiesFolder/Images/wine.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: wine;
+}
+
+.bubblyButton {
+  background-image: url("../../MyUtilitiesFolder/Images/bubbly.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: bubbly;
+}
+
+.speedButton {
+  background-image: url("../../MyUtilitiesFolder/Images/speed.jpg");
+  background-size: 100%;
+  width: 8vw;
+  height: 8vw;
+  grid-area: speed;
+}

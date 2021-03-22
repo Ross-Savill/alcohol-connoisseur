@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import { Container, Col, Form, Button, Row } from 'reactstrap';
 import '../Stylesheets/BoardFolder/AddDrinkForm.css';
 import DrinkerQ from './FormQuestions/DrinkerQ';
 import DrinkTypeQ from './FormQuestions/DrinkTypeQ';
@@ -64,7 +64,7 @@ class AddDrinkForm extends Component {
       mixerSeven: '',
       ratingWordOne: '',
       ratingWordTwo: '',
-      score: '',
+      score: null,
       hasCollab: false,
       firstCollabCompany: '',
       firstCollabCountry: '',
@@ -384,7 +384,6 @@ class AddDrinkForm extends Component {
 
   handleNameChange = (event) => {
     const { target: { name, value } } = event
-    console.log(value)
     var namePlusId = value.split(",");
     this.setState({ [name]: namePlusId[0], drinkerId: namePlusId[1] })
   }
@@ -452,19 +451,19 @@ class AddDrinkForm extends Component {
     if (isValid) {
 
       let drinkDate;
-      if(this.props.drinkToEdit && this.state.date !== null) {
+      if(this.props.drinkToEdit && this.state.date) {
         drinkDate = this.state.date
       } else if(this.state.ratingWordOne && this.state.ratingWordTwo && this.state.score) {
         drinkDate = new Date()
       } else {
-        drinkDate = null;
+        drinkDate = undefined;
       }
 
       const neworEditedDrink = {
         sessionId: this.state.sessionId,
         drinkerId: this.state.drinkerId,
         name: this.state.personName,
-        date: drinkDate,
+        date: drinkDate ? new Date(drinkDate) : undefined,
         company: (this.state.company).trim(),
         country: this.state.country,
         ukUsa: this.state.ukUsa,
@@ -486,7 +485,7 @@ class AddDrinkForm extends Component {
         mixerSeven: (this.state.mixerSeven).trim(),
         ratingWordOne: (this.state.ratingWordOne).trim(),
         ratingWordTwo: (this.state.ratingWordTwo).trim(),
-        score: parseFloat(this.state.score),
+        score: this.state.score ? parseFloat(this.state.score) : null,
         notes: (this.state.notes).trim(),
         confirmed: false
       }
@@ -548,7 +547,7 @@ class AddDrinkForm extends Component {
 
     return (
       <div className="addFormDiv" onClick={(e) => this.handleCancel(e) }>
-        <Container className="addFormContainer" ref={this.container}>
+        <Container className="addFormContainer">
           <Form className="addDrinkForm" onSubmit={this.handleSubmit}>
             <Row className="addDrinkTitle">
               <h3 className="mainFormHeader">🍺🍺🍺 🍺🍺🍺 Drink Details: 🍺🍺🍺 🍺🍺🍺</h3>

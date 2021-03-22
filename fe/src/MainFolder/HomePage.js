@@ -63,7 +63,8 @@ function HomePage(props) {
                 d.mixerTwo ?
                   `${d.drinkMain} WITH ${d.mixerOne} and ${d.mixerTwo}`:
                 d.mixerOne ?
-                  `${d.drinkMain} WITH ${d.mixerOne}` : `${d.drinkMain}`
+                  `${d.drinkMain} WITH ${d.mixerOne}`:
+                  `${d.drinkMain}`
               ),
             minWidth: "385"
           },

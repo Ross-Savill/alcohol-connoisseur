@@ -2,6 +2,8 @@
 
 Drink And Rate, a MERN app where you can record scores you give to your beverages to share and display with others.
 
+My application can be found at https://drinkandrate.netlify.app/ and a guest username - guest@guest.com - and password - Password123 - can be used to view the design. (Actual names of users will be changed when using these details).
+
 Various pages outlay data relating to drinks, drinkers, ratings (a score out of 10 and two descriptive words), companies and their countries of origin. Various methods are used to display the data including tables, charts of various types, country/global maps and a word cloud.
 
 Further information relating to the data of both the front-end and back-end of this app can be found in their respective folder's README files.

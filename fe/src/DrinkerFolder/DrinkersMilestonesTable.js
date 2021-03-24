@@ -28,19 +28,19 @@ class DrinkersMilestonesTable extends Component {
     if(this.props.drinks !== this.state.drinks) {
       this.setState({ drinks, selectedDrinker})
     }
-    let dateCount = []
+    let sessionCount = []
     this.props.drinks.map((drink) => {
       if(drink.name === selectedDrinker) {
-        dateCount.push(drink.date)
+        sessionCount.push(drink.sessionId)
       }
     })
     if(this.state.sessionsAttended === null) {
-      this.setState({ sessionsAttended: new Set(dateCount) })
+      this.setState({ sessionsAttended: new Set(sessionCount) })
     }
 
-    if(this.state.sufficientDrinks === null && new Set(dateCount).size >= 10) {
+    if(this.state.sufficientDrinks === null && new Set(sessionCount).size >= 10) {
       this.setState({ sufficientDrinks: true })
-    } else if(this.state.sufficientDrinks === null && new Set(dateCount).size < 10) {
+    } else if(this.state.sufficientDrinks === null && new Set(sessionCount).size < 10) {
       this.setState({ sufficientDrinks: false })
     }
     this.renderTopBottomData()
@@ -49,7 +49,7 @@ class DrinkersMilestonesTable extends Component {
   renderHighestAvgHeaders() {
     return(
       <tr className="highestAvgHeaderRow">
-        <th className="highestAvgTH">Date</th>
+        <th className="highestAvgTH">Session</th>
         <th className="highestAvgTH">Avg Score</th>
       </tr>
     )
@@ -58,7 +58,7 @@ class DrinkersMilestonesTable extends Component {
   renderWorstAvgHeaders() {
     return(
       <tr className="lowestAvgHeaderRow">
-        <th className="lowestAvgTH">Date</th>
+        <th className="lowestAvgTH">Session</th>
         <th className="lowestAvgTH">Avg Score</th>
       </tr>
     )
@@ -70,15 +70,15 @@ class DrinkersMilestonesTable extends Component {
     if(sessionsAttended && sessionsAttended.size > 10) {
       let sessionsAttendedArray = [...sessionsAttended];
 
-      sessionsAttendedArray.map((date) => {
+      sessionsAttendedArray.map((sessionId) => {
         let sessionArray = [];
         drinks.map((drink) => {
-          if(drink.date === date && drink.name === selectedDrinker) {
+          if(drink.sessionId === sessionId && drink.name === selectedDrinker) {
             sessionArray.push(drink.score)
           }
         })
-        const dateAndDrinks = { date: date, avgScore: sessionArray.reduce((a,b) => a + b, 0) / sessionArray.length };
-        sessionScoreArrays.push(dateAndDrinks)
+        const sessionIdAndDrinks = { sessionId: sessionId, avgScore: sessionArray.reduce((a,b) => a + b, 0) / sessionArray.length };
+        sessionScoreArrays.push(sessionIdAndDrinks)
       })
 
       const orderedSessionsByScore = sessionScoreArrays.sort((a, b) => b.avgScore > a.avgScore ? 1 : -1)
@@ -87,26 +87,26 @@ class DrinkersMilestonesTable extends Component {
       let lowestSessionCount = 0;
       let bottomFiveScoreSessions = [];
 
-      orderedSessionsByScore.map((dateWithAvg, i) => {
+      orderedSessionsByScore.map((sessionIdWithAvg, i) => {
         if(highestSessionCount === 6) return;
         if(i === orderedSessionsByScore.length - 1) return;
         const nextScore = orderedSessionsByScore[i+1].avgScore
-        if(dateWithAvg.avgScore === nextScore) {
-          topFiveScoreSessions.push(dateWithAvg)
+        if(sessionIdWithAvg.avgScore === nextScore) {
+          topFiveScoreSessions.push(sessionIdWithAvg)
         } else {
-          topFiveScoreSessions.push(dateWithAvg)
+          topFiveScoreSessions.push(sessionIdWithAvg)
           highestSessionCount = highestSessionCount + 1
         }
       })
 
-      orderedSessionsByScore.slice(0).reverse().map((dateWithAvg, i) => {
+      orderedSessionsByScore.slice(0).reverse().map((sessionIdWithAvg, i) => {
         if(lowestSessionCount === 6) return;
         if(i === orderedSessionsByScore.length - 1) return;
         const nextScore = orderedSessionsByScore[i+1].avgScore
-        if(dateWithAvg.avgScore === nextScore) {
-          bottomFiveScoreSessions.push(dateWithAvg)
+        if(sessionIdWithAvg.avgScore === nextScore) {
+          bottomFiveScoreSessions.push(sessionIdWithAvg)
         } else {
-          bottomFiveScoreSessions.push(dateWithAvg)
+          bottomFiveScoreSessions.push(sessionIdWithAvg)
           lowestSessionCount = lowestSessionCount + 1
         }
       })
@@ -122,8 +122,8 @@ class DrinkersMilestonesTable extends Component {
     if(highestRatedSessions) {
       return highestRatedSessions.map((dataScoreObj) => {
         return (
-          <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
-            <td>{moment(dataScoreObj.date).format('Do MMMM YYYY')}</td>
+          <tr className="milestoneTD" onClick={() => this.props.handleSelectedSessionId(dataScoreObj.sessionId)}>
+            <td>{dataScoreObj.sessionId}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
         )
@@ -136,8 +136,8 @@ class DrinkersMilestonesTable extends Component {
     if(lowestRatedSessions) {
       return lowestRatedSessions.map((dataScoreObj) => {
         return (
-          <tr className="milestoneTD" onClick={() => this.props.handleSelectedDate(dataScoreObj.date)}>
-            <td>{moment(dataScoreObj.date).format('Do MMMM YYYY')}</td>
+          <tr className="milestoneTD" onClick={() => this.props.handleSelectedSessionId(dataScoreObj.sessionId)}>
+            <td>{dataScoreObj.sessionId}</td>
             <td>{(dataScoreObj.avgScore).toFixed(2)}</td>
           </tr>
         )

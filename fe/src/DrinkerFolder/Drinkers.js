@@ -15,7 +15,7 @@ class Drinkers extends Component {
   constructor(props) {
     super(props)
       this.onSelectDrinker = this.onSelectDrinker.bind(this)
-      this.handleSelectedDate = this.handleSelectedDate.bind(this)
+      this.handleSelectedSessionId = this.handleSelectedSessionId.bind(this)
       this.resetSelectedChoices = this.resetSelectedChoices.bind(this)
       this.handleSelectedRatingWord = this.handleSelectedRatingWord.bind(this)
       this.state = {
@@ -25,7 +25,7 @@ class Drinkers extends Component {
         selectedDrinker: "All Drinkers",
         selectedDrinkerProfilePic: null,
         selectedDrinkerTitle: null,
-        selectedDate: null,
+        selectedSessionId: null,
         selectedRatingWord: null,
         drinksPerPerson: null,
       }
@@ -70,8 +70,8 @@ class Drinkers extends Component {
                     selectedDrinkerProfilePic: null });
   }
 
-  handleSelectedDate(selectedDate) {
-    this.setState({ selectedDate })
+  handleSelectedSessionId(selectedSessionId) {
+    this.setState({ selectedSessionId })
   }
 
   handleSelectedRatingWord(selectedRatingWord) {
@@ -79,7 +79,7 @@ class Drinkers extends Component {
   }
 
   resetSelectedChoices() {
-    this.setState({ selectedDate: null, selectedRatingWord: null })
+    this.setState({ selectedSessionId: null, selectedRatingWord: null })
   }
 
   render() {
@@ -131,12 +131,12 @@ class Drinkers extends Component {
             <div className="milestoneDatesComponent">
               <DrinkersMilestonesTable drinks={this.state.drinks}
                                        selectedDrinker={this.state.selectedDrinker}
-                                       handleSelectedDate={this.handleSelectedDate} />
+                                       handleSelectedSessionId={this.handleSelectedSessionId} />
             </div>
-            {this.state.selectedDate && <TableModal selectedDate={this.state.selectedDate}
-                                                    resetSelectedChoices={this.resetSelectedChoices}
-                                                    selectedDrinker={this.state.selectedDrinker}
-                                                    drinks={this.state.drinks} />
+            {this.state.selectedSessionId && <TableModal selectedSessionId={this.state.selectedSessionId}
+                                                         resetSelectedChoices={this.resetSelectedChoices}
+                                                         selectedDrinker={this.state.selectedDrinker}
+                                                         drinks={this.state.drinks} />
             }
             {this.state.selectedRatingWord && <TableModal selectedRatingWord={this.state.selectedRatingWord}
                                                     resetSelectedChoices={this.resetSelectedChoices}

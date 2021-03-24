@@ -3,20 +3,25 @@ import '../Stylesheets/MyUtilitiesSS/TableModal.css';
 import LoadingSpin from './LoadingSpin';
 import moment from 'moment';
 
-const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedDate, selectedRatingWord }) => {
+const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedSessionId, selectedRatingWord }) => {
 
   const [selectedDrinks, setSelectedDrinks] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(null)
 
   useEffect(() => {
     let chosenDrinks = [];
-    if(selectedDate) {
+    if(selectedSessionId) {
+      let chosenDate
       drinks.map((drink) => {
-        if(drink.date === selectedDate && drink.name === selectedDrinker) {
+        if(drink.sessionId === selectedSessionId && drink.name === selectedDrinker) {
           chosenDrinks.push(drink)
         }
       })
+      let orderedDrinks = chosenDrinks.sort(function(a,b){
+        return Date.parse(a.date) > Date.parse(b.date);
+      });
+      setSelectedDate(orderedDrinks[0].date)
     } else if(selectedRatingWord) {
-      console.log(selectedRatingWord)
       drinks.map((drink) => {
         if((drink.ratingWordOne === selectedRatingWord || drink.ratingWordTwo === selectedRatingWord) && drink.name === selectedDrinker) {
           chosenDrinks.push(drink)
@@ -84,7 +89,7 @@ const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedDat
             <thead>
               <tr>
                 <th className="tableModalMainHead" colSpan="8">
-                  {selectedDate ? `${selectedDrinker}'s drinks on ${moment(selectedDate).format('dddd Do MMMM YYYY')}` :
+                  {selectedSessionId ? `${selectedDrinker}'s drinks on Session Number ${selectedSessionId} started on ${moment(selectedDate).format('dddd Do MMMM')}` :
                   `${selectedDrinker}'s "${selectedRatingWord}" drinks`}
                 </th>
               </tr>

@@ -31,3 +31,39 @@
 .drinksBreakdownMainTitle {
   text-align: center;
 }
+
+@keyframes flickerAnimation {
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+
+.excitingNum {
+  -webkit-animation: flickerAnimation 2s infinite;
+  -moz-animation: flickerAnimation 2s infinite;
+  -o-animation: flickerAnimation 2s infinite;
+   animation: flickerAnimation 2s infinite;
+}
+
+.hundredMultiple {
+  background-color: lightgreen;
+}
+
+.hundredMultiple:before {
+  content: "🎉 "
+}

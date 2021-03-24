@@ -41,22 +41,34 @@ const DrinksBreakdownTable = ({ drinks, drinkers }) => {
         const namesArray = drinker.personName.split(" ");
         const firstName = namesArray[0]
 
+        function excitingNumChecker (num) {
+          if(num % 100 === 0) {
+            return "hundredMultiple"
+          }
+          for (let i = 0; i < 11; i++) {
+            let candidate = num + i
+            if(candidate % 100 === 0) {
+              return "excitingNum"
+            }
+          }
+        }
+
         return(
           <tr key={drinker._id}>
             <td>{firstName}</td>
-            <td>{drinkTypes["Beer"]}</td>
-            <td>{drinkTypes["Cider"]}</td>
-            <td>{drinkTypes["Vodka"]}</td>
-            <td>{drinkTypes["Gin"]}</td>
-            <td>{drinkTypes["Rum"]}</td>
-            <td>{drinkTypes["Whiskey"]}</td>
-            <td>{drinkTypes["Wine"]}</td>
-            <td>{drinkTypes["Fortified Wine"]}</td>
-            <td>{drinkTypes["Liqueur"]}</td>
-            <td>{drinkTypes["Brandy"]}</td>
-            <td>{drinkTypes["Soft Drink"]}</td>
-            <td>{drinkTypes["Other"]}</td>
-            <td>{totalDrinks}</td>
+            <td className={excitingNumChecker(drinkTypes["Beer"])}>{drinkTypes["Beer"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Cider"])}>{drinkTypes["Cider"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Vodka"])}>{drinkTypes["Vodka"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Gin"])}>{drinkTypes["Gin"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Rum"])}>{drinkTypes["Rum"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Whiskey"])}>{drinkTypes["Whiskey"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Wine"])}>{drinkTypes["Wine"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Fortified Wine"])}>{drinkTypes["Fortified Wine"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Liqueur"])}>{drinkTypes["Liqueur"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Brandy"])}>{drinkTypes["Brandy"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Soft Drink"])}>{drinkTypes["Soft Drink"]}</td>
+            <td className={excitingNumChecker(drinkTypes["Other"])}>{drinkTypes["Other"]}</td>
+            <td className={excitingNumChecker(totalDrinks)}>{totalDrinks}</td>
           </tr>
         )
       })

@@ -38,9 +38,12 @@ const DrinksBreakdownTable = ({ drinks, drinkers }) => {
           }
         })
 
+        const namesArray = drinker.personName.split(" ");
+        const firstName = namesArray[0]
+
         return(
           <tr key={drinker._id}>
-            <td>{drinker.personName}</td>
+            <td>{firstName}</td>
             <td>{drinkTypes["Beer"]}</td>
             <td>{drinkTypes["Cider"]}</td>
             <td>{drinkTypes["Vodka"]}</td>

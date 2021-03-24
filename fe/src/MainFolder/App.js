@@ -77,7 +77,12 @@ const App = () => {
           }
         })
         state.drinkers.map((drinker) => {
-          confirmedDrinkers.push(drinker)
+          for(let i = 0; i < state.drinks.length; i++) {
+            if (state.drinks[i].drinkerId === drinker._id) {
+              confirmedDrinkers.push(drinker)
+              break;
+            }
+        }
         })
       }
 

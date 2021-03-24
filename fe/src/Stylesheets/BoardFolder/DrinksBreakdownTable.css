@@ -1,0 +1,33 @@
+.drinksBreakdownContainer {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../MyUtilitiesFolder/BackgroundImages/drinksBreakdownBackground.jpg");
+  background-size: 100% 100%;
+}
+
+.drinksBreakdownTableDiv {
+  position: relative;
+  background-color: white;
+  width: 70vw;
+  height: 65vh;
+  top: 18vh;
+  left: 15vw;
+  border: white 5px solid;
+  overflow-y: scroll;
+}
+
+.drinksBreakdownTable table th td {
+  font-size: 10;
+}
+
+.drinksBreakdownTableDiv table tr:nth-child(even) {
+  background-color: rgba(176, 247, 255, 0.3);
+}
+
+.drinksBreakdownTableDiv table tr:nth-child(odd) {
+  background-color: rgba(253, 255, 132, 0.3);
+}
+
+.drinksBreakdownMainTitle {
+  text-align: center;
+}

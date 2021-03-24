@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import '../Stylesheets/BoardFolder/TheBoard.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import AddDrinkForm from './AddDrinkForm';
+import DrinksBreakdownTable from './DrinksBreakdownTable';
 import Soundboard from './Soundboard';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
-import greentick from './green-checkmark.png';
+import greentick from '../MyUtilitiesFolder/Images/green-checkmark.png';
 
 const TheBoard = ({ drinkers, drinkTypes }) => {
 
@@ -200,55 +201,62 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
   }
 
   return(
-    <div className="theBoardContainer">
-      {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-        <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
-      : null}
-      <Link className="mainTableButton" to="/">
-        <button>Back to Main Table</button>
-      </Link>
-      <button className="soundboardButton" onClick={() => callSoundboard()}></button>
-      <div className="theBoardTableDiv">
-        <table className="theBoardTable">
-          <thead className="theBoardTHead">
-            <tr className="theBoardMainHeaderRow">
-              <th className="theBoardMainHeader" colSpan="8">
-                <div className="theBoardMainHeaderContainer">
-                  <div>Drink#: {totalDrinksNum}</div>
-                  <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
-                  <div>Session#: {sessionId}</div>
-                </div>
-              </th>
-            </tr>
-            <tr className="theBoardHeadersRow">
-              <th className="theBoardTh">Drinker</th>
-              <th className="theBoardTh">Time</th>
-              <th className="theBoardTh">Drink</th>
-              <th className="theBoardTh">Description</th>
-              <th className="theBoardTh">Score</th>
-              <th className="theBoardTh">Previous?</th>
-              <th className="theBoardTh">Done?</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sessionDrinkData()}
-          </tbody>
-        </table>
-      </div>
-      {displayAddForm && <AddDrinkForm drinks={drinks}
-                                       drinkers={drinkers}
-                                       setDisplayAddForm={setDisplayAddForm}
-                                       drinkTypes={drinkTypes}
-                                       addDrinkToBoard={addDrinkToBoard}
-                                       drinkToEdit={drinkToEdit}
-                                       editDrinkOnBoard={editDrinkOnBoard}
-                                       sessionId={sessionId}
-                         />
-      }
-      {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
+    <div className="allBoardsContainer">
+      <div className="soloPaperBoardContainer">
         {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-          <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
-      : null }
+          <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
+        : null}
+        <Link className="mainTableButton" to="/">
+          <button>Back to Main Table</button>
+        </Link>
+        <button className="soundboardButton" onClick={() => callSoundboard()}></button>
+        <div className="theBoardTableDiv">
+          <table className="theBoardTable">
+            <thead className="theBoardTHead">
+              <tr className="theBoardMainHeaderRow">
+                <th className="theBoardMainHeader" colSpan="8">
+                  <div className="theBoardMainHeaderContainer">
+                    <div>Drink#: {totalDrinksNum}</div>
+                    <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
+                    <div>Session#: {sessionId}</div>
+                  </div>
+                </th>
+              </tr>
+              <tr className="theBoardHeadersRow">
+                <th className="theBoardTh">Drinker</th>
+                <th className="theBoardTh">Time</th>
+                <th className="theBoardTh">Drink</th>
+                <th className="theBoardTh">Description</th>
+                <th className="theBoardTh">Score</th>
+                <th className="theBoardTh">Previous?</th>
+                <th className="theBoardTh">Done?</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sessionDrinkData()}
+            </tbody>
+          </table>
+        </div>
+        {displayAddForm && <AddDrinkForm drinks={drinks}
+                                        drinkers={drinkers}
+                                        setDisplayAddForm={setDisplayAddForm}
+                                        drinkTypes={drinkTypes}
+                                        addDrinkToBoard={addDrinkToBoard}
+                                        drinkToEdit={drinkToEdit}
+                                        editDrinkOnBoard={editDrinkOnBoard}
+                                        sessionId={sessionId}
+                          />
+        }
+        {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
+          {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+            <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
+        : null }
+      </div>
+      <div className="drinksBreakdownContainer">
+        <DrinksBreakdownTable drinkers={drinkers}
+                              drinks={drinks}
+        />
+      </div>
     </div>
   )
 }

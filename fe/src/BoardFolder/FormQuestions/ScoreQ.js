@@ -12,9 +12,9 @@ class ScoreQ extends React.Component {render() {
           name="score"
           id="scoreInput"
           placeholder="Score"
-          value={this.props.score || null}
+          value={this.props.score || ""}
           onChange={this.props.handleFormChange}
-          className={this.props.score === null ? "dataNeeded" : "inputField"}
+          className={this.props.score === "" ? "dataNeeded" : "inputField"}
         />
       </FormGroup>
     </Col>

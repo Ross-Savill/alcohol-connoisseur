@@ -64,7 +64,7 @@ class AddDrinkForm extends Component {
       mixerSeven: '',
       ratingWordOne: '',
       ratingWordTwo: '',
-      score: null,
+      score: "",
       hasCollab: false,
       firstCollabCompany: '',
       firstCollabCountry: '',
@@ -159,7 +159,7 @@ class AddDrinkForm extends Component {
         secondUkUsa: drinkToEdit.drink.secondUkUsa,
         drinkMain: drinkToEdit.drink.drinkMain,
         drinkType: drinkToEdit.drink.drinkType,
-        abv: (drinkToEdit.drink.abv * 100).toFixed(1),
+        abv: drinkToEdit.drink.abv ? (drinkToEdit.drink.abv * 100).toFixed(1) : "",
         mixerOne: drinkToEdit.drink.mixerOne,
         mixerTwo: drinkToEdit.drink.mixerTwo,
         mixerThree: drinkToEdit.drink.mixerThree,
@@ -169,7 +169,7 @@ class AddDrinkForm extends Component {
         mixerSeven: drinkToEdit.drink.mixerSeven,
         ratingWordOne: drinkToEdit.drink.ratingWordOne,
         ratingWordTwo: drinkToEdit.drink.ratingWordTwo,
-        score: drinkToEdit.drink.score,
+        score: drinkToEdit.drink.score ? drinkToEdit.drink.score : "",
         notes: drinkToEdit.drink.notes
       })
     }
@@ -380,6 +380,7 @@ class AddDrinkForm extends Component {
   handleFormChange = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
+    console.log(value)
   }
 
   handleNameChange = (event) => {
@@ -459,6 +460,12 @@ class AddDrinkForm extends Component {
         drinkDate = undefined;
       }
 
+      let score;
+      this.state.score === "" ? score = undefined : score = this.state.score
+
+      let abv;
+      this.state.abv === "" ? abv = undefined : abv = this.state.abv
+
       const neworEditedDrink = {
         sessionId: this.state.sessionId,
         drinkerId: this.state.drinkerId,
@@ -475,7 +482,7 @@ class AddDrinkForm extends Component {
         secondUkUsa: this.state.secondUkUsa,
         drinkMain: (this.state.drinkMain).trim(),
         drinkType: this.state.drinkType,
-        abv: this.state.abv / 100,
+        abv: abv / 100,
         mixerOne: (this.state.mixerOne).trim(),
         mixerTwo: (this.state.mixerTwo).trim(),
         mixerThree: (this.state.mixerThree).trim(),
@@ -485,7 +492,7 @@ class AddDrinkForm extends Component {
         mixerSeven: (this.state.mixerSeven).trim(),
         ratingWordOne: (this.state.ratingWordOne).trim(),
         ratingWordTwo: (this.state.ratingWordTwo).trim(),
-        score: this.state.score ? parseFloat(this.state.score) : null,
+        score: parseFloat(score),
         notes: (this.state.notes).trim(),
         confirmed: false
       }
@@ -503,7 +510,9 @@ class AddDrinkForm extends Component {
     }
   }
 
+
   render() {
+    console.log(this.state.score)
     if(!this.state.peopleNameObjs || !this.props.drinkers) {
       return <LoadingSpin />
     }

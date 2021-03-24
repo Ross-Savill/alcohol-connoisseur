@@ -12,7 +12,7 @@ class ABVQuestion extends React.Component {render() {
           name="abv"
           id="abvInput"
           placeholder="Drink ABV(%)"
-          value={this.props.abv}
+          value={this.props.abv || ""}
           onChange={this.props.handleFormChange}
           className={this.props.abv === "" ? "dataNeeded" : "inputField"}
         />

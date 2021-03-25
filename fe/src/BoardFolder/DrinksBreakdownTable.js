@@ -5,7 +5,7 @@ const DrinksBreakdownTable = ({ drinks, drinkers }) => {
 
   const drinksBreakdownHeaders = () => {
     return(
-      <tr>
+      <tr className="drinksBreakdownTableTHRow">
         <th>Drinker</th>
         <th>Beer</th>
         <th>Cider</th>
@@ -14,7 +14,7 @@ const DrinksBreakdownTable = ({ drinks, drinkers }) => {
         <th>Rum</th>
         <th>Whiskey</th>
         <th>Wine</th>
-        <th>Fortified Wine</th>
+        <th>Fort. Wine</th>
         <th>Liqueur</th>
         <th>Brandy</th>
         <th>Soft Drink</th>

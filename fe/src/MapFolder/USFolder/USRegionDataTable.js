@@ -57,43 +57,24 @@ class USRegionDataTable extends Component {
 
     const orderedSelectedDrinks = selectedDrinks.sort((a, b) => (a.name > b.name) ? 1 : -1)
     return orderedSelectedDrinks.map((drink, index) => {
-      if(drink.mixerTwo) {
-        return(
-          <tr key={index}>
-            <td className="usDrinkRegionData">{drink.name}</td>
-            <td className="usDrinkRegionData">{drink.drinkMain} with {drink.mixerOne} and {drink.mixerTwo}</td>
-            <td className="usDrinkRegionData">{drink.drinkType}</td>
-            <td className="usDrinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="usDrinkRegionData">{drink.score}</td>
-            <td className="usDrinkRegionData">{drink.brand}</td>
-            <td className="usDrinkRegionData">{drink.company}</td>
-          </tr>
-        )
-      } else if(drink.mixerOne) {
-          return(
-          <tr key={index}>
-            <td className="usDrinkRegionData">{drink.name}</td>
-            <td className="usDrinkRegionData">{drink.drinkMain} with {drink.mixerOne}</td>
-            <td className="usDrinkRegionData">{drink.drinkType}</td>
-            <td className="usDrinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-            <td className="usDrinkRegionData">{drink.score}</td>
-            <td className="usDrinkRegionData">{drink.brand}</td>
-            <td className="usDrinkRegionData">{drink.company}</td>
-          </tr>
-          )
-      } else {
-          return (
-            <tr key={index}>
-              <td className="drinkRegionData">{drink.name}</td>
-              <td className="drinkRegionData">{drink.drinkMain}</td>
-              <td className="drinkRegionData">{drink.drinkType}</td>
-              <td className="drinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
-              <td className="drinkRegionData">{drink.score}</td>
-              <td className="drinkRegionData">{drink.brand}</td>
-              <td className="drinkRegionData">{drink.company}</td>
-            </tr>
-          )
-      }
+      return(
+        <tr key={index}>
+          <td className="usDrinkRegionData">{drink.name}</td>
+          <td className="usDrinkRegionData">{drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
+                                             drink.mixerSix ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}` :
+                                             drink.mixerFive ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}` :
+                                             drink.mixerFour ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}` :
+                                             drink.mixerThree ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo} and ${drink.mixerThree}` :
+                                             drink.mixerTwo ? `${drink.drinkMain} with ${drink.mixerOne} and ${drink.mixerTwo}` :
+                                             drink.mixerOne ? `${drink.drinkMain} with ${drink.mixerOne}` :
+                                             `${drink.drinkMain}`}</td>
+          <td className="usDrinkRegionData">{drink.drinkType}</td>
+          <td className="usDrinkRegionData">{drink.ratingWordOne} {drink.ratingWordTwo}</td>
+          <td className="usDrinkRegionData">{drink.score}</td>
+          <td className="usDrinkRegionData">{drink.brand}</td>
+          <td className="usDrinkRegionData">{drink.company}</td>
+        </tr>
+      )
     })
   }
 

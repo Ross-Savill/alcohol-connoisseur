@@ -16,6 +16,13 @@
   overflow-y: scroll;
 }
 
+.drinksBreakdownTableTHRow {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: rgb(131, 235, 131) !important;
+}
+
 .drinksBreakdownTable table td {
   font-size: 10;
 }

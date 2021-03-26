@@ -380,7 +380,6 @@ class AddDrinkForm extends Component {
   handleFormChange = (event) => {
     const { target: { name, value } } = event
     this.setState({ [name]: value })
-    console.log(value)
   }
 
   handleNameChange = (chosenNameObj) => {
@@ -510,7 +509,6 @@ class AddDrinkForm extends Component {
 
 
   render() {
-    console.log(this.state.drinkerId, this.state.personName)
     if(!this.state.peopleNameObjs || !this.props.drinkers) {
       return <LoadingSpin />
     }

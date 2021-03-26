@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Form, FormGroup } from 'reactstrap';
+import { Col, FormGroup } from 'reactstrap';
 import Select from 'react-select';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 

@@ -40,7 +40,14 @@ const TheBoard = ({ drinkTypes }) => {
     }
 
     if(drinks){
-      setTotalDrinksNum(drinks.length + 1)
+      let drinkCount = 0;
+      drinks.map((drink) => {
+        if(drink.confirmed === true || (drink.ratingWordOne && drink.ratingWordTwo && drink.score)) {
+          drinkCount = drinkCount + 1
+        }
+      })
+      setTotalDrinksNum(drinkCount + 1)
+
       let drinksForTheBoard = [];
       drinks.map((drink) => {
         if(drink.confirmed === false) {

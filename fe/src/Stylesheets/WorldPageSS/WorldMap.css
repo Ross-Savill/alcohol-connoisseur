@@ -1,6 +1,7 @@
-.worldTotalContainer {
-  display: grid;
-  grid-template-columns: repeat(4, [col-start] 1fr);
+.worldContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .worldTitleAndNav {
@@ -17,23 +18,37 @@
   margin-bottom: 0px;
 }
 
-.worldMapAndRegionTable {
-  grid-column: col-start 1 / span 3;
-  grid-row: 2 / 3;
-  display: flex;
-  flex-flow: column wrap;
-}
-
 .worldMap {
-  flex: 1;
+  display: block;
+  width: 60vw;
+  height: 50vh;
   border: solid 3px rgb(77, 71, 71);
 }
 
 .worldDrinkerDataTable {
+  width: 40vw;
+  height: 50vh;
   border: solid 3px green;
+  overflow-y: auto;
+
 }
 
 .worldRegionDataTable {
-  flex: 1;
   border: solid 3px blue;
+  height: 40vh;
+  width: 100vw;
+  overflow-y: auto;
+}
+
+.regionNameSpan {
+  float: left;
+}
+
+.allCountryReturnSpan {
+  float: right;
+}
+
+.allCountryReturnSpan:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

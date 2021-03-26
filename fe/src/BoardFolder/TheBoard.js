@@ -9,9 +9,10 @@ import axios from 'axios';
 import moment from 'moment';
 import greentick from '../MyUtilitiesFolder/Images/green-checkmark.png';
 
-const TheBoard = ({ drinkers, drinkTypes }) => {
+const TheBoard = ({ drinkTypes }) => {
 
   const [ drinks, setDrinks ] = useState (null)
+  const [ drinkers, setDrinkers ] = useState (null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
   const [ displaySoundboard, setDisplaySoundboard ] = useState(false)
   const [ boardDrinks, setBoardDrinks ] = useState([])
@@ -30,6 +31,10 @@ const TheBoard = ({ drinkers, drinkTypes }) => {
         }
         axios.get("https://drinkandrate.herokuapp.com/drinks", config)
         .then(resp => setDrinks(resp.data))
+        .catch(error => console.log(error))
+
+        axios.get("https://drinkandrate.herokuapp.com/users", config)
+        .then(resp => setDrinkers(resp.data))
         .catch(error => console.log(error))
       }
     }

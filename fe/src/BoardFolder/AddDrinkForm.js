@@ -383,10 +383,8 @@ class AddDrinkForm extends Component {
     console.log(value)
   }
 
-  handleNameChange = (event) => {
-    const { target: { name, value } } = event
-    var namePlusId = value.split(",");
-    this.setState({ [name]: namePlusId[0], drinkerId: namePlusId[1] })
+  handleNameChange = (chosenNameObj) => {
+    this.setState({ personName: chosenNameObj.label, drinkerId: chosenNameObj.value })
   }
 
   handleFormChangeCountryUpdate = (event) => {
@@ -512,7 +510,7 @@ class AddDrinkForm extends Component {
 
 
   render() {
-    console.log(this.state.score)
+    console.log(this.state.drinkerId, this.state.personName)
     if(!this.state.peopleNameObjs || !this.props.drinkers) {
       return <LoadingSpin />
     }
@@ -566,7 +564,7 @@ class AddDrinkForm extends Component {
             <h4 className="mainDrinkInfoAreaHeader">Standard Required Data</h4>
             <Row xs="3">
               <div>
-                  <DrinkerQ drinkerNames={this.state.peopleNameObjs}
+                  <DrinkerQ userObjects={this.state.peopleNameObjs}
                             personName={this.state.personName}
                             drinkerId={this.state.drinkerId}
                             handleNameChange={this.handleNameChange}

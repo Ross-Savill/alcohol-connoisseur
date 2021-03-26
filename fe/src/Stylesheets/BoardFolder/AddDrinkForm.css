@@ -62,12 +62,20 @@
   border-color: rgb(43, 255, 0) !important;
   border-width: 3px !important;
   margin: 20px 5px 0px 5px;
+  width: 100%;
 }
 
 .dataNeeded {
   border-color: rgb(255, 25, 0) !important;
   border-width: 3px !important;
   margin: 20px 5px 0px 5px !important;
+}
+
+.dataNeededSelect {
+  border-color: rgb(255, 25, 0) !important;
+  border-width: 3px !important;
+  margin: 20px 5px 0px 5px !important;
+  width: 100%;
 }
 
 .questionInputCheckboxes {

@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, Form, FormGroup } from 'reactstrap';
+import Select from 'react-select';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
-class DrinkerQ extends React.Component {render() {
+class DrinkerQ extends React.Component { render() {
 
-  const drinkerNameSelect = this.props.drinkerNames.map((name) =>
-    <option key={name._id} value={[name.personName, name._id]}>{name.personName}</option>
+  let users = [];
+
+  this.props.userObjects.map((name) =>
+    users.push({ "value": name._id, "label": name.personName })
   );
 
   return (
     <Col xs="12">
       <FormGroup className="formGroupQuestion">
-        <Input
-          type="select"
-          name="personName"
-          id="personNameInput"
-          value={[this.props.personName, this.props.drinkerId]}
-          onChange={this.props.handleNameChange}
-          className={this.props.personName === "" ? "dataNeeded" : "inputField"}
-        >
-        <option className="placeholder" value="">Select Drinker:</option>
-        {drinkerNameSelect}
-        </Input>
+        <Select value={this.props.drinkerId ? { "value": this.props.drinkerId, "label": this.props.personName } : null}
+                onChange={this.props.handleNameChange}
+                options={users}
+                className={this.props.personName === "" ? "dataNeededSelect" : "inputField"}
+                >
+        </Select>
       </FormGroup>
     </Col>
   )

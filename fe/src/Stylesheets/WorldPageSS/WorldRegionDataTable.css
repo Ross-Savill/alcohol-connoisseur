@@ -1,3 +1,7 @@
+.selectedCountryDiv {
+  background-color:rgb(49, 233, 33, 0.3);
+}
+
 .regionTableHeader {
   text-align: center;
 }

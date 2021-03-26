@@ -85,3 +85,15 @@
   left: auto;
   bottom: 0;
 }
+
+.thousanthDrink {
+  font-size: 40px;
+}
+
+.thousanthDrink:before {
+  content: "🎉 🎉 🎆🎆!!"
+}
+
+.thousanthDrink:after {
+  content: "!!🎆🎆 HAPPY ANNIVERSARY ALL!! 🎉 🎉 "
+}

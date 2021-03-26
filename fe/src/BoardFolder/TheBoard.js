@@ -228,7 +228,7 @@ const TheBoard = ({ drinkTypes }) => {
               <tr className="theBoardMainHeaderRow">
                 <th className="theBoardMainHeader" colSpan="8">
                   <div className="theBoardMainHeaderContainer">
-                    <div>Drink#: {totalDrinksNum}</div>
+                    <div>Drink#: <span className={totalDrinksNum % 1000 === 0 ? "thousanthDrink" : null}>{totalDrinksNum}</span></div>
                     <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
                     <div>Session#: {sessionId}</div>
                   </div>

@@ -18,7 +18,7 @@ class DrinkerQ extends React.Component { render() {
                 onChange={this.props.handleNameChange}
                 options={users}
                 className={this.props.personName === "" ? "dataNeededSelect" : "inputField"}
-                >
+        >
         </Select>
       </FormGroup>
     </Col>

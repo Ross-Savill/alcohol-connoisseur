@@ -172,6 +172,18 @@ app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   }
 });
 
+app.get('/sessions', authorizeAccessToken, (req, res) => {
+  MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+    if (err) throw err;
+    const dbName = db.db("drinkandrate");
+    dbName.collection("sessions").findOne({}, null,function(err, result) {
+      if (err) throw err;
+      res.json(result);
+      db.close();
+    });
+  });
+});
+
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('../fe/build'))
 }

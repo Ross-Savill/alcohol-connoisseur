@@ -11,6 +11,7 @@ import greentick from '../MyUtilitiesFolder/Images/green-checkmark.png';
 
 const TheBoard = ({ drinkTypes }) => {
 
+  const [ sessionStatus, setSessionStatus ] = useState(false)
   const [ drinks, setDrinks ] = useState (null)
   const [ drinkers, setDrinkers ] = useState (null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
@@ -29,6 +30,10 @@ const TheBoard = ({ drinkTypes }) => {
         const config = {
           headers: { 'Authorization': `Bearer ${token}` }
         }
+        axios.get("https://drinkandrate.herokuapp.com/sessions", config)
+        .then(resp => console.log(resp.data))
+        .catch(error => console.log(error))
+
         axios.get("https://drinkandrate.herokuapp.com/drinks", config)
         .then(resp => setDrinks(resp.data))
         .catch(error => console.log(error))

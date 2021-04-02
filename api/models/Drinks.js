@@ -15,6 +15,7 @@ const drinksSchema = new mongoose.Schema({
   mixerFive: String,
   mixerSix: String,
   mixerSeven: String,
+  mixerEight: String,
   ratingWordOne: String,
   ratingWordTwo: String,
   score: Number,

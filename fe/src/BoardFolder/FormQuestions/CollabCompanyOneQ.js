@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
@@ -48,6 +48,7 @@ class CollabCompanyOneQ extends React.Component {render() {
   return (
     <Col>
       <FormGroup>
+        <Label className={firstCollabCompany === "" ? "dataNeededLabel" : "questionLabel"}>First Collab Company</Label>
         <Input
           type="text"
           name="firstCollabCompany"
@@ -59,7 +60,9 @@ class CollabCompanyOneQ extends React.Component {render() {
           onChange={companyAutocomplete}
           className={firstCollabCompany === "" ? "dataNeeded" : "inputField"}
         />
+        <div className="mixerSuggestions">
           {companySuggestionsComponent}
+        </div>
       </FormGroup>
     </Col>
   )

@@ -2,26 +2,26 @@ import React from 'react';
 import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
-class MixerOneQ extends React.Component {render() {
+class MixerEightQ extends React.Component {render() {
 
-  let mixerOneSuggestionsComponent;
+  let mixerEightSuggestionsComponent;
 
   const {
     props: {
       filteredMixerSuggestions,
-      mixerOneSuggestions,
+      mixerEightSuggestions,
       mixerAutocomplete,
-      removeDropdown,
       mixerSuggestionClick,
-      mixerOne,
+      mixerEight,
+      removeDropdown,
       onKeyDown,
       activeSuggestion
     }
   } = this;
 
-  if (mixerOneSuggestions && mixerOne) {
+  if (mixerEightSuggestions && mixerEight) {
     if (filteredMixerSuggestions.length) {
-      mixerOneSuggestionsComponent = (
+      mixerEightSuggestionsComponent = (
         <ul className="suggestions">
           {filteredMixerSuggestions.map((suggestion, index) => {
             let className;
@@ -29,7 +29,7 @@ class MixerOneQ extends React.Component {render() {
               className = "suggestion-active";
             }
             return (
-              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerOne")}>
+              <li className={className} key={index} onClick={() => mixerSuggestionClick(suggestion, "mixerEight")}>
                 {suggestion}
               </li>
             );
@@ -37,7 +37,7 @@ class MixerOneQ extends React.Component {render() {
         </ul>
       );
     } else {
-      mixerOneSuggestionsComponent = (
+      mixerEightSuggestionsComponent = (
         <div className="no-suggestions">
           <em>No main drinks available.</em>
         </div>
@@ -48,21 +48,21 @@ class MixerOneQ extends React.Component {render() {
   return (
     <Col xs="3">
       <FormGroup>
-        <Label className={this.props.mixerOne === "" ? "dataNeededLabel" : "questionLabel"}>Mixer One</Label>
+        <Label className={mixerEight === "" ? "dataNeededLabel" : "questionLabel"}>Mixer Eight</Label>
         <div className="mixerQuestion">
           <Input
             type="text"
-            name="mixerOne"
-            id="mixerOneInput"
-            placeholder="Mixer One"
-            value={mixerOne}
+            name="mixerEight"
+            id="mixerEightInput"
+            placeholder="Mixer Eight"
+            value={mixerEight}
             onKeyDown={onKeyDown}
             onClick={removeDropdown}
             onChange={mixerAutocomplete}
-            className={mixerOne === "" ? "dataNeeded" : "inputField"}
+            className={mixerEight === "" ? "dataNeeded" : "inputField"}
           />
           <div className="mixerSuggestions">
-            {mixerOneSuggestionsComponent}
+            {mixerEightSuggestionsComponent}
           </div>
         </div>
       </FormGroup>
@@ -70,4 +70,4 @@ class MixerOneQ extends React.Component {render() {
   )
 }}
 
-export default MixerOneQ;
+export default MixerEightQ;

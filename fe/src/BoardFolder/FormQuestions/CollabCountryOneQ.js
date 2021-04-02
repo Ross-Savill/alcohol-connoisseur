@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
@@ -6,6 +6,7 @@ class CollabCountryOneQ extends React.Component {render() {
 
   return (
     <Col>
+      <Label className={this.props.firstCollabCountry === "" ? "dataNeededLabel" : "questionLabel"}>First Collab Country</Label>
       <FormGroup>
         <div>
           <Input

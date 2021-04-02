@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, FormGroup } from 'reactstrap';
+import { Col, FormGroup, Label } from 'reactstrap';
 import Select from 'react-select';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
@@ -13,7 +13,8 @@ class DrinkerQ extends React.Component { render() {
 
   return (
     <Col xs="12">
-      <FormGroup className="formGroupQuestion">
+      <FormGroup className="formGroupDrinkerQuestion">
+        <Label className={this.props.personName === "" ? "dataNeededLabel" : "questionLabel"}>Drinker</Label>
         <Select value={this.props.drinkerId ? { "value": this.props.drinkerId, "label": this.props.personName } : null}
                 onChange={this.props.handleNameChange}
                 options={users}

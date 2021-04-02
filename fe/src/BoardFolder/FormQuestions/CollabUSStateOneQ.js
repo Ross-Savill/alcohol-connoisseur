@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class CollabGBCountryOneQ extends React.Component {render() {
 
   return (
     <Col xs="4">
+      <Label className={this.props.firstUkUsa === "" ? "dataNeededLabel" : "questionLabel"}>US State</Label>
       <FormGroup className="formGroupQuestion">
         <Input
           type="select"

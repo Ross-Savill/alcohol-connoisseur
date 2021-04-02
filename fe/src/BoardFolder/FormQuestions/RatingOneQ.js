@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class RatingOneQ extends React.Component {render() {
@@ -46,19 +46,22 @@ class RatingOneQ extends React.Component {render() {
 
   return (
     <Col>
-    <FormGroup className="formGroupQuestion">
-      <Input
-        type="text"
-        name="ratingWordOne"
-        id="ratingWordOneInput"
-        placeholder="Rating Word One"
-        value={ratingWordOne}
-        onClick={removeDropdown}
-        onChange={rtOneAutocomplete}
-        className={ratingWordOne === "" ? "dataNeeded" : "inputField"}
-      />
-    </FormGroup>
-    {rtWordOneSuggestionsComponent}
+      <Label className={ratingWordOne === "" ? "dataNeededLabel" : "questionLabel"}>Rating Word One</Label>
+      <FormGroup className="formGroupQuestion">
+        <Input
+          type="text"
+          name="ratingWordOne"
+          id="ratingWordOneInput"
+          placeholder="Rating Word One"
+          value={ratingWordOne}
+          onClick={removeDropdown}
+          onChange={rtOneAutocomplete}
+          className={ratingWordOne === "" ? "dataNeeded" : "inputField"}
+        />
+      </FormGroup>
+      <div className="additionalSugs">
+        {rtWordOneSuggestionsComponent}
+      </div>
     </Col>
   )
 }}

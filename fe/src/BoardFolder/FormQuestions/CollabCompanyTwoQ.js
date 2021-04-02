@@ -48,6 +48,7 @@ class CollabCompanyTwoQ extends React.Component {render() {
   return (
     <Col>
       <FormGroup>
+      <Label className={secondCollabCompany === "" ? "dataNeededLabel" : "questionLabel"}>Second Collab Company</Label>
         <div>
           <Input
             type="text"
@@ -60,7 +61,9 @@ class CollabCompanyTwoQ extends React.Component {render() {
             onChange={companyAutocomplete}
             className="inputField"
           />
-          {companySuggestionsComponent}
+          <div className="mixerSuggestions">
+            {companySuggestionsComponent}
+          </div>
         </div>
       </FormGroup>
     </Col>

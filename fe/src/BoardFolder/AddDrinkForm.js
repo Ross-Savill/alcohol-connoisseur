@@ -17,6 +17,7 @@ import MixerFourQ from './FormQuestions/MixerFourQ';
 import MixerFiveQ from './FormQuestions/MixerFiveQ';
 import MixerSixQ from './FormQuestions/MixerSixQ';
 import MixerSevenQ from './FormQuestions/MixerSevenQ';
+import MixerEightQ from './FormQuestions/MixerEightQ';
 import CollabCheckbox from './FormQuestions/CollabCheckbox';
 import CollabCompanyOneQ from './FormQuestions/CollabCompanyOneQ';
 import CollabCountryOneQ from './FormQuestions/CollabCountryOneQ';
@@ -62,10 +63,11 @@ class AddDrinkForm extends Component {
       mixerFive: '',
       mixerSix: '',
       mixerSeven: '',
+      mixerEight: '',
       ratingWordOne: '',
       ratingWordTwo: '',
       score: "",
-      hasCollab: false,
+      hasCollab: "",
       firstCollabCompany: '',
       firstCollabCountry: '',
       firstUkUsa: '',
@@ -88,6 +90,7 @@ class AddDrinkForm extends Component {
       mixerFiveSuggestions: false,
       mixerSixSuggestions: false,
       mixerSevenSuggestions: false,
+      mixerEightSuggestions: false,
       companySuggestions: false,
       firstCollabCompanySuggestions: false,
       secondCollabCompanySuggestions: false,
@@ -123,7 +126,9 @@ class AddDrinkForm extends Component {
     }
 
     if(drinkToEdit) {
-      if(drinkToEdit.drink.mixerSeven) {
+      if(drinkToEdit.drink.mixerEight) {
+        this.setState({ hasMixer: "8" })
+      } else if (drinkToEdit.drink.mixerSeven) {
         this.setState({ hasMixer: "7" })
       } else if (drinkToEdit.drink.mixerSix) {
         this.setState({ hasMixer: "6" })
@@ -167,6 +172,7 @@ class AddDrinkForm extends Component {
         mixerFive: drinkToEdit.drink.mixerFive,
         mixerSix: drinkToEdit.drink.mixerSix,
         mixerSeven: drinkToEdit.drink.mixerSeven,
+        mixerEight: drinkToEdit.drink.mixerEight,
         ratingWordOne: drinkToEdit.drink.ratingWordOne,
         ratingWordTwo: drinkToEdit.drink.ratingWordTwo,
         score: drinkToEdit.drink.score ? drinkToEdit.drink.score : "",
@@ -194,7 +200,7 @@ class AddDrinkForm extends Component {
     const allMixersInclSpaces = [];
     drinks.map((drink) => allMixersInclSpaces.push(
       drink.mixerOne, drink.mixerTwo, drink.mixerThree, drink.mixerFour,
-      drink.mixerFive, drink.mixerSix, drink.mixerSeven
+      drink.mixerFive, drink.mixerSix, drink.mixerSeven, drink.mixerEight
     ));
     const uniqueMixers = Array.from(new Set(allMixersInclSpaces.filter(function (mixer) { return mixer != false })));
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
@@ -220,6 +226,7 @@ class AddDrinkForm extends Component {
       if(!drink.mixerFive) { return } else { allLiquids.push(drink.mixerFive)}
       if(!drink.mixerSix) { return } else { allLiquids.push(drink.mixerSix)}
       if(!drink.mixerSeven) { return } else { allLiquids.push(drink.mixerSeven)}
+      if(!drink.mixerEight) { return } else { allLiquids.push(drink.mixerEight)}
     })
     const uniqueMixers = Array.from(new Set(allLiquids));
     const filteredMixerSuggestions = uniqueMixers.filter(
@@ -287,7 +294,7 @@ class AddDrinkForm extends Component {
   removeDropdown() {
     this.setState({ showSuggestions: false, mixerOneSuggestions: false,
       mixerTwoSuggestions: false, mixerThreeSuggestions: false, mixerFourSuggestions: false,
-      mixerFiveSuggestions: false, mixerSixSuggestions: false, mixerSevenSuggestions: false,
+      mixerFiveSuggestions: false, mixerSixSuggestions: false, mixerSevenSuggestions: false, mixerEightSuggestions: false,
       companySuggestions: false, firstCollabCompanySuggestions: false, secondCollabCompanySuggestions: false })
   }
 
@@ -407,13 +414,11 @@ class AddDrinkForm extends Component {
                  });
   };
 
-  toggleHasCollab = () => {
-    const currentState = this.state.hasCollab;
-    this.setState({ hasCollab: !currentState,
-                    firstCollabCompany: '', secondCollabCompany: '',
-                    firstCollabCountry: '', secondCollabCountry: '',
-                    firstUkUsa: '', secondUkUsa: ''
-                  });
+  toggleHasCollab = (e) => {
+    this.setState({ hasCollab: e.target.value,
+                    firstCollabCompany: '', firstCollabCountry: '', firstUkUsa: '',
+                    secondCollabCompany: '', secondCollabCountry: '', secondUkUsa: ''
+    });
   };
 
   handleCancel = (e) => {
@@ -487,6 +492,7 @@ class AddDrinkForm extends Component {
         mixerFive: (this.state.mixerFive).trim(),
         mixerSix: (this.state.mixerSix).trim(),
         mixerSeven: (this.state.mixerSeven).trim(),
+        mixerEight: (this.state.mixerEight).trim(),
         ratingWordOne: (this.state.ratingWordOne).trim(),
         ratingWordTwo: (this.state.ratingWordTwo).trim(),
         score: parseFloat(score),
@@ -581,7 +587,7 @@ class AddDrinkForm extends Component {
               />
             </Row>
             <Row xs="2">
-              <Col xs="10">
+              <Col xs="7">
                 <div>
                   <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
                                   activeSuggestion={this.state.activeSuggestion}
@@ -599,6 +605,9 @@ class AddDrinkForm extends Component {
               </Col>
               <MixerSelect hasMixer={this.state.hasMixer}
                            toggleHasMixer={this.toggleHasMixer}
+              />
+              <CollabCheckbox toggleHasCollab={this.toggleHasCollab}
+                              hasCollab={this.state.hasCollab}
               />
             </Row>
             <Row xs={this.state.country === "GB" || this.state.country === "US" ? "3" : "2"}>
@@ -632,7 +641,7 @@ class AddDrinkForm extends Component {
             { this.state.hasMixer > 0 &&
               <div className="mixerInputArea">
               <h4 className="mixerInputAreaHeader">Mixer Input Area</h4>
-              <Row xs="3">
+              <Row xs="4">
                 <MixerOneQ mixerOne={this.state.mixerOne}
                            mixerOneSuggestions={this.state.mixerOneSuggestions}
                            filteredMixerSuggestions={this.state.filteredMixerSuggestions}
@@ -664,9 +673,8 @@ class AddDrinkForm extends Component {
                              removeDropdown={this.removeDropdown}
                 />
                 }
-              </Row>
-            { this.state.hasMixer > 3 &&
-              <Row xs="4">
+                { this.state.hasMixer > 3 &&
+
                 <MixerFourQ mixerFour={this.state.mixerFour}
                             mixerFourSuggestions={this.state.mixerFourSuggestions}
                             filteredMixerSuggestions={this.state.filteredMixerSuggestions}
@@ -676,6 +684,9 @@ class AddDrinkForm extends Component {
                             mixerSuggestionClick={this.mixerSuggestionClick}
                             removeDropdown={this.removeDropdown}
                 />
+                }
+              </Row>
+                <Row xs="4">
               { this.state.hasMixer > 4 &&
                 <MixerFiveQ mixerFive={this.state.mixerFive}
                             mixerFiveSuggestions={this.state.mixerFiveSuggestions}
@@ -709,17 +720,22 @@ class AddDrinkForm extends Component {
                             removeDropdown={this.removeDropdown}
                 />
               }
+              { this.state.hasMixer > 7 &&
+                <MixerEightQ mixerEight={this.state.mixerEight}
+                            mixerEightSuggestions={this.state.mixerEightSuggestions}
+                            filteredMixerSuggestions={this.state.filteredMixerSuggestions}
+                            activeSuggestion={this.state.activeSuggestion}
+                            onKeyDown={this.onKeyDown}
+                            mixerAutocomplete={this.mixerAutocomplete}
+                            mixerSuggestionClick={this.mixerSuggestionClick}
+                            removeDropdown={this.removeDropdown}
+                />
+              }
               </Row>
-            }
             </div>
             }
-          <Row xs="1">
-            <CollabCheckbox toggleHasCollab={this.toggleHasCollab}
-                            hasCollab={this.state.hasCollab}
-            />
-          </Row>
-        { this.state.hasCollab &&
-            <div className="collabInputs">
+        { this.state.hasCollab > 0 &&
+            <div className="collabInputArea">
               <h4 className="collabInputAreaHeader">Collab Input Area</h4>
               <Row xs={this.state.firstCollabCountry === "GB" || this.state.firstCollabCountry === "US" ? "3" : "2"}>
                 <CollabCompanyOneQ firstCollabCompany={this.state.firstCollabCompany}
@@ -748,6 +764,7 @@ class AddDrinkForm extends Component {
                 />
               }
               </Row>
+            { this.state.hasCollab > 1 &&
               <Row xs={this.state.secondCollabCountry === "GB" || this.state.secondCollabCountry === "US" ? "3" : "2"}>
                 <CollabCompanyTwoQ secondCollabCompany={this.state.secondCollabCompany}
                                    companyAutocomplete={this.companyAutocomplete}
@@ -776,6 +793,7 @@ class AddDrinkForm extends Component {
                 />
               }
               </Row>
+            }
             </div>
         }
             <div className="verdictArea">

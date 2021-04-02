@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class ABVQuestion extends React.Component {render() {
@@ -7,6 +7,7 @@ class ABVQuestion extends React.Component {render() {
   return (
     <Col xs="4">
       <FormGroup className="formGroupQuestion">
+        <Label className={this.props.abv === "" ? "dataNeededLabel" : "questionLabel"}>ABV(%)</Label>
         <Input
           type="number"
           name="abv"

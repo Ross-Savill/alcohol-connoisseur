@@ -11,7 +11,6 @@ import greentick from '../MyUtilitiesFolder/Images/green-checkmark.png';
 
 const TheBoard = ({ drinkTypes }) => {
 
-  const [ sessionStatus, setSessionStatus ] = useState(false)
   const [ drinks, setDrinks ] = useState (null)
   const [ drinkers, setDrinkers ] = useState (null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
@@ -19,7 +18,10 @@ const TheBoard = ({ drinkTypes }) => {
   const [ boardDrinks, setBoardDrinks ] = useState([])
   const [ totalDrinksNum, setTotalDrinksNum ] = useState()
   const [ drinkToEdit, setDrinkToEdit ] = useState(null)
-  const [ sessionId, setSessionId ] = useState(null)
+  const [ sessionData, setSessionData ] = useState({
+          sessionStatus: false,
+          sessionId: null
+  })
 
   const { user, getAccessTokenSilently } = useAuth0();
 
@@ -31,16 +33,19 @@ const TheBoard = ({ drinkTypes }) => {
           headers: { 'Authorization': `Bearer ${token}` }
         }
         axios.get("https://drinkandrate.herokuapp.com/sessions", config)
-        .then(resp => console.log(resp.data))
-        .catch(error => console.log(error))
+          .then(resp => setSessionData({
+            sessionStatus: resp.data.sessionActive,
+            sessionId: resp.data.sessionNum
+          }))
+          .catch(error => console.log(error))
 
         axios.get("https://drinkandrate.herokuapp.com/drinks", config)
-        .then(resp => setDrinks(resp.data))
-        .catch(error => console.log(error))
+          .then(resp => setDrinks(resp.data))
+          .catch(error => console.log(error))
 
         axios.get("https://drinkandrate.herokuapp.com/users", config)
-        .then(resp => setDrinkers(resp.data))
-        .catch(error => console.log(error))
+          .then(resp => setDrinkers(resp.data))
+          .catch(error => console.log(error))
       }
     }
 
@@ -63,16 +68,6 @@ const TheBoard = ({ drinkTypes }) => {
     }
     fetchData()
   },[drinks])
-
-  if(sessionId === null && drinks) {
-    const uniqueSessionIds = new Set()
-    drinks.forEach((drink) => {
-      if(drink.confirmed === true) {
-        uniqueSessionIds.add(drink.sessionId)
-      }
-    })
-    setSessionId(uniqueSessionIds.size + 1)
-  }
 
   const callAddForm = () => {
     setDrinkToEdit(null)
@@ -161,7 +156,8 @@ const TheBoard = ({ drinkTypes }) => {
           <tr key={index}>
             <td>{firstName}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
-            <td>{drink.mixerSeven ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven}`
+            <td>{ drink.mixerEight ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}`
+              : drink.mixerSeven ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}`
               : drink.mixerSix ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}`
               : drink.mixerFive ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}`
               : drink.mixerFour ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}`
@@ -218,7 +214,7 @@ const TheBoard = ({ drinkTypes }) => {
   }
 
   return(
-    <div className="allBoardsContainer">
+    <div className={!displayAddForm ? "allBoardsContainer" : "fixedBoardBackground"}>
       <div className="soloPaperBoardContainer">
         {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
           <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
@@ -235,7 +231,7 @@ const TheBoard = ({ drinkTypes }) => {
                   <div className="theBoardMainHeaderContainer">
                     <div>Drink#: <span className={totalDrinksNum % 1000 === 0 ? "thousanthDrink" : null}>{totalDrinksNum}</span></div>
                     <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
-                    <div>Session#: {sessionId}</div>
+                    <div>Session#: {sessionData.sessionId}</div>
                   </div>
                 </th>
               </tr>
@@ -261,7 +257,7 @@ const TheBoard = ({ drinkTypes }) => {
                                         addDrinkToBoard={addDrinkToBoard}
                                         drinkToEdit={drinkToEdit}
                                         editDrinkOnBoard={editDrinkOnBoard}
-                                        sessionId={sessionId}
+                                        sessionId={sessionData.sessionId}
                           />
         }
         {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}

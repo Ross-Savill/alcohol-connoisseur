@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MainComponentQ extends React.Component {render() {
@@ -75,8 +75,9 @@ class MainComponentQ extends React.Component {render() {
   }
 
   return(
-    <div>
+    <div className="drinkMainQuestionContainer">
       <FormGroup className="formGroupQuestion">
+        <Label className={this.props.drinkMain === "" ? "dataNeededLabel" : "questionLabel"}>Main Component</Label>
         <Input
           type="text"
           name="drinkMain"
@@ -89,7 +90,7 @@ class MainComponentQ extends React.Component {render() {
           className={this.props.drinkMain === "" ? "dataNeeded" : "inputField"}
         />
       </FormGroup>
-      <div className="mainAndMixerSuggestions" ref={this.props.setWrapperRef}>
+      <div className="mainAndMixerSuggestions">
         {mainDrinkSuggestionsComponent}
         {mixerSuggestionsComponent}
       </div>

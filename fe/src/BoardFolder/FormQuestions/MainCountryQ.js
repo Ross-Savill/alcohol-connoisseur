@@ -7,6 +7,7 @@ class MainCountryQ extends React.Component {render() {
   return(
     <Col>
       <FormGroup className="formGroupQuestion">
+        <Label className={this.props.country === "" ? "dataNeededLabel" : "questionLabel"}>Country</Label>
         <Input
           type="select"
           name="country"

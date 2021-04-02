@@ -60,7 +60,9 @@ const TableModal = ({ drinks, selectedDrinker, resetSelectedChoices, selectedSes
         return selectedDrinks.map((drink, i) => {
           return (
             <tr key={i}>
-              {drink.mixerSix ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree}, {drink.mixerFour}, {drink.mixerFive} and {drink.mixerSix}</td>
+              {drink.mixerEight ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree}, {drink.mixerFour}, {drink.mixerFive}, {drink.mixerSix}, {drink.mixerSeven} and {drink.mixerEight}</td>
+              : drink.mixerSeven ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree}, {drink.mixerFour}, {drink.mixerFive}, {drink.mixerSix} and {drink.mixerSeven}</td>
+              : drink.mixerSix ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree}, {drink.mixerFour}, {drink.mixerFive} and {drink.mixerSix}</td>
               : drink.mixerFive ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree}, {drink.mixerFour} and {drink.mixerFive}</td>
               : drink.mixerFour ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo}, {drink.mixerThree} and {drink.mixerFour}</td>
               : drink.mixerThree ? <td>{drink.drinkMain} with {drink.mixerOne}, {drink.mixerTwo} and {drink.mixerThree}</td>

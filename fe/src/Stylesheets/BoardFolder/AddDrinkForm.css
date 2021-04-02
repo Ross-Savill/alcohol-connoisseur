@@ -1,3 +1,5 @@
+/* OVERALL PAGE CSS */
+
 .addFormDiv {
   position: fixed;
   top: 0;
@@ -30,19 +32,21 @@
   overflow-y: scroll;
 }
 
+.addDrinkTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .mainFormHeader {
   margin-bottom: 10px;
   font-weight: bold;
 }
 
-.submitButton {
-  margin-bottom: 15px;
-}
-
-.addDrinkTitle {
+.formGroupQuestion {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  font-size: 12;
 }
 
 .sessionNumberPtag {
@@ -52,61 +56,32 @@
   margin-bottom: 0px;
 }
 
-.incorrectBlank input {
-  border-color: rgb(250, 128, 114);
-  border-width: 5px;
-  margin: 20px 0px 0px 0px;
+.questionLabel {
+  width: 100%;
+  background-color: lightgreen;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  font-weight: bold;
 }
 
-.inputField {
-  border-color: rgb(43, 255, 0) !important;
-  border-width: 3px !important;
-  margin: 20px 5px 0px 5px;
+.dataNeededLabel {
   width: 100%;
+  background-color: lightsalmon;
+  text-align: center;
+  margin: 0px 0px 0px 0px;
+  font-weight: bold;
 }
 
 .dataNeeded {
   border-color: rgb(255, 25, 0) !important;
   border-width: 3px !important;
-  margin: 20px 5px 0px 5px !important;
 }
 
-.dataNeededSelect {
-  border-color: rgb(255, 25, 0) !important;
-  border-width: 3px !important;
-  margin: 20px 5px 0px 5px !important;
+.inputField {
   width: 100%;
 }
 
-.questionInputCheckboxes {
-  display: flex;
-  margin: 0px 0px 0px 100px;
-}
-
-.mixerCheck {
-  margin: 20px;
-}
-
-.collabCheck {
-  margin: 10px;
-}
-
-.formGroupQuestion {
-  display: flex;
-  flex-direction: row;
-  font-size: 12;
-  height: 60px;
-}
-
-.collabBreweryCheckbox {
-  padding-bottom: 15px;
-}
-
-.mixerQuestion {
-  border-width: 10px;
-  border-color: green;
-  background-color: rgb(200, 255, 198);
-}
+/* MAIN INFORMATION AREA */
 
 .mainDrinkInfoAreaHeader {
   text-align: center;
@@ -115,45 +90,23 @@
 .mainDrinkInfoArea {
   border: 3px solid black;
   margin: 10px 0px 10px 0px;
+  padding: 0px 10px 0px 10px;
   background-color: rgb(200, 255, 198);
 }
 
-.mixerInputAreaHeader {
-  text-align: center;
+.formGroupDrinkerQuestion {
+  display: flex;
+  flex-direction: column;
+  font-size: 12;
+  height: 60px;
+  align-items: center;
 }
 
-.mixerInputArea {
-  border: 3px solid black;
-  background-color: rgb(200, 255, 198);
-}
-
-.verdictAreaHeader {
-  text-align: center;
-}
-
-.verdictArea {
-  border: 3px solid black;
-  background-color: rgb(200, 255, 198);
-}
-
-.collabInputAreaHeader {
-  text-align: center;
-}
-
-.collabInputs {
-  border: 3px solid black;
-  margin-bottom: 10px;
-  background-color: rgb(200, 255, 198);
-}
-
-.notesArea {
-  border: 3px solid black;
-  background-color: rgb(200, 255, 198);
-  margin: 10px 0px 10px 0px;
-}
-
-.notesAreaHeader {
-  text-align: center;
+.dataNeededSelect {
+  border-color: rgb(255, 25, 0) !important;
+  border-width: 3px !important;
+  margin: 0px 5px 0px 5px !important;
+  width: 100%;
 }
 
 .drinkerErrorMessage {
@@ -177,6 +130,66 @@
   font-weight: bold;
 }
 
+/* MIXER INPUT AREA  */
+
+.mixerQuestion {
+  width: 100%;
+  border-width: 10px;
+  border-color: green;
+  background-color: rgb(200, 255, 198);
+}
+
+.mixerInputAreaHeader {
+  text-align: center;
+}
+
+.mixerInputArea {
+  border: 3px solid black;
+  background-color: rgb(200, 255, 198);
+  padding: 0px 10px 0px 10px;
+  margin-bottom: 10px;
+}
+
+/* COLLABORATORY AREA  */
+
+.collabInputAreaHeader {
+  text-align: center;
+}
+
+.collabInputArea {
+  border: 3px solid black;
+  background-color: rgb(200, 255, 198);
+  padding: 0px 10px 0px 10px;
+  margin-bottom: 10px;
+}
+
+/* VERDICT AREA */
+
+.notesArea {
+  border: 3px solid black;
+  background-color: rgb(200, 255, 198);
+  margin: 10px 0px 10px 0px;
+  padding: 0px 10px 0px 10px;
+}
+
+.notesAreaHeader {
+  text-align: center;
+}
+
+.submitButton {
+  margin-bottom: 15px;
+}
+
+.verdictAreaHeader {
+  text-align: center;
+}
+
+.verdictArea {
+  border: 3px solid black;
+  background-color: rgb(200, 255, 198);
+  padding: 0px 10px 0px 10px;
+}
+
 /* CSS FOR AUTOCOMPLETE ABILITY */
 
 .suggestions {
@@ -187,6 +200,7 @@
   max-height: 40vh;
   overflow-y: scroll;
   padding-left: 0;
+  z-index: 2;
 }
 
 .main-suggestions {
@@ -217,22 +231,23 @@
 }
 
 .mainAndMixerSuggestions {
+  position: absolute;
   display: flex;
   flex-direction: row;
 }
 
-.companyInputAndSugs {
-  display: flex;
-  flex-direction: column;
+.additionalSugs {
+  position: absolute;
+  z-index: 1;
+  min-width: 100%;
 }
 
-.companySugs {
-  height: 40vh;
+.mixerSuggestions {
+  position: absolute;
   z-index: 1;
+  min-width: 100%;
 }
 
 .componentQuestion {
   width: 100%;
 }
-
-

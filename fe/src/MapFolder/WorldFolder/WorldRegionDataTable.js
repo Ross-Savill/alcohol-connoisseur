@@ -53,7 +53,8 @@ class WorldRegionDataTable extends Component {
                drink.firstCollabCountry ? `${getName(drink.country)} / ${getName(drink.firstCollabCountry)}` :
                `${getName(drink.country)}`}</td>
           <td className="drinkRegionData">{drink.name}</td>
-          <td className="drinkRegionData">{drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
+          <td className="drinkRegionData">{drink.mixerEight ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}` :
+                                          drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
                                           drink.mixerSix ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}` :
                                           drink.mixerFive ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}` :
                                           drink.mixerFour ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}` :
@@ -85,7 +86,8 @@ class WorldRegionDataTable extends Component {
         return(
           <tr key={index}>
             <td className="drinkRegionData">{drink.name}</td>
-            <td className="drinkRegionData">{drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
+            <td className="drinkRegionData">{drink.mixerEight ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}` :
+                                            drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
                                             drink.mixerSix ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}` :
                                             drink.mixerFive ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}` :
                                             drink.mixerFour ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}` :

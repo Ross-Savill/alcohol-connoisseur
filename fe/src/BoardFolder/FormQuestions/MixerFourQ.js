@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MixerFourQ extends React.Component {render() {
@@ -48,6 +48,7 @@ class MixerFourQ extends React.Component {render() {
   return (
     <Col xs="3">
       <FormGroup>
+        <Label className={mixerFour === "" ? "dataNeededLabel" : "questionLabel"}>Mixer Four</Label>
         <div className="mixerQuestion">
           <Input
             type="text"
@@ -60,7 +61,9 @@ class MixerFourQ extends React.Component {render() {
             onChange={mixerAutocomplete}
             className={mixerFour === "" ? "dataNeeded" : "inputField"}
           />
-          {mixerFourSuggestionsComponent}
+          <div className="mixerSuggestions">
+            {mixerFourSuggestionsComponent}
+          </div>
         </div>
       </FormGroup>
     </Col>

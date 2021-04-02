@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MixerSelect extends React.Component {render() {
 
   return(
-    <Col xs="2" className="mixerSelectQuestion">
+    <Col xs="2">
       <FormGroup className="mixerSelect">
+        <Label className="questionLabel">Mixers?</Label>
         <Input type="select"
                name="hasMixer"
                value={this.props.hasMixer}
@@ -21,6 +22,7 @@ class MixerSelect extends React.Component {render() {
           <option key={5} value={5}>Five Mixers</option>
           <option key={6} value={6}>Six Mixers</option>
           <option key={7} value={7}>Seven Mixers</option>
+          <option key={8} value={8}>Eight Mixers</option>
         </Input>
       </FormGroup>
     </Col>

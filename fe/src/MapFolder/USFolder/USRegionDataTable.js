@@ -60,7 +60,8 @@ class USRegionDataTable extends Component {
       return(
         <tr key={index}>
           <td className="usDrinkRegionData">{drink.name}</td>
-          <td className="usDrinkRegionData">{drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
+          <td className="usDrinkRegionData">{drink.mixerEight ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}` :
+                                             drink.mixerSeven ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}` :
                                              drink.mixerSix ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}` :
                                              drink.mixerFive ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}` :
                                              drink.mixerFour ? `${drink.drinkMain} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree} and ${drink.mixerFour}` :

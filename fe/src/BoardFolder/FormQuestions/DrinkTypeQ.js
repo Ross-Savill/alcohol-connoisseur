@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class DrinkTypeQ extends React.Component {render() {
@@ -11,6 +11,7 @@ class DrinkTypeQ extends React.Component {render() {
   return (
     <Col xs="12">
       <FormGroup className="formGroupQuestion">
+      <Label className={this.props.drinkType === "" ? "dataNeededLabel" : "questionLabel"}>Drink Type</Label>
         <Input
           type="select"
           name="drinkType"

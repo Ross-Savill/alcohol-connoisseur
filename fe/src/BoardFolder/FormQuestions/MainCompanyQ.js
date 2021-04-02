@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Col, Form, FormGroup, Label, Input, Button, Row } from 'reactstrap';
+import React from 'react';
+import { Col, FormGroup, Label, Input } from 'reactstrap';
 import '../../Stylesheets/BoardFolder/AddDrinkForm.css';
 
 class MainCompanyQ extends React.Component {render() {
@@ -22,7 +22,7 @@ class MainCompanyQ extends React.Component {render() {
   if (companySuggestions && company) {
     if (filteredCompanySuggestions.length) {
       companySuggestionsComponent = (
-        <ul className="suggestions companySuggestions">
+        <ul className="suggestions">
           {filteredCompanySuggestions.map((suggestion, index) => {
             let className;
             if (index === activeSuggestion) {
@@ -47,8 +47,9 @@ class MainCompanyQ extends React.Component {render() {
 
   return (
     <Col>
-      <FormGroup className="formGroupQuestion">
-        <div className="companyInputAndSugs">
+      <FormGroup>
+        <Label className={company === "" ? "dataNeededLabel" : "questionLabel"}>Company</Label>
+        <div>
           <Input
             type="text"
             name="company"
@@ -60,7 +61,7 @@ class MainCompanyQ extends React.Component {render() {
             onChange={companyAutocomplete}
             className={company === "" ? "dataNeeded" : "inputField"}
           />
-          <div className="companySugs">
+          <div className="additionalSugs">
             {companySuggestionsComponent}
           </div>
         </div>

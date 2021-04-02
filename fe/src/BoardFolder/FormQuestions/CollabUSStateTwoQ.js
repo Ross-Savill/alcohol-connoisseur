@@ -6,18 +6,19 @@ class CollabGBCountryTwoQ extends React.Component {render() {
 
   return (
     <Col>
-    <FormGroup className="formGroupQuestion">
-      <Input
-        type="select"
-        name="secondUkUsa"
-        id="collabTwoUSStateInput"
-        value={this.props.secondUkUsa}
-        onChange={this.props.handleFormChange}
-        className="inputField"
-      >
-        {this.props.usStateOptionsSelect}
-      </Input>
-    </FormGroup>
+      <Label className={this.props.secondUkUsa === "" ? "dataNeededLabel" : "questionLabel"}>US State</Label>
+      <FormGroup className="formGroupQuestion">
+        <Input
+          type="select"
+          name="secondUkUsa"
+          id="collabTwoUSStateInput"
+          value={this.props.secondUkUsa}
+          onChange={this.props.handleFormChange}
+          className="inputField"
+        >
+          {this.props.usStateOptionsSelect}
+        </Input>
+      </FormGroup>
     </Col>)
 }}
 

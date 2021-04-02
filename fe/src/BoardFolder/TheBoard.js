@@ -175,7 +175,7 @@ const TheBoard = ({ drinkTypes }) => {
         drinks.map((totalDrink) => {
           if(drink.mixerOne) {
             sameDrinkEntry = "❌ (Has Mixer)"
-          } else if(!drink.mixerOne && drink._id !== totalDrink._id && drink.drinkMain === totalDrink.drinkMain && (drink.company === totalDrink.company ||
+          } else if(!totalDrink.mixerOne && drink._id !== totalDrink._id && drink.drinkMain === totalDrink.drinkMain && (drink.company === totalDrink.company ||
              drink.firstCollabCompany === totalDrink.company || drink.secondCollabCompany === totalDrink.company)) {
                 sameDrinks.push(totalDrink)
              }

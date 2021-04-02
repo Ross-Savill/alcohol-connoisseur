@@ -472,7 +472,7 @@ class AddDrinkForm extends Component {
 
       if(this.props.drinkToEdit) {
         if(this.props.drinkToEdit.drink.confirmed === true ||
-           this.props.admin === true && this.state.ratingWordOne !== ""
+          this.props.admin === true && this.state.ratingWordOne !== ""
                                      && this.state.ratingWordTwo !== ""
                                      && (this.state.score !== "" || null)) {
           confirmedStatus = true
@@ -480,7 +480,7 @@ class AddDrinkForm extends Component {
       } else {
         if(this.props.admin === true && this.state.ratingWordOne !== ""
                                     && this.state.ratingWordTwo !== ""
-                                    && (this.state.score !== "" || null)) {
+                                    && (this.state.score !== "" || this.state.score !== null)) {
           confirmedStatus = true
         }
       }

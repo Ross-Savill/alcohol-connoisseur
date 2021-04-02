@@ -153,6 +153,22 @@ app.patch('/confirmdrinks', authorizeAccessToken, (req, res) => {
   } catch (err) {
     res.json({ message: err })
   }
+
+  try {
+    MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      const startSession = await dbName.collection("sessions").updateOne(
+        {},
+        { $set: { sessionActive: false, $inc: { sessionNum: 1 } }}
+      );
+      res.json(startSession);
+      db.close();
+    });
+  } catch (err) {
+    res.json({ message: err })
+  }
+
 })
 
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
@@ -192,7 +208,7 @@ app.patch('/startsession', authorizeAccessToken, (req, res) => {
       const dbName = db.db("drinkandrate");
       const startSession = await dbName.collection("sessions").updateOne(
         {},
-        { $set: { sessionActive: true }}
+        { $set: { sessionActive: true, $inc: { sessionNum: 1 } }}
       );
       res.json(startSession);
       db.close();

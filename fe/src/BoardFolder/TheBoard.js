@@ -7,6 +7,7 @@ import Soundboard from './Soundboard';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
+import LoadingSpin from '../MyUtilitiesFolder/LoadingSpin';
 import greentick from '../MyUtilitiesFolder/Images/green-checkmark.png';
 
 const TheBoard = ({ drinkTypes }) => {
@@ -19,7 +20,7 @@ const TheBoard = ({ drinkTypes }) => {
   const [ totalDrinksNum, setTotalDrinksNum ] = useState()
   const [ drinkToEdit, setDrinkToEdit ] = useState(null)
   const [ sessionData, setSessionData ] = useState({
-          sessionStatus: false,
+          sessionStatus: null,
           sessionId: null
   })
 
@@ -227,7 +228,9 @@ const TheBoard = ({ drinkTypes }) => {
     }
   }
 
-  if(sessionData.sessionStatus === false) {
+  if(sessionData.sessionStatus === null) {
+    return <LoadingSpin />
+  } else if(sessionData.sessionStatus === false) {
     return(
       <div className="noSessionScreen">
         <div className="noSessionContainer">

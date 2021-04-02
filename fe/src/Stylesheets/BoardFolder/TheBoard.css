@@ -1,4 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Asset&family=Monofett&display=swap');
+
+.noSessionScreen {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../../MyUtilitiesFolder/BackgroundImages/noSession.jpg");
+  background-size: 100% 100%;
+}
+
+.noSessionContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.noSessionMessage {
+  width: 40vw;
+  height: 65vh;
+  font-size: 3em;
+  color: black;
+  font-family: 'Asset', cursive;
+  background-color: rgba(236, 236, 242, 0.3);
+}
 
 .allBoardsContainer {
   display: flex;

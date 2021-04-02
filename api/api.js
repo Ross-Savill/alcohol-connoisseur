@@ -157,17 +157,17 @@ app.patch('/confirmdrinks', authorizeAccessToken, (req, res) => {
 
 app.patch('/profilephotoupdate/:id', authorizeAccessToken, (req, res) => {
   try {
-  const id = req.params.id;
-  MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
-    if (err) throw err;
-    const dbName = db.db("drinkandrate");
-    const updateProfilePhoto = await dbName.collection("users").updateOne(
-      { _id: ObjectId(id) },
-      { $set: { profilePic: req.body.profilePic }}
-    );
-    res.json(updateProfilePhoto);
-    db.close();
-  });
+    const id = req.params.id;
+    MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      const updateProfilePhoto = await dbName.collection("users").updateOne(
+        { _id: ObjectId(id) },
+        { $set: { profilePic: req.body.profilePic }}
+      );
+      res.json(updateProfilePhoto);
+      db.close();
+    });
   } catch (err) {
     res.json({ message: err })
   }
@@ -183,6 +183,23 @@ app.get('/sessions', authorizeAccessToken, (req, res) => {
       db.close();
     });
   });
+});
+
+app.patch('/sessions', authorizeAccessToken, (req, res) => {
+  try {
+    MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
+      if (err) throw err;
+      const dbName = db.db("drinkandrate");
+      const startSession = await dbName.collection("sessions").updateOne(
+        {},
+        { $set: { sessionActive: req.body }}
+      );
+      res.json(startSession);
+      db.close();
+    });
+  } catch (err) {
+    res.json({ message: err })
+  }
 });
 
 if(process.env.NODE_ENV === 'production') {

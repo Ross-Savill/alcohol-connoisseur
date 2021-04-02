@@ -69,6 +69,20 @@ const TheBoard = ({ drinkTypes }) => {
     fetchData()
   },[drinks])
 
+  const beginDnR = async () => {
+    const token = await getAccessTokenSilently();
+    const config = {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }
+    axios.patch(`https://drinkandrate.herokuapp.com/sessions`, true, config)
+      .then(resp => console.log(resp))
+      .catch(error => console.log(error))
+
+    axios.get("https://drinkandrate.herokuapp.com/drinks", config)
+    .then(resp => setDrinks(resp.data))
+    .catch(error => console.log(error))
+  }
+
   const callAddForm = () => {
     setDrinkToEdit(null)
     setDisplayAddForm(true)
@@ -213,65 +227,82 @@ const TheBoard = ({ drinkTypes }) => {
     }
   }
 
-  return(
-    <div className={!displayAddForm ? "allBoardsContainer" : "fixedBoardBackground"}>
-      <div className="soloPaperBoardContainer">
-        {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-          <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
-        : null}
-        <Link className="mainTableButton" to="/">
-          <button>Back to Main Table</button>
-        </Link>
-        <button className="soundboardButton" onClick={() => callSoundboard()}></button>
-        <div className="theBoardTableDiv">
-          <table className="theBoardTable">
-            <thead className="theBoardTHead">
-              <tr className="theBoardMainHeaderRow">
-                <th className="theBoardMainHeader" colSpan="8">
-                  <div className="theBoardMainHeaderContainer">
-                    <div>Drink#: <span className={totalDrinksNum % 1000 === 0 ? "thousanthDrink" : null}>{totalDrinksNum}</span></div>
-                    <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
-                    <div>Session#: {sessionData.sessionId}</div>
-                  </div>
-                </th>
-              </tr>
-              <tr className="theBoardHeadersRow">
-                <th className="theBoardTh">Drinker</th>
-                <th className="theBoardTh">Time</th>
-                <th className="theBoardTh">Drink</th>
-                <th className="theBoardTh">Description</th>
-                <th className="theBoardTh">Score</th>
-                <th className="theBoardTh">Previous?</th>
-                <th className="theBoardTh">Done?</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sessionDrinkData()}
-            </tbody>
-          </table>
+  if(sessionData.sessionStatus === false) {
+    return(
+      <div className="noSessionScreen">
+        <div className="noSessionContainer">
+          <div className="noSessionMessage">
+              Drink And Rate is currently not in session - come back later!
+          </div>
+          <div className="noSessionButton">
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+              <button onClick={() => beginDnR()}>Start Session</button>
+            : null}
+          </div>
         </div>
-        {displayAddForm && <AddDrinkForm drinks={drinks}
-                                        drinkers={drinkers}
-                                        setDisplayAddForm={setDisplayAddForm}
-                                        drinkTypes={drinkTypes}
-                                        addDrinkToBoard={addDrinkToBoard}
-                                        drinkToEdit={drinkToEdit}
-                                        editDrinkOnBoard={editDrinkOnBoard}
-                                        sessionId={sessionData.sessionId}
-                          />
-        }
-        {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
+      </div>
+    )
+  } else {
+    return(
+      <div className={!displayAddForm ? "allBoardsContainer" : "fixedBoardBackground"}>
+        <div className="soloPaperBoardContainer">
           {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-            <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
-        : null }
+            <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
+          : null}
+          <Link className="mainTableButton" to="/">
+            <button>Back to Main Table</button>
+          </Link>
+          <button className="soundboardButton" onClick={() => callSoundboard()}></button>
+          <div className="theBoardTableDiv">
+            <table className="theBoardTable">
+              <thead className="theBoardTHead">
+                <tr className="theBoardMainHeaderRow">
+                  <th className="theBoardMainHeader" colSpan="8">
+                    <div className="theBoardMainHeaderContainer">
+                      <div>Drink#: <span className={totalDrinksNum % 1000 === 0 ? "thousanthDrink" : null}>{totalDrinksNum}</span></div>
+                      <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
+                      <div>Session#: {sessionData.sessionId}</div>
+                    </div>
+                  </th>
+                </tr>
+                <tr className="theBoardHeadersRow">
+                  <th className="theBoardTh">Drinker</th>
+                  <th className="theBoardTh">Time</th>
+                  <th className="theBoardTh">Drink</th>
+                  <th className="theBoardTh">Description</th>
+                  <th className="theBoardTh">Score</th>
+                  <th className="theBoardTh">Previous?</th>
+                  <th className="theBoardTh">Done?</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sessionDrinkData()}
+              </tbody>
+            </table>
+          </div>
+          {displayAddForm && <AddDrinkForm drinks={drinks}
+                                          drinkers={drinkers}
+                                          setDisplayAddForm={setDisplayAddForm}
+                                          drinkTypes={drinkTypes}
+                                          addDrinkToBoard={addDrinkToBoard}
+                                          drinkToEdit={drinkToEdit}
+                                          editDrinkOnBoard={editDrinkOnBoard}
+                                          sessionId={sessionData.sessionId}
+                            />
+          }
+          {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+              <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
+          : null }
+        </div>
+        <div className="drinksBreakdownContainer">
+          <DrinksBreakdownTable drinkers={drinkers}
+                                drinks={drinks}
+          />
+        </div>
       </div>
-      <div className="drinksBreakdownContainer">
-        <DrinksBreakdownTable drinkers={drinkers}
-                              drinks={drinks}
-        />
-      </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default TheBoard;

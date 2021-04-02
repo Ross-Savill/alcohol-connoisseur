@@ -185,14 +185,14 @@ app.get('/sessions', authorizeAccessToken, (req, res) => {
   });
 });
 
-app.patch('/sessions', authorizeAccessToken, (req, res) => {
+app.patch('/startsession', authorizeAccessToken, (req, res) => {
   try {
     MongoClient.connect(process.env.MONGODB_URI, async function(err, db) {
       if (err) throw err;
       const dbName = db.db("drinkandrate");
       const startSession = await dbName.collection("sessions").updateOne(
         {},
-        { $set: { sessionActive: req.body }}
+        { $set: { sessionActive: true }}
       );
       res.json(startSession);
       db.close();

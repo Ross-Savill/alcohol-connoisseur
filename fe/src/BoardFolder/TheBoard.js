@@ -74,7 +74,7 @@ const TheBoard = ({ drinkTypes }) => {
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
     }
-    axios.patch(`https://drinkandrate.herokuapp.com/sessions`, true, config)
+    axios.patch(`https://drinkandrate.herokuapp.com/startsession`, null, config)
       .then(resp => console.log(resp))
       .catch(error => console.log(error))
 

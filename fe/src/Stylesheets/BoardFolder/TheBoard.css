@@ -88,6 +88,42 @@
   font-size: 18px;
 }
 
+/* .stillToRate {
+  background-color: rgb(128, 128, 128, 0.3);
+} */
+
+@keyframes flickerAnimation {
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-o-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-moz-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+@-webkit-keyframes flickerAnimation{
+  0%   { background-color:white; }
+  50%  { background-color:yellow; }
+  100% { background-color:white; }
+}
+
+.toBeAnnounced {
+  -webkit-animation: flickerAnimation 2s infinite;
+  -moz-animation: flickerAnimation 2s infinite;
+  -o-animation: flickerAnimation 2s infinite;
+   animation: flickerAnimation 2s infinite;
+}
+
+.confirmed {
+  background-color: rgba(24, 228, 1, 0.3);
+}
+
 .theBoardTable td {
   font-size: 14px;
 }

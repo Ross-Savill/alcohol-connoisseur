@@ -53,7 +53,7 @@ const TheBoard = ({ drinkTypes }) => {
     if(drinks){
       let drinkCount = 0;
       drinks.map((drink) => {
-        if(drink.confirmed === true || (drink.ratingWordOne && drink.ratingWordTwo && drink.score)) {
+        if(drink.confirmed === true) {
           drinkCount = drinkCount + 1
         }
       })
@@ -61,7 +61,7 @@ const TheBoard = ({ drinkTypes }) => {
 
       let drinksForTheBoard = [];
       drinks.map((drink) => {
-        if(drink.confirmed === false) {
+        if(drink.sessionId === sessionData.sessionId) {
           drinksForTheBoard.unshift(drink)
         }
       })
@@ -127,6 +127,21 @@ const TheBoard = ({ drinkTypes }) => {
     .catch(error => console.log(error))
   }
 
+  const confirmDrink = async (drink) => {
+    const drinkId = drink.id
+    const token = await getAccessTokenSilently();
+    const config = {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }
+    axios.patch(`https://drinkandrate.herokuapp.com/confirmSoloDrink/${drinkId}`, drink, config)
+      .then(resp => console.log(resp))
+      .catch(error => console.log(error))
+
+    axios.get("https://drinkandrate.herokuapp.com/drinks", config)
+      .then(resp => setDrinks(resp.data))
+      .catch(error => console.log(error))
+  }
+
   const sessionDrinkData = () => {
     if(boardDrinks.length === 0) {
       return(
@@ -168,7 +183,13 @@ const TheBoard = ({ drinkTypes }) => {
         }
 
         return (
-          <tr key={index}>
+          <tr key={index}
+              className={ drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "" ?
+                          "stillToRate" :
+                          drink.ratingWordOne !== "" && drink.ratingWordTwo !== "" && drink.score !== "" && drink.confirmed !== true ?
+                          "toBeAnnounced" :
+                          "confirmed"
+                        } >
             <td>{firstName}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
             <td>{ drink.mixerEight ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}`
@@ -185,9 +206,13 @@ const TheBoard = ({ drinkTypes }) => {
             <td>{drink.score}</td>
             <td>{sameDrinkEntry}</td>
             <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) : <img src={greentick} alt="DONE" height="20px" width="20px"></img>}</td>
-            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" || (user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "")) ?
               <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
             : null }
+            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" && drink.confirmed === false ?
+              <td><button className="confirmDrinkButton" onClick={() => confirmDrink({drink})}>Confirm Drink</button></td>
+              : "Confirmed"
+          }
           </tr>
         )
       })

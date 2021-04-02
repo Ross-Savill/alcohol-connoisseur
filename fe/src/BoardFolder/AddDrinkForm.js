@@ -468,6 +468,23 @@ class AddDrinkForm extends Component {
       let abv;
       this.state.abv === "" ? abv = undefined : abv = this.state.abv
 
+      let confirmedStatus = false
+
+      if(this.props.drinkToEdit) {
+        if(this.props.drinkToEdit.drink.confirmed === true ||
+           this.props.admin === true && this.state.ratingWordOne !== ""
+                                     && this.state.ratingWordTwo !== ""
+                                     && (this.state.score !== "" || null)) {
+          confirmedStatus = true
+        }
+      } else {
+        if(this.props.admin === true && this.state.ratingWordOne !== ""
+                                    && this.state.ratingWordTwo !== ""
+                                    && (this.state.score !== "" || null)) {
+          confirmedStatus = true
+        }
+      }
+
       const neworEditedDrink = {
         sessionId: this.state.sessionId,
         drinkerId: this.state.drinkerId,
@@ -497,7 +514,7 @@ class AddDrinkForm extends Component {
         ratingWordTwo: (this.state.ratingWordTwo).trim(),
         score: parseFloat(score),
         notes: (this.state.notes).trim(),
-        confirmed: false
+        confirmed: confirmedStatus
       }
 
       if(!this.props.drinkToEdit) {
@@ -572,6 +589,8 @@ class AddDrinkForm extends Component {
                             personName={this.state.personName}
                             drinkerId={this.state.drinkerId}
                             handleNameChange={this.handleNameChange}
+                            userId={this.props.userId}
+                            admin={this.props.admin}
                   />
                   <div className="drinkerErrorMessage">{this.state.drinkerError}</div>
               </div>

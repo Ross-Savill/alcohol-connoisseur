@@ -7,9 +7,17 @@ class DrinkerQ extends React.Component { render() {
 
   let users = [];
 
-  this.props.userObjects.map((name) =>
-    users.push({ "value": name._id, "label": name.personName })
-  );
+  if(this.props.admin) {
+    this.props.userObjects.map((name) =>
+      users.push({ "value": name._id, "label": name.personName })
+    );
+  } else {
+    this.props.userObjects.map((name) => {
+      if(name._id === this.props.userId) {
+        users.push({ "value": name._id, "label": name.personName })
+      }
+    });
+  }
 
   return (
     <Col xs="12">

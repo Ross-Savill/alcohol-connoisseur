@@ -14,6 +14,8 @@ const TheBoard = ({ drinkTypes }) => {
 
   const [ drinks, setDrinks ] = useState (null)
   const [ drinkers, setDrinkers ] = useState (null)
+  const [ admin, setAdmin ] = useState(false)
+  const [ userId, setUserId ] = useState(null)
   const [ displayAddForm, setDisplayAddForm ] = useState(false)
   const [ displaySoundboard, setDisplaySoundboard ] = useState(false)
   const [ boardDrinks, setBoardDrinks ] = useState([])
@@ -66,6 +68,10 @@ const TheBoard = ({ drinkTypes }) => {
         }
       })
       setBoardDrinks(drinksForTheBoard)
+      if(user['https://drinkandrate.netlify.app/roles'][0] === "admin"){
+        setAdmin(true)
+      }
+      setUserId(user.sub.substr(6))
     }
     fetchData()
   },[drinks])
@@ -128,7 +134,7 @@ const TheBoard = ({ drinkTypes }) => {
   }
 
   const confirmDrink = async (drink) => {
-    const drinkId = drink.id
+    const drinkId = drink._id
     const token = await getAccessTokenSilently();
     const config = {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -146,7 +152,7 @@ const TheBoard = ({ drinkTypes }) => {
     if(boardDrinks.length === 0) {
       return(
         <tr>
-          <td className="noDrinksOnBoardTd"colSpan="8">Nothing On The Board!</td>
+          <td className="noDrinksOnBoardTd"colSpan="9">Nothing On The Board!</td>
         </tr>
       )
     } else {
@@ -169,7 +175,7 @@ const TheBoard = ({ drinkTypes }) => {
         drinks.map((totalDrink) => {
           if(drink.mixerOne) {
             sameDrinkEntry = "❌ (Has Mixer)"
-          } else if(!drink.mixerOne && drink.drinkMain === totalDrink.drinkMain && totalDrink.confirmed === true && (drink.company === totalDrink.company ||
+          } else if(!drink.mixerOne && drink._id !== totalDrink._id && drink.drinkMain === totalDrink.drinkMain && (drink.company === totalDrink.company ||
              drink.firstCollabCompany === totalDrink.company || drink.secondCollabCompany === totalDrink.company)) {
                 sameDrinks.push(totalDrink)
              }
@@ -177,19 +183,18 @@ const TheBoard = ({ drinkTypes }) => {
 
         if(!drink.mixerOne) {
           sameDrinks.length === 0 ? sameDrinkEntry = "First Time Drink!" :
-          user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "") ?
+          user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || (drink.score === null || "")) ?
           sameDrinkEntry = "'Rate' and See!" :
           sameDrinkEntry = sameDrinks.map(sameDrink => `${sameDrink.name}, (${sameDrink.ratingWordOne} ${sameDrink.ratingWordTwo} - ${sameDrink.score}) `)
         }
 
+        const drinkRowClass = drink.ratingWordOne === "" || drink.ratingWordTwo === "" || (drink.score === null || "") ? "stillToRate"
+        : drink.ratingWordOne !== "" && drink.ratingWordTwo !== "" && drink.score !== "" && drink.confirmed !== true ? "toBeAnnounced"
+        : "confirmed";
+
         return (
           <tr key={index}
-              className={ drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "" ?
-                          "stillToRate" :
-                          drink.ratingWordOne !== "" && drink.ratingWordTwo !== "" && drink.score !== "" && drink.confirmed !== true ?
-                          "toBeAnnounced" :
-                          "confirmed"
-                        } >
+              className={drinkRowClass} >
             <td>{firstName}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
             <td>{ drink.mixerEight ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}`
@@ -202,16 +207,18 @@ const TheBoard = ({ drinkTypes }) => {
               : drink.mixerOne ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}`
               : `${drink.drinkMain} ${displayedAbv}`
             }</td>
-            <td> {!drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
-            <td>{drink.score}</td>
+            <td> {drinkRowClass === "toBeAnnounced" ? "*To Be Declared*" : !drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
+            <td>{drinkRowClass === "toBeAnnounced" ? "*To Be Declared*" : drink.score}</td>
             <td>{sameDrinkEntry}</td>
-            <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) : <img src={greentick} alt="DONE" height="20px" width="20px"></img>}</td>
-            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" || (user.sub.substr(6) === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "")) ?
+            <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) :
+                                        drinkRowClass === "toBeAnnounced" ? "-" :
+                                        <img src={greentick} alt="DONE" height="20px" width="20px"></img>}
+            </td>
+            { admin || (userId === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "")) ?
               <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
-            : null }
-            {user['https://drinkandrate.netlify.app/roles'][0] === "admin" && drink.confirmed === false ?
-              <td><button className="confirmDrinkButton" onClick={() => confirmDrink({drink})}>Confirm Drink</button></td>
-              : "Confirmed"
+            : <td>-</td> }
+            { admin && drink.confirmed === false ?
+                <td><button className="confirmDrinkButton" onClick={() => confirmDrink(drink)}>Confirm Drink</button></td> : null
           }
           </tr>
         )
@@ -274,9 +281,7 @@ const TheBoard = ({ drinkTypes }) => {
     return(
       <div className={!displayAddForm ? "allBoardsContainer" : "fixedBoardBackground"}>
         <div className="soloPaperBoardContainer">
-          {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
-            <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
-          : null}
+          <button className="addDrinkButton" onClick={() => callAddForm()}>Add a Drink</button>
           <Link className="mainTableButton" to="/">
             <button>Back to Main Table</button>
           </Link>
@@ -285,7 +290,7 @@ const TheBoard = ({ drinkTypes }) => {
             <table className="theBoardTable">
               <thead className="theBoardTHead">
                 <tr className="theBoardMainHeaderRow">
-                  <th className="theBoardMainHeader" colSpan="8">
+                  <th className="theBoardMainHeader" colSpan="9">
                     <div className="theBoardMainHeaderContainer">
                       <div>Drink#: <span className={totalDrinksNum % 1000 === 0 ? "thousanthDrink" : null}>{totalDrinksNum}</span></div>
                       <div>🍻🍻🍻 THE BOARD 🍻🍻🍻</div>
@@ -301,6 +306,9 @@ const TheBoard = ({ drinkTypes }) => {
                   <th className="theBoardTh">Score</th>
                   <th className="theBoardTh">Previous?</th>
                   <th className="theBoardTh">Done?</th>
+                  <th className="theBoardTh">Edit</th>
+                  {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
+                    <th className="theBoardTh">Confirm</th> : "" }
                 </tr>
               </thead>
               <tbody>
@@ -316,12 +324,14 @@ const TheBoard = ({ drinkTypes }) => {
                                           drinkToEdit={drinkToEdit}
                                           editDrinkOnBoard={editDrinkOnBoard}
                                           sessionId={sessionData.sessionId}
+                                          admin={admin}
+                                          userId={userId}
                             />
           }
           {displaySoundboard && <Soundboard setDisplaySoundboard={setDisplaySoundboard} />}
             {user['https://drinkandrate.netlify.app/roles'][0] === "admin" ?
               <button className="databaseSubmit" onClick={() => submitCheck()}>Submit All Drinks to Database</button>
-          : null }
+            : null }
         </div>
         <div className="drinksBreakdownContainer">
           <DrinksBreakdownTable drinkers={drinkers}

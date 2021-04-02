@@ -160,7 +160,7 @@ app.patch('/confirmdrinks', authorizeAccessToken, (req, res) => {
       const dbName = db.db("drinkandrate");
       const startSession = await dbName.collection("sessions").updateOne(
         {},
-        { $set: { sessionActive: false, $inc: { sessionNum: 1 } }}
+        { $set: { sessionActive: false }, $inc: { sessionNum: 1 }}
       );
       res.json(startSession);
       db.close();
@@ -208,7 +208,7 @@ app.patch('/startsession', authorizeAccessToken, (req, res) => {
       const dbName = db.db("drinkandrate");
       const startSession = await dbName.collection("sessions").updateOne(
         {},
-        { $set: { sessionActive: true, $inc: { sessionNum: 1 } }}
+        { $set: { sessionActive: true }, $inc: { sessionNum: 1 }}
       );
       res.json(startSession);
       db.close();

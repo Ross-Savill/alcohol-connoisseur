@@ -78,6 +78,8 @@ class AddDrinkForm extends Component {
       activeSuggestion: 0,
       filteredMainDrinkSuggestions: [],
       filteredMainDrinkMixerSuggestions: [],
+      lastLetter: '',
+      userInputLength: 0,
       filteredMixerSuggestions: [],
       filteredCompanySuggestions: [],
       filteredRtOneSuggestions: [],
@@ -191,10 +193,22 @@ class AddDrinkForm extends Component {
 
   drinkAutocomplete = (e) => {
     const { drinks } = this.props
+    const { lastLetter, userInputLength } = this.state
     const { target: { name, value } } = e
     const userInput = e.currentTarget.value;
+    const newUserInputLength = e.currentTarget.value.length;
+    const newLastLetter = userInput.slice(-1);
+    console.log(userInputLength)
+
+    let uniqueDrinks;
+    let uniqueMixers;
+
+    if(lastLetter !== newLastLetter && lastLetter !== "" && newUserInputLength > userInputLength) {
+      uniqueDrinks = this.state.filteredMainDrinkSuggestions
+      uniqueMixers = this.state.filteredMainDrinkMixerSuggestions
+    } else {
     let unfilteredMixers = [];
-    const uniqueDrinks = drinks.reduce((a,b) => {
+     uniqueDrinks = drinks.reduce((a,b) => {
       if(a.filter(i => i.drinkMain === b.drinkMain && i.abv === b.abv).length === 0) {
        a.push(b)
       }
@@ -217,7 +231,6 @@ class AddDrinkForm extends Component {
       return a
     },[])
 
-    let uniqueMixers;
     let alreadyIn = {};
     let result = [];
     const len = unfilteredMixers.length;
@@ -230,6 +243,7 @@ class AddDrinkForm extends Component {
       }
     }
     uniqueMixers = result;
+  }
 
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
       suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
@@ -237,7 +251,8 @@ class AddDrinkForm extends Component {
     const filteredMainDrinkMixerSuggestions = uniqueMixers.filter(
       suggestion => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMainDrinkMixerSuggestions, showSuggestions: true, [name]: value });
+    this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMainDrinkMixerSuggestions,
+                    showSuggestions: true, lastLetter: newLastLetter, userInputLength: newUserInputLength, [name]: value });
   }
 
   mixerAutocomplete = e => {

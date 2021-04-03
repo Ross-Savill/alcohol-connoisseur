@@ -198,11 +198,32 @@ class AddDrinkForm extends Component {
       ))
     );
     const allMixersInclSpaces = [];
-    drinks.map((drink) => allMixersInclSpaces.push(
-      drink.mixerOne, drink.mixerTwo, drink.mixerThree, drink.mixerFour,
-      drink.mixerFive, drink.mixerSix, drink.mixerSeven, drink.mixerEight
-    ));
-    const uniqueMixers = Array.from(new Set(allMixersInclSpaces.filter(function (mixer) { return mixer != false })));
+    drinks.map((drink) => {
+      if(!drink.mixerOne) { return } else { allMixersInclSpaces.push(drink.mixerOne)}
+      if(!drink.mixerTwo) { return } else { allMixersInclSpaces.push(drink.mixerTwo)}
+      if(!drink.mixerThree) { return } else { allMixersInclSpaces.push(drink.mixerThree)}
+      if(!drink.mixerFour) { return } else { allMixersInclSpaces.push(drink.mixerFour)}
+      if(!drink.mixerFive) { return } else { allMixersInclSpaces.push(drink.mixerFive)}
+      if(!drink.mixerSix) { return } else { allMixersInclSpaces.push(drink.mixerSix)}
+      if(!drink.mixerSeven) { return } else { allMixersInclSpaces.push(drink.mixerSeven)}
+      if(!drink.mixerEight) { return } else { allMixersInclSpaces.push(drink.mixerEight)}
+    });
+    // const uniqueMixers = Array.from(new Set(allMixersInclSpaces));
+    let uniqueMixers;
+
+      let alreadyIn = {};
+      let result = [];
+      const len = allMixersInclSpaces.length;
+      let j = 0;
+      for(let i = 0; i < len; i++) {
+           const drinkToCheck = allMixersInclSpaces[i];
+           if(alreadyIn[drinkToCheck] !== 1) {
+                 alreadyIn[drinkToCheck] = 1;
+                 result[j++] = drinkToCheck;
+           }
+      }
+      uniqueMixers = result;
+
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
       suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );

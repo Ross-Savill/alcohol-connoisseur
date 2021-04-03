@@ -188,41 +188,48 @@ class AddDrinkForm extends Component {
       }
   }
 
+
   drinkAutocomplete = (e) => {
     const { drinks } = this.props
     const { target: { name, value } } = e
     const userInput = e.currentTarget.value;
-    const uniqueDrinks = drinks.filter((drink, index, self) =>
-      index === self.findIndex((d) => (
-        d.drinkMain === drink.drinkMain && d.abv === drink.abv && d.company === drink.company
-      ))
-    );
-    const allMixersInclSpaces = [];
-    drinks.map((drink) => {
-      if(!drink.mixerOne) { return } else { allMixersInclSpaces.push(drink.mixerOne)}
-      if(!drink.mixerTwo) { return } else { allMixersInclSpaces.push(drink.mixerTwo)}
-      if(!drink.mixerThree) { return } else { allMixersInclSpaces.push(drink.mixerThree)}
-      if(!drink.mixerFour) { return } else { allMixersInclSpaces.push(drink.mixerFour)}
-      if(!drink.mixerFive) { return } else { allMixersInclSpaces.push(drink.mixerFive)}
-      if(!drink.mixerSix) { return } else { allMixersInclSpaces.push(drink.mixerSix)}
-      if(!drink.mixerSeven) { return } else { allMixersInclSpaces.push(drink.mixerSeven)}
-      if(!drink.mixerEight) { return } else { allMixersInclSpaces.push(drink.mixerEight)}
-    });
-    // const uniqueMixers = Array.from(new Set(allMixersInclSpaces));
-    let uniqueMixers;
-
-      let alreadyIn = {};
-      let result = [];
-      const len = allMixersInclSpaces.length;
-      let j = 0;
-      for(let i = 0; i < len; i++) {
-           const drinkToCheck = allMixersInclSpaces[i];
-           if(alreadyIn[drinkToCheck] !== 1) {
-                 alreadyIn[drinkToCheck] = 1;
-                 result[j++] = drinkToCheck;
-           }
+    let unfilteredMixers = [];
+    const uniqueDrinks = drinks.reduce((a,b) => {
+      if(a.filter(i => i.drinkMain === b.drinkMain && i.abv === b.abv).length === 0) {
+       a.push(b)
       }
-      uniqueMixers = result;
+      if(b.mixerOne) {
+        if(b.mixerTwo) {
+          if(b.mixerThree) {
+            if(b.mixerFour) {
+              if(b.mixerFive) {
+                if(b.mixerSix) {
+                  if(b.mixerSeven) {
+                    if(b.mixerEight) {
+                      unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree, b.mixerFour, b.mixerFive, b.mixerSix, b.mixerSeven, b.mixerEight)}
+                    unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree, b.mixerFour, b.mixerFive, b.mixerSix, b.mixerSeven)}
+                  unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree, b.mixerFour, b.mixerFive, b.mixerSix)}
+                unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree, b.mixerFour, b.mixerFive)}
+              unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree, b.mixerFour)}
+            unfilteredMixers.push(b.mixerOne, b.mixerTwo, b.mixerThree)}
+          unfilteredMixers.push(b.mixerOne, b.mixerTwo)}
+        unfilteredMixers.push(b.mixerOne)}
+      return a
+    },[])
+
+    let uniqueMixers;
+    let alreadyIn = {};
+    let result = [];
+    const len = unfilteredMixers.length;
+    let j = 0;
+    for(let i = 0; i < len; i++) {
+      const drinkToCheck = unfilteredMixers[i];
+      if(alreadyIn[drinkToCheck] !== 1) {
+        alreadyIn[drinkToCheck] = 1;
+        result[j++] = drinkToCheck;
+      }
+    }
+    uniqueMixers = result;
 
     const filteredMainDrinkSuggestions = uniqueDrinks.filter(
       suggestion => suggestion.drinkMain.toLowerCase().indexOf(userInput.toLowerCase()) > -1

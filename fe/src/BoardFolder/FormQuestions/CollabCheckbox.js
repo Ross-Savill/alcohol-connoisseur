@@ -12,7 +12,6 @@ class CollabCheckbox extends React.Component {render() {
                name="hasCollab"
                onChange={this.props.toggleHasCollab}
                value={this.props.hasCollab}
-               className={this.props.hasCollab === "" ? "dataNeeded" : "inputField"}
         >
           <option key={0} value={0}>Collab Breweries?</option>
           <option key={1} value={1}>One Collab</option>

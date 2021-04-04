@@ -7,7 +7,7 @@ class RatingTwoQ extends React.Component {render() {
   const {
     props: {
       ratingWordTwo,
-      showSuggestions,
+      rtWordTwoSuggestions,
       filteredRtTwoSuggestions,
       activeSuggestion,
       removeDropdown,
@@ -18,7 +18,7 @@ class RatingTwoQ extends React.Component {render() {
 
   let rtWordTwoSuggestionsComponent;
 
-    if (showSuggestions && ratingWordTwo) {
+    if (rtWordTwoSuggestions && ratingWordTwo) {
       if (filteredRtTwoSuggestions.length) {
         rtWordTwoSuggestionsComponent = (
           <ul className="suggestions">

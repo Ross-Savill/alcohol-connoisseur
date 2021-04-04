@@ -39,15 +39,15 @@ const DrinksBreakdownTable = ({ drinks, drinkers }) => {
         })
 
         const namesArray = drinker.personName.split(" ");
-        const firstName = namesArray[0]
+        const firstName = `${namesArray[0]+ " " +`${namesArray[1].slice(0,1)}`}`
 
         function excitingNumChecker (num) {
-          if(num % 100 === 0) {
+          if(num % 100 === 0 && num !== 0) {
             return "hundredMultiple"
           }
           for (let i = 0; i < 11; i++) {
             let candidate = num + i
-            if(candidate % 100 === 0) {
+            if(candidate % 100 === 0 && candidate !== 0) {
               return "excitingNum"
             }
           }

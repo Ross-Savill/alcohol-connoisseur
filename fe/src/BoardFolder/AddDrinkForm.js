@@ -84,7 +84,7 @@ class AddDrinkForm extends Component {
       filteredCompanySuggestions: [],
       filteredRtOneSuggestions: [],
       filteredRtTwoSuggestions: [],
-      showSuggestions: false,
+      drinkMainSuggestions: false,
       mixerOneSuggestions: false,
       mixerTwoSuggestions: false,
       mixerThreeSuggestions: false,
@@ -93,6 +93,8 @@ class AddDrinkForm extends Component {
       mixerSixSuggestions: false,
       mixerSevenSuggestions: false,
       mixerEightSuggestions: false,
+      rtWordOneSuggestions: false,
+      rtWordTwoSuggestions: false,
       companySuggestions: false,
       firstCollabCompanySuggestions: false,
       secondCollabCompanySuggestions: false,
@@ -252,7 +254,7 @@ class AddDrinkForm extends Component {
       suggestion => suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
     this.setState({ activeSuggestion: 0, filteredMainDrinkSuggestions, filteredMainDrinkMixerSuggestions,
-                    showSuggestions: true, lastLetter: newLastLetter, userInputLength: newUserInputLength, [name]: value });
+                    drinkMainSuggestions: true, lastLetter: newLastLetter, userInputLength: newUserInputLength, [name]: value });
   }
 
   mixerAutocomplete = e => {
@@ -317,7 +319,7 @@ class AddDrinkForm extends Component {
     const filteredRtOneSuggestions = allRatingWords.filter(
       suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    this.setState({ activeSuggestion: 0, filteredRtOneSuggestions, showSuggestions: true, [name]: value })
+    this.setState({ activeSuggestion: 0, filteredRtOneSuggestions, rtWordOneSuggestions: true, [name]: value })
   }
 
   rtTwoAutocomplete = (e) => {
@@ -331,14 +333,15 @@ class AddDrinkForm extends Component {
     const filteredRtTwoSuggestions = allRatingWords.filter(
       suggestion => suggestion.toString().toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
-    this.setState({ activeSuggestion: 0, filteredRtTwoSuggestions, showSuggestions: true, [name]: value })
+    this.setState({ activeSuggestion: 0, filteredRtTwoSuggestions, rtWordTwoSuggestions: true, [name]: value })
   }
 
   removeDropdown() {
-    this.setState({ showSuggestions: false, mixerOneSuggestions: false,
+    this.setState({ drinkMainSuggestions: false, mixerOneSuggestions: false,
       mixerTwoSuggestions: false, mixerThreeSuggestions: false, mixerFourSuggestions: false,
       mixerFiveSuggestions: false, mixerSixSuggestions: false, mixerSevenSuggestions: false, mixerEightSuggestions: false,
-      companySuggestions: false, firstCollabCompanySuggestions: false, secondCollabCompanySuggestions: false })
+      companySuggestions: false, firstCollabCompanySuggestions: false, secondCollabCompanySuggestions: false,
+      rtWordOneSuggestions: false, rtWordTwoSuggestions: false })
   }
 
   mainComponentSuggestionClick = chosenDrink => {
@@ -346,7 +349,7 @@ class AddDrinkForm extends Component {
       activeSuggestion: 0,
       filteredMainDrinkSuggestions: [],
       filteredMainDrinkMixerSuggestions: [],
-      showSuggestions: false,
+      drinkMainSuggestions: false,
       drinkMain: chosenDrink.drinkMain,
       drinkType: chosenDrink.drinkType,
       abv: (chosenDrink.abv * 100).toFixed(1),
@@ -389,7 +392,7 @@ class AddDrinkForm extends Component {
     this.setState({
       activeSuggestion: 0,
       filteredRtOneSuggestions: [],
-      showSuggestions: false,
+      rtWordOneSuggestions: false,
       ratingWordOne: chosenWord
     })
   }
@@ -398,7 +401,7 @@ class AddDrinkForm extends Component {
     this.setState({
       activeSuggestion: 0,
       filteredRtTwoSuggestions: [],
-      showSuggestions: false,
+      rtWordTwoSuggestions: false,
       ratingWordTwo: chosenWord
     })
   }
@@ -410,7 +413,7 @@ class AddDrinkForm extends Component {
     if (e.keyCode === 13) {
       this.setState({
         activeSuggestion: 0,
-        showSuggestions: false,
+        drinkMainSuggestions: false,
         userInput: filteredMainDrinkSuggestions[activeSuggestion]
       });
     } else if (e.keyCode === 38) {
@@ -653,7 +656,7 @@ class AddDrinkForm extends Component {
                 <div>
                   <MainComponentQ filteredMainDrinkSuggestions={this.state.filteredMainDrinkSuggestions}
                                   activeSuggestion={this.state.activeSuggestion}
-                                  showSuggestions={this.state.showSuggestions}
+                                  drinkMainSuggestions={this.state.drinkMainSuggestions}
                                   filteredMainDrinkMixerSuggestions={this.state.filteredMainDrinkMixerSuggestions}
                                   drinkMain={this.state.drinkMain}
                                   mainComponentSuggestionClick={this.mainComponentSuggestionClick}
@@ -862,7 +865,7 @@ class AddDrinkForm extends Component {
               <h4 className="verdictAreaHeader">Verdict</h4>
               <Row xs="3">
                 <RatingOneQ ratingWordOne={this.state.ratingWordOne}
-                            showSuggestions={this.state.showSuggestions}
+                            rtWordOneSuggestions={this.state.rtWordOneSuggestions}
                             filteredRtOneSuggestions={this.state.filteredRtOneSuggestions}
                             activeSuggestion={this.state.activeSuggestion}
                             rtOneAutocomplete={this.rtOneAutocomplete}
@@ -870,7 +873,7 @@ class AddDrinkForm extends Component {
                             removeDropdown={this.removeDropdown}
                 />
                 <RatingTwoQ ratingWordTwo={this.state.ratingWordTwo}
-                            showSuggestions={this.state.showSuggestions}
+                            rtWordTwoSuggestions={this.state.rtWordTwoSuggestions}
                             filteredRtTwoSuggestions={this.state.filteredRtTwoSuggestions}
                             activeSuggestion={this.state.activeSuggestion}
                             rtTwoAutocomplete={this.rtTwoAutocomplete}

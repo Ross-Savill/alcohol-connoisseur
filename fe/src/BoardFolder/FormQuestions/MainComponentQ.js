@@ -9,7 +9,7 @@ class MainComponentQ extends React.Component {render() {
       activeSuggestion,
       filteredMainDrinkSuggestions,
       filteredMainDrinkMixerSuggestions,
-      showSuggestions,
+      drinkMainSuggestions,
       drinkAutocomplete,
       removeDropdown,
       drinkMain,
@@ -22,7 +22,7 @@ class MainComponentQ extends React.Component {render() {
   let mainDrinkSuggestionsComponent;
   let mixerSuggestionsComponent;
 
-  if (showSuggestions && drinkMain) {
+  if (drinkMainSuggestions && drinkMain) {
     if (filteredMainDrinkSuggestions.length) {
       mainDrinkSuggestionsComponent = (
         <ul className="suggestions main-suggestions">
@@ -48,7 +48,7 @@ class MainComponentQ extends React.Component {render() {
     }
   }
 
-  if (showSuggestions && drinkMain) {
+  if (drinkMainSuggestions && drinkMain) {
     if (filteredMainDrinkMixerSuggestions.length) {
       mixerSuggestionsComponent = (
         <ul className="suggestions mixer-suggestions">

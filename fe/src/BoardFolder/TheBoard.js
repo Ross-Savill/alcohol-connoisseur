@@ -197,7 +197,7 @@ const TheBoard = ({ drinkTypes }) => {
               className={drinkRowClass} >
             <td>{firstName}</td>
             <td>{!drink.date ? "Awaiting Verdict" : moment(drink.date).format('h:mma')}</td>
-            <td>{ drink.mixerEight ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}`
+            <td>{drink.mixerEight ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix}, ${drink.mixerSeven} and ${drink.mixerEight}`
               : drink.mixerSeven ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive}, ${drink.mixerSix} and ${drink.mixerSeven}`
               : drink.mixerSix ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour}, ${drink.mixerFive} and ${drink.mixerSix}`
               : drink.mixerFive ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}, ${drink.mixerTwo}, ${drink.mixerThree}, ${drink.mixerFour} and ${drink.mixerFive}`
@@ -207,17 +207,17 @@ const TheBoard = ({ drinkTypes }) => {
               : drink.mixerOne ? `${drink.drinkMain} ${displayedAbv} with ${drink.mixerOne}`
               : `${drink.drinkMain} ${displayedAbv}`
             }</td>
-            <td> {drinkRowClass === "toBeAnnounced" ? "*To Be Declared*" : !drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
+            <td>{drinkRowClass === "toBeAnnounced" ? "*To Be Declared*" : !drink.ratingWordOne && !drink.ratingWordTwo ? "-" : `${drink.ratingWordOne}, ${drink.ratingWordTwo}`}</td>
             <td>{drinkRowClass === "toBeAnnounced" ? "*To Be Declared*" : drink.score}</td>
             <td>{sameDrinkEntry}</td>
             <td>{missingPieces.length ? "Need: " + missingPieces.map((piece) => piece) :
                                         drinkRowClass === "toBeAnnounced" ? "-" :
                                         <img src={greentick} alt="DONE" height="20px" width="20px"></img>}
             </td>
-            { admin || (userId === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "")) ?
+            {admin || (userId === drink.drinkerId && (drink.ratingWordOne === "" || drink.ratingWordTwo === "" || drink.score === "")) ?
               <td><button className="editDrinkButton" onClick={() => callEditForm({drink})}>Edit Drink</button></td>
             : <td>-</td> }
-            { admin && drink.confirmed === false ?
+            {admin && drink.confirmed === false ?
                 <td><button className="confirmDrinkButton" onClick={() => confirmDrink(drink)}>Confirm Drink</button></td> : null
           }
           </tr>

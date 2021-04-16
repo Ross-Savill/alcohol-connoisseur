@@ -200,7 +200,6 @@ class AddDrinkForm extends Component {
     const userInput = e.currentTarget.value;
     const newUserInputLength = e.currentTarget.value.length;
     const newLastLetter = userInput.slice(-1);
-    console.log(userInputLength)
 
     let uniqueDrinks;
     let uniqueMixers;
@@ -516,6 +515,7 @@ class AddDrinkForm extends Component {
 
       let confirmedStatus = false
 
+      console.log(this.state.ratingWordOne, this.state.ratingWordTwo, this.state.score)
       if(this.props.drinkToEdit) {
         if(this.props.drinkToEdit.drink.confirmed === true ||
           (this.props.admin === true && this.state.ratingWordOne !== ""

@@ -21,7 +21,7 @@
     "react-infinite-scroll-component": "^5.1.0",
     "react-jvectormap": "0.0.16",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.1",
+    "react-scripts": "^5.0.1",
     "react-select": "^3.2.0",
     "react-table": "^7.6.3",
     "react-wordcloud": "^1.2.7",
